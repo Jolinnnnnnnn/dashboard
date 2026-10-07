@@ -1,12 +1,14 @@
 """Generate Relay's synthetic dataset into data/. Implements docs/data-spec.md.
 
 Usage (from repo root, venv active):
-    python scripts/generate_data.py
+    python scripts/generate_data.py [--seed N] [--data-dir DIR]
 """
 from __future__ import annotations
 
+import argparse
 import json
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -27,11 +29,22 @@ OPEN_WINDOW_DAYS = 30
 DEMO_ID = "T-4821"
 DEMO_RATIO = 2.2  # demo task's hold vs. its (stakeholder, type) median, so it reads as High risk
 
-rng = np.random.default_rng(SEED)
+
+def make_rngs(seed: int) -> tuple[np.random.Generator, np.random.Generator]:
+    """Independent streams: structure (routes, holds, dates, clients) and text/code areas.
+
+    Keeping them separate means tweaking text noise never re-draws the planted patterns.
+    """
+    structure, text = np.random.SeedSequence(seed).spawn(2)
+    return np.random.default_rng(structure), np.random.default_rng(text)
 
 
-def pick(items):
-    return items[int(rng.integers(len(items)))]
+rng, rng_text = make_rngs(SEED)
+
+
+def pick(items, gen=None):
+    gen = gen or rng
+    return items[int(gen.integers(len(items)))]
 
 
 def weighted(items, weights):
@@ -153,7 +166,7 @@ REWORK_RATE = 0.18  # P3
 DETOUR_RATE = 0.08
 SEASONAL_TYPE = "Traffic spike"
 SEASONAL_MONTHS = {11, 12}
-SEASONAL_FACTOR = 2.5  # P7
+SEASONAL_FACTOR = 3.5  # P7
 
 # ── Issue families (templates) ─────────────────────────────────────────────
 
@@ -361,6 +374,38 @@ FAMILIES = {
 }
 FAMILIES_BY_TYPE = {t: [f for f, spec in FAMILIES.items() if spec["type"] == t] for t in TYPES}
 
+# Text overlap, so similar-case search isn't trivially perfect (target ~80–90% on P5).
+VAGUE_TITLE_RATE = 0.25
+VAGUE_TITLES = [
+    "Issue with {domain}",
+    "{client} escalation: {domain}",
+    "Urgent: problem reported in {region}",
+    "Customer reports errors on {domain}",
+    "Follow-up on {client} ticket",
+]
+GENERIC_SENTENCE_RATE = 0.40
+GENERIC_SENTENCES = [
+    "This is impacting production traffic.",
+    "{client} escalated via their account manager.",
+    "The issue started after the weekend maintenance window.",
+    "Please prioritize, this affects an upcoming launch.",
+    "Errors and latency are visible in the {region} dashboards.",
+    "Edge nodes in {pop} are affected.",
+]
+CONFUSED_WORDING_RATE = 0.15  # reporter describes it (title + description) like a related problem
+CONFUSABLE = {
+    "purge_propagation_delay": "partial_purge_failures",
+    "partial_purge_failures": "purge_propagation_delay",
+    "stale_content_after_purge": "config_rollout_regression",
+    "config_rollout_regression": "stale_content_after_purge",
+    "edge_overload_spike": "purge_propagation_delay",
+    "geo_misrouting": "origin_failover_not_triggering",
+    "origin_failover_not_triggering": "geo_misrouting",
+    "domain_onboarding_blocked": "cert_autorenew_failure",
+    "cert_autorenew_failure": "domain_onboarding_blocked",
+    "log_export_access": "domain_onboarding_blocked",
+}
+
 EMPTY_NOTE_RATE = 0.10
 NO_CODE_AREAS_RATE = 0.05
 DUPLICATE_RATE = 0.03
@@ -390,10 +435,24 @@ def pick_type(created: datetime) -> str:
     return weighted(TYPE_NAMES, weights)
 
 
+rework_quota = {"eligible": 0, "reworked": 0}
+
+
+def wants_rework() -> bool:
+    """Systematic sampling: keeps the running rework share at REWORK_RATE (P3) instead of
+    leaving it to independent coin flips, which swing ±4 points over ~100 tasks."""
+    rework_quota["eligible"] += 1
+    shortfall = REWORK_RATE * rework_quota["eligible"] - rework_quota["reworked"]
+    if rng.random() < shortfall:
+        rework_quota["reworked"] += 1
+        return True
+    return False
+
+
 def build_route(task_type: str) -> list[str]:
     options = TYPES[task_type][1]
     route = list(weighted([r for _, r in options], [p for p, _ in options]))
-    if task_type in REWORK_TYPES and rng.random() < REWORK_RATE:
+    if task_type in REWORK_TYPES and wants_rework():
         i = route.index(SE)
         route[i + 1:i + 1] = [SU, SE]
     if rng.random() < DETOUR_RATE:
@@ -414,30 +473,31 @@ def text_values(client: dict) -> dict:
     return {
         "client": client["name"],
         "region": client["region"],
-        "pop": pick(POPS[client["region"]]),
-        "domain": f"{pick(['www', 'static', 'api', 'cdn', 'media'])}.{client['slug']}.com",
-        "nodes": int(rng.integers(3, 40)),
-        "pct": int(rng.integers(5, 45)),
-        "minutes": int(rng.integers(10, 90)),
-        "code": pick(["502", "503", "504", "408"]),
-        "days": int(rng.integers(3, 14)),
-        "x": int(rng.integers(3, 12)),
-        "version": f"v{int(rng.integers(40, 99))}",
+        "pop": pick(POPS[client["region"]], rng_text),
+        "domain": f"{pick(['www', 'static', 'api', 'cdn', 'media'], rng_text)}.{client['slug']}.com",
+        "nodes": int(rng_text.integers(3, 40)),
+        "pct": int(rng_text.integers(5, 45)),
+        "minutes": int(rng_text.integers(10, 90)),
+        "code": pick(["502", "503", "504", "408"], rng_text),
+        "days": int(rng_text.integers(3, 14)),
+        "x": int(rng_text.integers(3, 12)),
+        "version": f"v{int(rng_text.integers(40, 99))}",
     }
 
 
 def build_code_areas(family: str, task_type: str) -> list[str]:
-    if rng.random() < NO_CODE_AREAS_RATE:
+    g = rng_text
+    if g.random() < NO_CODE_AREAS_RATE:
         return []
     modules = list(FAMILIES[family]["modules"])
-    if task_type in EDGE_SYNC_EXTRA_TYPES and rng.random() < EDGE_SYNC_EXTRA_RATE:
+    if task_type in EDGE_SYNC_EXTRA_TYPES and g.random() < EDGE_SYNC_EXTRA_RATE:
         modules.append("edge-sync")
-    if rng.random() < EXTRA_MODULE_RATE:
-        modules.append(pick([m for m in MODULES if m not in modules]))
+    if g.random() < EXTRA_MODULE_RATE:
+        modules.append(pick([m for m in MODULES if m not in modules], g))
     files = set()
     for m in modules:
-        n = int(rng.integers(1, min(2, len(MODULES[m])) + 1))
-        for f in rng.choice(MODULES[m], size=n, replace=False):
+        n = int(g.integers(1, min(2, len(MODULES[m])) + 1))
+        for f in g.choice(MODULES[m], size=n, replace=False):
             files.add(f"{m}/{f}")
     return sorted(files)
 
@@ -445,15 +505,21 @@ def build_code_areas(family: str, task_type: str) -> list[str]:
 def make_task(client: dict, task_type: str, created: datetime, status: str) -> dict:
     family = pick(FAMILIES_BY_TYPE[task_type])
     spec = FAMILIES[family]
+    g = rng_text
     values = text_values(client)
-    note = pick(spec["fixes"]).format(**values)
+    note = pick(spec["fixes"], g).format(**values)
+    wording = FAMILIES[CONFUSABLE[family]] if g.random() < CONFUSED_WORDING_RATE else spec
+    title = pick(VAGUE_TITLES if g.random() < VAGUE_TITLE_RATE else wording["titles"], g)
+    description = pick(wording["descriptions"], g)
+    if g.random() < GENERIC_SENTENCE_RATE:
+        description += " " + pick(GENERIC_SENTENCES, g)
     return {
         "client": client,
         "type": task_type,
         "family": family,
-        "title": pick(spec["titles"]).format(**values),
-        "description": pick(spec["descriptions"]).format(**values),
-        "solution_note": note if status == "closed" and rng.random() >= EMPTY_NOTE_RATE else "",
+        "title": title.format(**values),
+        "description": description.format(**values),
+        "solution_note": note if status == "closed" and g.random() >= EMPTY_NOTE_RATE else "",
         "code_areas": build_code_areas(family, task_type),
         "created_at": created,
         "status": status,
@@ -496,8 +562,9 @@ def split_duplicate(rows: list[dict]) -> list[dict]:
 def generate_closed(clients) -> list[dict]:
     tasks = []
     span = (HISTORY_END - HISTORY_START).total_seconds()
-    for _ in range(N_CLOSED):
-        created = HISTORY_START + timedelta(seconds=float(rng.uniform(0, span)))
+    for k in range(N_CLOSED):
+        # Stratified: evenly spread over the year with jitter, so monthly volume isn't lumpy
+        created = HISTORY_START + timedelta(seconds=span * (k + float(rng.uniform())) / N_CLOSED)
         client = pick_client(clients)
         task_type = pick_type(created)
         route = build_route(task_type)
@@ -595,14 +662,21 @@ def assign_ids(tasks: list[dict]) -> None:
         t["id"] = f"T-{base + i}"
 
 
-def write_json(name: str, rows) -> None:
-    rd.DATA_DIR.mkdir(exist_ok=True)
-    with open(rd.DATA_DIR / f"{name}.json", "w") as f:
+def write_json(data_dir: Path, name: str, rows) -> None:
+    data_dir.mkdir(parents=True, exist_ok=True)
+    with open(data_dir / f"{name}.json", "w") as f:
         json.dump(rows, f, indent=2, ensure_ascii=False)
         f.write("\n")
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--seed", type=int, default=SEED)
+    parser.add_argument("--data-dir", type=Path, default=rd.DATA_DIR)
+    args = parser.parse_args()
+    global rng, rng_text
+    rng, rng_text = make_rngs(args.seed)
+
     clients = build_clients()
     closed = generate_closed(clients)
     ne_median = network_eng_cache_median(closed)
@@ -636,15 +710,15 @@ def main() -> None:
                 "hold_days": r["hold_days"],
             })
 
-    write_json("stakeholders", [{"id": s, "name": n, "role": r} for s, n, r, _ in STAKEHOLDERS])
-    write_json("clients", [{k: c[k] for k in ("id", "name", "tier", "region")} for c in clients])
-    write_json("modules", [{"id": m, "path": f"{m}/", "files": files} for m, files in MODULES.items()])
-    write_json("tasks", task_rows)
-    write_json("handoffs", handoff_rows)
+    write_json(args.data_dir, "stakeholders", [{"id": s, "name": n, "role": r} for s, n, r, _ in STAKEHOLDERS])
+    write_json(args.data_dir, "clients", [{k: c[k] for k in ("id", "name", "tier", "region")} for c in clients])
+    write_json(args.data_dir, "modules", [{"id": m, "path": f"{m}/", "files": files} for m, files in MODULES.items()])
+    write_json(args.data_dir, "tasks", task_rows)
+    write_json(args.data_dir, "handoffs", handoff_rows)
 
     n_open = sum(t["status"] == "open" for t in tasks)
     print(f"Wrote {len(tasks)} tasks ({len(tasks) - n_open} closed, {n_open} open), "
-          f"{len(handoff_rows)} handoff rows to {rd.DATA_DIR.relative_to(rd.ROOT)}/")
+          f"{len(handoff_rows)} handoff rows to {args.data_dir}/ (seed {args.seed})")
     print(f"Demo task {DEMO_ID}: Network Eng hold {round(DEMO_RATIO * ne_median, 1)}d "
           f"(cache-type median {ne_median:.2f}d)")
 

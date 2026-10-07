@@ -112,11 +112,11 @@ Template placeholders vary the text: client name, region, domain, node count, er
 |---|---|---|---|
 | P1 | Routing depends on task type | Per-type route probabilities above | Prediction by (stakeholder, type) beats the baseline by ≥ 10 points top-1. Falls back to stakeholder-only when a pair has < 5 examples. |
 | P2 | Security is the bottleneck | Median hold 2.9 days vs 0.2–2.0 elsewhere | Security has the highest median hold, within 2.3–3.5 days |
-| P3 | Rework loop | 18% of New domain setup and Log access tasks go Security → Support → Security | Share of those tasks with a Security → Support → Security sequence within 12–24% (a plain Security → Support rate doesn't work: Log access's main route already has that handoff) |
+| P3 | Rework loop | 18% of New domain setup and Log access tasks go Security → Support → Security (assigned by quota, not independent coin flips, so the share stays near 18% on a small sample) | Share of those tasks with a Security → Support → Security sequence within 12–24% (a plain Security → Support rate doesn't work: Log access's main route already has that handoff) |
 | P4 | Problem module | `edge-sync/` in 3 families, plus added to 25% of DNS routing / Origin failover tasks | `edge-sync/` ranks #1 by task count |
 | P5 | Issue families have consistent fixes | Shared templates per family | Top-3 similar cases share the family ≥ 70% of the time (score = 0.7 × TF-IDF cosine + 0.3 × module Jaccard) |
 | P6 | Enterprise clients respond faster | Customer hold × 0.6 for Enterprise | Enterprise median Customer hold < SMB median Customer hold |
-| P7 | Holiday traffic spike | Traffic spike volume × 2.5 in Nov–Dec | Nov–Dec traffic spike volume ≥ 1.5× the monthly average |
+| P7 | Holiday traffic spike | Traffic spike weight × 3.5 in Nov–Dec; closed-task creation dates are spread evenly across the year (with jitter) so monthly volume isn't lumpy | Nov–Dec traffic spike volume ≥ 1.5× the monthly average |
 
 ## Noise
 
@@ -126,13 +126,19 @@ Keeps the data realistic and gives the cleaning step something to do.
 - 10% of closed tasks have an empty solution note.
 - 5% of tasks have no code areas; 30% get one extra unrelated module.
 - 3% of closed tasks have a duplicate consecutive handoff (data-entry mistake); `relay_data.clean_handoffs` merges these.
+- **Text overlap** (so similar-case search isn't trivially perfect): 25% of tasks get a vague title ("Issue with {domain}"); 40% get a generic sentence appended ("This is impacting production traffic."); 15% are worded (title + description) like a related family, e.g. a stale-content ticket that reads like a config regression. The family label and code areas stay true.
+
+## Randomness
+
+- Two independent random streams from seed 42: one for structure (clients, types, routes, holds, dates) and one for text and code areas. Changing text noise never re-draws the planted patterns.
+- `--seed N --data-dir DIR` generates alternative datasets. All 17 validation checks pass for seeds 1–30, so the patterns don't depend on a lucky seed.
 
 ## Open tasks (100)
 
 - Created in the last 30 days, stopped partway through their route.
 - About 8 are at risk, so the queue has realistic red flags.
 - **At-risk rule:** time with the current stakeholder > 1.5× that stakeholder's median for the task type → **Medium**; > 2× → **High**.
-- **T-4821** (Cache purge bug, Northwind Media, family "Purge propagation delay") is guaranteed to exist as the demo task: Intake 0.2d → Support 0.8d → Network Eng (current). Its Network Eng hold is set to 2.2× the generated median for (Network Eng, Cache purge bug) so it always reads as **High** risk. With seed 42: **4.1 days** vs a 1.85-day median, open 5.1 days.
+- **T-4821** (Cache purge bug, Northwind Media, family "Purge propagation delay") is guaranteed to exist as the demo task: Intake 0.2d → Support 0.8d → Network Eng (current). Its Network Eng hold is set to 2.2× the generated median for (Network Eng, Cache purge bug) so it always reads as **High** risk. With seed 42: **4.2 days** vs a 1.90-day median, open 5.2 days.
 - Task IDs are sequential by creation time, offset so the demo task is exactly T-4821.
 
 ## Output files (`data/`)

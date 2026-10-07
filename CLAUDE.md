@@ -52,5 +52,6 @@ Run from the repo root with the venv active (`source .venv/bin/activate`):
 - `pip install -r requirements.txt`: install Python deps
 - `python scripts/generate_data.py`: regenerate `data/` (deterministic, seed 42)
 - `python scripts/validate_patterns.py`: check counts, demo task, noise, and patterns P1–P7; exits 1 on failure
+- Both accept `--data-dir DIR` (and the generator `--seed N`) to test other seeds without touching `data/`. After changing the generator, check a range of seeds, not just 42.
 
 `scripts/relay_data.py` holds shared loading/cleaning (`load`, `clean_handoffs`, `stints`, `routes`, `risk_levels`). Reuse it in later scripts rather than re-implementing.

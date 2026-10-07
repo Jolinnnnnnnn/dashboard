@@ -1,13 +1,15 @@
 """Check that data/ matches docs/data-spec.md: counts, demo task, noise, and planted patterns P1–P7.
 
 Usage (from repo root, venv active):
-    python scripts/validate_patterns.py
+    python scripts/validate_patterns.py [--data-dir DIR]
 Exits 1 if any check fails.
 """
 from __future__ import annotations
 
+import argparse
 import sys
 from collections import Counter
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -63,7 +65,9 @@ def similar_family_rate(closed: pd.DataFrame) -> float:
 
 
 def main() -> int:
-    d = rd.load()
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--data-dir", type=Path, default=rd.DATA_DIR)
+    d = rd.load(parser.parse_args().data_dir)
     tasks, clients = d["tasks"], d["clients"]
     raw = d["handoffs"]
     h = rd.clean_handoffs(raw)
