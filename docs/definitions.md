@@ -49,6 +49,6 @@ Exact meanings of the terms used across the data scripts, the app, and the agent
 | Term | Definition |
 |---|---|
 | **Similar case** | A closed task ranked by combined similarity to a given task. |
-| **Similarity score** | Weighted mix of TF-IDF cosine similarity on title + description, and Jaccard overlap of code modules. Weights are set in Phase 3 and recorded here. |
+| **Similarity score** | 0.7 × TF-IDF cosine similarity on title + description + 0.3 × Jaccard overlap of code modules (module = first path segment of each code area). Weights may be tuned in Phase 3; update here if they change. |
 | **Hit** | A similar case from the same issue family as the query task (used only for evaluation; the app never uses family labels to rank). |
 | **Problem module** | A code module ranked by the number of tasks linked to it. |

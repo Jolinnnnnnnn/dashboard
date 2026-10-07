@@ -1,0 +1,163 @@
+[
+  {
+    "id": "edge-sync",
+    "path": "edge-sync/",
+    "files": [
+      "propagation.go",
+      "batch_scheduler.go",
+      "node_registry.go"
+    ]
+  },
+  {
+    "id": "cdn-cache-purge",
+    "path": "cdn-cache-purge/",
+    "files": [
+      "purge_api.go",
+      "purge_queue.go"
+    ]
+  },
+  {
+    "id": "config-service",
+    "path": "config-service/",
+    "files": [
+      "ttl_rules.yaml",
+      "config_loader.go"
+    ]
+  },
+  {
+    "id": "ssl-cert",
+    "path": "ssl-cert/",
+    "files": [
+      "cert_renewal.py",
+      "acme_client.py"
+    ]
+  },
+  {
+    "id": "dns-routing",
+    "path": "dns-routing/",
+    "files": [
+      "geo_resolver.go",
+      "health_check.go"
+    ]
+  },
+  {
+    "id": "origin-failover",
+    "path": "origin-failover/",
+    "files": [
+      "failover_policy.go",
+      "origin_probe.go"
+    ]
+  },
+  {
+    "id": "waf-rules",
+    "path": "waf-rules/",
+    "files": [
+      "rule_engine.go",
+      "rulesets/default.yaml"
+    ]
+  },
+  {
+    "id": "log-export",
+    "path": "log-export/",
+    "files": [
+      "exporter.py",
+      "s3_sink.py"
+    ]
+  },
+  {
+    "id": "traffic-shaping",
+    "path": "traffic-shaping/",
+    "files": [
+      "shaper.go",
+      "qos_policy.yaml"
+    ]
+  },
+  {
+    "id": "rate-limiter",
+    "path": "rate-limiter/",
+    "files": [
+      "limiter.go",
+      "thresholds.yaml"
+    ]
+  },
+  {
+    "id": "ddos-mitigation",
+    "path": "ddos-mitigation/",
+    "files": [
+      "scrubber.go",
+      "signatures.yaml"
+    ]
+  },
+  {
+    "id": "domain-onboarding",
+    "path": "domain-onboarding/",
+    "files": [
+      "verify_ownership.py",
+      "onboarding_flow.py"
+    ]
+  },
+  {
+    "id": "billing-metering",
+    "path": "billing-metering/",
+    "files": [
+      "meter.go",
+      "usage_rollup.py"
+    ]
+  },
+  {
+    "id": "analytics-pipeline",
+    "path": "analytics-pipeline/",
+    "files": [
+      "ingest.py",
+      "aggregate.sql"
+    ]
+  },
+  {
+    "id": "edge-auth",
+    "path": "edge-auth/",
+    "files": [
+      "token_validator.go",
+      "signed_urls.go"
+    ]
+  },
+  {
+    "id": "image-optimizer",
+    "path": "image-optimizer/",
+    "files": [
+      "resize.go",
+      "formats.yaml"
+    ]
+  },
+  {
+    "id": "video-streaming",
+    "path": "video-streaming/",
+    "files": [
+      "hls_packager.go",
+      "segmenter.go"
+    ]
+  },
+  {
+    "id": "api-gateway",
+    "path": "api-gateway/",
+    "files": [
+      "router.go",
+      "middleware.go"
+    ]
+  },
+  {
+    "id": "monitoring-alerts",
+    "path": "monitoring-alerts/",
+    "files": [
+      "alert_rules.yaml",
+      "notifier.py"
+    ]
+  },
+  {
+    "id": "customer-portal",
+    "path": "customer-portal/",
+    "files": [
+      "settings_page.tsx",
+      "api_client.ts"
+    ]
+  }
+]

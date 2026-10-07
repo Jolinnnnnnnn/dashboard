@@ -75,13 +75,15 @@ Files for the last 12 modules are chosen by the generator.
 | Type | Share | Main route (probability) | Other routes |
 |---|---|---|---|
 | Cache purge bug | 18% | Intake → Support → Network Eng → Customer → Closed (65%) | via QA (22%), via Dev (13%) |
-| New domain setup | 15% | Intake → Support → Security → Ops → Customer → Closed (70%) | Security → Support rework (see P3) |
+| New domain setup | 15% | Intake → Support → Security → Ops → Customer → Closed (70%) | skip Customer (30%) |
 | SSL renewal | 12% | Intake → Security → Ops → Closed (75%) | via Customer (25%) |
 | Traffic spike | 12% | Intake → Network Eng → Ops → Customer → Closed (60%) | via Dev (25%), direct close (15%) |
 | Config change | 13% | Intake → Ops → QA → Customer → Closed (70%) | skip QA (30%) |
 | DNS routing issue | 10% | Intake → Support → Network Eng → QA → Closed (60%) | via Customer (40%) |
 | Origin failover | 10% | Intake → Network Eng → Dev → QA → Customer → Closed (65%) | skip Dev (35%) |
 | Log access request | 10% | Intake → Security → Support → Customer → Closed (80%) | via Ops (20%) |
+
+The rework loop (P3) is applied on top of the chosen route for New domain setup and Log access request: Support → Security is inserted right after the first Security stint.
 
 ## Issue families (10)
 
@@ -110,9 +112,9 @@ Template placeholders vary the text: client name, region, domain, node count, er
 |---|---|---|---|
 | P1 | Routing depends on task type | Per-type route probabilities above | Prediction by (stakeholder, type) beats the baseline by ≥ 10 points top-1. Falls back to stakeholder-only when a pair has < 5 examples. |
 | P2 | Security is the bottleneck | Median hold 2.9 days vs 0.2–2.0 elsewhere | Security has the highest median hold, within 2.3–3.5 days |
-| P3 | Rework loop | 18% of New domain setup and Log access tasks go Security → Support → Security | Security → Support rate within 12–24% |
-| P4 | Problem module | `edge-sync/` linked to ~3× the average module's task count | `edge-sync/` ranks #1 by task count |
-| P5 | Issue families have consistent fixes | Shared templates per family | Top-3 similar cases share the family ≥ 70% of the time |
+| P3 | Rework loop | 18% of New domain setup and Log access tasks go Security → Support → Security | Share of those tasks with a Security → Support → Security sequence within 12–24% (a plain Security → Support rate doesn't work: Log access's main route already has that handoff) |
+| P4 | Problem module | `edge-sync/` in 3 families, plus added to 25% of DNS routing / Origin failover tasks | `edge-sync/` ranks #1 by task count |
+| P5 | Issue families have consistent fixes | Shared templates per family | Top-3 similar cases share the family ≥ 70% of the time (score = 0.7 × TF-IDF cosine + 0.3 × module Jaccard) |
 | P6 | Enterprise clients respond faster | Customer hold × 0.6 for Enterprise | Enterprise median Customer hold < SMB median Customer hold |
 | P7 | Holiday traffic spike | Traffic spike volume × 2.5 in Nov–Dec | Nov–Dec traffic spike volume ≥ 1.5× the monthly average |
 
@@ -122,15 +124,16 @@ Keeps the data realistic and gives the cleaning step something to do.
 
 - 8% of tasks take a random detour (one extra stakeholder hop).
 - 10% of closed tasks have an empty solution note.
-- 5% of tasks have no code areas.
-- 3% have a duplicate consecutive handoff (data-entry mistake); the cleaning step removes these.
+- 5% of tasks have no code areas; 30% get one extra unrelated module.
+- 3% of closed tasks have a duplicate consecutive handoff (data-entry mistake); `relay_data.clean_handoffs` merges these.
 
 ## Open tasks (100)
 
 - Created in the last 30 days, stopped partway through their route.
 - About 8 are at risk, so the queue has realistic red flags.
 - **At-risk rule:** time with the current stakeholder > 1.5× that stakeholder's median for the task type → **Medium**; > 2× → **High**.
-- **T-4821** (Cache purge bug, Northwind Media, with Network Eng for 3.1 days, family "Purge propagation delay") is guaranteed to exist as the demo task.
+- **T-4821** (Cache purge bug, Northwind Media, family "Purge propagation delay") is guaranteed to exist as the demo task: Intake 0.2d → Support 0.8d → Network Eng (current). Its Network Eng hold is set to 2.2× the generated median for (Network Eng, Cache purge bug) so it always reads as **High** risk. With seed 42: **4.1 days** vs a 1.85-day median, open 5.1 days.
+- Task IDs are sequential by creation time, offset so the demo task is exactly T-4821.
 
 ## Output files (`data/`)
 
@@ -141,8 +144,10 @@ All timestamps are ISO 8601 UTC.
 | `stakeholders.json` | `id`, `name`, `role` |
 | `clients.json` | `id`, `name`, `tier`, `region` |
 | `modules.json` | `id`, `path`, `files[]` |
-| `tasks.json` | `id`, `title`, `description`, `client_id`, `type`, `family`, `status` (`open`/`closed`), `created_at`, `closed_at`, `code_areas[]`, `solution_note`, `current_stakeholder` |
+| `tasks.json` | `id`, `title`, `description`, `client_id`, `type`, `family`, `status` (`open`/`closed`), `created_at`, `closed_at`, `code_areas[]` (file paths like `edge-sync/propagation.go`), `solution_note`, `current_stakeholder` |
 | `handoffs.json` | `task_id`, `seq`, `from_stakeholder`, `to_stakeholder`, `entered_at`, `left_at`, `hold_days` |
+
+Each `handoffs.json` row is one stint: the task arriving at `to_stakeholder` (from `from_stakeholder`, null for the first Intake row) at `entered_at` and leaving at `left_at`. An open task's current stint has `left_at` and `hold_days` null. A closed task ends with a row whose `to_stakeholder` is `closed`; its `entered_at` equals the task's `closed_at`.
 
 ## Caveat
 

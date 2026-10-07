@@ -1,0 +1,47 @@
+[
+  {
+    "id": "intake",
+    "name": "Intake",
+    "role": "Logs and triages new requests"
+  },
+  {
+    "id": "support",
+    "name": "Support",
+    "role": "First-line troubleshooting"
+  },
+  {
+    "id": "network_eng",
+    "name": "Network Eng",
+    "role": "Edge, cache, routing fixes"
+  },
+  {
+    "id": "security",
+    "name": "Security Review",
+    "role": "Certs, WAF, access approvals"
+  },
+  {
+    "id": "ops",
+    "name": "Ops",
+    "role": "Config rollout, deployments"
+  },
+  {
+    "id": "qa",
+    "name": "QA",
+    "role": "Verification before release"
+  },
+  {
+    "id": "dev",
+    "name": "Dev",
+    "role": "Code fixes"
+  },
+  {
+    "id": "customer",
+    "name": "Customer",
+    "role": "Client confirms or provides info"
+  },
+  {
+    "id": "closed",
+    "name": "Closed",
+    "role": "Terminal state"
+  }
+]
