@@ -18,12 +18,13 @@ TPMs / support leads tracking client tasks across teams.
 - `scripts/`: `generate_data.py`, `validate_patterns.py`, `backtest.py`, `build_artifacts.py`
 - `data/`: generated JSON (committed); `data/artifacts/`: transition tables, similar cases, summaries
 - `app/`: pages (`/` briefing, `queue`, `task/[id]`, `process`, `ask`) and `api/agent` (POST, streams NDJSON events)
-- `lib/agent/`: `run.ts` (tool-use loop, Sonnet 5.5, guardrails), `tools.ts` (7 read-only tools, zod-validated), `ratelimit.ts` (Upstash or in-memory fallback)
+- `lib/agent/`: `run.ts` (tool-use loop, Sonnet 5.5, guardrails), `tools.ts` (8 read-only tools, zod-validated), `ratelimit.ts` (Upstash or in-memory fallback)
 - `components/`: client components (AgentDock: provider, dock, launcher, AskButton; BriefingView, TopBar, Sidebar, QueueTable, ProcessView, AskView, ui)
 - `lib/data.ts` (server-only data access) and `lib/types.ts` (view models)
 - `design/`: Claude Design handoff; `project/Relay v3.dc.html` is the current visual source of truth (v1/v2 kept for reference; designed under the working name Relay); tokens copied into `app/globals.css`
 - `docs/`: `plan.md`, `data-spec.md`, `definitions.md`, `prompt-log.md`
-- `evals/`: `agent-questions.json` (15 graded questions) + `run.ts`; results in `evals/results.json`
+- `lib/workspace.ts` + `app/api/workspace`: demo team workspace (task claims and notes). Seeded teammates in `data/seed_workspace.json` plus each visitor's own changes, sandboxed per anonymous cookie for 24h (Upstash or memory). No login; in production this would sit behind SSO.
+- `evals/`: `agent-questions.json` (16 graded questions) + `run.ts`; results in `evals/results.json`
 
 ## Key docs (read before changing related code)
 
@@ -57,7 +58,7 @@ App (from the repo root):
 - `npx tsc --noEmit && npx eslint .`: typecheck and lint (`next build` no longer lints)
 - `npm run build`: production build; prerenders all 500 task pages. Run it before pushing: Suspense mistakes only fail here.
 - `npm run story`: regenerates `data/artifacts/build_story.json` (commits, code size, logged decisions, eval results) for the How it was built page (`/build`; curated catches in `lib/story.ts`, each tied to a real prompt-log entry and commit). Run before pushing when history changes.
-- `npm run eval [-- <id filter>]`: runs the agent eval set against the real API (~$0.15 for all 15). Re-run after changing the system prompt, tools, or model.
+- `npm run eval [-- <id filter>]`: runs the agent eval set against the real API (~$0.23 for all 16). Re-run after changing the system prompt, tools, or model.
 - Env vars: `ANTHROPIC_API_KEY` (agent; without it the dock reports "not configured"), `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` (rate limits; required in production, the in-memory fallback resets per instance).
 
 Data pipeline, run from the repo root with the venv active (`source .venv/bin/activate`):

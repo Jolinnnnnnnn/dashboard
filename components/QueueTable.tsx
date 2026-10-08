@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { RiskPill, ratioColor } from "@/components/ui";
 import type { QueueRow, Risk } from "@/lib/types";
@@ -10,15 +10,17 @@ import type { QueueRow, Risk } from "@/lib/types";
 const PAGE_SIZE = 12;
 const RISK_RANK: Record<Risk, number> = { High: 3, Medium: 2, Low: 1 };
 
-type SortKey = "id" | "client" | "type" | "stakeholder" | "days" | "next" | "risk";
+type SortKey = "id" | "client" | "type" | "stakeholder" | "owner" | "days" | "next" | "risk";
 const COLUMNS: [SortKey, string, string][] = [
-  ["id", "Task ID", "96px"], ["client", "Client", "auto"], ["type", "Type", "auto"], ["stakeholder", "Currently with", "auto"],
+  ["id", "Task ID", "96px"], ["client", "Client", "auto"], ["type", "Type", "auto"], ["stakeholder", "Currently with", "auto"], ["owner", "Owner", "110px"],
   ["days", "Days there", "210px"], ["next", "Predicted next", "172px"], ["risk", "Risk", "100px"],
 ];
-const SORT: Record<SortKey, (r: QueueRow) => string | number> = {
+type Owners = Record<string, { by: string; mine: boolean }>;
+const sorters = (owners: Owners): Record<SortKey, (r: QueueRow) => string | number> => ({
   id: (r) => r.id, client: (r) => r.client, type: (r) => r.type, stakeholder: (r) => r.stakeholder,
+  owner: (r) => (owners[r.id] ? (owners[r.id].mine ? "0" : "1" + owners[r.id].by) : "2"),
   days: (r) => r.ratio, next: (r) => r.next[0]?.pct ?? 0, risk: (r) => RISK_RANK[r.risk] * 10 + r.ratio,
-};
+});
 
 function Legend() {
   return (
@@ -40,7 +42,7 @@ function Shell({ count, children, footer }: { count: string; children: React.Rea
         <Legend />
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[1000px] border-collapse">{children}</table>
+        <table className="w-full min-w-[1080px] border-collapse">{children}</table>
       </div>
       {footer}
     </div>
@@ -52,6 +54,11 @@ export function QueueTable({ rows }: { rows: QueueRow[] }) {
   const router = useRouter();
   const [sort, setSort] = useState<{ key: SortKey; dir: "asc" | "desc" }>({ key: "risk", dir: "desc" });
   const [page, setPage] = useState(0);
+  // Claims from the demo team workspace (seeded teammates + this visitor's own)
+  const [owners, setOwners] = useState<Owners>({});
+  useEffect(() => {
+    fetch("/api/workspace").then((r) => r.json()).then((d) => setOwners(d.claims ?? {})).catch(() => {});
+  }, []);
 
   const q = (params.get("q") ?? "").trim().toLowerCase();
   const type = params.get("type"), client = params.get("client"), stakeholder = params.get("stakeholder");
@@ -66,7 +73,7 @@ export function QueueTable({ rows }: { rows: QueueRow[] }) {
   const filtered = rows.filter((r) =>
     (!q || r.id.toLowerCase().includes(q) || r.client.toLowerCase().includes(q))
     && (!type || r.type === type) && (!client || r.client === client) && (!stakeholder || r.stakeholder === stakeholder));
-  const key = SORT[sort.key];
+  const key = sorters(owners)[sort.key];
   const dir = sort.dir === "asc" ? 1 : -1;
   const sorted = [...filtered].sort((a, b) => (key(a) > key(b) ? 1 : key(a) < key(b) ? -1 : 0) * dir);
   const pages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
@@ -120,6 +127,11 @@ export function QueueTable({ rows }: { rows: QueueRow[] }) {
             <td className="px-4 py-2.5">
               <span className="inline-block whitespace-nowrap rounded border border-line bg-surface2 px-2 py-px text-xs">{r.stakeholder}</span>
             </td>
+            <td className="whitespace-nowrap px-4 py-2.5 text-[12.5px]">
+              {owners[r.id] ? (
+                <span className={owners[r.id].mine ? "font-medium text-accent-ink" : "text-ink"}>{owners[r.id].mine ? "You" : owners[r.id].by.split(" (")[0]}</span>
+              ) : <span className="text-faint">—</span>}
+            </td>
             <td className="px-4 py-2.5">
               <div className="flex items-center gap-2.5" title={`${r.ratio.toFixed(1)}× the ${r.median}-day median`}>
                 <div className="w-[34px] font-medium tabular-nums">{r.days}d</div>
@@ -144,7 +156,7 @@ export function QueueTable({ rows }: { rows: QueueRow[] }) {
         ))}
         {filtered.length === 0 && (
           <tr>
-            <td colSpan={7} className="px-4 py-14 text-center">
+            <td colSpan={8} className="px-4 py-14 text-center">
               <div className="text-sm font-semibold">No tasks match {q ? `“${params.get("q")}”` : "the current filters"}</div>
               <div className="mt-1 text-muted">Try a task ID like T-4821, a client name, or clear the filters.</div>
               <button onClick={() => router.replace("/queue", { scroll: false })} className="btn mt-3.5 h-[30px] font-normal">Clear search and filters</button>
@@ -162,7 +174,7 @@ export function QueueTableFallback() {
       <tbody>
         {Array.from({ length: 8 }, (_, i) => (
           <tr key={i} className="border-b border-line">
-            {[52, 110, 96, 84, 130, 120, 52].map((w, j) => (
+            {[52, 110, 96, 84, 50, 130, 120, 52].map((w, j) => (
               <td key={j} className="px-4 py-[15px]"><div className="skeleton" style={{ width: w, height: j === 3 || j === 6 ? 18 : 10 }} /></td>
             ))}
           </tr>

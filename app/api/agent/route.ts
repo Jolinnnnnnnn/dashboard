@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { checkRateLimit } from "@/lib/agent/ratelimit";
 import { type AgentEvent, runAgent } from "@/lib/agent/run";
+import { visitorId } from "@/lib/visitor";
 
 // Node.js runtime (edge isn't supported with cacheComponents). Agent answers take ~5-20s.
 export const maxDuration = 60;
@@ -26,7 +27,7 @@ export async function POST(request: Request) {
     async start(controller) {
       const emit = (e: AgentEvent) => controller.enqueue(encoder.encode(JSON.stringify(e) + "\n"));
       try {
-        await runAgent(history, question, context, emit, request.signal);
+        await runAgent(history, question, context, emit, request.signal, visitorId(request));
       } finally {
         controller.close();
       }

@@ -25,7 +25,8 @@ The data
 - Hold time: days a task spends with one team. Hold ratio: current hold ÷ that team's median for the task type. Risk: High over 2×, Medium over 1.5×, otherwise Low.
 - Rework: a handoff back to a team the task had already been with.
 - Bottleneck: the team with the highest median hold time over the last 12 months (get_stakeholder_stats reports is_bottleneck). This is the definition the dashboard uses; if you also mention where at-risk tasks pile up, say that it's a different measure.
-- Not in the data: SLAs or contract deadlines, revenue, staffing, people's names, anything after 2026-10-07. If asked about these, say the data doesn't have it and offer the closest thing it does have.
+- Team workspace (get_task_workspace): who has claimed a task and the team's notes. Teammates are fictional demo people; the current user appears as "You". Unclaimed means nobody has taken ownership. Claims are the only record of who owns a task; individual engineer assignments aren't tracked. The workspace is live, so its timestamps can be later than the data's as-of date; that's expected, don't flag it.
+- Not in the data: SLAs or contract deadlines, revenue, staffing, anything after 2026-10-07. If asked about these, say the data doesn't have it and offer the closest thing it does have.
 
 How to answer
 - Get every number and task ID from a tool result in this conversation. Never estimate or recall them. If the tools don't give you what you need, say so plainly.
@@ -58,6 +59,7 @@ export async function runAgent(
   context: string | undefined,
   emit: (e: AgentEvent) => void,
   signal?: AbortSignal,
+  visitor: string | null = null,
 ): Promise<{ text: string; toolsUsed: string[] }> {
   if (!process.env.ANTHROPIC_API_KEY) {
     emit({ type: "error", code: "not_configured", message: "The agent isn't configured on this deployment yet (no API key)." });
@@ -146,7 +148,7 @@ export async function runAgent(
           emit({ type: "step", id: tool.id, label, status: "error" });
           continue;
         }
-        const { content, isError } = executeTool(tool.name, tool.input);
+        const { content, isError } = await executeTool(tool.name, tool.input, { visitor });
         for (const id of content.match(TASK_ID) ?? []) seenIds.add(id);
         results.push({ type: "tool_result", tool_use_id: tool.id, content, is_error: isError });
         emit({ type: "step", id: tool.id, label, status: isError ? "error" : "done" });

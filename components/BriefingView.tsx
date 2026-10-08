@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { AskButton, useAgent } from "@/components/AgentDock";
+import { ClaimButton, TaskWorkspaceProvider } from "@/components/Workspace";
 import type { Briefing, Insight, Tone } from "@/lib/types";
 
 const TONE: Record<Tone, string> = {
@@ -95,6 +96,7 @@ function Featured({ f }: { f: Insight }) {
       <div className="text-balance font-serif text-[30px] leading-[1.08] tracking-[-0.01em] min-[1280px]:text-[42px]">{f.title}</div>
       <div className="max-w-[640px] text-pretty text-sm leading-relaxed text-muted">{f.body}</div>
       {f.bars && <Bars bars={f.bars} wide />}
+      <TaskWorkspaceProvider task={context}>
       <div className="flex flex-wrap items-center gap-2 pt-1">
         {f.actions.map((a) =>
           a.href ? (
@@ -107,8 +109,10 @@ function Featured({ f }: { f: Insight }) {
             <button key={a.label} onClick={() => ask(a.ask!, context)} className="h-8 rounded-lg border border-line2 bg-transparent px-3 text-ink">{a.label}</button>
           ),
         )}
+        <ClaimButton task={context} />
         <Evidence ids={f.evidence} />
       </div>
+      </TaskWorkspaceProvider>
     </div>
   );
 }

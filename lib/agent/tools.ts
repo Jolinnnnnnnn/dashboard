@@ -8,6 +8,7 @@ import { z } from "zod";
 import {
   agentSimilar, agentTask, briefingForAgent, clientStats, moduleStats, searchTasks, stakeholderStats,
 } from "@/lib/data";
+import { getAllClaims, getTaskWorkspace } from "@/lib/workspace";
 
 const TaskId = z.string().regex(/^T-\d{4}$/i, "Task IDs look like T-4821");
 
@@ -33,6 +34,7 @@ const schemas = {
   get_module_stats: z.object({ module: z.string().max(40).optional() }),
   get_client_stats: z.object({ client: z.string().max(60) }),
   get_briefing: z.object({}),
+  get_task_workspace: z.object({ task_id: TaskId.optional() }),
 } as const;
 
 export type ToolName = keyof typeof schemas;
@@ -102,13 +104,22 @@ export const TOOLS: Anthropic.Beta.BetaTool[] = [
     input_schema: { type: "object", properties: { client: { type: "string" } }, required: ["client"] },
   },
   {
+    name: "get_task_workspace",
+    description:
+      "The team workspace: who has claimed a task and the team's notes on it (fictional demo teammates plus the current user, shown as \"You\"). " +
+      "With `task_id`: that task's claim and notes. Without: every claimed task and its owner. Unclaimed means nobody has taken ownership yet.",
+    input_schema: { type: "object", properties: { task_id: { type: "string" } } },
+  },
+  {
     name: "get_briefing",
     description: "Today's briefing: the detected insights with their facts and evidence task IDs, the watch-rule counts, and recorded process changes.",
     input_schema: { type: "object", properties: {} },
   },
 ];
 
-const run: { [K in ToolName]: (input: z.infer<(typeof schemas)[K]>) => unknown } = {
+export type ToolContext = { visitor: string | null };
+
+const run: { [K in ToolName]: (input: z.infer<(typeof schemas)[K]>, ctx: ToolContext) => unknown } = {
   search_tasks: (i) => searchTasks(i),
   get_task: (i) => agentTask(i.task_id),
   find_similar_cases: (i) => agentSimilar(i.task_id, i.limit),
@@ -116,16 +127,18 @@ const run: { [K in ToolName]: (input: z.infer<(typeof schemas)[K]>) => unknown }
   get_module_stats: (i) => moduleStats(i.module),
   get_client_stats: (i) => clientStats(i.client),
   get_briefing: () => briefingForAgent(),
+  get_task_workspace: (i, ctx) => (i.task_id ? getTaskWorkspace(ctx.visitor, i.task_id.toUpperCase()) : getAllClaims(ctx.visitor)
+    .then((claims) => ({ claimed_tasks: Object.entries(claims).map(([task, c]) => ({ task, owner: c.by, since: c.at.slice(0, 10) })) }))),
 };
 
 /** Validates input and runs a tool. Returns the JSON result and whether it is an error. */
-export function executeTool(name: string, input: unknown): { content: string; isError: boolean } {
+export async function executeTool(name: string, input: unknown, ctx: ToolContext): Promise<{ content: string; isError: boolean }> {
   if (!(name in schemas)) return { content: JSON.stringify({ error: `Unknown tool ${name}` }), isError: true };
   const parsed = schemas[name as ToolName].safeParse(input ?? {});
   if (!parsed.success) {
     return { content: JSON.stringify({ error: "Invalid input", issues: parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`) }), isError: true };
   }
-  const result = (run[name as ToolName] as (i: unknown) => unknown)(parsed.data);
+  const result = await (run[name as ToolName] as (i: unknown, c: ToolContext) => unknown)(parsed.data, ctx);
   const isError = typeof result === "object" && result !== null && "error" in result;
   return { content: JSON.stringify(result), isError };
 }
@@ -145,6 +158,7 @@ export function stepLabel(name: string, input: Record<string, unknown>): string 
     case "get_module_stats": return i.module ? `Checked module ${i.module}` : "Ranked code modules";
     case "get_client_stats": return `Checked ${i.client}`;
     case "get_briefing": return "Read today's briefing";
+    case "get_task_workspace": return i.task_id ? `Checked claims and notes on ${i.task_id}` : "Checked who owns what";
     default: return name;
   }
 }

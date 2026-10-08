@@ -37,19 +37,22 @@ Ticket text is noisy (vague titles, tickets worded like a different problem), an
 
 **Agent briefing:** five detectors (most overdue task with a known fix, module behind at-risk tasks, clients slow to respond, rising rework, process-change effects) find insights in the data; Claude writes each card from the detected facts, and any wording with a number not in the facts is rejected for a template. Today's briefing: 4 insights, all Claude-worded, all passing the check.
 
-**Agent (Ask / dock):** Claude Sonnet 5.5 in a tool-use loop over 7 read-only tools (search tasks, task detail, similar cases, team stats, module stats, client stats, briefing). It shows each step, cites task IDs, drafts messages on request, and says when the data can't answer.
+**Agent (Ask / dock):** Claude Sonnet 5.5 in a tool-use loop over 8 read-only tools (search tasks, task detail, similar cases, team stats, module stats, client stats, briefing, team workspace). It shows each step, cites task IDs, drafts messages on request, and says when the data can't answer.
 
-| Eval set (15 questions, `npm run eval`) | Result |
+| Eval set (16 questions, `npm run eval`) | Result |
 |---|---|
 | Lookups with exact expected numbers | 6/6 |
 | Multi-step questions | 4/4 |
 | Drafting a message | 1/1 |
-| Questions the data can't answer (SLA, revenue, people, a missing task) | 4/4 |
-| Median latency · cost per question | 4.0 s · ~$0.013 |
+| Questions the data can't answer (SLA, revenue, a missing task) | 3/3 |
+| Team workspace (who owns a task, latest note) | 2/2 |
+| Median latency · cost per question | 3.6 s · ~$0.014 |
 
 Every answer is also checked for task IDs that no tool returned (flagged "unverified" in the UI) and for staying within 6 tool calls. Guardrails: zod-validated tool inputs, a tool budget after which tools are switched off, a stream-idle watchdog, per-visitor and global rate limits, and server-side refusal fallback.
 
 > These numbers show the pipeline recovers patterns planted in synthetic data ([data spec](docs/data-spec.md)). They are not real-world accuracy; with real data the same scripts would be re-run.
+
+**Team workspace (demo):** claim a task and leave notes, from the task page or the briefing. Ownership shows in the queue, and the agent reads it ("Who owns T-4821?"). No login: each visitor gets a private sandbox that clears after 24 hours, on top of a few seeded teammate notes. In production this would sit behind SSO with one shared workspace.
 
 ## Run locally
 

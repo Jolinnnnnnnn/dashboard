@@ -4,24 +4,25 @@
   "first_commit": "2026-10-07T16:36:14-04:00",
   "agent_live": "2026-10-08T10:19:40-04:00",
   "hours_to_live_agent": 17.7,
-  "commits": 13,
+  "commits": 17,
   "lines": {
-    "typescript": 3160,
+    "typescript": 3522,
     "python": 2105
   },
-  "logged_decisions": 34,
+  "logged_decisions": 37,
   "validator_checks": 21,
   "evals": {
-    "passed": 15,
-    "total": 15,
+    "passed": 16,
+    "total": 16,
     "by_group": {
       "lookup": "6/6",
       "multi-step": "4/4",
       "draft": "1/1",
-      "unanswerable": "4/4"
+      "unanswerable": "3/3",
+      "workspace": "2/2"
     },
-    "median_seconds": 4.024,
-    "total_cost_usd": 0.198
+    "median_seconds": 3.588,
+    "total_cost_usd": 0.227
   },
   "timeline": [
     {
@@ -88,6 +89,26 @@
       "hash": "384a122",
       "date": "2026-10-08T10:19:40-04:00",
       "subject": "Docs: agent live with Upstash rate limiting"
+    },
+    {
+      "hash": "d89965f",
+      "date": "2026-10-08T10:25:14-04:00",
+      "subject": "Add How it was built page"
+    },
+    {
+      "hash": "753a20d",
+      "date": "2026-10-08T11:14:49-04:00",
+      "subject": "Keep the agent dock's state across pages and reloads"
+    },
+    {
+      "hash": "a3224bf",
+      "date": "2026-10-08T11:17:02-04:00",
+      "subject": "Fix process map panel height so the page doesn't jump"
+    },
+    {
+      "hash": "a88c32c",
+      "date": "2026-10-08T11:23:48-04:00",
+      "subject": "Move the process map history window next to the map title"
     }
   ]
 }

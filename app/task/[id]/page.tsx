@@ -4,6 +4,7 @@ import { Suspense } from "react";
 
 import { AskButton } from "@/components/AgentDock";
 import { RiskPill } from "@/components/ui";
+import { ClaimButton, NotesPanel, TaskWorkspaceProvider } from "@/components/Workspace";
 import { allTaskIds, getTaskDetail } from "@/lib/data";
 import type { Segment, TaskDetail } from "@/lib/types";
 
@@ -23,7 +24,7 @@ async function Task({ params }: Pick<PageProps<"/task/[id]">, "params">) {
   const { id } = await params;
   const d = getTaskDetail(id);
   if (!d) notFound();
-  return (
+  const content = (
     <div className="flex flex-col gap-5">
       <Header d={d} />
       <Timeline d={d} />
@@ -33,8 +34,11 @@ async function Task({ params }: Pick<PageProps<"/task/[id]">, "params">) {
         <RelatedCode d={d} />
       </div>
       <SimilarCases d={d} />
+      {d.status === "open" && <NotesPanel />}
     </div>
   );
+  // Claims and notes apply to open tasks only
+  return d.status === "open" ? <TaskWorkspaceProvider task={d.id}>{content}</TaskWorkspaceProvider> : content;
 }
 
 function Header({ d }: { d: TaskDetail }) {
@@ -52,7 +56,10 @@ function Header({ d }: { d: TaskDetail }) {
             <Dot /><div>{d.status === "open" ? `Open ${d.openDays} days` : `Closed in ${d.openDays} days`}</div>
           </div>
         </div>
-        <AskButton q={`What should happen next on ${d.id}?`} context={d.id} label="Ask about this task" size="md" />
+        <div className="flex flex-wrap items-center gap-2">
+          {d.status === "open" && <ClaimButton task={d.id} />}
+          <AskButton q={`What should happen next on ${d.id}?`} context={d.id} label="Ask about this task" size="md" />
+        </div>
       </div>
     </div>
   );
