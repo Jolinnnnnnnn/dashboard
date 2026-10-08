@@ -6,10 +6,10 @@
   "hours_to_live_agent": 17.7,
   "commits": 26,
   "lines": {
-    "typescript": 4186,
+    "typescript": 4212,
     "python": 2105
   },
-  "logged_decisions": 41,
+  "logged_decisions": 42,
   "validator_checks": 21,
   "evals": {
     "passed": 16,
@@ -151,7 +151,7 @@
       "subject": "How it was built: one interactive system diagram"
     },
     {
-      "hash": "25887c2",
+      "hash": "6fead7d",
       "date": "2026-10-08T13:29:22-04:00",
       "subject": "Revert \"How it was built: one interactive system diagram\""
     }

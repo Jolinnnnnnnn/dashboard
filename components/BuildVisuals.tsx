@@ -1,38 +1,146 @@
 // Illustrations for the "How it was built" page. Plain SVG/HTML using theme tokens, so they work in
 // light and dark mode without images.
 
-import { DETECTORS, IDEAS, JOURNEY, SIGNAL, TABLEAU } from "@/lib/story";
+import { CATCHES, DETECTORS, JOURNEY, LANES, SOURCE_LINKS } from "@/lib/story";
 
-// ── Brainstorm board ──
+const ARROW = (id: string, color: string) => (
+  <marker id={id} viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto">
+    <path d="M0,0 L8,4 L0,8 z" style={{ fill: color }} />
+  </marker>
+);
 
-const NOTE_TONE: Record<string, { bg: string; ink: string }> = {
-  amber: { bg: "var(--amber-soft)", ink: "var(--amber-ink)" },
-  accent: { bg: "var(--accent-soft)", ink: "var(--accent-ink)" },
-  green: { bg: "var(--green-soft)", ink: "var(--green-ink)" },
-  red: { bg: "var(--red-soft)", ink: "var(--red-ink)" },
-};
-const TILT = [-2, 1.5, -1, 2, -1.5];
+// ── Tableau vs Signal: two lanes from the same data ──
 
-export function Brainstorm() {
+function LaneIcon({ kind, x, y }: { kind: string; x: number; y: number }) {
+  const ink = kind === "person" || kind === "chart" ? "var(--muted)" : "var(--accent)";
+  if (kind === "person") return <g style={{ fill: "none", stroke: ink }} strokeWidth={1.6}><circle cx={x} cy={y - 4} r={4} /><path d={`M${x - 7} ${y + 9} a7 6.5 0 0 1 14 0`} /></g>;
+  if (kind === "chart") return <g style={{ fill: ink }}>{[[-7, 4], [-1.5, -2], [4, -6]].map(([dx, top]) => <rect key={dx} x={x + dx} y={y + top} width={4} height={8 - top} rx={1} />)}</g>;
+  if (kind === "claude") return <path d={`M${x} ${y - 8} L${x + 2.4} ${y - 2.4} L${x + 8} ${y} L${x + 2.4} ${y + 2.4} L${x} ${y + 8} L${x - 2.4} ${y + 2.4} L${x - 8} ${y} L${x - 2.4} ${y - 2.4} Z`} style={{ fill: ink }} />;
+  return <circle cx={x} cy={y} r={4} className="anim-pulse" style={{ fill: ink }} />;
+}
+
+export function TableauLanes() {
+  const COLS = [210, 400, 590, 780];
+  const W = 160;
+  const H = 52;
+  const rows = [{ key: "tableau", y: 50, label: "TABLEAU · BY HAND" }, { key: "signal", y: 200, label: "SIGNAL · EVERY REFRESH" }] as const;
   return (
-    <div className="grid grid-cols-1 gap-5 min-[640px]:grid-cols-2 min-[1100px]:grid-cols-5">
-      {IDEAS.map((idea, i) => (
-        <div
-          key={idea.text}
-          className="flex min-h-[120px] flex-col justify-between rounded-md p-4 shadow-[0_6px_18px_rgba(16,24,40,0.08)] transition-transform duration-200 hover:rotate-0"
-          style={{ background: NOTE_TONE[idea.tone].bg, transform: `rotate(${TILT[i % TILT.length]}deg)` }}
-        >
-          <div className="text-balance font-serif text-[24px] leading-[1.15] text-ink">{idea.text}</div>
-          <div className="mt-3 font-mono text-[10.5px] tracking-[.08em]" style={{ color: NOTE_TONE[idea.tone].ink }}>IDEA {i + 1}</div>
+    <svg viewBox="0 0 960 290" className="block h-auto w-full min-w-[720px]" role="img" aria-label="Tableau: dashboard, then you filter, spot changes, and write it up. Signal: checks, detectors, and Claude produce the briefing from the same data.">
+      <defs>{ARROW("lane-grey", "var(--border2)")}{ARROW("lane-accent", "var(--accent)")}</defs>
+      {/* the shared data source */}
+      <g>
+        <path d="M30 130 v44 a50 12 0 0 0 100 0 v-44" style={{ fill: "var(--surface2)", stroke: "var(--border2)" }} strokeWidth={1.2} />
+        <ellipse cx={80} cy={130} rx={50} ry={12} style={{ fill: "var(--surface)", stroke: "var(--border2)" }} strokeWidth={1.2} />
+        <text x={80} y={162} textAnchor="middle" fontSize={14} fontWeight={600} style={{ fill: "var(--text)" }}>Same data</text>
+        <text x={80} y={214} textAnchor="middle" fontSize={11} style={{ fill: "var(--faint)" }}>tasks · handoffs</text>
+      </g>
+      <path d={`M130 140 C170 140, 170 ${50 + H / 2}, ${COLS[0] - 4} ${50 + H / 2}`} fill="none" strokeWidth={1.4} markerEnd="url(#lane-grey)" style={{ stroke: "var(--border2)" }} />
+      <path d={`M130 160 C170 160, 170 ${200 + H / 2}, ${COLS[0] - 4} ${200 + H / 2}`} fill="none" strokeWidth={1.8} markerEnd="url(#lane-accent)" style={{ stroke: "var(--accent)" }} />
+      {rows.map((r) => {
+        const signal = r.key === "signal";
+        const cy = r.y + H / 2;
+        return (
+          <g key={r.key}>
+            <text x={COLS[0]} y={r.y - 14} fontSize={11} letterSpacing={1.2} fontFamily="var(--font-mono)" style={{ fill: signal ? "var(--accent-ink)" : "var(--faint)" }}>{r.label}</text>
+            {COLS.slice(0, -1).map((x) => (
+              <g key={x}>
+                <path d={`M${x + W} ${cy} H${x + 190 - 4}`} fill="none" strokeWidth={1.4} markerEnd={`url(#${signal ? "lane-accent" : "lane-grey"})`} style={{ stroke: signal ? "var(--accent)" : "var(--border2)" }} />
+                {signal && <path d={`M${x + W} ${cy} H${x + 190 - 8}`} fill="none" strokeWidth={3.5} className="anim-flow" style={{ stroke: "var(--accent)" }} />}
+              </g>
+            ))}
+            {LANES[r.key].map((n, i) => {
+              const x = COLS[i];
+              const claude = n.icon === "claude";
+              return (
+                <g key={n.label}>
+                  <rect x={x} y={r.y} width={W} height={H} rx={12} strokeWidth={claude ? 1.6 : 1.2}
+                    style={{ fill: signal ? (claude ? "var(--accent-soft)" : "var(--surface)") : "var(--surface2)", stroke: signal ? "var(--accent)" : "var(--border2)" }} />
+                  <LaneIcon kind={n.icon} x={x + 24} y={cy} />
+                  <text x={x + 44} y={cy + 5} fontSize={14.5} fontWeight={600} style={{ fill: signal ? (claude ? "var(--accent-ink)" : "var(--text)") : "var(--muted)" }}>{n.label}</text>
+                </g>
+              );
+            })}
+          </g>
+        );
+      })}
+      {/* the people move out of the loop */}
+      <text x={COLS[1] + W + 15} y={142} textAnchor="middle" fontSize={11.5} style={{ fill: "var(--amber-ink)" }}>3 manual steps → 0</text>
+    </svg>
+  );
+}
+
+// ── Where insights come from: sources → detectors → one insight ──
+
+export function InsightFlow({ counts, example }: {
+  counts: { tasks: number; handoffs: number; modules: number; clients: number; events: number };
+  example?: { title: string; evidence: string[] };
+}) {
+  const sources: [string, string][] = [
+    ["Task records", String(counts.tasks)],
+    ["Handoff history", counts.handoffs.toLocaleString("en-US")],
+    ["Code areas", String(counts.modules)],
+    ["Client profiles", String(counts.clients)],
+    ["Process change log", String(counts.events)],
+  ];
+  const rowY = (i: number) => 30 + i * 60;
+  const H = 42;
+  const cy = (i: number) => rowY(i) + H / 2;
+  const SX = 210; // source box width
+  const DX = 320; // detector box x
+  const DW = 220;
+  const OUT = { x: 660, y: cy(2) };
+  return (
+    <div className="grid items-center gap-4 min-[900px]:grid-cols-[1fr_300px]">
+      <div className="overflow-x-auto">
+        <svg viewBox="0 0 660 330" className="block h-auto w-full min-w-[560px]" role="img" aria-label="Five data sources feed five detectors, which produce the briefing's insights">
+          <defs>{ARROW("ins-accent", "var(--accent)")}</defs>
+          <text x={0} y={14} fontSize={11} letterSpacing={1.2} fontFamily="var(--font-mono)" style={{ fill: "var(--faint)" }}>SOURCES</text>
+          <text x={DX} y={14} fontSize={11} letterSpacing={1.2} fontFamily="var(--font-mono)" style={{ fill: "var(--accent-ink)" }}>DETECTORS</text>
+          {SOURCE_LINKS.map(([s, d]) => (
+            <path key={`${s}-${d}`} d={`M${SX} ${cy(s)} C${SX + 55} ${cy(s)}, ${DX - 55} ${cy(d)}, ${DX} ${cy(d)}`} fill="none" strokeWidth={1.3} style={{ stroke: "var(--border2)" }} />
+          ))}
+          {DETECTORS.map((_, d) => (
+            <g key={d}>
+              <path d={`M${DX + DW} ${cy(d)} C${DX + DW + 60} ${cy(d)}, ${OUT.x - 60} ${OUT.y}, ${OUT.x - 4} ${OUT.y}`} fill="none" strokeWidth={1.4} markerEnd="url(#ins-accent)" style={{ stroke: "var(--accent)" }} />
+              <path d={`M${DX + DW} ${cy(d)} C${DX + DW + 60} ${cy(d)}, ${OUT.x - 60} ${OUT.y}, ${OUT.x - 8} ${OUT.y}`} fill="none" strokeWidth={3.5} className="anim-flow" style={{ stroke: "var(--accent)", animationDelay: `${d * -0.15}s` }} />
+            </g>
+          ))}
+          {sources.map(([name, n], i) => (
+            <g key={name}>
+              <rect x={0} y={rowY(i)} width={SX} height={H} rx={8} strokeWidth={1.2} style={{ fill: "var(--surface)", stroke: "var(--border2)" }} />
+              <text x={14} y={cy(i) + 5} fontSize={13.5} style={{ fill: "var(--text)" }}>{name}</text>
+              <text x={SX - 14} y={cy(i) + 5} textAnchor="end" fontSize={12} fontFamily="var(--font-mono)" style={{ fill: "var(--faint)" }}>{n}</text>
+            </g>
+          ))}
+          {DETECTORS.map((d, i) => (
+            <g key={d}>
+              <rect x={DX} y={rowY(i)} width={DW} height={H} rx={8} strokeWidth={1.2} strokeDasharray="4 3" style={{ fill: "var(--accent-soft)", stroke: "var(--accent)" }} />
+              <circle cx={DX + 16} cy={cy(i)} r={3.5} style={{ fill: "var(--accent)" }} />
+              <text x={DX + 30} y={cy(i) + 5} fontSize={13.5} style={{ fill: "var(--accent-ink)" }}>{d}</text>
+            </g>
+          ))}
+        </svg>
+      </div>
+      <div className="flex flex-col gap-3 rounded-xl border border-line bg-surface p-4 shadow-[0_8px_24px_rgba(16,24,40,0.08)]">
+        <div className="flex items-center justify-between">
+          <span className="rounded-full bg-red-soft px-2.5 py-0.5 text-xs font-medium text-red-ink">Needs you</span>
+          <span className="font-mono text-[10.5px] tracking-[.08em] text-faint">BRIEFING</span>
         </div>
-      ))}
+        <div className="text-balance font-serif text-[22px] leading-[1.15]">{example?.title}</div>
+        <div className="flex flex-wrap gap-1.5">
+          {example?.evidence.slice(0, 3).map((id) => <span key={id} className="rounded border border-line px-1.5 font-mono text-[11px] text-muted">{id}</span>)}
+        </div>
+        <div className="flex items-center gap-2 border-t border-line pt-2.5 text-xs text-green-ink">
+          <span className="flex size-4 items-center justify-center rounded-full bg-green-soft text-[10px]">✓</span>Every number checked against the data
+        </div>
+      </div>
     </div>
   );
 }
 
-// ── Journey ──
+// ── Build timeline: hours from the first commit ──
 
-function Icon({ name }: { name: string }) {
+function iconPaths(name: string) {
   const p = { fill: "none", stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   const paths: Record<string, React.ReactNode> = {
     plan: <><path {...p} d="M7 5h10M7 10h10M7 15h6" /><circle {...p} cx="4" cy="5" r=".6" /><circle {...p} cx="4" cy="10" r=".6" /><circle {...p} cx="4" cy="15" r=".6" /></>,
@@ -43,40 +151,86 @@ function Icon({ name }: { name: string }) {
     agent: <><path {...p} d="M4 4h12a1.5 1.5 0 011.5 1.5v7A1.5 1.5 0 0116 14h-6l-4 3v-3H4a1.5 1.5 0 01-1.5-1.5v-7A1.5 1.5 0 014 4z" /><path {...p} d="M7 9h.01M10 9h.01M13 9h.01" strokeWidth={2.4} /></>,
     live: <><circle {...p} cx="10" cy="10" r="2" /><path {...p} d="M5.5 5.5a6.4 6.4 0 000 9M14.5 5.5a6.4 6.4 0 010 9M3 3a10 10 0 000 14M17 3a10 10 0 010 14" /></>,
   };
-  return <svg viewBox="0 0 20 20" className="size-5" aria-hidden>{paths[name]}</svg>;
+  return paths[name];
 }
 
-export function Journey({ times, firstCommit, repo }: { times: Record<string, string>; firstCommit: string; repo: string }) {
+export function BuildTimeline({ times, firstCommit, liveHours, repo }: { times: Record<string, string>; firstCommit: string; liveHours: number; repo: string }) {
   const start = new Date(firstCommit).getTime();
+  const at = (hash: string) => (times[hash] ? (new Date(times[hash]).getTime() - start) / 3_600_000 : 0);
+  const MAX = Math.ceil(liveHours / 2) * 2;
+  const X0 = 170;
+  const X1 = 940;
+  const x = (h: number) => X0 + (h / MAX) * (X1 - X0);
+  const ROW = 34;
+  const TOP = 20;
+  // Each phase runs from the previous phase's finishing commit to its own (phases 5 and 6 shipped together).
+  const bars = JOURNEY.map((j, i) => {
+    const end = at(j.commit);
+    const prev = JOURNEY.slice(0, i).reverse().find((p) => at(p.commit) < end);
+    return { ...j, from: prev ? at(prev.commit) : 0, to: end };
+  });
+  const lastEnd = Math.max(...bars.map((b) => b.to));
+  const axisY = TOP + bars.length * ROW + 12;
+  const fmt = (h: number) => (h < 1 ? `${Math.round(h * 60)} min` : `${h.toFixed(1)}h`);
   return (
-    <ol className="relative m-0 grid list-none grid-cols-1 gap-6 p-0 min-[900px]:grid-cols-7 min-[900px]:gap-3">
-      {/* connecting line (horizontal on wide screens) */}
-      <div className="absolute left-[19px] top-5 hidden h-px bg-line2 min-[900px]:left-[7%] min-[900px]:right-[7%] min-[900px]:block" aria-hidden />
-      {JOURNEY.map((j, i) => {
-        const at = times[j.commit];
-        const hours = at ? (new Date(at).getTime() - start) / 3_600_000 : null;
-        const last = i === JOURNEY.length - 1;
+    <svg viewBox={`0 0 960 ${axisY + 30}`} className="block h-auto w-full min-w-[680px]" role="img" aria-label="Timeline of the seven build phases in hours from the first commit">
+      {/* overnight gap between the agent and going live */}
+      <rect x={x(lastEnd) + 6} y={TOP - 6} width={x(liveHours) - x(lastEnd) - 12} height={bars.length * ROW + 6} rx={8} style={{ fill: "var(--surface2)" }} />
+      <text x={(x(lastEnd) + x(liveHours)) / 2} y={TOP + bars.length * ROW / 2} textAnchor="middle" fontSize={13} style={{ fill: "var(--faint)" }}>overnight</text>
+      {Array.from({ length: MAX / 2 + 1 }, (_, i) => i * 2).map((h) => (
+        <g key={h}>
+          <line x1={x(h)} x2={x(h)} y1={TOP - 6} y2={axisY - 6} strokeDasharray="2 4" style={{ stroke: "var(--border)" }} />
+          <text x={x(h)} y={axisY + 8} textAnchor="middle" fontSize={11} fontFamily="var(--font-mono)" style={{ fill: "var(--faint)" }}>{h}h</text>
+        </g>
+      ))}
+      {bars.map((b, i) => {
+        const y = TOP + i * ROW;
+        const w = Math.max(x(b.to) - x(b.from), 6);
         return (
-          <li key={j.phase} className="relative flex gap-4 min-[900px]:flex-col min-[900px]:items-center min-[900px]:gap-3 min-[900px]:text-center">
-            <a
-              href={`${repo}/commit/${j.commit}`}
-              target="_blank"
-              rel="noreferrer"
-              title={`commit ${j.commit}`}
-              className={`relative z-10 flex size-10 flex-none items-center justify-center rounded-full border no-underline ${last ? "border-accent bg-accent text-on-accent hover:text-on-accent" : "border-line2 bg-surface text-ink hover:border-accent hover:text-accent-ink"}`}
-            >
-              <Icon name={j.icon} />
-            </a>
-            <div>
-              <div className="mb-1 font-mono text-[10.5px] tracking-[.08em] text-faint">PHASE {j.phase}</div>
-              <div className="font-serif text-[22px] leading-none">{j.step}</div>
-              <div className="mt-1.5 text-pretty text-[12.5px] leading-snug text-muted">{j.line}</div>
-              {hours !== null && <div className="mt-1.5 font-mono text-[11px] text-faint">{hours < 0.05 ? "start" : `+${hours.toFixed(1)}h`}</div>}
-            </div>
-          </li>
+          <a key={b.phase} href={`${repo}/commit/${b.commit}`} target="_blank" rel="noreferrer">
+            <title>{`Phase ${b.phase}: ${b.line} · commit ${b.commit}`}</title>
+            <g transform={`translate(4 ${y + 3}) scale(0.95)`} style={{ color: "var(--muted)" }}>{iconPaths(b.icon)}</g>
+            <text x={34} y={y + 17} fontSize={11} fontFamily="var(--font-mono)" style={{ fill: "var(--faint)" }}>P{b.phase}</text>
+            <text x={60} y={y + 17} fontSize={14} fontWeight={500} style={{ fill: "var(--text)" }}>{b.step}</text>
+            <rect x={x(b.from)} y={y + 4} width={w} height={20} rx={5} style={{ fill: b.phase === 7 ? "var(--accent)" : "var(--accent-soft)", stroke: "var(--accent)" }} strokeWidth={1} />
+            <text x={x(b.from) + w + 8} y={y + 18} fontSize={11.5} fontFamily="var(--font-mono)" style={{ fill: "var(--muted)" }}>{fmt(b.to - b.from)}</text>
+          </a>
         );
       })}
-    </ol>
+      {/* live */}
+      <line x1={x(liveHours)} x2={x(liveHours)} y1={TOP - 6} y2={axisY - 6} strokeWidth={1.5} style={{ stroke: "var(--green)" }} />
+      <circle cx={x(liveHours)} cy={TOP + (bars.length - 1) * ROW + 14} r={6} className="anim-pulse" style={{ fill: "var(--green)" }} />
+      <text x={x(liveHours) - 12} y={TOP + (bars.length - 1) * ROW + 18} textAnchor="end" fontSize={13} fontWeight={600} style={{ fill: "var(--green-ink)" }}>Live</text>
+    </svg>
+  );
+}
+
+// ── Mistakes: wrong → caught → fixed ──
+
+export function Catches({ repo }: { repo: string }) {
+  return (
+    <div className="grid gap-5 min-[800px]:grid-cols-3">
+      {CATCHES.map((c) => (
+        <div key={c.title} className="card flex flex-col gap-0 p-5">
+          {[
+            { dot: "bg-red", ink: "text-red-ink", label: "Wrong", body: <span className="text-balance font-serif text-[21px] leading-[1.15] text-ink">{c.title}</span> },
+            { dot: "bg-amber", ink: "text-amber-ink", label: "Caught", body: <span className="text-ink">{c.caughtBy}</span> },
+            { dot: "bg-green", ink: "text-green-ink", label: "Fixed", body: <a href={`${repo}/commit/${c.commit}`} target="_blank" rel="noreferrer" className="font-mono text-xs">{c.commit} ↗</a> },
+          ].map((s, i) => (
+            <div key={s.label} className="flex gap-3">
+              <div className="flex flex-col items-center">
+                <span className={`mt-1 size-2.5 flex-none rounded-full ${s.dot}`} />
+                {i < 2 && <span className="w-px flex-1 bg-line2" />}
+              </div>
+              <div className={`flex flex-col gap-1 ${i < 2 ? "pb-4" : ""}`}>
+                <span className={`font-mono text-[10.5px] tracking-[.08em] ${s.ink}`}>{s.label.toUpperCase()}</span>
+                {s.body}
+              </div>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -179,107 +333,3 @@ export function WireframeDashboard() {
   );
 }
 
-// ── From Tableau to Signal ──
-
-export function FromTableau() {
-  return (
-    <div className="flex flex-col gap-6">
-      <div className="grid gap-4 min-[800px]:grid-cols-2">
-        <div className="flex flex-col gap-4 rounded-xl border border-line bg-surface2 p-5">
-          <div className="flex items-baseline justify-between">
-            <div className="font-serif text-[26px] leading-none text-muted">Tableau</div>
-          </div>
-          <ol className="m-0 flex list-none flex-col gap-2.5 p-0">
-            {TABLEAU.map((t, i) => (
-              <li key={t} className="flex items-center gap-3 text-muted">
-                <span className="flex size-6 flex-none items-center justify-center rounded-full border border-line2 font-mono text-[11px]">{i + 1}</span>{t}
-              </li>
-            ))}
-          </ol>
-        </div>
-        <div className="flex flex-col gap-4 rounded-xl border border-accent bg-accent-soft p-5">
-          <div className="flex items-baseline justify-between">
-            <div className="font-serif text-[26px] leading-none text-accent-ink">Signal</div>
-          </div>
-          <ol className="m-0 flex list-none flex-col gap-2.5 p-0">
-            {SIGNAL.map((t) => (
-              <li key={t} className="flex items-center gap-3 text-ink">
-                <span className="flex size-6 flex-none items-center justify-center rounded-full bg-accent text-[12px] text-on-accent">→</span>{t}
-              </li>
-            ))}
-          </ol>
-        </div>
-      </div>
-      {/* Transfer: same sources, a different last mile */}
-      <div className="grid items-center gap-3 min-[800px]:grid-cols-[1fr_auto_1.2fr_auto_1fr]">
-        <Stage label="Input" items={["Task and handoff records", "Here: synthetic data", "Elsewhere: a warehouse table or Tableau data source"]} />
-        <Flow />
-        <Stage label="Processing" items={["Data checks", "Detectors", "Claude"]} accent />
-        <Flow />
-        <Stage label="Output" items={["Daily briefing", "Questions to the agent", "Task owners and notes"]} />
-      </div>
-    </div>
-  );
-}
-
-function Stage({ label, items, accent }: { label: string; items: string[]; accent?: boolean }) {
-  return (
-    <div className={`flex flex-col gap-2 rounded-lg border p-4 ${accent ? "border-accent bg-surface" : "border-line bg-surface"}`}>
-      <div className={`font-mono text-[10.5px] tracking-[.08em] ${accent ? "text-accent-ink" : "text-faint"}`}>{label.toUpperCase()}</div>
-      {items.map((x) => <div key={x} className="text-[13.5px]">{x}</div>)}
-    </div>
-  );
-}
-
-function Flow() {
-  return <div className="text-center text-xl text-faint" aria-hidden><span className="min-[800px]:hidden">↓</span><span className="hidden min-[800px]:inline">→</span></div>;
-}
-
-// ── Where insights come from ──
-
-export function InsightSources({ counts, example }: {
-  counts: { tasks: number; handoffs: number; modules: number; clients: number; events: number };
-  example?: { title: string; evidence: string[] };
-}) {
-  const sources: [string, string][] = [
-    ["Task records", `${counts.tasks} tasks`],
-    ["Handoff history", `${counts.handoffs.toLocaleString("en-US")} handoffs`],
-    ["Code areas", `${counts.modules} modules`],
-    ["Client profiles", `${counts.clients} clients`],
-    ["Process change log", `${counts.events} change`],
-  ];
-  return (
-    <div className="grid items-center gap-3 min-[900px]:grid-cols-[1fr_auto_1fr_auto_1.1fr]">
-      <div className="flex flex-col gap-2">
-        <div className="font-mono text-[10.5px] tracking-[.08em] text-faint">SOURCES</div>
-        {sources.map(([name, n]) => (
-          <div key={name} className="flex items-center justify-between gap-3 rounded-lg border border-line bg-surface px-3 py-2">
-            <span>{name}</span><span className="font-mono text-[11.5px] text-faint">{n}</span>
-          </div>
-        ))}
-      </div>
-      <Flow />
-      <div className="flex flex-col gap-2">
-        <div className="font-mono text-[10.5px] tracking-[.08em] text-faint">DETECTORS</div>
-        {DETECTORS.map((d) => (
-          <div key={d} className="flex items-center gap-2.5 rounded-lg border border-dashed border-line2 px-3 py-2">
-            <span className="size-1.5 flex-none rounded-full bg-accent" />{d}
-          </div>
-        ))}
-      </div>
-      <Flow />
-      <div className="flex flex-col gap-2">
-        <div className="font-mono text-[10.5px] tracking-[.08em] text-faint">INSIGHT</div>
-        <div className="flex flex-col gap-3 rounded-xl border border-line bg-surface p-4 shadow-[0_6px_18px_rgba(16,24,40,0.06)]">
-          <span className="self-start rounded-full bg-red-soft px-2.5 py-0.5 text-xs font-medium text-red-ink">Needs you</span>
-          <div className="text-balance font-serif text-[21px] leading-[1.15]">{example?.title}</div>
-          <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted">
-            Evidence
-            {example?.evidence.slice(0, 3).map((id) => <span key={id} className="rounded border border-line px-1.5 font-mono text-[11px]">{id}</span>)}
-          </div>
-          <div className="border-t border-line pt-2.5 text-xs text-muted">Claude writes the sentence from the detector&apos;s numbers. If it uses a number that isn&apos;t in them, template text is used instead.</div>
-        </div>
-      </div>
-    </div>
-  );
-}

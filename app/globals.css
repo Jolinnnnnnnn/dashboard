@@ -81,6 +81,10 @@
 .anim-slide { animation: slideIn 240ms ease-out both; }
 .anim-spin { animation: spin 700ms linear infinite; }
 .anim-breathe { animation: breathe 2.4s ease-in-out infinite; }
+/* Dots moving along an SVG path (How it was built diagrams) */
+@keyframes flowDash { to { stroke-dashoffset: -12 } }
+.anim-flow { stroke-dasharray: 2 10; stroke-linecap: round; animation: flowDash 0.8s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .anim-flow { animation: none } }
 
 @layer components {
 /* Shared building blocks */

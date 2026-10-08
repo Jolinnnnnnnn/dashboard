@@ -1,15 +1,6 @@
-// Content for the "How it was built" page (/build). Short on purpose: the page is read by people,
-// not reviewers of the code. Every catch is a real event from docs/prompt-log.md, linked to its fix.
+// Content for the "How it was built" page (/build). Mostly diagrams; text is kept to labels.
+// Every catch is a real event from docs/prompt-log.md, linked to its fix.
 // Numbers come from data/artifacts/build_story.json (npm run story).
-
-/** The first ideas, as they were written down while planning. */
-export const IDEAS = [
-  { text: "Dashboards show everything; finding what changed is manual.", tone: "amber" },
-  { text: "An agent could flag what changed and say why.", tone: "accent" },
-  { text: "Every number should trace back to the data.", tone: "green" },
-  { text: "Use synthetic data with patterns I know are there.", tone: "red" },
-  { text: "The agent should say when it doesn't know.", tone: "accent" },
-] as const;
 
 /** The build plan's phases (docs/plan.md). `commit` is the change that finished each; its time comes from git. */
 export const JOURNEY = [
@@ -22,17 +13,15 @@ export const JOURNEY = [
   { phase: 7, step: "Agent", line: "Claude with tools", commit: "2cee8e0", icon: "agent" },
 ] as const;
 
-export const TABLEAU = ["Open the dashboard", "Filter by team, client, and date", "Look for what seems off", "Write up what you found"] as const;
-export const SIGNAL = ["Checks run on the data each refresh", "Detectors flag changes, with task IDs", "Claude writes the summary; you can ask follow-ups"] as const;
+/** The same weekly job, by hand in Tableau and automatic in Signal. Columns line up. */
+export const LANES = {
+  tableau: [{ label: "Dashboard", icon: "chart" }, { label: "Filter", icon: "person" }, { label: "Spot changes", icon: "person" }, { label: "Write it up", icon: "person" }],
+  signal: [{ label: "Checks", icon: "auto" }, { label: "Detectors", icon: "auto" }, { label: "Claude", icon: "claude" }, { label: "Briefing", icon: "auto" }],
+} as const;
 
-/** Detectors that turn the sources into briefing insights (scripts/build_briefing.py). */
-export const DETECTORS = [
-  "Overdue task with a known fix",
-  "Module behind at-risk tasks",
-  "Client slow to respond",
-  "Rework rising at a team",
-  "Effect of a process change",
-] as const;
+/** Data sources, the detectors that read them (scripts/build_briefing.py), and which source feeds which detector. */
+export const DETECTORS = ["Overdue, fix known", "Module blocking tasks", "Slow client", "Rework rising", "Process change"] as const;
+export const SOURCE_LINKS: [source: number, detector: number][] = [[0, 0], [1, 0], [0, 1], [2, 1], [1, 2], [3, 2], [1, 3], [1, 4], [4, 4]];
 
 export type Catch = { title: string; caughtBy: string; commit: string };
 

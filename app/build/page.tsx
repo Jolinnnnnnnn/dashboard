@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { Architecture, Brainstorm, FromTableau, InsightSources, Journey, WireframeDashboard } from "@/components/BuildVisuals";
+import { Architecture, BuildTimeline, Catches, InsightFlow, TableauLanes, WireframeDashboard } from "@/components/BuildVisuals";
 import { getBriefing, getBuildStory, getSourceCounts } from "@/lib/data";
-import { CATCHES } from "@/lib/story";
 
 export const metadata: Metadata = { title: "How it was built · Signal" };
 
@@ -33,9 +32,6 @@ export default function BuildPage() {
         <h1 className="m-0 max-w-[860px] text-balance font-serif text-[44px] font-normal leading-[1.02] tracking-[-0.02em] min-[900px]:text-[68px]">
           How I built Signal
         </h1>
-        <p className="m-0 mt-4 max-w-[640px] text-pretty text-[16px] leading-relaxed text-muted">
-          An operations dashboard where an AI agent writes the daily summary and answers questions. Built with Claude Code, on synthetic data.
-        </p>
         </div>
         <div className="grid grid-cols-3 gap-8">
           {[[`${s.hours_to_live_agent}h`, "first commit to working agent"], [String(s.commits), "commits"], [`${s.evals.passed}/${s.evals.total}`, "agent test questions passed"]].map(([v, l]) => (
@@ -47,31 +43,29 @@ export default function BuildPage() {
         </div>
       </div>
 
-      <Section kicker="01" title="What changes compared with a Tableau dashboard">
-        <FromTableau />
-      </Section>
-
-      <Section kicker="02" title="Where each insight comes from">
-        <InsightSources counts={getSourceCounts()} example={moduleInsight ? { title: moduleInsight.title, evidence: moduleInsight.evidence } : undefined} />
-      </Section>
-
-      <Section kicker="03" title="Notes from planning">
-        <Brainstorm />
-      </Section>
-
-      <Section kicker="04" title="Build order">
-        <div className="card px-5 py-7 min-[900px]:px-6">
-          <Journey times={times} firstCommit={s.first_commit} repo={repo} />
+      <Section kicker="01" title="Same data, fewer manual steps than Tableau">
+        <div className="overflow-x-auto rounded-xl bg-surface p-4">
+          <TableauLanes />
         </div>
       </Section>
 
-      <Section kicker="05" title="Architecture">
+      <Section kicker="02" title="Where each insight comes from">
+        <InsightFlow counts={getSourceCounts()} example={moduleInsight ? { title: moduleInsight.title, evidence: moduleInsight.evidence } : undefined} />
+      </Section>
+
+      <Section kicker="03" title="Seven phases, one day">
+        <div className="overflow-x-auto rounded-xl bg-surface p-4">
+          <BuildTimeline times={times} firstCommit={s.first_commit} liveHours={s.hours_to_live_agent} repo={repo} />
+        </div>
+      </Section>
+
+      <Section kicker="04" title="Architecture">
         <div className="overflow-x-auto rounded-xl bg-surface p-4">
           <Architecture evals={`tests ${s.evals.passed}/${s.evals.total}`} backtest="89% vs 56% baseline" />
         </div>
       </Section>
 
-      <Section kicker="06" title="Design versions">
+      <Section kicker="05" title="Design versions">
         <div className="grid items-start gap-6 min-[900px]:grid-cols-3">
           <figure className="m-0 flex flex-col gap-2.5">
             <div className="rounded-lg bg-surface2 p-3"><WireframeDashboard /></div>
@@ -95,15 +89,8 @@ export default function BuildPage() {
         </div>
       </Section>
 
-      <Section kicker="07" title="Mistakes I caught">
-        <div className="grid gap-8 min-[800px]:grid-cols-3">
-          {CATCHES.map((c) => (
-            <a key={c.title} href={`${repo}/commit/${c.commit}`} target="_blank" rel="noreferrer" className="rule flex flex-col gap-3 text-ink no-underline hover:text-ink">
-              <div className="text-balance font-serif text-[24px] leading-[1.12]">{c.title}</div>
-              <span className="self-start rounded-full bg-green-soft px-2.5 py-0.5 text-xs font-medium text-green-ink">{c.caughtBy}</span>
-            </a>
-          ))}
-        </div>
+      <Section kicker="06" title="Mistakes I caught">
+        <Catches repo={repo} />
       </Section>
 
       <div className="flex flex-wrap gap-x-6 gap-y-2 border-t border-line2 pt-5">
