@@ -56,6 +56,7 @@ App (from the repo root):
 - `npm run dev`: dev server on http://localhost:3000
 - `npx tsc --noEmit && npx eslint .`: typecheck and lint (`next build` no longer lints)
 - `npm run build`: production build; prerenders all 500 task pages. Run it before pushing: Suspense mistakes only fail here.
+- `npm run story`: regenerates `data/artifacts/build_story.json` (commits, code size, logged decisions, eval results) for the How it was built page (`/build`; curated catches in `lib/story.ts`, each tied to a real prompt-log entry and commit). Run before pushing when history changes.
 - `npm run eval [-- <id filter>]`: runs the agent eval set against the real API (~$0.15 for all 15). Re-run after changing the system prompt, tools, or model.
 - Env vars: `ANTHROPIC_API_KEY` (agent; without it the dock reports "not configured"), `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` (rate limits; required in production, the in-memory fallback resets per instance).
 

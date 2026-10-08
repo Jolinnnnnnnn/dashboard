@@ -1,0 +1,93 @@
+{
+  "generated_from": "git history, docs/prompt-log.md, scripts/validate_patterns.py, evals/results.json",
+  "repo": "https://github.com/Jolinnnnnnnn/dashboard",
+  "first_commit": "2026-10-07T16:36:14-04:00",
+  "agent_live": "2026-10-08T10:19:40-04:00",
+  "hours_to_live_agent": 17.7,
+  "commits": 13,
+  "lines": {
+    "typescript": 3160,
+    "python": 2105
+  },
+  "logged_decisions": 34,
+  "validator_checks": 21,
+  "evals": {
+    "passed": 15,
+    "total": 15,
+    "by_group": {
+      "lookup": "6/6",
+      "multi-step": "4/4",
+      "draft": "1/1",
+      "unanswerable": "4/4"
+    },
+    "median_seconds": 4.024,
+    "total_cost_usd": 0.198
+  },
+  "timeline": [
+    {
+      "hash": "f7b1ee6",
+      "date": "2026-10-07T16:36:14-04:00",
+      "subject": "initial commit"
+    },
+    {
+      "hash": "5b4c921",
+      "date": "2026-10-07T18:06:02-04:00",
+      "subject": "feat: gitignore"
+    },
+    {
+      "hash": "5a5cd8d",
+      "date": "2026-10-07T18:27:51-04:00",
+      "subject": "Phase 1: plan, data spec, definitions, CLAUDE.md"
+    },
+    {
+      "hash": "0207541",
+      "date": "2026-10-07T19:25:27-04:00",
+      "subject": "Phase 2: generate and validate synthetic data"
+    },
+    {
+      "hash": "3d675b1",
+      "date": "2026-10-07T19:36:01-04:00",
+      "subject": "Phase 2: add text overlap and make planted patterns seed-robust"
+    },
+    {
+      "hash": "b3618c6",
+      "date": "2026-10-07T21:58:00-04:00",
+      "subject": "Phase 3: prediction, similar cases, backtest, AI summaries"
+    },
+    {
+      "hash": "f8ca527",
+      "date": "2026-10-07T23:07:53-04:00",
+      "subject": "Add Claude Design handoff, module descriptions, process map artifact"
+    },
+    {
+      "hash": "417472c",
+      "date": "2026-10-07T23:20:27-04:00",
+      "subject": "Phases 5-6: Next.js app built from the Claude Design handoff"
+    },
+    {
+      "hash": "daf5379",
+      "date": "2026-10-08T00:52:27-04:00",
+      "subject": "Design v3: agent briefing, classic view, agent dock; data patterns behind it"
+    },
+    {
+      "hash": "f379d1c",
+      "date": "2026-10-08T01:02:42-04:00",
+      "subject": "Rename product from Relay to Signal; fix nondeterministic tie order"
+    },
+    {
+      "hash": "8643a48",
+      "date": "2026-10-08T01:12:22-04:00",
+      "subject": "Add live link to README"
+    },
+    {
+      "hash": "2cee8e0",
+      "date": "2026-10-08T02:17:58-04:00",
+      "subject": "Phase 7: Signal agent with tools, streaming UI, guardrails, and evals"
+    },
+    {
+      "hash": "384a122",
+      "date": "2026-10-08T10:19:40-04:00",
+      "subject": "Docs: agent live with Upstash rate limiting"
+    }
+  ]
+}

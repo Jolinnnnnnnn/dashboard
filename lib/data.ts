@@ -14,6 +14,7 @@ import summariesJson from "@/data/artifacts/summaries.json";
 import transitionsJson from "@/data/artifacts/transitions.json";
 import briefingJson from "@/data/artifacts/briefing.json";
 import eventsJson from "@/data/events.json";
+import buildStoryJson from "@/data/artifacts/build_story.json";
 
 import type {
   Briefing, CodeArea, FilterOptions, MapWindow, QueueRow, QueueStats, Risk, Segment, SimilarCaseView, TaskDetail,
@@ -475,4 +476,23 @@ export function briefingForAgent() {
     watch_rules: b.watch_rules.map((r) => ({ rule: r.label, count: r.count })),
     process_changes: eventsJson,
   };
+}
+
+// ── How it was built (data/artifacts/build_story.json, from scripts/build_story.mjs) ──
+
+export type BuildStory = {
+  repo: string;
+  first_commit: string;
+  agent_live: string;
+  hours_to_live_agent: number;
+  commits: number;
+  lines: { typescript: number; python: number };
+  logged_decisions: number;
+  validator_checks: number;
+  evals: { passed: number; total: number; by_group: Record<string, string>; median_seconds: number; total_cost_usd: number };
+  timeline: { hash: string; date: string; subject: string }[];
+};
+
+export function getBuildStory(): BuildStory {
+  return buildStoryJson as BuildStory;
 }

@@ -24,6 +24,9 @@ const MapIcon = () => (
     <div className="size-1 rounded-full border-[1.5px] border-current" />
   </div>
 );
+const BuildIcon = () => (
+  <div className="flex w-3.5 justify-center font-mono text-[10px] font-semibold leading-none">{"</>"}</div>
+);
 const AskIcon = () => (
   <div className="flex w-3.5 justify-center"><div className="h-[9px] w-[11px] rounded-[3px] border-[1.5px] border-current" /></div>
 );
@@ -34,6 +37,7 @@ function items(openCount: number, insights: number): Item[] {
     { href: "/queue", label: "Queue", short: "Queue", icon: <QueueIcon />, count: openCount },
     { href: "/process", label: "Process Map", short: "Map", icon: <MapIcon /> },
     { href: "/ask", label: "Ask", short: "Ask", icon: <AskIcon /> },
+    { href: "/build", label: "How it was built", short: "Build", icon: <BuildIcon /> },
   ];
 }
 
