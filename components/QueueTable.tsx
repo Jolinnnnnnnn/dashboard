@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { RiskPill, ratioColor } from "@/components/ui";
+import { Select } from "@/components/Select";
 import { ALL } from "@/lib/filters";
 import type { FilterOptions, QueueRow, Risk } from "@/lib/types";
 
@@ -22,16 +23,6 @@ const sorters = (owners: Owners): Record<SortKey, (r: QueueRow) => string | numb
   owner: (r) => (owners[r.id] ? (owners[r.id].mine ? "0" : "1" + owners[r.id].by) : "2"),
   days: (r) => r.ratio, next: (r) => r.next[0]?.pct ?? 0, risk: (r) => RISK_RANK[r.risk] * 10 + r.ratio,
 });
-
-export function FilterSelect({ value, options, onChange, label }: {
-  value: string; options: string[]; onChange: (v: string) => void; label: string;
-}) {
-  return (
-    <select aria-label={label} value={value} onChange={(e) => onChange(e.target.value)} className="field max-w-[170px]">
-      {options.map((o) => <option key={o} value={o}>{o}</option>)}
-    </select>
-  );
-}
 
 function Legend() {
   return (
@@ -146,10 +137,10 @@ export function QueueTable({ rows, options }: { rows: QueueRow[]; options: Filte
           className="min-w-0 flex-1 border-0 bg-transparent text-ink outline-none placeholder:text-faint"
         />
       </div>
-      <FilterSelect label="Task type" value={type ?? ALL.type} options={[ALL.type, ...options.types]} onChange={(v) => setParam("type", v, ALL.type)} />
-      <FilterSelect label="Client" value={client ?? ALL.client} options={[ALL.client, ...options.clients]} onChange={(v) => setParam("client", v, ALL.client)} />
-      <FilterSelect label="Currently with" value={stakeholder ?? ALL.stakeholder} options={[ALL.stakeholder, ...options.stakeholders]} onChange={(v) => setParam("stakeholder", v, ALL.stakeholder)} />
-      <FilterSelect label="Risk" value={risk ?? ALL.risk} options={[ALL.risk, "At risk", "High", "Medium", "Low"]} onChange={(v) => setParam("risk", v, ALL.risk)} />
+      <Select label="Task type" className="max-w-[180px]" allLabel={ALL.type} value={type ?? ALL.type} options={[ALL.type, ...options.types]} onChange={(v) => setParam("type", v, ALL.type)} />
+      <Select label="Client" className="max-w-[180px]" allLabel={ALL.client} value={client ?? ALL.client} options={[ALL.client, ...options.clients]} onChange={(v) => setParam("client", v, ALL.client)} />
+      <Select label="Currently with" className="max-w-[180px]" allLabel={ALL.stakeholder} value={stakeholder ?? ALL.stakeholder} options={[ALL.stakeholder, ...options.stakeholders]} onChange={(v) => setParam("stakeholder", v, ALL.stakeholder)} />
+      <Select label="Risk" allLabel={ALL.risk} value={risk ?? ALL.risk} options={[ALL.risk, "At risk", "High", "Medium", "Low"]} onChange={(v) => setParam("risk", v, ALL.risk)} />
       {anyFilter && (
         <button onClick={() => router.replace("/queue", { scroll: false })} className="h-8 border-0 bg-transparent px-1 text-muted hover:text-ink">Clear</button>
       )}

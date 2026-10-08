@@ -51,6 +51,7 @@
 /* In the base layer so Tailwind utilities (e.g. text-ink on a link) can override them */
 @layer base {
   html, body { background: var(--bg); color: var(--text); }
+  :root { --chevrons: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 16' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 6l3-3 3 3M2 10l3 3 3-3'/%3E%3C/svg%3E"); }
   body {
     margin: 0;
     font-family: var(--font-sans);
@@ -94,7 +95,34 @@
   height: 32px; padding: 0 8px; border: 1px solid var(--border); border-radius: 8px;
   background: var(--surface); color: var(--text); font: inherit;
 }
-.skeleton { background: var(--surface3); border-radius: 4px; animation: pulse 1.2s ease-in-out infinite; }
+/* Select: custom stacked-chevron indicator replaces the OS arrow (which ignores our padding).
+     Drawn with a mask so its color follows the theme tokens. */
+  .select { position: relative; display: inline-flex; max-width: 100%; }
+  .select select {
+    appearance: none; -webkit-appearance: none;
+    height: 32px; max-width: 100%; padding: 0 30px 0 10px;
+    border: 1px solid var(--border); border-radius: 8px;
+    background: var(--surface); color: var(--text); font: inherit;
+    text-overflow: ellipsis; cursor: pointer;
+    transition: border-color 150ms, background-color 150ms, box-shadow 150ms;
+  }
+  .select[data-size="sm"] select { height: 30px; font-size: 12px; padding: 0 28px 0 9px; }
+  .select::after {
+    content: ""; position: absolute; right: 10px; top: 50%; width: 9px; height: 14px; transform: translateY(-50%);
+    background: var(--faint); pointer-events: none; transition: background-color 150ms;
+    -webkit-mask: var(--chevrons) center / contain no-repeat; mask: var(--chevrons) center / contain no-repeat;
+  }
+  .select[data-size="sm"]::after { right: 9px; height: 12px; }
+  .select:hover select { border-color: var(--border2); }
+  .select:hover::after { background: var(--muted); }
+  .select select:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .select:focus-within::after { background: var(--accent); }
+  /* A filter that is narrowing results reads as "on" at a glance */
+  .select[data-active="true"] select { background: var(--accent-soft); border-color: transparent; color: var(--accent-ink); font-weight: 500; }
+  .select[data-active="true"]::after { background: var(--accent-ink); }
+  .select select:disabled { cursor: default; opacity: 0.6; }
+
+  .skeleton { background: var(--surface3); border-radius: 4px; animation: pulse 1.2s ease-in-out infinite; }
 .chip {
   padding: 5px 10px; border: 1px solid var(--border); border-radius: 999px;
   background: var(--surface); color: var(--text); font: inherit; font-size: 12.5px;

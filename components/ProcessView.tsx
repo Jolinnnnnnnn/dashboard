@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { AskButton, useAgent } from "@/components/AgentDock";
 import { DEFAULT_WINDOW, WINDOWS } from "@/lib/filters";
+import { Select } from "@/components/Select";
 import { riskVars } from "@/components/ui";
 import type { MapEdge, MapNode, MapWindow } from "@/lib/types";
 
@@ -198,15 +199,13 @@ function Header({ w, onWindow }: { w?: MapWindow; onWindow?: (key: string) => vo
       </div>
       <div className="flex flex-none flex-col items-start gap-2.5 min-[900px]:items-end">
         {/* History window lives next to the map it controls */}
-        <select
-          aria-label="History window"
-          className="field"
+        <Select
+          label="History window"
           value={w?.key ?? DEFAULT_WINDOW}
           disabled={!onWindow}
-          onChange={(e) => onWindow?.(e.target.value)}
-        >
-          {WINDOWS.map((x) => <option key={x.key} value={x.key}>{x.label}</option>)}
-        </select>
+          options={WINDOWS.map((x) => ({ value: x.key, label: x.label }))}
+          onChange={(v) => onWindow?.(v)}
+        />
         <div className="flex flex-wrap items-center gap-4 text-xs text-muted">
         <div className="flex items-center gap-1.5"><div className="h-0.5 w-[18px] bg-line2" /><div className="h-1.5 w-[18px] rounded-[3px] bg-line2" />Share of tasks</div>
         <div className="flex items-center gap-1.5">

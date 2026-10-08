@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { AskButton, useAgent } from "@/components/AgentDock";
+import { Select } from "@/components/Select";
 import { ClaimButton, TaskWorkspaceProvider } from "@/components/Workspace";
 import type { ClassicData } from "@/lib/data";
 import type { Briefing, Insight, Tone } from "@/lib/types";
@@ -203,9 +204,8 @@ function Classic({ data }: { data: ClassicData }) {
   ];
   const anyFilter = Object.values(f).some(Boolean);
   const pick = (label: string, all: string, key: keyof typeof f, options: string[]) => (
-    <select aria-label={label} value={f[key] || all} onChange={(e) => set(key)(e.target.value === all ? "" : e.target.value)} className="field h-[30px] max-w-[170px] text-xs">
-      {[all, ...options].map((o) => <option key={o} value={o}>{o}</option>)}
-    </select>
+    <Select label={label} size="sm" className="max-w-[180px]" allLabel={all} value={f[key] || all} options={[all, ...options]}
+      onChange={(v) => set(key)(v === all ? "" : v)} />
   );
 
   return (
