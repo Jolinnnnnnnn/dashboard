@@ -2,7 +2,7 @@
 
 > Renamed from the working name **Relay** on 2026-10-08. The Claude Design prompt in section 6 is kept verbatim as sent, so it still says Relay.
 
-**Status (update as phases finish):** Phase 0 ✅ · Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · Phase 4 ✅ · Phase 5 ✅ (deploy pending) · Phase 6 ✅ · Design v3 ✅ (briefing, classic view, agent dock UI) · next: Phase 7 (agent, wired into the dock and Ask page)
+**Status (update as phases finish):** Phase 0 ✅ · Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · Phase 4 ✅ · Phase 5 ✅ (live: https://signal-agent-nu.vercel.app) · Phase 6 ✅ · Design v3 ✅ (briefing, classic view, agent dock UI) · next: Phase 7 (agent, wired into the dock and Ask page)
 
 ## 1. What it is
 

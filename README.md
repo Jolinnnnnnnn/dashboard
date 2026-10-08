@@ -2,7 +2,9 @@
 
 Signal is an AI agent for operations data: instead of a dashboard you have to dig through, it checks every client task and handoff, tells you what changed and what needs you, predicts where stuck tasks go next, and shows how similar issues were solved before.
 
-> **Status:** in progress. See [docs/plan.md](docs/plan.md).
+**Live:** https://signal-agent-nu.vercel.app
+
+> **Status:** in progress (the agent is next). See [docs/plan.md](docs/plan.md).
 >
 > **All data is synthetic.** 400 historical and 100 open tasks for a fictional CDN company, generated with planted patterns ([docs/data-spec.md](docs/data-spec.md)). Accuracy numbers are indicative, not real-world performance.
 
