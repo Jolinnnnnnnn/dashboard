@@ -4,12 +4,12 @@
   "first_commit": "2026-10-07T16:36:14-04:00",
   "agent_live": "2026-10-08T10:19:40-04:00",
   "hours_to_live_agent": 17.7,
-  "commits": 26,
+  "commits": 27,
   "lines": {
-    "typescript": 4212,
+    "typescript": 4388,
     "python": 2105
   },
-  "logged_decisions": 42,
+  "logged_decisions": 43,
   "validator_checks": 21,
   "evals": {
     "passed": 16,
@@ -154,6 +154,11 @@
       "hash": "6fead7d",
       "date": "2026-10-08T13:29:22-04:00",
       "subject": "Revert \"How it was built: one interactive system diagram\""
+    },
+    {
+      "hash": "e3c4adb",
+      "date": "2026-10-08T13:33:15-04:00",
+      "subject": "How it was built: diagrams instead of text"
     }
   ]
 }

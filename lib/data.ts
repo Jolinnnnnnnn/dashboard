@@ -15,6 +15,8 @@ import transitionsJson from "@/data/artifacts/transitions.json";
 import briefingJson from "@/data/artifacts/briefing.json";
 import eventsJson from "@/data/events.json";
 import buildStoryJson from "@/data/artifacts/build_story.json";
+import evalQuestionsJson from "@/evals/agent-questions.json";
+import evalResultsJson from "@/evals/results.json";
 
 import type {
   Briefing, CodeArea, FilterOptions, MapWindow, QueueRow, QueueStats, Risk, Segment, SimilarCaseView, TaskDetail,
@@ -495,6 +497,38 @@ export type BuildStory = {
 
 export function getBuildStory(): BuildStory {
   return buildStoryJson as BuildStory;
+}
+
+/** Two real Claude calls for /build: the briefing writer's input and output, and one graded agent run. */
+export type ClaudeExamples = {
+  writer: { facts: Record<string, unknown>; title: string; numbers: { n: string; ok: boolean }[] } | null;
+  agent: { model: string; question: string; tools: string[]; answer: string; ids: string[]; seconds: number; cost: number } | null;
+};
+
+const NUM = /\d+(?:\.\d+)?/g;
+
+export function getClaudeExamples(insightId = "module", evalId = "module-risk"): ClaudeExamples {
+  const insight = getBriefing().insights.find((i) => i.id === insightId && i.written_by === "claude");
+  // Same rule as grounded() in build_briefing.py: every number Claude writes must appear in the facts
+  const allowed = new Set(JSON.stringify(insight?.facts ?? {}).match(NUM));
+  const writer = insight
+    ? { facts: insight.facts, title: insight.title, numbers: [...new Set(insight.title.match(NUM))].map((n) => ({ n, ok: allowed.has(n) })) }
+    : null;
+
+  const run = evalResultsJson.results.find((r) => r.id === evalId && r.pass);
+  const question = evalQuestionsJson.find((q) => q.id === evalId)?.question;
+  const agent = run && question
+    ? {
+        model: evalResultsJson.summary.model,
+        question,
+        tools: run.tools,
+        answer: run.answer.split("\n\n")[0].replace(/\*\*/g, ""),
+        ids: [...new Set(run.answer.match(/T-\d{4}/g))],
+        seconds: run.seconds,
+        cost: run.cost,
+      }
+    : null;
+  return { writer, agent };
 }
 
 // ── Search and classic-dashboard data ──

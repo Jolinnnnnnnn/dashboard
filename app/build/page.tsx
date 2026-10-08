@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { Architecture, BuildTimeline, Catches, InsightFlow, TableauLanes, WireframeDashboard } from "@/components/BuildVisuals";
-import { getBriefing, getBuildStory, getSourceCounts } from "@/lib/data";
+import { AgentTrace, Architecture, BuildTimeline, ClaudeWriter, Catches, InsightFlow, TableauLanes, WireframeDashboard } from "@/components/BuildVisuals";
+import { getBriefing, getBuildStory, getClaudeExamples, getSourceCounts } from "@/lib/data";
 
 export const metadata: Metadata = { title: "How it was built · Signal" };
 
@@ -24,6 +24,7 @@ export default function BuildPage() {
   const repo = s.repo;
   const times = Object.fromEntries(s.timeline.map((c) => [c.hash, c.date]));
   const moduleInsight = briefing.insights.find((i) => i.id === "module");
+  const claude = getClaudeExamples();
 
   return (
     <div className="flex max-w-[1100px] flex-col gap-20 pb-10">
@@ -53,19 +54,26 @@ export default function BuildPage() {
         <InsightFlow counts={getSourceCounts()} example={moduleInsight ? { title: moduleInsight.title, evidence: moduleInsight.evidence } : undefined} />
       </Section>
 
-      <Section kicker="03" title="Seven phases, one day">
+      <Section kicker="03" title="How Claude is used">
+        <div className="flex flex-col gap-12">
+          {claude.writer && <ClaudeWriter writer={claude.writer} />}
+          {claude.agent && <AgentTrace agent={claude.agent} />}
+        </div>
+      </Section>
+
+      <Section kicker="04" title="Seven phases, one day">
         <div className="overflow-x-auto rounded-xl bg-surface p-4">
           <BuildTimeline times={times} firstCommit={s.first_commit} liveHours={s.hours_to_live_agent} repo={repo} />
         </div>
       </Section>
 
-      <Section kicker="04" title="Architecture">
+      <Section kicker="05" title="Architecture">
         <div className="overflow-x-auto rounded-xl bg-surface p-4">
           <Architecture evals={`tests ${s.evals.passed}/${s.evals.total}`} backtest="89% vs 56% baseline" />
         </div>
       </Section>
 
-      <Section kicker="05" title="Design versions">
+      <Section kicker="06" title="Design versions">
         <div className="grid items-start gap-6 min-[900px]:grid-cols-3">
           <figure className="m-0 flex flex-col gap-2.5">
             <div className="rounded-lg bg-surface2 p-3"><WireframeDashboard /></div>
@@ -89,7 +97,7 @@ export default function BuildPage() {
         </div>
       </Section>
 
-      <Section kicker="06" title="Mistakes I caught">
+      <Section kicker="07" title="Mistakes I caught">
         <Catches repo={repo} />
       </Section>
 

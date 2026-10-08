@@ -1,7 +1,8 @@
 // Illustrations for the "How it was built" page. Plain SVG/HTML using theme tokens, so they work in
 // light and dark mode without images.
 
-import { CATCHES, DETECTORS, JOURNEY, LANES, SOURCE_LINKS } from "@/lib/story";
+import type { ClaudeExamples } from "@/lib/data";
+import { CATCHES, DETECTORS, GUARDRAILS, JOURNEY, LANES, SOURCE_LINKS } from "@/lib/story";
 
 const ARROW = (id: string, color: string) => (
   <marker id={id} viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto">
@@ -131,7 +132,137 @@ export function InsightFlow({ counts, example }: {
           {example?.evidence.slice(0, 3).map((id) => <span key={id} className="rounded border border-line px-1.5 font-mono text-[11px] text-muted">{id}</span>)}
         </div>
         <div className="flex items-center gap-2 border-t border-line pt-2.5 text-xs text-green-ink">
-          <span className="flex size-4 items-center justify-center rounded-full bg-green-soft text-[10px]">✓</span>Every number checked against the data
+          <span className="flex size-4 items-center justify-center rounded-full bg-green-soft text-[10px]">✓</span>Worded by Claude; every number checked
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── How Claude is used: two real calls ──
+
+function ModelTag({ model, when }: { model: string; when: string }) {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <span className="rounded-md bg-accent px-2 py-0.5 font-mono text-[11.5px] text-on-accent">{model}</span>
+      <span className="text-[13px] text-muted">{when}</span>
+    </div>
+  );
+}
+
+function Step({ n, label, children, accent }: { n: number; label: string; children: React.ReactNode; accent?: boolean }) {
+  return (
+    <div className={`flex flex-col gap-2.5 rounded-xl border p-4 ${accent ? "border-accent bg-accent-soft" : "border-line bg-surface"}`}>
+      <div className={`font-mono text-[10.5px] tracking-[.08em] ${accent ? "text-accent-ink" : "text-faint"}`}>{n} · {label.toUpperCase()}</div>
+      {children}
+    </div>
+  );
+}
+
+function Next() {
+  return <div className="text-center text-xl text-accent" aria-hidden><span className="min-[1000px]:hidden">↓</span><span className="hidden min-[1000px]:inline">→</span></div>;
+}
+
+function factValue(v: unknown) {
+  return Array.isArray(v) ? `[${v.length}]` : typeof v === "string" ? `"${v}"` : String(v);
+}
+
+export function ClaudeWriter({ writer }: { writer: NonNullable<ClaudeExamples["writer"]> }) {
+  const facts = Object.entries(writer.facts).slice(0, 6);
+  return (
+    <div className="flex flex-col gap-4">
+      <ModelTag model="claude-haiku-5-5" when="writes the briefing · runs offline, once per data refresh" />
+      <div className="grid items-center gap-3 min-[1000px]:grid-cols-[1.6fr_auto_1fr_auto_1fr_auto_1fr]">
+        <Step n={1} label="Detector output">
+          <pre className="m-0 overflow-hidden whitespace-pre-wrap break-words font-mono text-[11px] leading-[1.6] text-muted">
+            {facts.map(([k, v]) => <div key={k}><span className="text-ink">{k}</span>: {factValue(v)}</div>)}
+          </pre>
+        </Step>
+        <Next />
+        <Step n={2} label="Prompt" accent>
+          <div className="font-serif text-[19px] leading-[1.2] text-ink">“Use only the facts provided. Every number you write must appear in the facts exactly as given.”</div>
+        </Step>
+        <Next />
+        <Step n={3} label="Claude writes">
+          <div className="text-balance font-serif text-[19px] leading-[1.2]">{writer.title}</div>
+        </Step>
+        <Next />
+        <Step n={4} label="Number check">
+          <div className="flex flex-wrap gap-1.5">
+            {writer.numbers.map(({ n, ok }) => (
+              <span key={n} className={`rounded-md px-2 py-0.5 font-mono text-[12px] ${ok ? "bg-green-soft text-green-ink" : "bg-red-soft text-red-ink"}`}>{n} {ok ? "✓" : "✗"}</span>
+            ))}
+          </div>
+          <div className="flex flex-col gap-1 text-[12.5px]">
+            <span className="text-green-ink">All found → shown on the briefing</span>
+            <span className="text-muted">Any missing → template text instead</span>
+          </div>
+        </Step>
+      </div>
+    </div>
+  );
+}
+
+const LANE_W = 100 / 3;
+
+function Msg({ from, to, children }: { from: 0 | 1 | 2; to: 0 | 1 | 2; children: React.ReactNode }) {
+  const left = Math.min(from, to);
+  const rightward = to > from;
+  return (
+    <div className="relative flex flex-col gap-2 py-2.5" style={{ marginLeft: `${left * LANE_W + LANE_W / 2}%`, width: `${Math.abs(to - from) * LANE_W}%` }}>
+      <div className="px-4">{children}</div>
+      <div className="relative h-[1.5px] bg-accent">
+        <svg width="9" height="10" viewBox="0 0 9 10" className={`absolute -top-[4.25px] ${rightward ? "-right-px" : "-left-px rotate-180"}`} aria-hidden>
+          <path d="M0 0 L9 5 L0 10 z" style={{ fill: "var(--accent)" }} />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+export function AgentTrace({ agent }: { agent: NonNullable<ClaudeExamples["agent"]> }) {
+  const calls = Object.entries(agent.tools.reduce<Record<string, number>>((m, t) => ({ ...m, [t]: (m[t] ?? 0) + 1 }), {}));
+  return (
+    <div className="flex flex-col gap-4">
+      <ModelTag model={agent.model} when="answers questions · runs live, per question" />
+      <div className="overflow-x-auto rounded-xl bg-surface p-4">
+        <div className="relative min-w-[680px]">
+          {/* lifelines */}
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="absolute bottom-0 top-12 border-l border-dashed border-line2" style={{ left: `${i * LANE_W + LANE_W / 2}%` }} aria-hidden />
+          ))}
+          <div className="relative grid grid-cols-3 gap-4 pb-3">
+            {[["You", "", false], ["Claude Sonnet", "decides what to look up", true], ["Tools → data", "8 read-only", false]].map(([name, sub, accent]) => (
+              <div key={String(name)} className={`mx-auto flex min-w-[150px] flex-col items-center rounded-lg border px-3 py-1.5 ${accent ? "border-accent bg-accent-soft text-accent-ink" : "border-line2 bg-bg"}`}>
+                <span className="text-[14px] font-semibold">{name}</span>
+                {sub && <span className="text-[11px] text-muted">{sub}</span>}
+              </div>
+            ))}
+          </div>
+          <div className="relative flex flex-col">
+            <Msg from={0} to={1}><div className="text-pretty font-serif text-[18px] leading-[1.2]">{agent.question}</div></Msg>
+            <Msg from={1} to={2}>
+              <div className="flex flex-wrap gap-1.5">
+                {calls.map(([t, n]) => <span key={t} className="rounded-md border border-line2 bg-bg px-2 py-0.5 font-mono text-[11.5px]">{t}(){n > 1 ? ` ×${n}` : ""}</span>)}
+              </div>
+            </Msg>
+            <Msg from={2} to={1}><div className="text-[13px] text-muted">counts, holds, and the task IDs behind them</div></Msg>
+            <Msg from={1} to={0}>
+              <div className="flex flex-col gap-2 rounded-lg border border-line bg-bg p-3">
+                <div className="text-pretty text-[13.5px] leading-relaxed">{agent.answer}</div>
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {agent.ids.map((id) => <span key={id} className="rounded border border-line px-1.5 font-mono text-[11px] text-muted">{id}</span>)}
+                  <span className="text-[11.5px] text-green-ink">✓ every ID came from a tool</span>
+                </div>
+              </div>
+            </Msg>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+        <span className="font-mono text-[12px] text-muted">{agent.seconds.toFixed(1)}s · ${agent.cost.toFixed(3)} · {agent.tools.length} tool calls</span>
+        <div className="flex flex-wrap gap-1.5">
+          {GUARDRAILS.map((g) => <span key={g} className="rounded-full border border-line2 px-2.5 py-0.5 text-[12px] text-muted">{g}</span>)}
         </div>
       </div>
     </div>

@@ -23,6 +23,9 @@ export const LANES = {
 export const DETECTORS = ["Overdue, fix known", "Module blocking tasks", "Slow client", "Rework rising", "Process change"] as const;
 export const SOURCE_LINKS: [source: number, detector: number][] = [[0, 0], [1, 0], [0, 1], [2, 1], [1, 2], [3, 2], [1, 3], [1, 4], [4, 4]];
 
+/** Agent limits, enforced in lib/agent (run.ts, tools.ts, ratelimit.ts). */
+export const GUARDRAILS = ["Read-only", "Max 6 tool calls", "Cites task IDs", "Says when it doesn't know", "Rate limited"] as const;
+
 export type Catch = { title: string; caughtBy: string; commit: string };
 
 /** Three of the moments the AI was wrong (all of them are in docs/prompt-log.md). */
