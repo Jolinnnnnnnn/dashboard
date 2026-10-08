@@ -2,6 +2,7 @@
   {
     "id": "edge-sync",
     "path": "edge-sync/",
+    "description": "Pushes config and purge state to edge nodes",
     "files": [
       "propagation.go",
       "batch_scheduler.go",
@@ -11,6 +12,7 @@
   {
     "id": "cdn-cache-purge",
     "path": "cdn-cache-purge/",
+    "description": "Purge API and request fan-out",
     "files": [
       "purge_api.go",
       "purge_queue.go"
@@ -19,6 +21,7 @@
   {
     "id": "config-service",
     "path": "config-service/",
+    "description": "Per-client config and TTL rules",
     "files": [
       "ttl_rules.yaml",
       "config_loader.go"
@@ -27,6 +30,7 @@
   {
     "id": "ssl-cert",
     "path": "ssl-cert/",
+    "description": "Certificate issuance and renewal",
     "files": [
       "cert_renewal.py",
       "acme_client.py"
@@ -35,6 +39,7 @@
   {
     "id": "dns-routing",
     "path": "dns-routing/",
+    "description": "Geo DNS resolution and health checks",
     "files": [
       "geo_resolver.go",
       "health_check.go"
@@ -43,6 +48,7 @@
   {
     "id": "origin-failover",
     "path": "origin-failover/",
+    "description": "Origin health probes and failover policy",
     "files": [
       "failover_policy.go",
       "origin_probe.go"
@@ -51,6 +57,7 @@
   {
     "id": "waf-rules",
     "path": "waf-rules/",
+    "description": "Web application firewall rules",
     "files": [
       "rule_engine.go",
       "rulesets/default.yaml"
@@ -59,6 +66,7 @@
   {
     "id": "log-export",
     "path": "log-export/",
+    "description": "Raw log delivery to client storage",
     "files": [
       "exporter.py",
       "s3_sink.py"
@@ -67,6 +75,7 @@
   {
     "id": "traffic-shaping",
     "path": "traffic-shaping/",
+    "description": "Regional traffic steering and QoS",
     "files": [
       "shaper.go",
       "qos_policy.yaml"
@@ -75,6 +84,7 @@
   {
     "id": "rate-limiter",
     "path": "rate-limiter/",
+    "description": "Per-client request rate limits",
     "files": [
       "limiter.go",
       "thresholds.yaml"
@@ -83,6 +93,7 @@
   {
     "id": "ddos-mitigation",
     "path": "ddos-mitigation/",
+    "description": "Attack detection and scrubbing",
     "files": [
       "scrubber.go",
       "signatures.yaml"
@@ -91,6 +102,7 @@
   {
     "id": "domain-onboarding",
     "path": "domain-onboarding/",
+    "description": "Domain ownership checks and activation",
     "files": [
       "verify_ownership.py",
       "onboarding_flow.py"
@@ -99,6 +111,7 @@
   {
     "id": "billing-metering",
     "path": "billing-metering/",
+    "description": "Usage metering for billing",
     "files": [
       "meter.go",
       "usage_rollup.py"
@@ -107,6 +120,7 @@
   {
     "id": "analytics-pipeline",
     "path": "analytics-pipeline/",
+    "description": "Traffic analytics ingestion",
     "files": [
       "ingest.py",
       "aggregate.sql"
@@ -115,6 +129,7 @@
   {
     "id": "edge-auth",
     "path": "edge-auth/",
+    "description": "Signed URLs and token validation",
     "files": [
       "token_validator.go",
       "signed_urls.go"
@@ -123,6 +138,7 @@
   {
     "id": "image-optimizer",
     "path": "image-optimizer/",
+    "description": "On-the-fly image resizing",
     "files": [
       "resize.go",
       "formats.yaml"
@@ -131,6 +147,7 @@
   {
     "id": "video-streaming",
     "path": "video-streaming/",
+    "description": "HLS packaging and segmenting",
     "files": [
       "hls_packager.go",
       "segmenter.go"
@@ -139,6 +156,7 @@
   {
     "id": "api-gateway",
     "path": "api-gateway/",
+    "description": "Request routing and middleware",
     "files": [
       "router.go",
       "middleware.go"
@@ -147,6 +165,7 @@
   {
     "id": "monitoring-alerts",
     "path": "monitoring-alerts/",
+    "description": "Alert rules and notifications",
     "files": [
       "alert_rules.yaml",
       "notifier.py"
@@ -155,6 +174,7 @@
   {
     "id": "customer-portal",
     "path": "customer-portal/",
+    "description": "Client-facing settings UI",
     "files": [
       "settings_page.tsx",
       "api_client.ts"

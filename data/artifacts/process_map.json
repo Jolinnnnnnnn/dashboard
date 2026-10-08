@@ -1,0 +1,1833 @@
+{
+  "as_of": "2026-10-07",
+  "windows": {
+    "90": {
+      "label": "Last 90 days",
+      "tasks": 192,
+      "closed": 92,
+      "median_days_to_close": 4.7,
+      "bottleneck": "security",
+      "min_rework_tasks": 10,
+      "nodes": [
+        {
+          "id": "customer",
+          "name": "Customer",
+          "volume": 95,
+          "avg_hold_days": 1.06,
+          "median_hold_days": 0.96,
+          "next": [
+            {
+              "stakeholder": "closed",
+              "share": 0.975
+            },
+            {
+              "stakeholder": "network_eng",
+              "share": 0.025
+            }
+          ],
+          "insight": "98% of tasks go to Closed next. DNS routing issue tasks hold longest here (1.4d median)."
+        },
+        {
+          "id": "dev",
+          "name": "Dev",
+          "volume": 23,
+          "avg_hold_days": 1.9,
+          "median_hold_days": 1.63,
+          "next": [
+            {
+              "stakeholder": "qa",
+              "share": 0.611
+            },
+            {
+              "stakeholder": "ops",
+              "share": 0.167
+            },
+            {
+              "stakeholder": "customer",
+              "share": 0.167
+            }
+          ],
+          "insight": "61% of tasks go to QA next. Median hold 1.6d."
+        },
+        {
+          "id": "intake",
+          "name": "Intake",
+          "volume": 192,
+          "avg_hold_days": 0.23,
+          "median_hold_days": 0.2,
+          "next": [
+            {
+              "stakeholder": "support",
+              "share": 0.396
+            },
+            {
+              "stakeholder": "network_eng",
+              "share": 0.208
+            },
+            {
+              "stakeholder": "ops",
+              "share": 0.198
+            }
+          ],
+          "insight": "40% of tasks go to Support next. Median hold 0.2d."
+        },
+        {
+          "id": "network_eng",
+          "name": "Network Eng",
+          "volume": 80,
+          "avg_hold_days": 2.21,
+          "median_hold_days": 1.96,
+          "next": [
+            {
+              "stakeholder": "dev",
+              "share": 0.309
+            },
+            {
+              "stakeholder": "customer",
+              "share": 0.279
+            },
+            {
+              "stakeholder": "qa",
+              "share": 0.206
+            }
+          ],
+          "insight": "31% of tasks go to Dev next. Median hold 2.0d."
+        },
+        {
+          "id": "ops",
+          "name": "Ops",
+          "volume": 94,
+          "avg_hold_days": 1.12,
+          "median_hold_days": 0.98,
+          "next": [
+            {
+              "stakeholder": "customer",
+              "share": 0.479
+            },
+            {
+              "stakeholder": "qa",
+              "share": 0.31
+            },
+            {
+              "stakeholder": "closed",
+              "share": 0.127
+            }
+          ],
+          "insight": "48% of tasks go to Customer next. New domain setup tasks hold longest here (1.2d median)."
+        },
+        {
+          "id": "qa",
+          "name": "QA",
+          "volume": 48,
+          "avg_hold_days": 0.9,
+          "median_hold_days": 0.78,
+          "next": [
+            {
+              "stakeholder": "customer",
+              "share": 0.743
+            },
+            {
+              "stakeholder": "closed",
+              "share": 0.171
+            },
+            {
+              "stakeholder": "security",
+              "share": 0.029
+            }
+          ],
+          "insight": "74% of tasks go to Customer next. Median hold 0.8d."
+        },
+        {
+          "id": "security",
+          "name": "Security Review",
+          "volume": 67,
+          "avg_hold_days": 3.28,
+          "median_hold_days": 2.93,
+          "next": [
+            {
+              "stakeholder": "ops",
+              "share": 0.667
+            },
+            {
+              "stakeholder": "support",
+              "share": 0.3
+            },
+            {
+              "stakeholder": "customer",
+              "share": 0.017
+            }
+          ],
+          "insight": "Biggest bottleneck: median hold 2.9d, 3.1× the typical team."
+        },
+        {
+          "id": "support",
+          "name": "Support",
+          "volume": 94,
+          "avg_hold_days": 0.9,
+          "median_hold_days": 0.79,
+          "next": [
+            {
+              "stakeholder": "network_eng",
+              "share": 0.442
+            },
+            {
+              "stakeholder": "security",
+              "share": 0.395
+            },
+            {
+              "stakeholder": "customer",
+              "share": 0.128
+            }
+          ],
+          "insight": "44% of tasks go to Network Eng next. Median hold 0.8d."
+        },
+        {
+          "id": "closed",
+          "name": "Closed",
+          "volume": 92,
+          "insight": "92 tasks closed; median time to close 4.7 days."
+        }
+      ],
+      "edges": [
+        {
+          "from": "customer",
+          "to": "closed",
+          "count": 77,
+          "share_of_tasks": 0.401,
+          "avg_wait_days": 1.01,
+          "rework_tasks": 0
+        },
+        {
+          "from": "customer",
+          "to": "network_eng",
+          "count": 2,
+          "share_of_tasks": 0.01,
+          "avg_wait_days": 3.09,
+          "rework_tasks": 0
+        },
+        {
+          "from": "dev",
+          "to": "customer",
+          "count": 3,
+          "share_of_tasks": 0.016,
+          "avg_wait_days": 1.73,
+          "rework_tasks": 0
+        },
+        {
+          "from": "dev",
+          "to": "ops",
+          "count": 3,
+          "share_of_tasks": 0.016,
+          "avg_wait_days": 2.09,
+          "rework_tasks": 0
+        },
+        {
+          "from": "dev",
+          "to": "qa",
+          "count": 11,
+          "share_of_tasks": 0.057,
+          "avg_wait_days": 1.99,
+          "rework_tasks": 0
+        },
+        {
+          "from": "dev",
+          "to": "security",
+          "count": 1,
+          "share_of_tasks": 0.005,
+          "avg_wait_days": 0.91,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "customer",
+          "count": 1,
+          "share_of_tasks": 0.005,
+          "avg_wait_days": 0.21,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "network_eng",
+          "count": 40,
+          "share_of_tasks": 0.208,
+          "avg_wait_days": 0.26,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "ops",
+          "count": 38,
+          "share_of_tasks": 0.198,
+          "avg_wait_days": 0.24,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "security",
+          "count": 37,
+          "share_of_tasks": 0.193,
+          "avg_wait_days": 0.21,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "support",
+          "count": 76,
+          "share_of_tasks": 0.396,
+          "avg_wait_days": 0.22,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "customer",
+          "count": 19,
+          "share_of_tasks": 0.099,
+          "avg_wait_days": 2.37,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "dev",
+          "count": 21,
+          "share_of_tasks": 0.109,
+          "avg_wait_days": 2.08,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "ops",
+          "count": 12,
+          "share_of_tasks": 0.062,
+          "avg_wait_days": 1.99,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "qa",
+          "count": 14,
+          "share_of_tasks": 0.073,
+          "avg_wait_days": 2.52,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "security",
+          "count": 1,
+          "share_of_tasks": 0.005,
+          "avg_wait_days": 0.8,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "support",
+          "count": 1,
+          "share_of_tasks": 0.005,
+          "avg_wait_days": 1.57,
+          "rework_tasks": 0
+        },
+        {
+          "from": "ops",
+          "to": "closed",
+          "count": 9,
+          "share_of_tasks": 0.047,
+          "avg_wait_days": 1.27,
+          "rework_tasks": 0
+        },
+        {
+          "from": "ops",
+          "to": "customer",
+          "count": 34,
+          "share_of_tasks": 0.177,
+          "avg_wait_days": 1.1,
+          "rework_tasks": 0
+        },
+        {
+          "from": "ops",
+          "to": "qa",
+          "count": 22,
+          "share_of_tasks": 0.115,
+          "avg_wait_days": 0.98,
+          "rework_tasks": 0
+        },
+        {
+          "from": "ops",
+          "to": "support",
+          "count": 6,
+          "share_of_tasks": 0.031,
+          "avg_wait_days": 1.49,
+          "rework_tasks": 2
+        },
+        {
+          "from": "qa",
+          "to": "closed",
+          "count": 6,
+          "share_of_tasks": 0.031,
+          "avg_wait_days": 0.8,
+          "rework_tasks": 0
+        },
+        {
+          "from": "qa",
+          "to": "customer",
+          "count": 26,
+          "share_of_tasks": 0.135,
+          "avg_wait_days": 0.94,
+          "rework_tasks": 0
+        },
+        {
+          "from": "qa",
+          "to": "ops",
+          "count": 1,
+          "share_of_tasks": 0.005,
+          "avg_wait_days": 0.65,
+          "rework_tasks": 1
+        },
+        {
+          "from": "qa",
+          "to": "security",
+          "count": 1,
+          "share_of_tasks": 0.005,
+          "avg_wait_days": 0.87,
+          "rework_tasks": 0
+        },
+        {
+          "from": "qa",
+          "to": "support",
+          "count": 1,
+          "share_of_tasks": 0.005,
+          "avg_wait_days": 0.75,
+          "rework_tasks": 0
+        },
+        {
+          "from": "security",
+          "to": "customer",
+          "count": 1,
+          "share_of_tasks": 0.005,
+          "avg_wait_days": 3.9,
+          "rework_tasks": 0
+        },
+        {
+          "from": "security",
+          "to": "ops",
+          "count": 40,
+          "share_of_tasks": 0.208,
+          "avg_wait_days": 3.25,
+          "rework_tasks": 0
+        },
+        {
+          "from": "security",
+          "to": "qa",
+          "count": 1,
+          "share_of_tasks": 0.005,
+          "avg_wait_days": 1.44,
+          "rework_tasks": 0
+        },
+        {
+          "from": "security",
+          "to": "support",
+          "count": 18,
+          "share_of_tasks": 0.089,
+          "avg_wait_days": 3.4,
+          "rework_tasks": 5
+        },
+        {
+          "from": "support",
+          "to": "customer",
+          "count": 11,
+          "share_of_tasks": 0.057,
+          "avg_wait_days": 0.73,
+          "rework_tasks": 0
+        },
+        {
+          "from": "support",
+          "to": "dev",
+          "count": 2,
+          "share_of_tasks": 0.01,
+          "avg_wait_days": 0.44,
+          "rework_tasks": 0
+        },
+        {
+          "from": "support",
+          "to": "network_eng",
+          "count": 38,
+          "share_of_tasks": 0.198,
+          "avg_wait_days": 0.86,
+          "rework_tasks": 0
+        },
+        {
+          "from": "support",
+          "to": "ops",
+          "count": 1,
+          "share_of_tasks": 0.005,
+          "avg_wait_days": 0.69,
+          "rework_tasks": 0
+        },
+        {
+          "from": "support",
+          "to": "security",
+          "count": 34,
+          "share_of_tasks": 0.156,
+          "avg_wait_days": 1.04,
+          "rework_tasks": 7
+        }
+      ],
+      "modules": [
+        {
+          "id": "edge-sync",
+          "count": 52
+        },
+        {
+          "id": "config-service",
+          "count": 45
+        },
+        {
+          "id": "api-gateway",
+          "count": 40
+        },
+        {
+          "id": "domain-onboarding",
+          "count": 31
+        },
+        {
+          "id": "waf-rules",
+          "count": 30
+        },
+        {
+          "id": "monitoring-alerts",
+          "count": 26
+        },
+        {
+          "id": "origin-failover",
+          "count": 23
+        },
+        {
+          "id": "traffic-shaping",
+          "count": 23
+        },
+        {
+          "id": "edge-auth",
+          "count": 20
+        },
+        {
+          "id": "log-export",
+          "count": 20
+        },
+        {
+          "id": "rate-limiter",
+          "count": 20
+        },
+        {
+          "id": "cdn-cache-purge",
+          "count": 19
+        },
+        {
+          "id": "ssl-cert",
+          "count": 17
+        },
+        {
+          "id": "dns-routing",
+          "count": 16
+        },
+        {
+          "id": "image-optimizer",
+          "count": 5
+        },
+        {
+          "id": "ddos-mitigation",
+          "count": 4
+        },
+        {
+          "id": "analytics-pipeline",
+          "count": 4
+        },
+        {
+          "id": "billing-metering",
+          "count": 3
+        },
+        {
+          "id": "video-streaming",
+          "count": 2
+        },
+        {
+          "id": "customer-portal",
+          "count": 2
+        }
+      ]
+    },
+    "180": {
+      "label": "Last 6 months",
+      "tasks": 290,
+      "closed": 190,
+      "median_days_to_close": 4.7,
+      "bottleneck": "security",
+      "min_rework_tasks": 10,
+      "nodes": [
+        {
+          "id": "customer",
+          "name": "Customer",
+          "volume": 180,
+          "avg_hold_days": 1.07,
+          "median_hold_days": 0.94,
+          "next": [
+            {
+              "stakeholder": "closed",
+              "share": 0.982
+            },
+            {
+              "stakeholder": "network_eng",
+              "share": 0.018
+            }
+          ],
+          "insight": "98% of tasks go to Closed next. DNS routing issue tasks hold longest here (1.4d median)."
+        },
+        {
+          "id": "dev",
+          "name": "Dev",
+          "volume": 34,
+          "avg_hold_days": 2.18,
+          "median_hold_days": 1.99,
+          "next": [
+            {
+              "stakeholder": "qa",
+              "share": 0.586
+            },
+            {
+              "stakeholder": "customer",
+              "share": 0.207
+            },
+            {
+              "stakeholder": "ops",
+              "share": 0.138
+            }
+          ],
+          "insight": "59% of tasks go to QA next. Median hold 2.0d."
+        },
+        {
+          "id": "intake",
+          "name": "Intake",
+          "volume": 290,
+          "avg_hold_days": 0.24,
+          "median_hold_days": 0.2,
+          "next": [
+            {
+              "stakeholder": "support",
+              "share": 0.421
+            },
+            {
+              "stakeholder": "security",
+              "share": 0.207
+            },
+            {
+              "stakeholder": "network_eng",
+              "share": 0.19
+            }
+          ],
+          "insight": "42% of tasks go to Support next. Median hold 0.2d."
+        },
+        {
+          "id": "network_eng",
+          "name": "Network Eng",
+          "volume": 126,
+          "avg_hold_days": 2.15,
+          "median_hold_days": 1.92,
+          "next": [
+            {
+              "stakeholder": "customer",
+              "share": 0.342
+            },
+            {
+              "stakeholder": "dev",
+              "share": 0.254
+            },
+            {
+              "stakeholder": "qa",
+              "share": 0.211
+            }
+          ],
+          "insight": "34% of tasks go to Customer next. Median hold 1.9d."
+        },
+        {
+          "id": "ops",
+          "name": "Ops",
+          "volume": 144,
+          "avg_hold_days": 1.11,
+          "median_hold_days": 1.01,
+          "next": [
+            {
+              "stakeholder": "customer",
+              "share": 0.484
+            },
+            {
+              "stakeholder": "qa",
+              "share": 0.27
+            },
+            {
+              "stakeholder": "closed",
+              "share": 0.139
+            }
+          ],
+          "insight": "48% of tasks go to Customer next. Median hold 1.0d."
+        },
+        {
+          "id": "qa",
+          "name": "QA",
+          "volume": 76,
+          "avg_hold_days": 0.83,
+          "median_hold_days": 0.75,
+          "next": [
+            {
+              "stakeholder": "customer",
+              "share": 0.766
+            },
+            {
+              "stakeholder": "closed",
+              "share": 0.156
+            },
+            {
+              "stakeholder": "ops",
+              "share": 0.031
+            }
+          ],
+          "insight": "77% of tasks go to Customer next. Median hold 0.8d."
+        },
+        {
+          "id": "security",
+          "name": "Security Review",
+          "volume": 107,
+          "avg_hold_days": 3.13,
+          "median_hold_days": 2.58,
+          "next": [
+            {
+              "stakeholder": "ops",
+              "share": 0.651
+            },
+            {
+              "stakeholder": "support",
+              "share": 0.321
+            },
+            {
+              "stakeholder": "dev",
+              "share": 0.009
+            }
+          ],
+          "insight": "Biggest bottleneck: median hold 2.6d, 2.7× the typical team. 11 tasks were sent back from here for rework."
+        },
+        {
+          "id": "support",
+          "name": "Support",
+          "volume": 154,
+          "avg_hold_days": 0.96,
+          "median_hold_days": 0.83,
+          "next": [
+            {
+              "stakeholder": "network_eng",
+              "share": 0.429
+            },
+            {
+              "stakeholder": "security",
+              "share": 0.364
+            },
+            {
+              "stakeholder": "customer",
+              "share": 0.169
+            }
+          ],
+          "insight": "14 tasks went from here back to a team they had already been with (rework loop)."
+        },
+        {
+          "id": "closed",
+          "name": "Closed",
+          "volume": 190,
+          "insight": "190 tasks closed; median time to close 4.7 days."
+        }
+      ],
+      "edges": [
+        {
+          "from": "customer",
+          "to": "closed",
+          "count": 162,
+          "share_of_tasks": 0.559,
+          "avg_wait_days": 1.04,
+          "rework_tasks": 0
+        },
+        {
+          "from": "customer",
+          "to": "network_eng",
+          "count": 3,
+          "share_of_tasks": 0.01,
+          "avg_wait_days": 2.4,
+          "rework_tasks": 0
+        },
+        {
+          "from": "dev",
+          "to": "customer",
+          "count": 6,
+          "share_of_tasks": 0.021,
+          "avg_wait_days": 2.21,
+          "rework_tasks": 0
+        },
+        {
+          "from": "dev",
+          "to": "network_eng",
+          "count": 1,
+          "share_of_tasks": 0.003,
+          "avg_wait_days": 4.12,
+          "rework_tasks": 0
+        },
+        {
+          "from": "dev",
+          "to": "ops",
+          "count": 4,
+          "share_of_tasks": 0.014,
+          "avg_wait_days": 2.15,
+          "rework_tasks": 0
+        },
+        {
+          "from": "dev",
+          "to": "qa",
+          "count": 17,
+          "share_of_tasks": 0.059,
+          "avg_wait_days": 2.13,
+          "rework_tasks": 1
+        },
+        {
+          "from": "dev",
+          "to": "security",
+          "count": 1,
+          "share_of_tasks": 0.003,
+          "avg_wait_days": 0.91,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "customer",
+          "count": 1,
+          "share_of_tasks": 0.003,
+          "avg_wait_days": 0.21,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "network_eng",
+          "count": 55,
+          "share_of_tasks": 0.19,
+          "avg_wait_days": 0.25,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "ops",
+          "count": 51,
+          "share_of_tasks": 0.176,
+          "avg_wait_days": 0.24,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "qa",
+          "count": 1,
+          "share_of_tasks": 0.003,
+          "avg_wait_days": 0.74,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "security",
+          "count": 60,
+          "share_of_tasks": 0.207,
+          "avg_wait_days": 0.22,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "support",
+          "count": 122,
+          "share_of_tasks": 0.421,
+          "avg_wait_days": 0.23,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "closed",
+          "count": 1,
+          "share_of_tasks": 0.003,
+          "avg_wait_days": 1.71,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "customer",
+          "count": 39,
+          "share_of_tasks": 0.134,
+          "avg_wait_days": 2.09,
+          "rework_tasks": 1
+        },
+        {
+          "from": "network_eng",
+          "to": "dev",
+          "count": 29,
+          "share_of_tasks": 0.1,
+          "avg_wait_days": 2.39,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "ops",
+          "count": 18,
+          "share_of_tasks": 0.062,
+          "avg_wait_days": 1.82,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "qa",
+          "count": 24,
+          "share_of_tasks": 0.083,
+          "avg_wait_days": 2.34,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "security",
+          "count": 2,
+          "share_of_tasks": 0.007,
+          "avg_wait_days": 0.8,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "support",
+          "count": 1,
+          "share_of_tasks": 0.003,
+          "avg_wait_days": 1.57,
+          "rework_tasks": 0
+        },
+        {
+          "from": "ops",
+          "to": "closed",
+          "count": 17,
+          "share_of_tasks": 0.059,
+          "avg_wait_days": 1.23,
+          "rework_tasks": 0
+        },
+        {
+          "from": "ops",
+          "to": "customer",
+          "count": 59,
+          "share_of_tasks": 0.203,
+          "avg_wait_days": 1.06,
+          "rework_tasks": 0
+        },
+        {
+          "from": "ops",
+          "to": "dev",
+          "count": 1,
+          "share_of_tasks": 0.003,
+          "avg_wait_days": 1.27,
+          "rework_tasks": 0
+        },
+        {
+          "from": "ops",
+          "to": "qa",
+          "count": 33,
+          "share_of_tasks": 0.114,
+          "avg_wait_days": 1.07,
+          "rework_tasks": 0
+        },
+        {
+          "from": "ops",
+          "to": "support",
+          "count": 12,
+          "share_of_tasks": 0.041,
+          "avg_wait_days": 1.27,
+          "rework_tasks": 4
+        },
+        {
+          "from": "qa",
+          "to": "closed",
+          "count": 10,
+          "share_of_tasks": 0.034,
+          "avg_wait_days": 0.71,
+          "rework_tasks": 0
+        },
+        {
+          "from": "qa",
+          "to": "customer",
+          "count": 49,
+          "share_of_tasks": 0.169,
+          "avg_wait_days": 0.86,
+          "rework_tasks": 0
+        },
+        {
+          "from": "qa",
+          "to": "network_eng",
+          "count": 1,
+          "share_of_tasks": 0.003,
+          "avg_wait_days": 0.75,
+          "rework_tasks": 0
+        },
+        {
+          "from": "qa",
+          "to": "ops",
+          "count": 2,
+          "share_of_tasks": 0.007,
+          "avg_wait_days": 0.88,
+          "rework_tasks": 1
+        },
+        {
+          "from": "qa",
+          "to": "security",
+          "count": 1,
+          "share_of_tasks": 0.003,
+          "avg_wait_days": 0.87,
+          "rework_tasks": 0
+        },
+        {
+          "from": "qa",
+          "to": "support",
+          "count": 1,
+          "share_of_tasks": 0.003,
+          "avg_wait_days": 0.75,
+          "rework_tasks": 0
+        },
+        {
+          "from": "security",
+          "to": "customer",
+          "count": 1,
+          "share_of_tasks": 0.003,
+          "avg_wait_days": 3.9,
+          "rework_tasks": 0
+        },
+        {
+          "from": "security",
+          "to": "dev",
+          "count": 1,
+          "share_of_tasks": 0.003,
+          "avg_wait_days": 1.65,
+          "rework_tasks": 0
+        },
+        {
+          "from": "security",
+          "to": "ops",
+          "count": 69,
+          "share_of_tasks": 0.238,
+          "avg_wait_days": 3.18,
+          "rework_tasks": 0
+        },
+        {
+          "from": "security",
+          "to": "qa",
+          "count": 1,
+          "share_of_tasks": 0.003,
+          "avg_wait_days": 1.44,
+          "rework_tasks": 0
+        },
+        {
+          "from": "security",
+          "to": "support",
+          "count": 34,
+          "share_of_tasks": 0.11,
+          "avg_wait_days": 3.08,
+          "rework_tasks": 11
+        },
+        {
+          "from": "support",
+          "to": "customer",
+          "count": 26,
+          "share_of_tasks": 0.09,
+          "avg_wait_days": 0.87,
+          "rework_tasks": 0
+        },
+        {
+          "from": "support",
+          "to": "dev",
+          "count": 3,
+          "share_of_tasks": 0.01,
+          "avg_wait_days": 1.57,
+          "rework_tasks": 0
+        },
+        {
+          "from": "support",
+          "to": "network_eng",
+          "count": 66,
+          "share_of_tasks": 0.228,
+          "avg_wait_days": 0.9,
+          "rework_tasks": 0
+        },
+        {
+          "from": "support",
+          "to": "ops",
+          "count": 2,
+          "share_of_tasks": 0.007,
+          "avg_wait_days": 0.61,
+          "rework_tasks": 1
+        },
+        {
+          "from": "support",
+          "to": "qa",
+          "count": 1,
+          "share_of_tasks": 0.003,
+          "avg_wait_days": 0.52,
+          "rework_tasks": 0
+        },
+        {
+          "from": "support",
+          "to": "security",
+          "count": 56,
+          "share_of_tasks": 0.166,
+          "avg_wait_days": 1.06,
+          "rework_tasks": 13
+        }
+      ],
+      "modules": [
+        {
+          "id": "edge-sync",
+          "count": 77
+        },
+        {
+          "id": "config-service",
+          "count": 68
+        },
+        {
+          "id": "api-gateway",
+          "count": 56
+        },
+        {
+          "id": "domain-onboarding",
+          "count": 47
+        },
+        {
+          "id": "waf-rules",
+          "count": 47
+        },
+        {
+          "id": "monitoring-alerts",
+          "count": 36
+        },
+        {
+          "id": "log-export",
+          "count": 35
+        },
+        {
+          "id": "edge-auth",
+          "count": 34
+        },
+        {
+          "id": "traffic-shaping",
+          "count": 32
+        },
+        {
+          "id": "cdn-cache-purge",
+          "count": 32
+        },
+        {
+          "id": "origin-failover",
+          "count": 31
+        },
+        {
+          "id": "ssl-cert",
+          "count": 28
+        },
+        {
+          "id": "rate-limiter",
+          "count": 28
+        },
+        {
+          "id": "dns-routing",
+          "count": 24
+        },
+        {
+          "id": "video-streaming",
+          "count": 7
+        },
+        {
+          "id": "ddos-mitigation",
+          "count": 6
+        },
+        {
+          "id": "image-optimizer",
+          "count": 6
+        },
+        {
+          "id": "analytics-pipeline",
+          "count": 6
+        },
+        {
+          "id": "customer-portal",
+          "count": 4
+        },
+        {
+          "id": "billing-metering",
+          "count": 4
+        }
+      ]
+    },
+    "365": {
+      "label": "Last 12 months",
+      "tasks": 500,
+      "closed": 400,
+      "median_days_to_close": 4.7,
+      "bottleneck": "security",
+      "min_rework_tasks": 10,
+      "nodes": [
+        {
+          "id": "customer",
+          "name": "Customer",
+          "volume": 352,
+          "avg_hold_days": 1.06,
+          "median_hold_days": 0.93,
+          "next": [
+            {
+              "stakeholder": "closed",
+              "share": 0.985
+            },
+            {
+              "stakeholder": "network_eng",
+              "share": 0.009
+            },
+            {
+              "stakeholder": "qa",
+              "share": 0.003
+            }
+          ],
+          "insight": "98% of tasks go to Closed next. SSL renewal tasks hold longest here (1.2d median)."
+        },
+        {
+          "id": "dev",
+          "name": "Dev",
+          "volume": 66,
+          "avg_hold_days": 2.21,
+          "median_hold_days": 2.05,
+          "next": [
+            {
+              "stakeholder": "qa",
+              "share": 0.468
+            },
+            {
+              "stakeholder": "ops",
+              "share": 0.274
+            },
+            {
+              "stakeholder": "customer",
+              "share": 0.177
+            }
+          ],
+          "insight": "47% of tasks go to QA next. Median hold 2.0d."
+        },
+        {
+          "id": "intake",
+          "name": "Intake",
+          "volume": 500,
+          "avg_hold_days": 0.23,
+          "median_hold_days": 0.2,
+          "next": [
+            {
+              "stakeholder": "support",
+              "share": 0.4
+            },
+            {
+              "stakeholder": "network_eng",
+              "share": 0.248
+            },
+            {
+              "stakeholder": "security",
+              "share": 0.192
+            }
+          ],
+          "insight": "40% of tasks go to Support next. Median hold 0.2d."
+        },
+        {
+          "id": "network_eng",
+          "name": "Network Eng",
+          "volume": 246,
+          "avg_hold_days": 2.14,
+          "median_hold_days": 1.88,
+          "next": [
+            {
+              "stakeholder": "customer",
+              "share": 0.289
+            },
+            {
+              "stakeholder": "dev",
+              "share": 0.243
+            },
+            {
+              "stakeholder": "ops",
+              "share": 0.217
+            }
+          ],
+          "insight": "29% of tasks go to Customer next. Median hold 1.9d."
+        },
+        {
+          "id": "ops",
+          "name": "Ops",
+          "volume": 266,
+          "avg_hold_days": 1.17,
+          "median_hold_days": 0.99,
+          "next": [
+            {
+              "stakeholder": "customer",
+              "share": 0.576
+            },
+            {
+              "stakeholder": "qa",
+              "share": 0.192
+            },
+            {
+              "stakeholder": "closed",
+              "share": 0.155
+            }
+          ],
+          "insight": "58% of tasks go to Customer next. Median hold 1.0d."
+        },
+        {
+          "id": "qa",
+          "name": "QA",
+          "volume": 127,
+          "avg_hold_days": 0.8,
+          "median_hold_days": 0.73,
+          "next": [
+            {
+              "stakeholder": "customer",
+              "share": 0.748
+            },
+            {
+              "stakeholder": "closed",
+              "share": 0.174
+            },
+            {
+              "stakeholder": "network_eng",
+              "share": 0.026
+            }
+          ],
+          "insight": "75% of tasks go to Customer next. Median hold 0.7d."
+        },
+        {
+          "id": "security",
+          "name": "Security Review",
+          "volume": 175,
+          "avg_hold_days": 3.16,
+          "median_hold_days": 2.66,
+          "next": [
+            {
+              "stakeholder": "ops",
+              "share": 0.656
+            },
+            {
+              "stakeholder": "support",
+              "share": 0.311
+            },
+            {
+              "stakeholder": "dev",
+              "share": 0.011
+            }
+          ],
+          "insight": "Biggest bottleneck: median hold 2.7d, 2.9× the typical team. 21 tasks were sent back from here for rework."
+        },
+        {
+          "id": "support",
+          "name": "Support",
+          "volume": 253,
+          "avg_hold_days": 0.96,
+          "median_hold_days": 0.8,
+          "next": [
+            {
+              "stakeholder": "network_eng",
+              "share": 0.43
+            },
+            {
+              "stakeholder": "security",
+              "share": 0.361
+            },
+            {
+              "stakeholder": "customer",
+              "share": 0.179
+            }
+          ],
+          "insight": "23 tasks went from here back to a team they had already been with (rework loop)."
+        },
+        {
+          "id": "closed",
+          "name": "Closed",
+          "volume": 400,
+          "insight": "400 tasks closed; median time to close 4.7 days."
+        }
+      ],
+      "edges": [
+        {
+          "from": "customer",
+          "to": "closed",
+          "count": 334,
+          "share_of_tasks": 0.668,
+          "avg_wait_days": 1.05,
+          "rework_tasks": 0
+        },
+        {
+          "from": "customer",
+          "to": "dev",
+          "count": 1,
+          "share_of_tasks": 0.002,
+          "avg_wait_days": 0.27,
+          "rework_tasks": 0
+        },
+        {
+          "from": "customer",
+          "to": "network_eng",
+          "count": 3,
+          "share_of_tasks": 0.006,
+          "avg_wait_days": 2.4,
+          "rework_tasks": 0
+        },
+        {
+          "from": "customer",
+          "to": "qa",
+          "count": 1,
+          "share_of_tasks": 0.002,
+          "avg_wait_days": 0.76,
+          "rework_tasks": 0
+        },
+        {
+          "from": "dev",
+          "to": "customer",
+          "count": 11,
+          "share_of_tasks": 0.022,
+          "avg_wait_days": 2.55,
+          "rework_tasks": 0
+        },
+        {
+          "from": "dev",
+          "to": "network_eng",
+          "count": 2,
+          "share_of_tasks": 0.004,
+          "avg_wait_days": 3.09,
+          "rework_tasks": 0
+        },
+        {
+          "from": "dev",
+          "to": "ops",
+          "count": 17,
+          "share_of_tasks": 0.034,
+          "avg_wait_days": 2.07,
+          "rework_tasks": 0
+        },
+        {
+          "from": "dev",
+          "to": "qa",
+          "count": 29,
+          "share_of_tasks": 0.058,
+          "avg_wait_days": 2.14,
+          "rework_tasks": 1
+        },
+        {
+          "from": "dev",
+          "to": "security",
+          "count": 2,
+          "share_of_tasks": 0.004,
+          "avg_wait_days": 1.72,
+          "rework_tasks": 0
+        },
+        {
+          "from": "dev",
+          "to": "support",
+          "count": 1,
+          "share_of_tasks": 0.002,
+          "avg_wait_days": 1.95,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "customer",
+          "count": 1,
+          "share_of_tasks": 0.002,
+          "avg_wait_days": 0.21,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "dev",
+          "count": 1,
+          "share_of_tasks": 0.002,
+          "avg_wait_days": 0.22,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "network_eng",
+          "count": 124,
+          "share_of_tasks": 0.248,
+          "avg_wait_days": 0.23,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "ops",
+          "count": 76,
+          "share_of_tasks": 0.152,
+          "avg_wait_days": 0.23,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "qa",
+          "count": 2,
+          "share_of_tasks": 0.004,
+          "avg_wait_days": 0.46,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "security",
+          "count": 96,
+          "share_of_tasks": 0.192,
+          "avg_wait_days": 0.23,
+          "rework_tasks": 0
+        },
+        {
+          "from": "intake",
+          "to": "support",
+          "count": 200,
+          "share_of_tasks": 0.4,
+          "avg_wait_days": 0.23,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "closed",
+          "count": 8,
+          "share_of_tasks": 0.016,
+          "avg_wait_days": 1.5,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "customer",
+          "count": 68,
+          "share_of_tasks": 0.136,
+          "avg_wait_days": 1.99,
+          "rework_tasks": 1
+        },
+        {
+          "from": "network_eng",
+          "to": "dev",
+          "count": 57,
+          "share_of_tasks": 0.114,
+          "avg_wait_days": 2.28,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "ops",
+          "count": 51,
+          "share_of_tasks": 0.102,
+          "avg_wait_days": 2.25,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "qa",
+          "count": 47,
+          "share_of_tasks": 0.094,
+          "avg_wait_days": 2.26,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "security",
+          "count": 2,
+          "share_of_tasks": 0.004,
+          "avg_wait_days": 0.8,
+          "rework_tasks": 0
+        },
+        {
+          "from": "network_eng",
+          "to": "support",
+          "count": 2,
+          "share_of_tasks": 0.004,
+          "avg_wait_days": 1.94,
+          "rework_tasks": 1
+        },
+        {
+          "from": "ops",
+          "to": "closed",
+          "count": 38,
+          "share_of_tasks": 0.076,
+          "avg_wait_days": 1.33,
+          "rework_tasks": 0
+        },
+        {
+          "from": "ops",
+          "to": "customer",
+          "count": 141,
+          "share_of_tasks": 0.282,
+          "avg_wait_days": 1.14,
+          "rework_tasks": 1
+        },
+        {
+          "from": "ops",
+          "to": "dev",
+          "count": 1,
+          "share_of_tasks": 0.002,
+          "avg_wait_days": 1.27,
+          "rework_tasks": 0
+        },
+        {
+          "from": "ops",
+          "to": "qa",
+          "count": 47,
+          "share_of_tasks": 0.094,
+          "avg_wait_days": 1.1,
+          "rework_tasks": 0
+        },
+        {
+          "from": "ops",
+          "to": "security",
+          "count": 1,
+          "share_of_tasks": 0.002,
+          "avg_wait_days": 0.71,
+          "rework_tasks": 0
+        },
+        {
+          "from": "ops",
+          "to": "support",
+          "count": 17,
+          "share_of_tasks": 0.034,
+          "avg_wait_days": 1.29,
+          "rework_tasks": 4
+        },
+        {
+          "from": "qa",
+          "to": "closed",
+          "count": 20,
+          "share_of_tasks": 0.04,
+          "avg_wait_days": 0.68,
+          "rework_tasks": 0
+        },
+        {
+          "from": "qa",
+          "to": "customer",
+          "count": 86,
+          "share_of_tasks": 0.172,
+          "avg_wait_days": 0.83,
+          "rework_tasks": 1
+        },
+        {
+          "from": "qa",
+          "to": "dev",
+          "count": 1,
+          "share_of_tasks": 0.002,
+          "avg_wait_days": 0.93,
+          "rework_tasks": 1
+        },
+        {
+          "from": "qa",
+          "to": "network_eng",
+          "count": 3,
+          "share_of_tasks": 0.006,
+          "avg_wait_days": 0.75,
+          "rework_tasks": 1
+        },
+        {
+          "from": "qa",
+          "to": "ops",
+          "count": 2,
+          "share_of_tasks": 0.004,
+          "avg_wait_days": 0.88,
+          "rework_tasks": 1
+        },
+        {
+          "from": "qa",
+          "to": "security",
+          "count": 1,
+          "share_of_tasks": 0.002,
+          "avg_wait_days": 0.87,
+          "rework_tasks": 0
+        },
+        {
+          "from": "qa",
+          "to": "support",
+          "count": 2,
+          "share_of_tasks": 0.004,
+          "avg_wait_days": 0.6,
+          "rework_tasks": 0
+        },
+        {
+          "from": "security",
+          "to": "customer",
+          "count": 1,
+          "share_of_tasks": 0.002,
+          "avg_wait_days": 3.9,
+          "rework_tasks": 0
+        },
+        {
+          "from": "security",
+          "to": "dev",
+          "count": 2,
+          "share_of_tasks": 0.004,
+          "avg_wait_days": 2.25,
+          "rework_tasks": 0
+        },
+        {
+          "from": "security",
+          "to": "network_eng",
+          "count": 2,
+          "share_of_tasks": 0.004,
+          "avg_wait_days": 5.47,
+          "rework_tasks": 0
+        },
+        {
+          "from": "security",
+          "to": "ops",
+          "count": 120,
+          "share_of_tasks": 0.24,
+          "avg_wait_days": 3.09,
+          "rework_tasks": 1
+        },
+        {
+          "from": "security",
+          "to": "qa",
+          "count": 1,
+          "share_of_tasks": 0.002,
+          "avg_wait_days": 1.44,
+          "rework_tasks": 0
+        },
+        {
+          "from": "security",
+          "to": "support",
+          "count": 57,
+          "share_of_tasks": 0.104,
+          "avg_wait_days": 3.29,
+          "rework_tasks": 20
+        },
+        {
+          "from": "support",
+          "to": "customer",
+          "count": 47,
+          "share_of_tasks": 0.094,
+          "avg_wait_days": 0.82,
+          "rework_tasks": 0
+        },
+        {
+          "from": "support",
+          "to": "dev",
+          "count": 4,
+          "share_of_tasks": 0.008,
+          "avg_wait_days": 1.37,
+          "rework_tasks": 0
+        },
+        {
+          "from": "support",
+          "to": "network_eng",
+          "count": 113,
+          "share_of_tasks": 0.226,
+          "avg_wait_days": 0.88,
+          "rework_tasks": 0
+        },
+        {
+          "from": "support",
+          "to": "ops",
+          "count": 3,
+          "share_of_tasks": 0.006,
+          "avg_wait_days": 0.49,
+          "rework_tasks": 1
+        },
+        {
+          "from": "support",
+          "to": "qa",
+          "count": 1,
+          "share_of_tasks": 0.002,
+          "avg_wait_days": 0.52,
+          "rework_tasks": 0
+        },
+        {
+          "from": "support",
+          "to": "security",
+          "count": 95,
+          "share_of_tasks": 0.162,
+          "avg_wait_days": 1.12,
+          "rework_tasks": 22
+        }
+      ],
+      "modules": [
+        {
+          "id": "edge-sync",
+          "count": 155
+        },
+        {
+          "id": "config-service",
+          "count": 106
+        },
+        {
+          "id": "traffic-shaping",
+          "count": 89
+        },
+        {
+          "id": "api-gateway",
+          "count": 83
+        },
+        {
+          "id": "domain-onboarding",
+          "count": 83
+        },
+        {
+          "id": "rate-limiter",
+          "count": 81
+        },
+        {
+          "id": "waf-rules",
+          "count": 77
+        },
+        {
+          "id": "monitoring-alerts",
+          "count": 56
+        },
+        {
+          "id": "log-export",
+          "count": 56
+        },
+        {
+          "id": "edge-auth",
+          "count": 56
+        },
+        {
+          "id": "origin-failover",
+          "count": 52
+        },
+        {
+          "id": "cdn-cache-purge",
+          "count": 51
+        },
+        {
+          "id": "ssl-cert",
+          "count": 45
+        },
+        {
+          "id": "dns-routing",
+          "count": 43
+        },
+        {
+          "id": "image-optimizer",
+          "count": 10
+        },
+        {
+          "id": "video-streaming",
+          "count": 10
+        },
+        {
+          "id": "ddos-mitigation",
+          "count": 9
+        },
+        {
+          "id": "customer-portal",
+          "count": 9
+        },
+        {
+          "id": "analytics-pipeline",
+          "count": 8
+        },
+        {
+          "id": "billing-metering",
+          "count": 6
+        }
+      ]
+    }
+  }
+}

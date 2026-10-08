@@ -117,6 +117,30 @@ MODULES = {
     "customer-portal": ["settings_page.tsx", "api_client.ts"],
 }
 
+MODULE_DESCRIPTIONS = {
+    "edge-sync": "Pushes config and purge state to edge nodes",
+    "cdn-cache-purge": "Purge API and request fan-out",
+    "config-service": "Per-client config and TTL rules",
+    "ssl-cert": "Certificate issuance and renewal",
+    "dns-routing": "Geo DNS resolution and health checks",
+    "origin-failover": "Origin health probes and failover policy",
+    "waf-rules": "Web application firewall rules",
+    "log-export": "Raw log delivery to client storage",
+    "traffic-shaping": "Regional traffic steering and QoS",
+    "rate-limiter": "Per-client request rate limits",
+    "ddos-mitigation": "Attack detection and scrubbing",
+    "domain-onboarding": "Domain ownership checks and activation",
+    "billing-metering": "Usage metering for billing",
+    "analytics-pipeline": "Traffic analytics ingestion",
+    "edge-auth": "Signed URLs and token validation",
+    "image-optimizer": "On-the-fly image resizing",
+    "video-streaming": "HLS packaging and segmenting",
+    "api-gateway": "Request routing and middleware",
+    "monitoring-alerts": "Alert rules and notifications",
+    "customer-portal": "Client-facing settings UI",
+}
+assert set(MODULE_DESCRIPTIONS) == set(MODULES)
+
 # ── Task types and routes ──────────────────────────────────────────────────
 
 I, SU, NE, SE, OP, QA, DV, CU, CL = (
@@ -712,7 +736,8 @@ def main() -> None:
 
     write_json(args.data_dir, "stakeholders", [{"id": s, "name": n, "role": r} for s, n, r, _ in STAKEHOLDERS])
     write_json(args.data_dir, "clients", [{k: c[k] for k in ("id", "name", "tier", "region")} for c in clients])
-    write_json(args.data_dir, "modules", [{"id": m, "path": f"{m}/", "files": files} for m, files in MODULES.items()])
+    write_json(args.data_dir, "modules", [{"id": m, "path": f"{m}/", "description": MODULE_DESCRIPTIONS[m], "files": files}
+                                          for m, files in MODULES.items()])
     write_json(args.data_dir, "tasks", task_rows)
     write_json(args.data_dir, "handoffs", handoff_rows)
 

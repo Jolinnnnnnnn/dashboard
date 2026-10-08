@@ -149,7 +149,7 @@ All timestamps are ISO 8601 UTC.
 |---|---|
 | `stakeholders.json` | `id`, `name`, `role` |
 | `clients.json` | `id`, `name`, `tier`, `region` |
-| `modules.json` | `id`, `path`, `files[]` |
+| `modules.json` | `id`, `path`, `description` (one line, shown in the UI), `files[]` |
 | `tasks.json` | `id`, `title`, `description`, `client_id`, `type`, `family`, `status` (`open`/`closed`), `created_at`, `closed_at`, `code_areas[]` (file paths like `edge-sync/propagation.go`), `solution_note`, `current_stakeholder` |
 | `handoffs.json` | `task_id`, `seq`, `from_stakeholder`, `to_stakeholder`, `entered_at`, `left_at`, `hold_days` |
 

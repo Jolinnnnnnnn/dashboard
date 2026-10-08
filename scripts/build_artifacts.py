@@ -111,6 +111,105 @@ def similar_cases(tasks: pd.DataFrame, closed: pd.DataFrame, client_names: dict)
     return out
 
 
+MIN_REWORK_TASKS = 10  # below this, rework is detour noise, not a pattern
+MAP_WINDOWS = {"90": ("Last 90 days", 90), "180": ("Last 6 months", 180), "365": ("Last 12 months", 400)}
+
+
+def process_map(tasks: pd.DataFrame, s: pd.DataFrame, names: dict) -> dict:
+    """Stakeholder flow stats per history window, for the Process Map view.
+
+    A task is in a window if it was created within it. Edges are consecutive stints
+    (including the final handoff to Closed). A handoff is rework when it returns to a
+    stakeholder the task already left (docs/definitions.md).
+    """
+    s = s.sort_values(["task_id", "seq"])
+    out = {"as_of": rd.TODAY.strftime("%Y-%m-%d"), "windows": {}}
+    for key, (label, days) in MAP_WINDOWS.items():
+        ids = set(tasks.loc[tasks["created_at"] >= rd.TODAY - pd.Timedelta(days=days), "id"])
+        w = s[s["task_id"].isin(ids)].copy()
+        w["visited_before"] = [
+            nxt in seen
+            for _, g in w.groupby("task_id", sort=False)
+            for seen, nxt in zip(_prefix_sets(g["stakeholder"].tolist()), g["next_stakeholder"])
+        ]
+        done = w.dropna(subset=["next_stakeholder"])
+        in_window = tasks[tasks["id"].isin(ids)]
+        closed = in_window[in_window["status"] == "closed"]
+        days_to_close = (closed["closed_at"] - closed["created_at"]) / pd.Timedelta(days=1)
+
+        edges = []
+        for (frm, to), g in done.groupby(["stakeholder", "next_stakeholder"]):
+            edges.append({
+                "from": frm, "to": to, "count": len(g),
+                "share_of_tasks": round(g["task_id"].nunique() / len(ids), 3),
+                "avg_wait_days": round(float(g["hold_days"].mean()), 2),
+                "rework_tasks": int(g.loc[g["visited_before"], "task_id"].nunique()),
+            })
+
+        medians = done.groupby("stakeholder")["hold_days"].median()
+        bottleneck = medians.idxmax()
+        nodes = []
+        for stk, g in w.groupby("stakeholder"):
+            g_done = g.dropna(subset=["next_stakeholder"])
+            nxt = g_done["next_stakeholder"].value_counts(normalize=True)
+            node = {
+                "id": stk, "name": names[stk], "volume": int(g["task_id"].nunique()),
+                "avg_hold_days": round(float(g_done["hold_days"].mean()), 2),
+                "median_hold_days": round(float(g_done["hold_days"].median()), 2),
+                "next": [{"stakeholder": k, "share": round(float(v), 3)} for k, v in nxt.head(3).items()],
+            }
+            node["insight"] = _insight(node, g_done, edges, stk == bottleneck, medians, names)
+            nodes.append(node)
+        nodes.append({"id": "closed", "name": "Closed", "volume": len(closed),
+                      "insight": f"{len(closed)} tasks closed; median time to close "
+                                 f"{days_to_close.median():.1f} days."})
+
+        module_counts = pd.Series([m for areas in in_window["code_areas"] for m in rm.module_set(areas)])
+        out["windows"][key] = {
+            "label": label, "tasks": len(ids), "closed": len(closed),
+            "median_days_to_close": round(float(days_to_close.median()), 1),
+            "bottleneck": bottleneck,
+            "min_rework_tasks": MIN_REWORK_TASKS,
+            "nodes": nodes, "edges": edges,
+            "modules": [{"id": m, "count": int(c)} for m, c in module_counts.value_counts().items()],
+        }
+    return out
+
+
+def _prefix_sets(route: list[str]) -> list[set]:
+    """For each stint, the set of stakeholders the task has already been with (including this one)."""
+    seen, out = set(), []
+    for stk in route:
+        seen = seen | {stk}
+        out.append(seen)
+    return out
+
+
+def _insight(node: dict, done: pd.DataFrame, edges: list[dict], is_bottleneck: bool,
+             medians: pd.Series, names: dict) -> str:
+    """One plain-language observation per stakeholder, from the numbers only."""
+    stk, med = node["id"], node["median_hold_days"]
+    rework = sum(e["rework_tasks"] for e in edges if e["from"] == stk)
+    if is_bottleneck:
+        others = medians.drop(stk).median()
+        text = f"Biggest bottleneck: median hold {med:.1f}d, {med / others:.1f}× the typical team."
+        if rework >= MIN_REWORK_TASKS:
+            text += f" {rework} tasks were sent back from here for rework."
+        return text
+    if rework >= MIN_REWORK_TASKS:
+        return f"{rework} tasks went from here back to a team they had already been with (rework loop)."
+    by_type = done.groupby("type")["hold_days"].agg(["median", "size"])
+    by_type = by_type[by_type["size"] >= 5]
+    top = node["next"][0] if node["next"] else None
+    lead = f"{top['share']:.0%} of tasks go to {names[top['stakeholder']]} next." if top else ""
+    if len(by_type) >= 2:
+        slow = by_type["median"].idxmax()
+        ratio = by_type.loc[slow, "median"] / by_type["median"].min()
+        if ratio >= 1.5:
+            return f"{lead} {slow} tasks hold longest here ({by_type.loc[slow, 'median']:.1f}d median)."
+    return f"{lead} Median hold {med:.1f}d."
+
+
 def main() -> None:
     d = rd.load()
     tasks, clients = d["tasks"], d["clients"]
@@ -127,9 +226,11 @@ def main() -> None:
     write("predictions", preds)
     similar = similar_cases(tasks, tasks[tasks["status"] == "closed"], client_names)
     write("similar_cases", similar)
+    pmap = process_map(tasks, s, names)
+    write("process_map", pmap)
 
     demo = preds["T-4821"]
-    print(f"Wrote transitions, predictions ({len(preds)} open tasks), similar_cases ({len(similar)} tasks) "
+    print(f"Wrote transitions, predictions ({len(preds)} open tasks), similar_cases ({len(similar)} tasks), process_map "
           f"to {OUT_DIR.relative_to(rd.ROOT)}/")
     print(f"T-4821: {demo['risk']} risk, {demo['hold_days']}d vs median {demo['median_hold_days']}d; "
           f"next {demo['next'][0]['stakeholder']} {demo['next'][0]['probability']:.0%}; {demo['reason']}; "
