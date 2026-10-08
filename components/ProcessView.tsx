@@ -62,7 +62,7 @@ function MapSvg({ w, selected, onSelect, animate }: {
   const pairs = new Set(edges.map((e) => `${e.from}>${e.to}`));
 
   return (
-    <svg viewBox="0 0 1120 440" className="block h-auto w-full" role="img" aria-label="Process map of handoffs between stakeholders">
+    <svg viewBox="0 0 1120 440" className="block h-auto w-full min-[900px]:h-full" role="img" aria-label="Process map of handoffs between stakeholders">
       <defs>
         <marker id="arr" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
           <path d="M0,0 L8,4 L0,8 z" style={{ fill: "var(--muted)" }} />
@@ -130,7 +130,7 @@ function NodePanel({ n, label, onClose }: { n: MapNode; label: string; onClose: 
   const max = Math.max(n.avgHold ?? 0, n.medianHold ?? 0) || 1;
   const ratio = (n.avgHold ?? 0) / (n.medianHold || 1);
   return (
-    <div className="anim-slide flex min-w-0 flex-none flex-col gap-4 self-stretch border-t border-line bg-surface px-[18px] py-4 min-[900px]:w-[320px] min-[900px]:border-l min-[900px]:border-t-0">
+    <div className="anim-slide flex h-[420px] min-w-0 flex-none flex-col gap-4 overflow-y-auto border-t border-line bg-surface px-[18px] py-4 min-[900px]:h-full min-[900px]:w-[320px] min-[900px]:border-l min-[900px]:border-t-0">
       <div className="flex items-start justify-between">
         <div>
           <div className="text-[15px] font-semibold">{n.name}</div>
@@ -223,12 +223,12 @@ export function ProcessView({ windows }: { windows: MapWindow[] }) {
   return (
     <div className="flex flex-col gap-5">
       <Header w={w} />
-      <div className="flex min-h-[480px] flex-col overflow-hidden rounded-xl bg-surface min-[900px]:flex-row">
-        <div className="relative min-w-0 flex-1 px-4 py-3.5">
+      <div className="flex flex-col overflow-hidden rounded-xl bg-surface min-[900px]:h-[520px] min-[900px]:flex-row">
+        <div className="relative flex min-w-0 flex-1 flex-col px-4 py-3.5">
           <div className="text-xs text-faint">
             Click a stakeholder to inspect · node size = task volume · {hidden} minor routes under {MIN_EDGE_SHARE * 100}% of tasks hidden
           </div>
-          <div className="mt-1.5">
+          <div className="mt-1.5 min-h-0 flex-1">
             <MapSvg w={w} selected={selected} onSelect={setSelected} animate={animate} />
           </div>
         </div>
@@ -263,7 +263,7 @@ export function ProcessViewFallback() {
   return (
     <div className="flex flex-col gap-5">
       <Header />
-      <div className="min-h-[480px] rounded-xl bg-surface px-4 py-3.5"><div className="skeleton mt-3 h-[420px] rounded-md" /></div>
+      <div className="rounded-xl bg-surface px-4 py-3.5 min-[900px]:h-[520px]"><div className="skeleton mt-3 h-[420px] rounded-md" /></div>
     </div>
   );
 }
