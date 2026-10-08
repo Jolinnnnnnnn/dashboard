@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { Suspense, createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 
 // The agent dock (design v3): any "Ask agent" button opens it with a question and its context.
 // One conversation is shared by the dock and the Ask page; answers stream from /api/agent.
@@ -9,7 +9,7 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState } f
 import { Exchange, type AgentMessage } from "@/components/AgentThread";
 
 type AgentApi = {
-  ask: (q: string, context?: string) => void;
+  ask: (q: string, context?: string, opts?: { openDock?: boolean }) => void;
   open: () => void;
   close: () => void;
   reset: () => void;
@@ -20,6 +20,8 @@ type AgentApi = {
 
 const AgentContext = createContext<AgentApi | null>(null);
 const HISTORY_TURNS = 4; // prior exchanges sent back as plain text for follow-ups
+// Dock open/closed state and finished exchanges survive reloads within this browser tab
+const STORAGE_KEY = "signal-agent";
 
 export function useAgent() {
   const ctx = useContext(AgentContext);
@@ -37,6 +39,29 @@ type StreamEvent =
 export function AgentProvider({ children, ...dock }: DockProps & { children: React.ReactNode }) {
   const [isOpen, setOpen] = useState(false);
   const [messages, setMessages] = useState<AgentMessage[]>([]);
+  const [restored, setRestored] = useState(false);
+
+  // Restore after mount (not in the initial state) so server and client render the same HTML.
+  // Saving waits for `restored`, so the defaults never overwrite what was saved.
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(STORAGE_KEY) ?? "null") as { isOpen: boolean; messages: AgentMessage[] } | null;
+      if (saved) {
+        setOpen(saved.isOpen); // eslint-disable-line react-hooks/set-state-in-effect
+        setMessages(saved.messages);
+      }
+    } catch {
+      // Storage unavailable or corrupt: start fresh
+    }
+    setRestored(true);
+  }, []);
+  useEffect(() => {
+    if (!restored) return;
+    try {
+      // Only finished exchanges; an answer still streaming can't be resumed after a reload
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ isOpen, messages: messages.filter((m) => m.status !== "thinking") }));
+    } catch {}
+  }, [isOpen, messages, restored]);
   const busyRef = useRef(false);
   const [busy, setBusy] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
@@ -44,8 +69,8 @@ export function AgentProvider({ children, ...dock }: DockProps & { children: Rea
   const update = (index: number, fn: (m: AgentMessage) => AgentMessage) =>
     setMessages((all) => all.map((m, i) => (i === index ? fn(m) : m)));
 
-  const ask = useCallback((q: string, context = "Briefing") => {
-    setOpen(true);
+  const ask = useCallback((q: string, context = "Briefing", opts?: { openDock?: boolean }) => {
+    if (opts?.openDock !== false) setOpen(true);
     if (busyRef.current || !q.trim()) return;
     busyRef.current = true;
     setBusy(true);
@@ -123,10 +148,20 @@ export function AgentProvider({ children, ...dock }: DockProps & { children: Rea
     <AgentContext.Provider value={api}>
       <div className="flex min-h-screen flex-col bg-bg text-ink min-[900px]:flex-row">
         {children}
-        {isOpen && <Dock {...dock} />}
+        {isOpen && (
+          <Suspense fallback={null}>
+            <DockSlot {...dock} />
+          </Suspense>
+        )}
       </div>
     </AgentContext.Provider>
   );
+}
+
+/** The Ask page shows the same conversation full-width, so the dock is hidden there (not closed). */
+function DockSlot(props: DockProps) {
+  const pathname = usePathname();
+  return pathname.startsWith("/ask") ? null : <Dock {...props} />;
 }
 
 function Dock({ openTasks, chips }: DockProps) {

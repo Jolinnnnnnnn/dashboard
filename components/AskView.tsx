@@ -24,21 +24,19 @@ export function AskWithTask() {
 }
 
 export function AskView({ task = null }: { task?: string | null }) {
-  const { messages, ask, reset, busy, close } = useAgent();
+  const { messages, ask, reset, busy } = useAgent();
   const [draft, setDraft] = useState<string | null>(null);
   const value = draft ?? (task ? `What should happen next on ${task}?` : "");
   const bottom = useRef<HTMLDivElement>(null);
   const last = messages.at(-1);
 
-  // The page shows the conversation itself, so the dock would be a duplicate
-  useEffect(() => close(), []); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     bottom.current?.scrollIntoView({ block: "end" });
   }, [messages.length, last?.text.length]);
 
   const send = (q: string) => {
     if (!q.trim() || busy) return;
-    ask(q.trim(), task ?? "Ask");
+    ask(q.trim(), task ?? "Ask", { openDock: false }); // asking here shouldn't change the dock's state elsewhere
     setDraft("");
   };
 
