@@ -4,11 +4,11 @@
 
 /** The first ideas, as they were written down while planning. */
 export const IDEAS = [
-  { text: "Dashboards make you hunt.", tone: "amber" },
-  { text: "An agent that says what matters.", tone: "accent" },
-  { text: "Every number traceable.", tone: "green" },
-  { text: "Fake data, real patterns.", tone: "red" },
-  { text: "Allowed to say \u201cI don't know.\u201d", tone: "accent" },
+  { text: "Dashboards show everything; finding what changed is manual.", tone: "amber" },
+  { text: "An agent could flag what changed and say why.", tone: "accent" },
+  { text: "Every number should trace back to the data.", tone: "green" },
+  { text: "Use synthetic data with patterns I know are there.", tone: "red" },
+  { text: "The agent should say when it doesn't know.", tone: "accent" },
 ] as const;
 
 /** The build plan's phases (docs/plan.md). `commit` is the change that finished each; its time comes from git. */
@@ -22,8 +22,8 @@ export const JOURNEY = [
   { phase: 7, step: "Agent", line: "Claude with tools", commit: "2cee8e0", icon: "agent" },
 ] as const;
 
-export const TABLEAU = ["Open four dashboards", "Filter and compare", "Export to find outliers", "Write it up"] as const;
-export const SIGNAL = ["Checks every task and handoff", "Surfaces what changed, with evidence", "Suggests a next step; you decide"] as const;
+export const TABLEAU = ["Open the dashboard", "Filter by team, client, and date", "Look for what seems off", "Write up what you found"] as const;
+export const SIGNAL = ["Checks run on the data each refresh", "Detectors flag changes, with task IDs", "Claude writes the summary; you can ask follow-ups"] as const;
 
 /** Detectors that turn the sources into briefing insights (scripts/build_briefing.py). */
 export const DETECTORS = [
@@ -38,8 +38,8 @@ export type Catch = { title: string; caughtBy: string; commit: string };
 
 /** Three of the moments the AI was wrong (all of them are in docs/prompt-log.md). */
 export const CATCHES: Catch[] = [
-  { title: "A beautiful design with made-up numbers", caughtBy: "Checked every claim against the data", commit: "daf5379" },
-  { title: "Patterns that only worked by luck", caughtBy: "Re-ran on 30 random seeds", commit: "3d675b1" },
-  { title: "Right number, wrong label", caughtBy: "Read the output, not just the tests", commit: "daf5379" },
+  { title: "The design prototype used invented numbers", caughtBy: "Compared each claim to the data", commit: "daf5379" },
+  { title: "Data checks passed on only one random seed", caughtBy: "Re-ran the checks on 30 seeds", commit: "3d675b1" },
+  { title: "Claude put the wrong label on a correct number", caughtBy: "Read the generated text", commit: "daf5379" },
 ];
 

@@ -188,7 +188,6 @@ export function FromTableau() {
         <div className="flex flex-col gap-4 rounded-xl border border-line bg-surface2 p-5">
           <div className="flex items-baseline justify-between">
             <div className="font-serif text-[26px] leading-none text-muted">Tableau</div>
-            <div className="font-mono text-[11px] text-faint">~40 min · weekly</div>
           </div>
           <ol className="m-0 flex list-none flex-col gap-2.5 p-0">
             {TABLEAU.map((t, i) => (
@@ -197,12 +196,10 @@ export function FromTableau() {
               </li>
             ))}
           </ol>
-          <div className="mt-auto border-t border-line pt-3 text-[13px] text-muted">You find the story.</div>
         </div>
         <div className="flex flex-col gap-4 rounded-xl border border-accent bg-accent-soft p-5">
           <div className="flex items-baseline justify-between">
             <div className="font-serif text-[26px] leading-none text-accent-ink">Signal</div>
-            <div className="font-mono text-[11px] text-accent-ink">seconds · daily</div>
           </div>
           <ol className="m-0 flex list-none flex-col gap-2.5 p-0">
             {SIGNAL.map((t) => (
@@ -211,16 +208,15 @@ export function FromTableau() {
               </li>
             ))}
           </ol>
-          <div className="mt-auto border-t border-accent/30 pt-3 text-[13px] font-medium text-accent-ink">It tells you the story, with sources.</div>
         </div>
       </div>
       {/* Transfer: same sources, a different last mile */}
       <div className="grid items-center gap-3 min-[800px]:grid-cols-[1fr_auto_1.2fr_auto_1fr]">
-        <Stage label="Your sources stay" items={["Data warehouse / BigQuery", "Tableau data sources", "CSV & Sheets"]} />
+        <Stage label="Input" items={["Task and handoff records", "Here: synthetic data", "Elsewhere: a warehouse table or Tableau data source"]} />
         <Flow />
-        <Stage label="Signal layer" items={["Checks the data", "Detectors find changes", "Claude explains them"]} accent />
+        <Stage label="Processing" items={["Data checks", "Detectors", "Claude"]} accent />
         <Flow />
-        <Stage label="Instead of dashboards" items={["Daily briefing", "Ask in plain English", "Owners & notes"]} />
+        <Stage label="Output" items={["Daily briefing", "Questions to the agent", "Task owners and notes"]} />
       </div>
     </div>
   );
@@ -281,7 +277,7 @@ export function InsightSources({ counts, example }: {
             Evidence
             {example?.evidence.slice(0, 3).map((id) => <span key={id} className="rounded border border-line px-1.5 font-mono text-[11px]">{id}</span>)}
           </div>
-          <div className="border-t border-line pt-2.5 text-xs text-muted">Words by Claude, from these facts. Any number not in the facts is rejected.</div>
+          <div className="border-t border-line pt-2.5 text-xs text-muted">Claude writes the sentence from the detector&apos;s numbers. If it uses a number that isn&apos;t in them, template text is used instead.</div>
         </div>
       </div>
     </div>

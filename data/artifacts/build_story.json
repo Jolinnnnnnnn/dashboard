@@ -4,12 +4,12 @@
   "first_commit": "2026-10-07T16:36:14-04:00",
   "agent_live": "2026-10-08T10:19:40-04:00",
   "hours_to_live_agent": 17.7,
-  "commits": 22,
+  "commits": 23,
   "lines": {
-    "typescript": 4185,
+    "typescript": 4186,
     "python": 2105
   },
-  "logged_decisions": 40,
+  "logged_decisions": 41,
   "validator_checks": 21,
   "evals": {
     "passed": 16,
@@ -134,6 +134,11 @@
       "hash": "c38357f",
       "date": "2026-10-08T12:42:41-04:00",
       "subject": "Redesign How it was built as a visual page"
+    },
+    {
+      "hash": "a013e03",
+      "date": "2026-10-08T13:12:38-04:00",
+      "subject": "How it was built: Tableau shift, insight sources, Phases 1-7"
     }
   ]
 }
