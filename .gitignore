@@ -14,3 +14,11 @@ __pycache__/
 
 # os
 .DS_Store
+# next.js / node
+/build
+/coverage
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+*.pem
+npm-debug.log*

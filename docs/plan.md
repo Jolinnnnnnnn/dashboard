@@ -1,6 +1,6 @@
 # Relay: Plan
 
-**Status (update as phases finish):** Phase 0 ✅ · Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · next: Phase 4 (Claude Design)
+**Status (update as phases finish):** Phase 0 ✅ · Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · Phase 4 ✅ · Phase 5 ✅ (deploy pending) · Phase 6 ✅ · next: Phase 7 (Ask agent)
 
 ## 1. What it is
 
@@ -92,20 +92,20 @@ Folders are created in the phase that first needs them.
 
 **Done when:** accuracy beats baseline and the numbers are in the README draft.
 
-### Phase 4: Design in Claude Design (~75 min, you)
+### Phase 4: Design in Claude Design ✅ (you)
 - Paste the prompt in section 6, make a few targeted revisions, then stop.
 - Export → Hand off to Claude Code (local), pointed at this repo.
 
 **Done when:** the handoff has landed in the repo.
 
-### Phase 5: Scaffold + deploy day one (~1.5 hrs, Claude Code + you)
+### Phase 5: Scaffold + deploy day one ✅ (deploy pending: you import the repo into Vercel)
 - Turn the handoff into a Next.js app with shadcn/ui, using mock data in the real JSON shapes.
 - Import the repo into Vercel; add `ANTHROPIC_API_KEY` under Settings → Environment Variables.
 - Push → live URL.
 
 **Done when:** all four views render on the live URL, even with fake numbers.
 
-### Phase 6: Data layer + wire up views (~4 hrs, Claude Code)
+### Phase 6: Data layer + wire up views ✅ (done together with Phase 5: the artifacts already existed, so no mock-data step)
 - `lib/data/`: mock API functions with the same signatures real APIs would have, reading JSON.
 - `lib/predict/`: reads transition tables, returns next stakeholder, probabilities, reason text, ETA.
 - Wire up one view at a time, committing after each:

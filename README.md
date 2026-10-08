@@ -35,6 +35,15 @@ Ticket text is noisy (vague titles, tickets worded like a different problem), an
 
 > These numbers show the pipeline recovers patterns planted in synthetic data ([data spec](docs/data-spec.md)). They are not real-world accuracy; with real data the same scripts would be re-run.
 
+## Run locally
+
+```bash
+npm ci
+npm run dev        # http://localhost:3000
+```
+
+Data and model scripts (Python 3.12): see the Commands section of [CLAUDE.md](CLAUDE.md).
+
 ## Docs
 
 - [Plan](docs/plan.md)

@@ -9,7 +9,7 @@ TPMs / support leads tracking client tasks across teams.
 ## Stack
 
 - Offline data & analysis: Python 3.12 (`scripts/`, venv in `.venv/`), pandas, numpy, scikit-learn
-- App: Next.js (App Router), TypeScript (strict), Tailwind, shadcn/ui, Recharts, React Flow
+- App: Next.js 16 (App Router, `cacheComponents` + `partialPrefetching` on), React 19, TypeScript (strict), Tailwind v4. Charts and the process map are custom SVG/divs matching the Claude Design prototype (no chart library, no shadcn).
 - AI: Claude API. Sonnet 5.5 (`claude-sonnet-5-5`) for the agent, Haiku 5.5 (`claude-haiku-5-5`) for offline task summaries
 - Hosting: GitHub → Vercel
 
@@ -17,10 +17,11 @@ TPMs / support leads tracking client tasks across teams.
 
 - `scripts/`: `generate_data.py`, `validate_patterns.py`, `backtest.py`, `build_artifacts.py`
 - `data/`: generated JSON (committed); `data/artifacts/`: transition tables, similar cases, summaries
-- `lib/data/`: mock API layer (same signatures as the future real APIs)
-- `lib/predict/`: prediction from transition tables
 - `lib/agent/`: agent tools + system prompt
-- `app/`: pages (queue, `task/[id]`, process, ask) and `api/agent`
+- `app/`: pages (`/` queue, `task/[id]`, `process`, `ask`; later `api/agent`)
+- `components/`: client components (TopBar, Sidebar, QueueTable, ProcessView, AskView, ui)
+- `lib/data.ts` (server-only data access) and `lib/types.ts` (view models)
+- `design/`: Claude Design handoff (`project/Relay.dc.html`), the visual source of truth; tokens copied into `app/globals.css`
 - `docs/`: `plan.md`, `data-spec.md`, `definitions.md`, `prompt-log.md`
 - `evals/`: agent eval questions + runner
 
@@ -33,7 +34,8 @@ TPMs / support leads tracking client tasks across teams.
 
 - Never hand-edit files in `data/`. Change the spec or the generator, then regenerate.
 - After regenerating data, run `validate_patterns.py`; all checks must pass.
-- All data access in the app goes through `lib/data/`. Pages and the agent never read JSON directly.
+- All data access in the app goes through `lib/data.ts`. Pages and the agent never read JSON directly.
+- Next.js 16 is not the version in most training data: read `node_modules/next/dist/docs/` before using an unfamiliar API (see AGENTS.md). Key rules here: `params`/`searchParams` are Promises; anything reading them, `useSearchParams`, or `usePathname` must sit inside `<Suspense>` or the production build fails; no `dynamic`/`dynamicParams`/`revalidate` exports; route handlers run on Node.js (no edge).
 - Secrets live only in `.env.local` / Vercel env vars. Never import them into client components.
 - The agent is read-only, must cite task IDs for claims, and says "I don't know" when the data doesn't support an answer. Max 6 tool calls per question.
 - The UI shows a "synthetic data" disclaimer; never present the data as real.
@@ -47,7 +49,13 @@ TPMs / support leads tracking client tasks across teams.
 
 ## Commands
 
-Run from the repo root with the venv active (`source .venv/bin/activate`):
+App (from the repo root):
+
+- `npm run dev`: dev server on http://localhost:3000
+- `npx tsc --noEmit && npx eslint .`: typecheck and lint (`next build` no longer lints)
+- `npm run build`: production build; prerenders all 500 task pages. Run it before pushing: Suspense mistakes only fail here.
+
+Data pipeline, run from the repo root with the venv active (`source .venv/bin/activate`):
 
 - `pip install -r requirements.txt`: install Python deps
 - `python scripts/generate_data.py`: regenerate `data/` (deterministic, seed 42)
