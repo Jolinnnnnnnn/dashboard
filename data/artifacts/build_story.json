@@ -4,12 +4,12 @@
   "first_commit": "2026-10-07T16:36:14-04:00",
   "agent_live": "2026-10-08T10:19:40-04:00",
   "hours_to_live_agent": 17.7,
-  "commits": 23,
+  "commits": 24,
   "lines": {
-    "typescript": 4186,
+    "typescript": 3839,
     "python": 2105
   },
-  "logged_decisions": 41,
+  "logged_decisions": 42,
   "validator_checks": 21,
   "evals": {
     "passed": 16,
@@ -139,6 +139,11 @@
       "hash": "a013e03",
       "date": "2026-10-08T13:12:38-04:00",
       "subject": "How it was built: Tableau shift, insight sources, Phases 1-7"
+    },
+    {
+      "hash": "a9deaf8",
+      "date": "2026-10-08T13:14:49-04:00",
+      "subject": "How it was built: plain language instead of marketing copy"
     }
   ]
 }
