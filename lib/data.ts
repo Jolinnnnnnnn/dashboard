@@ -496,3 +496,52 @@ export type BuildStory = {
 export function getBuildStory(): BuildStory {
   return buildStoryJson as BuildStory;
 }
+
+// ── Search and classic-dashboard data ──
+
+export type SearchIndex = {
+  tasks: { id: string; title: string; client: string; status: "open" | "closed" }[];
+  clients: { name: string; open: number }[];
+};
+
+/** Everything the jump-to search can match (served once as static JSON). */
+export function getSearchIndex(): SearchIndex {
+  return {
+    tasks: TASKS.map((t) => ({ id: t.id, title: t.title, client: CLIENT_NAMES[t.client_id], status: t.status })),
+    clients: clientsJson.map((c) => ({ name: c.name, open: OPEN_TASKS.filter((t) => t.client_id === c.id).length }))
+      .sort((a, b) => a.name.localeCompare(b.name)),
+  };
+}
+
+export type ClassicData = {
+  open: { stakeholder: string; type: string; client: string; region: string; risk: Risk; age: number }[];
+  history: { type: string; client: string; region: string; week: string; handoffs90: number }[];
+  weeks: string[];
+};
+
+/** Raw rows for the classic dashboard, so its filters can recompute every chart in the browser. */
+export function getClassicData(): ClassicData {
+  const regionOf = Object.fromEntries(clientsJson.map((c) => [c.id, c.region]));
+  const weekStart = (iso: string) => {
+    const d = new Date(iso);
+    d.setUTCHours(0, 0, 0, 0);
+    d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7)); // Monday
+    return d.toISOString().slice(0, 10);
+  };
+  const ninetyDaysAgo = TODAY.getTime() - 90 * DAY_MS;
+  // Last 8 complete weeks before the current one
+  const current = weekStart(TODAY.toISOString());
+  const weeks = Array.from({ length: 8 }, (_, i) => new Date(new Date(current).getTime() - (8 - i) * 7 * DAY_MS).toISOString().slice(0, 10));
+  return {
+    open: OPEN_TASKS.map((t) => ({
+      stakeholder: name(t.current_stakeholder), type: t.type, client: CLIENT_NAMES[t.client_id], region: regionOf[t.client_id],
+      risk: PREDICTIONS[t.id].risk, age: round1(daysBetween(t.created_at, TODAY)),
+    })),
+    history: TASKS.map((t) => ({
+      type: t.type, client: CLIENT_NAMES[t.client_id], region: regionOf[t.client_id], week: weekStart(t.created_at),
+      // Cleaned stints (duplicate rows merged), matching the Python pipeline's handoff counts
+      handoffs90: stints(t.id).filter((st) => new Date(st.entered).getTime() >= ninetyDaysAgo).length,
+    })),
+    weeks,
+  };
+}

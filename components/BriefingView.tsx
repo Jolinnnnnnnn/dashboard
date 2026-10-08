@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { AskButton, useAgent } from "@/components/AgentDock";
 import { ClaimButton, TaskWorkspaceProvider } from "@/components/Workspace";
+import type { ClassicData } from "@/lib/data";
 import type { Briefing, Insight, Tone } from "@/lib/types";
 
 const TONE: Record<Tone, string> = {
@@ -166,26 +167,78 @@ function SideColumn({ b }: { b: Briefing }) {
   );
 }
 
-function Classic({ b }: { b: Briefing }) {
-  const k = b.classic.kpis;
-  const chips = ["Stakeholder", "Type", "Client", "Region", "Risk"].map((x) => `${x}: All ▾`).concat("Date: Last 30 days ▾");
+type Chart = { title: string; note?: string; bars?: { label: string; value: number }[]; cols?: { label: string; value: number }[] };
+
+const countBy = <T,>(rows: T[], key: (r: T) => string) =>
+  Object.entries(rows.reduce<Record<string, number>>((a, r) => ({ ...a, [key(r)]: (a[key(r)] ?? 0) + 1 }), {}))
+    .sort((a, b) => b[1] - a[1]).map(([label, value]) => ({ label, value }));
+
+function Classic({ data }: { data: ClassicData }) {
+  const [f, setF] = useState({ stakeholder: "", type: "", client: "", region: "", risk: "" });
+  const uniq = (xs: string[]) => [...new Set(xs)].sort();
+  const set = (k: keyof typeof f) => (v: string) => setF((x) => ({ ...x, [k]: v }));
+
+  // Open tasks honor every filter; history (created per week, handoffs) has no current team or risk
+  const open = data.open.filter((r) => (!f.stakeholder || r.stakeholder === f.stakeholder) && (!f.type || r.type === f.type)
+    && (!f.client || r.client === f.client) && (!f.region || r.region === f.region)
+    && (!f.risk || (f.risk === "At risk" ? r.risk !== "Low" : r.risk === f.risk)));
+  const history = data.history.filter((r) => (!f.type || r.type === f.type) && (!f.client || r.client === f.client) && (!f.region || r.region === f.region));
+  const historyNote = f.stakeholder || f.risk ? "Team and risk filters don't apply to history" : undefined;
+
+  const byClient = Object.entries(open.reduce<Record<string, number[]>>((a, r) => ({ ...a, [r.client]: [...(a[r.client] ?? []), r.age] }), {}))
+    .map(([label, ages]) => ({ label, value: Math.round((ages.reduce((x, y) => x + y, 0) / ages.length) * 10) / 10 }))
+    .sort((a, b) => b.value - a.value).slice(0, 8);
+  const charts: Chart[] = [
+    { title: "Open tasks by stakeholder", bars: countBy(open, (r) => r.stakeholder) },
+    { title: "Open tasks by type", bars: countBy(open, (r) => r.type) },
+    { title: "Avg days open by client", bars: byClient },
+    { title: "Tasks opened per week", note: historyNote,
+      cols: data.weeks.map((w) => ({ label: new Date(w).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" }), value: history.filter((r) => r.week === w).length })) },
+  ];
+  const kpis: [string, string | number, string?][] = [
+    ["Open tasks", open.length],
+    ["At risk", open.filter((r) => r.risk !== "Low").length],
+    ["Avg days open", open.length ? (open.reduce((a, r) => a + r.age, 0) / open.length).toFixed(1) : "–"],
+    ["Handoffs (90d)", history.reduce((a, r) => a + r.handoffs90, 0), historyNote],
+  ];
+  const anyFilter = Object.values(f).some(Boolean);
+  const pick = (label: string, all: string, key: keyof typeof f, options: string[]) => (
+    <select aria-label={label} value={f[key] || all} onChange={(e) => set(key)(e.target.value === all ? "" : e.target.value)} className="field h-[30px] max-w-[170px] text-xs">
+      {[all, ...options].map((o) => <option key={o} value={o}>{o}</option>)}
+    </select>
+  );
+
   return (
     <div className="flex flex-col gap-3" style={{ animation: "fadeIn 200ms ease-out both" }}>
-      <div className="flex flex-wrap gap-1.5">
-        {chips.map((c) => <span key={c} className="rounded-md border border-line bg-surface px-2.5 py-1 text-xs text-muted">{c}</span>)}
+      <div className="flex flex-wrap items-center gap-1.5">
+        {pick("Stakeholder", "All stakeholders", "stakeholder", uniq(data.open.map((r) => r.stakeholder)))}
+        {pick("Type", "All task types", "type", uniq(data.open.map((r) => r.type)))}
+        {pick("Client", "All clients", "client", uniq(data.open.map((r) => r.client)))}
+        {pick("Region", "All regions", "region", uniq(data.open.map((r) => r.region)))}
+        {pick("Risk", "Any risk", "risk", ["At risk", "High", "Medium", "Low"])}
+        {anyFilter && (
+          <button onClick={() => setF({ stakeholder: "", type: "", client: "", region: "", risk: "" })} className="h-[30px] border-0 bg-transparent px-1 text-xs text-muted hover:text-ink">Clear</button>
+        )}
       </div>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-3">
-        {[["Open tasks", k.open], ["At risk", k.at_risk], ["Avg days open", k.avg_days_open], ["Handoffs (90d)", k.handoffs_90d]].map(([label, v]) => (
-          <div key={label} className="card px-4 py-3.5"><div className="text-xs text-muted">{label}</div><div className="mt-1 text-[26px] font-semibold">{v}</div></div>
+        {kpis.map(([label, v, note]) => (
+          <div key={label} className="card px-4 py-3.5" title={note}>
+            <div className="text-xs text-muted">{label}{note && " *"}</div>
+            <div className="mt-1 text-[26px] font-semibold">{v}</div>
+          </div>
         ))}
       </div>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-3">
-        {b.classic.charts.map((c) => {
+        {charts.map((c) => {
           const vals = (c.bars ?? c.cols ?? []).map((x) => x.value);
-          const max = Math.max(...vals) || 1;
+          const max = Math.max(...vals, 0) || 1;
           return (
             <div key={c.title} className="card flex flex-col gap-2.5 px-4 py-3.5">
-              <div className="text-[12.5px] font-medium">{c.title}</div>
+              <div className="flex items-baseline justify-between gap-2">
+                <div className="text-[12.5px] font-medium">{c.title}</div>
+                {c.note && <div className="text-[11px] text-faint">* {c.note}</div>}
+              </div>
+              {c.bars && c.bars.length === 0 && <div className="py-4 text-center text-xs text-faint">No open tasks match these filters.</div>}
               {c.bars && (
                 <div className="flex flex-col gap-[5px]">
                   {c.bars.map((x, i) => (
@@ -203,7 +256,7 @@ function Classic({ b }: { b: Briefing }) {
                     <div key={x.label} className="flex h-full flex-1 flex-col items-center justify-end gap-1">
                       <div className="text-[11px] text-muted">{x.value}</div>
                       <div className="w-full rounded-t-sm" style={{ height: `${(x.value / max) * 80}%`, background: PAL[0] }} />
-                      <div className="text-[10.5px] text-faint">{x.label}</div>
+                      <div className="whitespace-nowrap text-[10px] text-faint">{x.label}</div>
                     </div>
                   ))}
                 </div>
@@ -216,7 +269,7 @@ function Classic({ b }: { b: Briefing }) {
   );
 }
 
-export function BriefingView({ b }: { b: Briefing }) {
+export function BriefingView({ b, classic }: { b: Briefing; classic: ClassicData }) {
   const [mode, setMode] = useState<"agent" | "classic">("agent");
   const tab = (m: "agent" | "classic") =>
     `flex h-[30px] items-center gap-[7px] rounded-md border-0 px-3 font-medium ${mode === m ? "bg-ink text-bg" : "bg-transparent text-muted"}`;
@@ -259,7 +312,7 @@ export function BriefingView({ b }: { b: Briefing }) {
           <SideColumn b={b} />
         </div>
       ) : (
-        <Classic b={b} />
+        <Classic data={classic} />
       )}
     </div>
   );

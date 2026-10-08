@@ -5,8 +5,8 @@ import { Suspense } from "react";
 import { AgentLauncher, AgentProvider } from "@/components/AgentDock";
 import { Banner } from "@/components/Banner";
 import { Sidebar, SidebarFallback } from "@/components/Sidebar";
-import { TopBar, TopBarFallback } from "@/components/TopBar";
-import { getBriefing, getFilterOptions, getQueueStats } from "@/lib/data";
+import { TopBar } from "@/components/TopBar";
+import { getBriefing, getQueueStats } from "@/lib/data";
 import "./globals.css";
 
 const geist = Geist({ variable: "--font-geist", subsets: ["latin"], weight: ["400", "500", "600"] });
@@ -22,7 +22,6 @@ export const metadata: Metadata = {
 const themeScript = `(function(){try{var t=localStorage.getItem('signal-theme');if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t}catch(e){}})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
-  const options = getFilterOptions();
   const openCount = getQueueStats().open;
   const briefing = getBriefing();
   const chips = [
@@ -40,9 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Sidebar openCount={openCount} stats={briefing.stats} />
           </Suspense>
           <main className="flex min-w-0 flex-1 flex-col">
-            <Suspense fallback={<TopBarFallback />}>
-              <TopBar options={options} />
-            </Suspense>
+            <TopBar />
             <Banner />
             <div className="w-full max-w-[1400px] px-4 pb-12 pt-6 min-[900px]:px-8">{children}</div>
           </main>

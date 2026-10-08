@@ -5,7 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { RiskPill, ratioColor } from "@/components/ui";
-import type { QueueRow, Risk } from "@/lib/types";
+import { ALL } from "@/lib/filters";
+import type { FilterOptions, QueueRow, Risk } from "@/lib/types";
 
 const PAGE_SIZE = 12;
 const RISK_RANK: Record<Risk, number> = { High: 3, Medium: 2, Low: 1 };
@@ -21,6 +22,16 @@ const sorters = (owners: Owners): Record<SortKey, (r: QueueRow) => string | numb
   owner: (r) => (owners[r.id] ? (owners[r.id].mine ? "0" : "1" + owners[r.id].by) : "2"),
   days: (r) => r.ratio, next: (r) => r.next[0]?.pct ?? 0, risk: (r) => RISK_RANK[r.risk] * 10 + r.ratio,
 });
+
+export function FilterSelect({ value, options, onChange, label }: {
+  value: string; options: string[]; onChange: (v: string) => void; label: string;
+}) {
+  return (
+    <select aria-label={label} value={value} onChange={(e) => onChange(e.target.value)} className="field max-w-[170px]">
+      {options.map((o) => <option key={o} value={o}>{o}</option>)}
+    </select>
+  );
+}
 
 function Legend() {
   return (
@@ -49,7 +60,7 @@ function Shell({ count, children, footer }: { count: string; children: React.Rea
   );
 }
 
-export function QueueTable({ rows }: { rows: QueueRow[] }) {
+export function QueueTable({ rows, options }: { rows: QueueRow[]; options: FilterOptions }) {
   const params = useSearchParams();
   const router = useRouter();
   const [sort, setSort] = useState<{ key: SortKey; dir: "asc" | "desc" }>({ key: "risk", dir: "desc" });
@@ -61,8 +72,17 @@ export function QueueTable({ rows }: { rows: QueueRow[] }) {
   }, []);
 
   const q = (params.get("q") ?? "").trim().toLowerCase();
-  const type = params.get("type"), client = params.get("client"), stakeholder = params.get("stakeholder");
-  const filterKey = `${q}|${type}|${client}|${stakeholder}`;
+  const type = params.get("type"), client = params.get("client"), stakeholder = params.get("stakeholder"), risk = params.get("risk");
+  const filterKey = `${q}|${type}|${client}|${stakeholder}|${risk}`;
+  // Filters live in the URL so a filtered view can be shared
+  const setParam = (key: string, value: string, empty: string) => {
+    const next = new URLSearchParams(params);
+    if (value && value !== empty) next.set(key, value);
+    else next.delete(key);
+    const qs = next.toString();
+    router.replace(qs ? `/queue?${qs}` : "/queue", { scroll: false });
+  };
+  const anyFilter = Boolean(q || type || client || stakeholder || risk);
   // Reset to the first page whenever the filters change
   const [lastFilter, setLastFilter] = useState(filterKey);
   if (filterKey !== lastFilter) {
@@ -72,7 +92,8 @@ export function QueueTable({ rows }: { rows: QueueRow[] }) {
 
   const filtered = rows.filter((r) =>
     (!q || r.id.toLowerCase().includes(q) || r.client.toLowerCase().includes(q))
-    && (!type || r.type === type) && (!client || r.client === client) && (!stakeholder || r.stakeholder === stakeholder));
+    && (!type || r.type === type) && (!client || r.client === client) && (!stakeholder || r.stakeholder === stakeholder)
+    && (!risk || (risk === "At risk" ? r.risk !== "Low" : r.risk === risk)));
   const key = sorters(owners)[sort.key];
   const dir = sort.dir === "asc" ? 1 : -1;
   const sorted = [...filtered].sort((a, b) => (key(a) > key(b) ? 1 : key(a) < key(b) ? -1 : 0) * dir);
@@ -113,7 +134,31 @@ export function QueueTable({ rows }: { rows: QueueRow[] }) {
 
   const count = filtered.length === rows.length ? `${rows.length} tasks` : `${filtered.length} of ${rows.length} tasks`;
 
+  const filters = (
+    <div className="flex flex-wrap items-center gap-2">
+      <div className="flex h-8 max-w-[260px] flex-[1_1_200px] items-center gap-2 rounded-lg border border-line bg-surface px-2.5 focus-within:border-line2">
+        <div className="size-[9px] flex-none rounded-full border-[1.5px] border-faint" />
+        <input
+          value={params.get("q") ?? ""}
+          onChange={(e) => setParam("q", e.target.value, "")}
+          placeholder="Filter by ID or client"
+          aria-label="Filter by task ID or client"
+          className="min-w-0 flex-1 border-0 bg-transparent text-ink outline-none placeholder:text-faint"
+        />
+      </div>
+      <FilterSelect label="Task type" value={type ?? ALL.type} options={[ALL.type, ...options.types]} onChange={(v) => setParam("type", v, ALL.type)} />
+      <FilterSelect label="Client" value={client ?? ALL.client} options={[ALL.client, ...options.clients]} onChange={(v) => setParam("client", v, ALL.client)} />
+      <FilterSelect label="Currently with" value={stakeholder ?? ALL.stakeholder} options={[ALL.stakeholder, ...options.stakeholders]} onChange={(v) => setParam("stakeholder", v, ALL.stakeholder)} />
+      <FilterSelect label="Risk" value={risk ?? ALL.risk} options={[ALL.risk, "At risk", "High", "Medium", "Low"]} onChange={(v) => setParam("risk", v, ALL.risk)} />
+      {anyFilter && (
+        <button onClick={() => router.replace("/queue", { scroll: false })} className="h-8 border-0 bg-transparent px-1 text-muted hover:text-ink">Clear</button>
+      )}
+    </div>
+  );
+
   return (
+    <div className="flex flex-col gap-3">
+    {filters}
     <Shell count={count} footer={footer}>
       {header}
       <tbody>
@@ -165,6 +210,7 @@ export function QueueTable({ rows }: { rows: QueueRow[] }) {
         )}
       </tbody>
     </Shell>
+    </div>
   );
 }
 

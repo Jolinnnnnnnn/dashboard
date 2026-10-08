@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 import { AskButton, useAgent } from "@/components/AgentDock";
-import { DEFAULT_WINDOW, WINDOWS } from "@/components/TopBar";
+import { DEFAULT_WINDOW, WINDOWS } from "@/lib/filters";
 import { riskVars } from "@/components/ui";
 import type { MapEdge, MapNode, MapWindow } from "@/lib/types";
 

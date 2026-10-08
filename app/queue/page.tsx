@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { AskButton } from "@/components/AgentDock";
 import { QueueTable, QueueTableFallback } from "@/components/QueueTable";
 import { CountUp } from "@/components/ui";
-import { DATA_AS_OF, getQueueRows, getQueueStats } from "@/lib/data";
+import { DATA_AS_OF, getFilterOptions, getQueueRows, getQueueStats } from "@/lib/data";
 
 export default function QueuePage() {
   const stats = getQueueStats();
@@ -46,7 +46,7 @@ export default function QueuePage() {
       </div>
 
       <Suspense fallback={<QueueTableFallback />}>
-        <QueueTable rows={rows} />
+        <QueueTable rows={rows} options={getFilterOptions()} />
       </Suspense>
     </div>
   );

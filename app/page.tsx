@@ -1,6 +1,6 @@
 import { BriefingView } from "@/components/BriefingView";
-import { getBriefing } from "@/lib/data";
+import { getBriefing, getClassicData } from "@/lib/data";
 
 export default function BriefingPage() {
-  return <BriefingView b={getBriefing()} />;
+  return <BriefingView b={getBriefing()} classic={getClassicData()} />;
 }
