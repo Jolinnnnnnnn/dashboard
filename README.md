@@ -4,7 +4,7 @@ Signal is an AI agent for operations data: instead of a dashboard you have to di
 
 **Live:** https://signal-agent-nu.vercel.app
 
-> **Status:** in progress (the agent is next). See [docs/plan.md](docs/plan.md).
+> **Status:** agent live; polish next. See [docs/plan.md](docs/plan.md).
 >
 > **All data is synthetic.** 400 historical and 100 open tasks for a fictional CDN company, generated with planted patterns ([docs/data-spec.md](docs/data-spec.md)). Accuracy numbers are indicative, not real-world performance.
 
@@ -36,6 +36,18 @@ Ticket text is noisy (vague titles, tickets worded like a different problem), an
 **AI summaries:** 100 open-task summaries from Claude Haiku 5.5, grounded only in precomputed facts. An automated check confirms no summary cites a task ID it wasn't given.
 
 **Agent briefing:** five detectors (most overdue task with a known fix, module behind at-risk tasks, clients slow to respond, rising rework, process-change effects) find insights in the data; Claude writes each card from the detected facts, and any wording with a number not in the facts is rejected for a template. Today's briefing: 4 insights, all Claude-worded, all passing the check.
+
+**Agent (Ask / dock):** Claude Sonnet 5.5 in a tool-use loop over 7 read-only tools (search tasks, task detail, similar cases, team stats, module stats, client stats, briefing). It shows each step, cites task IDs, drafts messages on request, and says when the data can't answer.
+
+| Eval set (15 questions, `npm run eval`) | Result |
+|---|---|
+| Lookups with exact expected numbers | 6/6 |
+| Multi-step questions | 4/4 |
+| Drafting a message | 1/1 |
+| Questions the data can't answer (SLA, revenue, people, a missing task) | 4/4 |
+| Median latency · cost per question | 4.0 s · ~$0.013 |
+
+Every answer is also checked for task IDs that no tool returned (flagged "unverified" in the UI) and for staying within 6 tool calls. Guardrails: zod-validated tool inputs, a tool budget after which tools are switched off, a stream-idle watchdog, per-visitor and global rate limits, and server-side refusal fallback.
 
 > These numbers show the pipeline recovers patterns planted in synthetic data ([data spec](docs/data-spec.md)). They are not real-world accuracy; with real data the same scripts would be re-run.
 

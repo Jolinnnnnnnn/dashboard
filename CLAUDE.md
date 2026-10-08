@@ -17,13 +17,13 @@ TPMs / support leads tracking client tasks across teams.
 
 - `scripts/`: `generate_data.py`, `validate_patterns.py`, `backtest.py`, `build_artifacts.py`
 - `data/`: generated JSON (committed); `data/artifacts/`: transition tables, similar cases, summaries
-- `lib/agent/`: agent tools + system prompt
-- `app/`: pages (`/` briefing, `queue`, `task/[id]`, `process`, `ask`; later `api/agent`)
+- `app/`: pages (`/` briefing, `queue`, `task/[id]`, `process`, `ask`) and `api/agent` (POST, streams NDJSON events)
+- `lib/agent/`: `run.ts` (tool-use loop, Sonnet 5.5, guardrails), `tools.ts` (7 read-only tools, zod-validated), `ratelimit.ts` (Upstash or in-memory fallback)
 - `components/`: client components (AgentDock: provider, dock, launcher, AskButton; BriefingView, TopBar, Sidebar, QueueTable, ProcessView, AskView, ui)
 - `lib/data.ts` (server-only data access) and `lib/types.ts` (view models)
 - `design/`: Claude Design handoff; `project/Relay v3.dc.html` is the current visual source of truth (v1/v2 kept for reference; designed under the working name Relay); tokens copied into `app/globals.css`
 - `docs/`: `plan.md`, `data-spec.md`, `definitions.md`, `prompt-log.md`
-- `evals/`: agent eval questions + runner
+- `evals/`: `agent-questions.json` (15 graded questions) + `run.ts`; results in `evals/results.json`
 
 ## Key docs (read before changing related code)
 
@@ -37,7 +37,8 @@ TPMs / support leads tracking client tasks across teams.
 - All data access in the app goes through `lib/data.ts`. Pages and the agent never read JSON directly.
 - Next.js 16 is not the version in most training data: read `node_modules/next/dist/docs/` before using an unfamiliar API (see AGENTS.md). Key rules here: `params`/`searchParams` are Promises; anything reading them, `useSearchParams`, or `usePathname` must sit inside `<Suspense>` or the production build fails; no `dynamic`/`dynamicParams`/`revalidate` exports; route handlers run on Node.js (no edge).
 - Secrets live only in `.env.local` / Vercel env vars. Never import them into client components.
-- The agent is read-only, must cite task IDs for claims, and says "I don't know" when the data doesn't support an answer. Max 6 tool calls per question.
+- The agent is read-only, must cite task IDs for claims, and says "I don't know" when the data doesn't support an answer. Max 6 tool calls per question; then tools are switched off and it must answer.
+- Agent answers only show task IDs as sources if a tool returned them; any other ID is flagged "unverified" in the UI and fails the evals.
 - The UI shows a "synthetic data" disclaimer; never present the data as real.
 - Every briefing insight must come from a detector over the data, never hand-written copy. If the design needs a finding the data can't support, plant the pattern in the generator (spec + validation) or drop the card.
 
@@ -55,6 +56,8 @@ App (from the repo root):
 - `npm run dev`: dev server on http://localhost:3000
 - `npx tsc --noEmit && npx eslint .`: typecheck and lint (`next build` no longer lints)
 - `npm run build`: production build; prerenders all 500 task pages. Run it before pushing: Suspense mistakes only fail here.
+- `npm run eval [-- <id filter>]`: runs the agent eval set against the real API (~$0.15 for all 15). Re-run after changing the system prompt, tools, or model.
+- Env vars: `ANTHROPIC_API_KEY` (agent; without it the dock reports "not configured"), `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` (rate limits; required in production, the in-memory fallback resets per instance).
 
 Data pipeline, run from the repo root with the venv active (`source .venv/bin/activate`):
 

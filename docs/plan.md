@@ -2,7 +2,7 @@
 
 > Renamed from the working name **Relay** on 2026-10-08. The Claude Design prompt in section 6 is kept verbatim as sent, so it still says Relay.
 
-**Status (update as phases finish):** Phase 0 ✅ · Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · Phase 4 ✅ · Phase 5 ✅ (live: https://signal-agent-nu.vercel.app) · Phase 6 ✅ · Design v3 ✅ (briefing, classic view, agent dock UI) · next: Phase 7 (agent, wired into the dock and Ask page)
+**Status (update as phases finish):** Phase 0 ✅ · Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · Phase 4 ✅ · Phase 5 ✅ (live: https://signal-agent-nu.vercel.app) · Phase 6 ✅ · Design v3 ✅ (briefing, classic view, agent dock UI) · Phase 7 ✅ (agent, 15/15 evals) · next: Phase 8 (Upstash + API key on Vercel, polish, README, demo)
 
 ## 1. What it is
 
@@ -117,7 +117,7 @@ Folders are created in the phase that first needs them.
 
 **Done when:** a few UI numbers match `validate_patterns.py` output (e.g. Security's median hold).
 
-### Phase 7: Ask agent (~4 hrs, Claude Code)
+### Phase 7: Ask agent ✅ (Claude Code)
 - `/api/agent`: Claude tool use with read-only tools: `list_tasks(filters)`, `get_task(id)`, `get_task_history(id)`, `get_code_areas(id)`, `search_similar_cases(query|id)`, `get_routing_stats(filters)`, `get_module_stats()`.
 - **Guardrails:** max 6 tool calls per question, must cite task IDs, "I don't know" when evidence is thin, refuse requests outside the data.
 - **UI:** streaming, step indicator, source chips, suggested questions, follow-ups.

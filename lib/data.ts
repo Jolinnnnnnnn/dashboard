@@ -13,6 +13,7 @@ import similarJson from "@/data/artifacts/similar_cases.json";
 import summariesJson from "@/data/artifacts/summaries.json";
 import transitionsJson from "@/data/artifacts/transitions.json";
 import briefingJson from "@/data/artifacts/briefing.json";
+import eventsJson from "@/data/events.json";
 
 import type {
   Briefing, CodeArea, FilterOptions, MapWindow, QueueRow, QueueStats, Risk, Segment, SimilarCaseView, TaskDetail,
@@ -268,4 +269,210 @@ export function getProcessMap(): MapWindow[] {
 
 export function getBriefing(): Briefing {
   return briefingJson as unknown as Briefing;
+}
+
+// ── Agent queries (read-only; used by lib/agent/tools.ts) ──
+// Return plain JSON so tool results are easy for the model to read and for evals to inspect.
+
+const CLIENT_BY_ID = Object.fromEntries(clientsJson.map((c) => [c.id, c]));
+const STAKEHOLDER_IDS = stakeholdersJson.map((s) => s.id);
+
+/** Accepts a stakeholder id ("network_eng") or display name ("Network Eng"), case-insensitive. */
+export function resolveStakeholder(input: string): string | null {
+  const k = input.trim().toLowerCase().replace(/[\s-]+/g, "_");
+  return STAKEHOLDER_IDS.find((id) => id === k || STAKEHOLDER_NAMES[id].toLowerCase().replace(/[\s-]+/g, "_") === k
+    || STAKEHOLDER_NAMES[id].toLowerCase().startsWith(input.trim().toLowerCase())) ?? null;
+}
+
+function resolveClient(input: string) {
+  const k = input.trim().toLowerCase();
+  return clientsJson.find((c) => c.name.toLowerCase() === k) ?? clientsJson.find((c) => c.name.toLowerCase().includes(k)) ?? null;
+}
+
+const moduleOf = (path: string) => path.split("/")[0];
+
+function taskRow(t: RawTask) {
+  const p = PREDICTIONS[t.id];
+  return {
+    id: t.id, title: t.title, client: CLIENT_NAMES[t.client_id], type: t.type, status: t.status,
+    created: t.created_at.slice(0, 10), closed: t.closed_at?.slice(0, 10) ?? null,
+    current_stakeholder: t.status === "open" ? name(t.current_stakeholder) : null,
+    days_with_current: p ? round1(p.hold_days) : null, risk: p?.risk ?? null,
+    modules: [...new Set(t.code_areas.map(moduleOf))],
+  };
+}
+
+export type TaskSearch = {
+  query?: string; status?: "open" | "closed" | "any"; stakeholder?: string; client?: string; type?: string;
+  risk?: "High" | "Medium" | "Low" | "at_risk"; module?: string; created_after?: string; limit?: number;
+};
+
+export function searchTasks(f: TaskSearch) {
+  const stk = f.stakeholder ? resolveStakeholder(f.stakeholder) : null;
+  if (f.stakeholder && !stk) return { error: `Unknown stakeholder "${f.stakeholder}". Known: ${stakeholdersJson.map((s) => s.name).join(", ")}` };
+  const client = f.client ? resolveClient(f.client) : null;
+  if (f.client && !client) return { error: `Unknown client "${f.client}". Known: ${clientsJson.map((c) => c.name).join(", ")}` };
+  const q = f.query?.trim().toLowerCase();
+  const mod = f.module?.replace(/\/$/, "");
+  const status = f.status ?? "any";
+  const matches = TASKS.filter((t) => {
+    const p = PREDICTIONS[t.id];
+    if (status !== "any" && t.status !== status) return false;
+    if (stk && (t.status !== "open" || t.current_stakeholder !== stk)) return false;
+    if (client && t.client_id !== client.id) return false;
+    if (f.type && t.type.toLowerCase() !== f.type.toLowerCase()) return false;
+    if (f.risk && (!p || (f.risk === "at_risk" ? p.risk === "Low" : p.risk !== f.risk))) return false;
+    if (mod && !t.code_areas.some((a) => moduleOf(a) === mod)) return false;
+    if (f.created_after && t.created_at < f.created_after) return false;
+    if (q && !(t.id.toLowerCase().includes(q) || t.title.toLowerCase().includes(q) || t.description.toLowerCase().includes(q)
+      || CLIENT_NAMES[t.client_id].toLowerCase().includes(q))) return false;
+    return true;
+  });
+  // Most urgent first: open tasks by hold ratio, then newest
+  matches.sort((a, b) => (PREDICTIONS[b.id]?.hold_ratio ?? -1) - (PREDICTIONS[a.id]?.hold_ratio ?? -1) || b.created_at.localeCompare(a.created_at));
+  const limit = Math.min(f.limit ?? 10, 25);
+  return { total_matches: matches.length, showing: Math.min(limit, matches.length), tasks: matches.slice(0, limit).map(taskRow) };
+}
+
+export function agentTask(id: string) {
+  const t = TASK_BY_ID.get(id.trim().toUpperCase());
+  if (!t) return { error: `No task ${id}. Task IDs look like T-4821.` };
+  const p = PREDICTIONS[t.id];
+  const timeline = stints(t.id).filter((s) => s.stakeholder !== "closed").map((s) => ({
+    stakeholder: name(s.stakeholder), entered: s.entered.slice(0, 10),
+    days: round1(s.hold ?? daysBetween(s.entered, TODAY)), ongoing: s.hold === null,
+  }));
+  return {
+    ...taskRow(t),
+    description: t.description,
+    client_tier: CLIENT_BY_ID[t.client_id].tier, client_region: CLIENT_BY_ID[t.client_id].region,
+    code_areas: t.code_areas.map((a) => ({ path: a, module_description: MODULE_NOTES[moduleOf(a)] })),
+    handoff_timeline: timeline,
+    ...(t.status === "closed"
+      ? { days_to_close: round1((new Date(t.closed_at!).getTime() - new Date(t.created_at).getTime()) / DAY_MS), solution_note: t.solution_note || null }
+      : {
+          prediction: {
+            median_hold_for_this_stakeholder_and_type: round1(p.median_hold_days), hold_ratio: round1(p.hold_ratio),
+            next_stakeholder: p.next.map((n) => ({ stakeholder: name(n.stakeholder), probability: Math.round(n.probability * 100) + "%", past_cases: n.count })),
+            evidence: p.reason, expected_route: p.expected_path.map(name), estimated_close: p.estimated_close,
+          },
+          ai_summary: SUMMARIES[t.id]?.summary ?? null,
+        }),
+    similar_case_ids: (SIMILAR[t.id] ?? []).slice(0, 3).map((m) => m.task_id),
+  };
+}
+
+export function agentSimilar(id: string, limit = 3) {
+  const t = TASK_BY_ID.get(id.trim().toUpperCase());
+  if (!t) return { error: `No task ${id}.` };
+  return {
+    task: t.id,
+    similar_cases: (SIMILAR[t.id] ?? []).slice(0, Math.min(limit, 5)).map((m) => ({
+      id: m.task_id, client: m.client, title: m.title, match: Math.round(m.score * 100) + "%", matched_on: m.matched_on,
+      solution_note: m.solution_note || null, days_to_close: m.resolution_days,
+    })),
+  };
+}
+
+export function stakeholderStats(input: string | undefined, type?: string, windowKey: "90" | "180" | "365" = "365") {
+  if (!input) {
+    // Comparison across every team, so "which team is slowest?" takes one call
+    const w = MAP.windows[windowKey];
+    return {
+      window: w.label, bottleneck: name(w.bottleneck),
+      teams: w.nodes.filter((n) => n.id !== "closed")
+        .map((n) => ({ stakeholder: n.name, tasks_passed_through: n.volume, median_hold_days: n.median_hold_days, avg_hold_days: n.avg_hold_days,
+          open_now: OPEN_TASKS.filter((t) => t.current_stakeholder === n.id).length,
+          at_risk_now: OPEN_TASKS.filter((t) => t.current_stakeholder === n.id && PREDICTIONS[t.id].risk !== "Low").length }))
+        .sort((x, y) => (y.median_hold_days ?? 0) - (x.median_hold_days ?? 0)),
+    };
+  }
+  const stk = resolveStakeholder(input);
+  if (!stk) return { error: `Unknown stakeholder "${input}". Known: ${stakeholdersJson.map((s) => s.name).join(", ")}` };
+  const w = MAP.windows[windowKey];
+  const node = w.nodes.find((n) => n.id === stk);
+  const outgoing = w.edges.filter((e) => e.from === stk);
+  const incoming = w.edges.filter((e) => e.to === stk);
+  const byType = Object.entries(TRANSITIONS.by_pair[stk] ?? {})
+    .filter(([t]) => !type || t.toLowerCase() === type.toLowerCase())
+    .map(([t, v]) => ({ type: t, past_stints: v.n, median_hold_days: v.median_hold_days,
+      next: Object.entries(v.next).map(([k, c]) => ({ stakeholder: name(k), share: Math.round((c / v.n) * 100) + "%" })) }));
+  const openHere = OPEN_TASKS.filter((t) => t.current_stakeholder === stk).map((t) => ({
+    id: t.id, client: CLIENT_NAMES[t.client_id], type: t.type, days: round1(PREDICTIONS[t.id].hold_days), risk: PREDICTIONS[t.id].risk,
+  })).sort((a, b) => b.days - a.days);
+  return {
+    stakeholder: name(stk), window: w.label, is_bottleneck: w.bottleneck === stk,
+    tasks_passed_through: node?.volume ?? 0, avg_hold_days: node?.avg_hold_days ?? null, median_hold_days: node?.median_hold_days ?? null,
+    next_stops: outgoing.sort((a, b) => b.count - a.count).map((e) => ({ to: name(e.to), handoffs: e.count, avg_wait_days: e.avg_wait_days, rework_tasks: e.rework_tasks })),
+    arrives_from: incoming.sort((a, b) => b.count - a.count).slice(0, 4).map((e) => ({ from: name(e.from), handoffs: e.count })),
+    by_task_type_12_months: byType,
+    open_now: { count: openHere.length, tasks: openHere.slice(0, 10) },
+    process_changes: (eventsJson as { date: string; stakeholder: string; title: string }[]).filter((e) => e.stakeholder === stk),
+    insight: node?.insight ?? null,
+  };
+}
+
+export function moduleStats(module?: string) {
+  const counts = MAP.windows["365"].modules;
+  const atRisk = OPEN_TASKS.filter((t) => PREDICTIONS[t.id].risk !== "Low");
+  if (!module) {
+    return {
+      modules_by_task_count_12_months: counts.slice(0, 10).map((m) => ({
+        module: `${m.id}/`, tasks: m.count, description: MODULE_NOTES[m.id],
+        at_risk_open_tasks: atRisk.filter((t) => t.code_areas.some((a) => moduleOf(a) === m.id)).length,
+      })),
+      at_risk_open_tasks_total: atRisk.length,
+    };
+  }
+  const id = module.replace(/\/$/, "");
+  if (!MODULE_NOTES[id]) return { error: `Unknown module "${module}". Known: ${modulesJson.map((m) => m.id + "/").join(", ")}` };
+  const touching = TASKS.filter((t) => t.code_areas.some((a) => moduleOf(a) === id));
+  const closed = touching.filter((t) => t.status === "closed");
+  const fixes = closed.filter((t) => t.solution_note).slice(-5).map((t) => ({ id: t.id, client: CLIENT_NAMES[t.client_id], fix: t.solution_note }));
+  const riskHere = atRisk.filter((t) => t.code_areas.some((a) => moduleOf(a) === id));
+  return {
+    module: `${id}/`, description: MODULE_NOTES[id], tasks_12_months: MODULE_COUNTS[id] ?? 0,
+    rank: counts.findIndex((m) => m.id === id) + 1, open_tasks: touching.length - closed.length,
+    at_risk_open_tasks: riskHere.map((t) => ({ id: t.id, client: CLIENT_NAMES[t.client_id], stakeholder: name(t.current_stakeholder), risk: PREDICTIONS[t.id].risk })),
+    clients_with_at_risk_tasks: [...new Set(riskHere.map((t) => CLIENT_NAMES[t.client_id]))],
+    median_days_to_close: closed.length ? round1(median(closed.map((t) => (new Date(t.closed_at!).getTime() - new Date(t.created_at).getTime()) / DAY_MS))) : null,
+    recent_fixes: fixes,
+  };
+}
+
+function median(xs: number[]) {
+  const s = [...xs].sort((a, b) => a - b);
+  const m = Math.floor(s.length / 2);
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+}
+
+export function clientStats(input: string) {
+  const c = resolveClient(input);
+  if (!c) return { error: `Unknown client "${input}". Known: ${clientsJson.map((x) => x.name).join(", ")}` };
+  const theirs = TASKS.filter((t) => t.client_id === c.id);
+  const customerHolds = (pred: (t: RawTask) => boolean) => TASKS.filter(pred).flatMap((t) =>
+    stints(t.id).filter((s) => s.stakeholder === "customer" && s.hold !== null).map((s) => s.hold!));
+  const closed = theirs.filter((t) => t.status === "closed");
+  const open = theirs.filter((t) => t.status === "open");
+  return {
+    client: c.name, tier: c.tier, region: c.region,
+    open_tasks: open.map((t) => ({ id: t.id, type: t.type, stakeholder: name(t.current_stakeholder), days: round1(PREDICTIONS[t.id].hold_days), risk: PREDICTIONS[t.id].risk })),
+    waiting_on_client_now: open.filter((t) => t.current_stakeholder === "customer").map((t) => t.id),
+    closed_tasks_12_months: closed.length,
+    median_days_to_close: closed.length ? round1(median(closed.map((t) => (new Date(t.closed_at!).getTime() - new Date(t.created_at).getTime()) / DAY_MS))) : null,
+    median_client_response_days: round1(median(customerHolds((t) => t.client_id === c.id)) || 0),
+    median_client_response_days_other_clients: round1(median(customerHolds((t) => t.client_id !== c.id))),
+    task_types: Object.entries(theirs.reduce<Record<string, number>>((a, t) => ({ ...a, [t.type]: (a[t.type] ?? 0) + 1 }), {}))
+      .sort((a, b) => b[1] - a[1]).map(([type, n]) => ({ type, tasks: n })),
+  };
+}
+
+export function briefingForAgent() {
+  const b = getBriefing();
+  return {
+    as_of: b.as_of, headline: b.headline,
+    insights: [b.featured, ...b.insights].filter(Boolean).map((i) => ({ kind: i!.kind, title: i!.title, body: i!.body, evidence: i!.evidence, facts: i!.facts })),
+    watch_rules: b.watch_rules.map((r) => ({ rule: r.label, count: r.count })),
+    process_changes: eventsJson,
+  };
 }
