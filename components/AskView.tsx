@@ -85,7 +85,6 @@ export function AskView({ task = null }: { task?: string | null }) {
           />
           <button type="submit" disabled={busy} className="h-[30px] rounded-[7px] border-0 bg-accent px-3.5 font-medium text-on-accent disabled:opacity-50">Send</button>
         </form>
-        <div className="mt-2 text-center text-[11.5px] text-faint">Answers are generated from the task data via tool calls</div>
       </div>
     </div>
   );

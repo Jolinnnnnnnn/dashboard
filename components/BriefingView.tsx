@@ -80,9 +80,6 @@ function Meta({ insight }: { insight: Insight }) {
     <div className="flex flex-wrap items-center gap-2.5">
       <KindTag kind={insight.kind} featured={insight.id === "featured"} />
       <div className="text-xs text-muted">{insight.meta}</div>
-      <div className="ml-auto font-mono text-xs text-faint" title={insight.written_by === "claude" ? "Wording by Claude from the detected facts" : "Template wording"}>
-        {insight.written_by === "claude" ? "written by Claude" : "template"}
-      </div>
     </div>
   );
 }
@@ -142,31 +139,10 @@ function InsightCard({ insight, index }: { insight: Insight; index: number }) {
   );
 }
 
-function SideColumn({ b, onClassic }: { b: Briefing; onClassic: () => void }) {
+function SideColumn({ b }: { b: Briefing }) {
   const { ask } = useAgent();
-  const steps = ["Open four dashboards", "Filter each stakeholder, compare to last week", "Export to Sheets to spot outliers", "Write it up in Slack"];
   return (
     <div className="flex min-w-0 flex-col gap-8 min-[1280px]:sticky min-[1280px]:top-[76px]">
-      <div className="border-t border-ink">
-        <div className="flex flex-col gap-[9px] py-4">
-          <div className="font-mono text-[11px] tracking-[.08em] text-faint">BEFORE · TABLEAU</div>
-          {steps.map((s, i) => (
-            <div key={s} className="flex gap-2.5 text-muted"><span className="w-3.5 font-mono text-[11.5px] text-faint">{i + 1}</span>{s}</div>
-          ))}
-          <div className="pt-0.5 text-xs text-faint">~40 min · once a week</div>
-        </div>
-        <div className="flex flex-col gap-[9px] border-t border-line py-4">
-          <div className="font-mono text-[11px] tracking-[.08em] text-accent-ink">NOW · SIGNAL AGENT</div>
-          {["Checks every task and handoff on each data refresh", "Pushes what changed, with evidence", "Suggests a next step; you decide"].map((s) => (
-            <div key={s} className="flex gap-2.5"><span className="text-accent-ink">→</span>{s}</div>
-          ))}
-          <div className="pt-0.5 text-xs font-medium text-accent-ink">Seconds · before standup, daily</div>
-        </div>
-        <button onClick={onClassic} className="h-9 w-full border-0 border-t border-line bg-transparent p-0 text-left font-medium text-accent-ink hover:text-ink">
-          See the dashboard version →
-        </button>
-      </div>
-
       <div className="flex flex-col gap-1 border-t border-ink pt-4">
         <div className="mb-1.5 flex items-center gap-2">
           <div className="font-semibold">What I&apos;m watching</div>
@@ -190,21 +166,11 @@ function SideColumn({ b, onClassic }: { b: Briefing; onClassic: () => void }) {
   );
 }
 
-function Classic({ b, onAgent }: { b: Briefing; onAgent: () => void }) {
+function Classic({ b }: { b: Briefing }) {
   const k = b.classic.kpis;
-  const f = b.featured;
   const chips = ["Stakeholder", "Type", "Client", "Region", "Risk"].map((x) => `${x}: All ▾`).concat("Date: Last 30 days ▾");
   return (
     <div className="flex flex-col gap-3" style={{ animation: "fadeIn 200ms ease-out both" }}>
-      {f && (
-        <div className="flex flex-wrap items-center gap-3 rounded-lg border border-dashed border-line2 px-3.5 py-3">
-          <div className="min-w-[240px] flex-1 text-pretty text-muted">
-            {String(f.facts.task)} is in here: part of one bar under {String(f.facts.stakeholder)}, one row under {String(f.facts.client)}.
-            Seeing that it&apos;s {String(f.facts.times_median)}× over its median takes three filters and a calculated field.
-          </div>
-          <button onClick={onAgent} className="h-[30px] rounded-[7px] border-0 bg-accent px-3 font-medium text-on-accent">Switch to agent briefing →</button>
-        </div>
-      )}
       <div className="flex flex-wrap gap-1.5">
         {chips.map((c) => <span key={c} className="rounded-md border border-line bg-surface px-2.5 py-1 text-xs text-muted">{c}</span>)}
       </div>
@@ -290,10 +256,10 @@ export function BriefingView({ b }: { b: Briefing }) {
             {b.featured && <Featured f={b.featured} />}
             {b.insights.map((i, n) => <InsightCard key={i.id} insight={i} index={n} />)}
           </div>
-          <SideColumn b={b} onClassic={() => setMode("classic")} />
+          <SideColumn b={b} />
         </div>
       ) : (
-        <Classic b={b} onAgent={() => setMode("agent")} />
+        <Classic b={b} />
       )}
     </div>
   );

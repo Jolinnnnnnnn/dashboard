@@ -222,7 +222,6 @@ function Dock({ openTasks, chips }: DockProps) {
           />
           <button type="submit" disabled={busy} className="h-7 rounded-[7px] border-0 bg-accent px-3 font-medium text-on-accent disabled:opacity-50">Send</button>
         </div>
-        <div className="mt-[7px] text-center text-[11px] text-faint">Answers are generated from the task data via tool calls</div>
       </form>
     </aside>
   );

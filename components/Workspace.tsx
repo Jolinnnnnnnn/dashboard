@@ -99,7 +99,7 @@ export function NotesPanel() {
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap items-baseline gap-2">
         <div className="text-[15px] font-semibold">Notes</div>
-        <div className="text-xs text-faint">Team workspace demo: your notes and claims are private to this browser and clear after 24 hours</div>
+        <div className="text-xs text-faint">Private to you · clears after 24h</div>
       </div>
       <div className="flex flex-col border-t border-line2">
         {!state && <div className="py-3 text-muted">Loading…</div>}

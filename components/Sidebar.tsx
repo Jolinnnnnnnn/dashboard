@@ -104,7 +104,9 @@ function SidebarView({ openCount, stats, pathname }: { openCount: number; stats:
         </nav>
         <div className="flex-1" />
         <AgentStatus stats={stats} />
-        <div className="px-2.5 pt-3.5 text-xs text-faint">Synthetic data · Built with Claude Code</div>
+        <div className="truncate whitespace-nowrap px-2.5 pt-3.5 text-[10.5px] text-faint">
+          Synthetic data · <Link href="/build" className="text-faint no-underline hover:text-ink">Built with Claude Code</Link>
+        </div>
       </aside>
 
       {/* Narrow: compact header */}
