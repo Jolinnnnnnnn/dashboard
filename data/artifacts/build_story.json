@@ -4,12 +4,12 @@
   "first_commit": "2026-10-07T16:36:14-04:00",
   "agent_live": "2026-10-08T10:19:40-04:00",
   "hours_to_live_agent": 17.7,
-  "commits": 17,
+  "commits": 21,
   "lines": {
-    "typescript": 3522,
+    "typescript": 3873,
     "python": 2105
   },
-  "logged_decisions": 37,
+  "logged_decisions": 39,
   "validator_checks": 21,
   "evals": {
     "passed": 16,
@@ -109,6 +109,26 @@
       "hash": "a88c32c",
       "date": "2026-10-08T11:23:48-04:00",
       "subject": "Move the process map history window next to the map title"
+    },
+    {
+      "hash": "046f46f",
+      "date": "2026-10-08T11:32:37-04:00",
+      "subject": "Add demo team workspace: task claims and notes"
+    },
+    {
+      "hash": "a42fff9",
+      "date": "2026-10-08T11:41:13-04:00",
+      "subject": "Remove redundant hints and labels"
+    },
+    {
+      "hash": "f6a95b9",
+      "date": "2026-10-08T11:53:30-04:00",
+      "subject": "Consolidate filters onto the pages they control"
+    },
+    {
+      "hash": "5255915",
+      "date": "2026-10-08T12:11:42-04:00",
+      "subject": "Custom select with stacked-chevron indicator"
     }
   ]
 }
