@@ -1,0 +1,18 @@
+{
+  "e795b03aed6425df": [
+    "Northwind Media cache purge task sits 4.7 days with Network Eng, 2.9 times median",
+    "Network Eng has held T-4821 for 4.7 days against a 1.6-day median, with estimated close Oct 9. Similar T-4670 (Mosaic Studio, 71% match) was fixed by lowering the LATAM edge-sync batch interval from 60s to 15s, so purges now land in under 2 minutes."
+  ],
+  "573beb5f8b1495be": [
+    "edge-sync/ touches 4 of 10 at-risk tasks, the most of any module.",
+    "The module appears in 157 tasks over the last 12 months and is linked to at-risk work for three clients: Kestrel Retail, Lumen Games, and Northwind Media. Because it carries the highest task volume of any module and sits under 4 of the 10 at-risk tasks, changes here could ripple across several client commitments."
+  ],
+  "f4d60e6ec09788bc": [
+    "Security Review rework rose from 9% to 21% since July, with 15 bounces.",
+    "Tasks leaving Security Review were sent back to a team they had already been with in 21% of cases since July, versus 9% before, and the monthly rate reached 32% in October. New domain setup accounted for 9 of the 15 bounces, so that task type is the first place to look."
+  ],
+  "1e5151c553c48fb2": [
+    "Ops median task hold fell 29% after the Aug 1 rollback-plan requirement",
+    "The median time any task spends with Ops dropped from 1.4 days to 1.0 days after the rollback-plan requirement for config rollouts took effect on Aug 1. The drop coincides with the change, so TPMs planning Ops-dependent work should check whether the faster turnaround holds."
+  ]
+}

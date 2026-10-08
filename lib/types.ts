@@ -94,3 +94,36 @@ export type MapWindow = {
   edges: MapEdge[];
   modules: { id: string; count: number }[];
 };
+
+// ── Briefing (data/artifacts/briefing.json, built by scripts/build_briefing.py) ──
+
+export type Tone = "red" | "amber" | "green" | "accent" | "muted";
+export type InsightAction = { label: string; href?: string; ask?: string; primary?: boolean };
+
+export type Insight = {
+  kind: "need" | "pattern" | "win";
+  id: string;
+  title: string;
+  body: string;
+  meta: string;
+  written_by: "claude" | "template";
+  facts: Record<string, string | number | boolean | string[]>;
+  bars?: { label: string; value: number; unit: string; tone: Tone }[];
+  cols?: { label: string; value: number }[];
+  evidence: string[];
+  actions: InsightAction[];
+};
+
+export type Briefing = {
+  as_of: string;
+  headline: string;
+  subhead: string;
+  featured: Insight | null;
+  insights: Insight[];
+  watch_rules: { label: string; count: number; tone: Tone }[];
+  stats: { open: number; handoffs_90d: number; insights: number };
+  classic: {
+    kpis: { open: number; at_risk: number; avg_days_open: number; handoffs_90d: number };
+    charts: { title: string; bars?: { label: string; value: number }[]; cols?: { label: string; value: number }[] }[];
+  };
+};

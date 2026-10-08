@@ -34,8 +34,8 @@ function Legend() {
 
 function Shell({ count, children, footer }: { count: string; children: React.ReactNode; footer: React.ReactNode }) {
   return (
-    <div className="card overflow-hidden">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
+    <div className="border-t border-line2">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line py-3">
         <div className="flex items-baseline gap-2"><div className="font-semibold">Open tasks</div><div className="text-xs text-faint">{count}</div></div>
         <Legend />
       </div>
@@ -83,7 +83,7 @@ export function QueueTable({ rows }: { rows: QueueRow[] }) {
               key={k}
               onClick={() => { setSort((s) => ({ key: k, dir: s.key === k && s.dir === "desc" ? "asc" : "desc" })); setPage(0); }}
               aria-sort={active ? (sort.dir === "asc" ? "ascending" : "descending") : "none"}
-              className={`cursor-pointer select-none whitespace-nowrap border-b border-line bg-surface2 px-4 py-[9px] text-left text-xs font-medium ${active ? "text-ink" : "text-muted"}`}
+              className={`cursor-pointer select-none whitespace-nowrap border-b border-line bg-transparent px-4 py-[9px] text-left text-xs font-medium first:pl-0 ${active ? "text-ink" : "text-muted"}`}
               style={{ width: w }}
             >
               {label} <span className="font-mono text-[11px] text-faint">{active ? (sort.dir === "asc" ? "↑" : "↓") : ""}</span>
@@ -95,7 +95,7 @@ export function QueueTable({ rows }: { rows: QueueRow[] }) {
   );
 
   const footer = (
-    <div className="flex items-center justify-between px-4 py-2.5 text-xs text-muted">
+    <div className="flex items-center justify-between py-2.5 text-xs text-muted">
       <div>{sorted.length ? `${current * PAGE_SIZE + 1}–${Math.min(sorted.length, current * PAGE_SIZE + PAGE_SIZE)} of ${sorted.length}` : "0 results"}</div>
       <div className="flex gap-1.5">
         <button disabled={current === 0} onClick={() => setPage(current - 1)} className="h-7 rounded-md border border-line bg-surface px-2.5 text-ink hover:bg-surface2 disabled:opacity-40">← Prev</button>
@@ -112,7 +112,7 @@ export function QueueTable({ rows }: { rows: QueueRow[] }) {
       <tbody>
         {visible.map((r) => (
           <tr key={r.id} onClick={() => router.push(`/task/${r.id}`)} className="cursor-pointer border-b border-line hover:bg-surface2">
-            <td className="whitespace-nowrap px-4 py-2.5 font-mono text-[12.5px] font-medium">
+            <td className="whitespace-nowrap py-2.5 pl-0 pr-4 font-mono text-[12.5px] font-medium">
               <Link href={`/task/${r.id}`} className="text-ink no-underline" onClick={(e) => e.stopPropagation()}>{r.id}</Link>
             </td>
             <td className="whitespace-nowrap px-4 py-2.5">{r.client}</td>
@@ -147,7 +147,7 @@ export function QueueTable({ rows }: { rows: QueueRow[] }) {
             <td colSpan={7} className="px-4 py-14 text-center">
               <div className="text-sm font-semibold">No tasks match {q ? `“${params.get("q")}”` : "the current filters"}</div>
               <div className="mt-1 text-muted">Try a task ID like T-4821, a client name, or clear the filters.</div>
-              <button onClick={() => router.replace("/", { scroll: false })} className="btn mt-3.5 h-[30px] font-normal">Clear search and filters</button>
+              <button onClick={() => router.replace("/queue", { scroll: false })} className="btn mt-3.5 h-[30px] font-normal">Clear search and filters</button>
             </td>
           </tr>
         )}

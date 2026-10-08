@@ -26,7 +26,7 @@ export function Banner() {
   };
 
   return (
-    <div className="mx-4 mt-4 flex items-start gap-2.5 rounded-lg border border-line bg-accent-soft py-2.5 pl-3.5 pr-3 min-[900px]:mx-8">
+    <div className="mx-4 mt-4 flex items-start gap-2.5 rounded-lg bg-accent-soft py-2.5 pl-3.5 pr-3 min-[900px]:mx-8">
       <div className="mt-1.5 size-1.5 flex-none rounded-full bg-accent" />
       <div className="flex-1 text-pretty">
         All data is synthetic, generated with realistic patterns. Try: open a high-risk task, explore the process map, or ask the agent a question.

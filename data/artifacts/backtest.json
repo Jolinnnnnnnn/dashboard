@@ -1,101 +1,101 @@
 {
   "split": {
     "train_before": "2026-07-01T00:00:00+00:00",
-    "train_stints": 1290,
-    "test_stints": 438,
-    "train_tasks": 299,
-    "test_tasks": 101
+    "train_stints": 1286,
+    "test_stints": 447,
+    "train_tasks": 300,
+    "test_tasks": 100
   },
   "next_stakeholder": {
-    "n": 438,
-    "model_top1": 0.8926940639269406,
-    "model_top3": 0.9726027397260274,
-    "baseline_top1": 0.6050228310502284,
-    "baseline_top3": 0.9018264840182648,
+    "n": 447,
+    "model_top1": 0.8903803131991052,
+    "model_top3": 0.9776286353467561,
+    "baseline_top1": 0.5615212527964206,
+    "baseline_top3": 0.9060402684563759,
     "by_stakeholder": [
       {
         "stakeholder": "intake",
-        "n": 101,
-        "model_top1": 0.9702970297029703,
-        "base_top1": 0.42574257425742573
+        "n": 100,
+        "model_top1": 0.99,
+        "base_top1": 0.41
       },
       {
         "stakeholder": "customer",
         "n": 86,
-        "model_top1": 0.9883720930232558,
-        "base_top1": 0.9883720930232558
-      },
-      {
-        "stakeholder": "ops",
-        "n": 60,
-        "model_top1": 0.7833333333333333,
-        "base_top1": 0.5666666666666667
+        "model_top1": 0.9767441860465116,
+        "base_top1": 0.9767441860465116
       },
       {
         "stakeholder": "support",
-        "n": 59,
-        "model_top1": 0.9322033898305084,
-        "base_top1": 0.4406779661016949
+        "n": 61,
+        "model_top1": 0.8852459016393442,
+        "base_top1": 0.3770491803278688
       },
       {
-        "stakeholder": "network_eng",
-        "n": 46,
-        "model_top1": 0.6956521739130435,
-        "base_top1": 0.34782608695652173
+        "stakeholder": "ops",
+        "n": 52,
+        "model_top1": 0.7884615384615384,
+        "base_top1": 0.5384615384615384
       },
       {
         "stakeholder": "security",
-        "n": 44,
-        "model_top1": 0.7727272727272727,
-        "base_top1": 0.7045454545454546
+        "n": 48,
+        "model_top1": 0.8333333333333334,
+        "base_top1": 0.5625
+      },
+      {
+        "stakeholder": "network_eng",
+        "n": 45,
+        "model_top1": 0.6,
+        "base_top1": 0.35555555555555557
       },
       {
         "stakeholder": "qa",
-        "n": 31,
-        "model_top1": 0.9354838709677419,
-        "base_top1": 0.7096774193548387
+        "n": 38,
+        "model_top1": 1.0,
+        "base_top1": 0.8157894736842105
       },
       {
         "stakeholder": "dev",
-        "n": 11,
-        "model_top1": 1.0,
-        "base_top1": 0.7272727272727273
+        "n": 17,
+        "model_top1": 0.8823529411764706,
+        "base_top1": 0.058823529411764705
       }
     ]
   },
   "eta": {
-    "n": 438,
-    "model_median_abs_error_days": 0.7466898148148148,
-    "model_mae_days": 1.3304757790038897,
-    "model_within_2_days": 0.776255707762557,
-    "baseline_median_abs_error_days": 0.9926736111111113,
-    "baseline_mae_days": 1.432083029447827,
-    "baseline_within_2_days": 0.7488584474885844
+    "n": 447,
+    "model_median_abs_error_days": 0.9003703703703705,
+    "model_mae_days": 1.5255000414284532,
+    "model_within_2_days": 0.7427293064876958,
+    "baseline_median_abs_error_days": 1.0204571759259258,
+    "baseline_mae_days": 1.630293805410556,
+    "baseline_within_2_days": 0.7114093959731543
   },
   "similar_cases": {
     "n_queries": 100,
     "text_only": {
       "precision_at_3": 0.7366666666666667,
-      "hit_at_3": 0.9
+      "hit_at_3": 0.94
     },
     "modules_only": {
-      "precision_at_3": 0.9333333333333333,
-      "hit_at_3": 0.98
+      "precision_at_3": 0.9466666666666667,
+      "hit_at_3": 0.97
     },
     "combined": {
-      "precision_at_3": 0.93,
+      "precision_at_3": 0.9666666666666667,
       "hit_at_3": 1.0
     },
     "combined_by_family": {
-      "cert_autorenew_failure": 0.9,
-      "config_rollout_regression": 0.963,
-      "domain_onboarding_blocked": 0.912,
-      "edge_overload_spike": 0.879,
-      "geo_misrouting": 1.0,
-      "log_export_access": 0.9,
-      "origin_failover_not_triggering": 0.929,
-      "partial_purge_failures": 1.0,
-      "purge_propagation_delay": 0.933,
+      "cert_autorenew_failure": 0.958,
+      "config_rollout_regression": 1.0,
+      "domain_onboarding_blocked": 0.982,
+      "edge_overload_spike": 1.0,
+      "geo_misrouting": 0.926,
+      "log_export_access": 0.963,
+      "origin_failover_not_triggering": 0.933,
+      "partial_purge_failures": 0.833,
+      "purge_propagation_delay": 1.0,
       "stale_content_after_purge": 1.0
     }
   }

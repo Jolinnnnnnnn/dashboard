@@ -1,6 +1,6 @@
 # Relay: Plan
 
-**Status (update as phases finish):** Phase 0 ✅ · Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · Phase 4 ✅ · Phase 5 ✅ (deploy pending) · Phase 6 ✅ · next: Phase 7 (Ask agent)
+**Status (update as phases finish):** Phase 0 ✅ · Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · Phase 4 ✅ · Phase 5 ✅ (deploy pending) · Phase 6 ✅ · Design v3 ✅ (briefing, classic view, agent dock UI) · next: Phase 7 (agent, wired into the dock and Ask page)
 
 ## 1. What it is
 

@@ -14,7 +14,7 @@ export const WINDOWS = [
 ];
 export const DEFAULT_WINDOW = "365";
 
-const BAR = "sticky top-0 z-20 flex flex-wrap items-center gap-2 border-b border-line bg-surface px-4 py-2.5 min-[900px]:px-8";
+const BAR = "sticky top-0 z-20 flex flex-wrap items-center gap-2 border-b border-line bg-bg px-4 py-2.5 min-[900px]:px-8";
 
 function SearchBox({ value, onChange, inputRef }: {
   value?: string; onChange?: (v: string) => void; inputRef?: React.Ref<HTMLInputElement>;
@@ -50,7 +50,7 @@ export function TopBar({ options }: { options: FilterOptions }) {
   const params = useSearchParams();
   const router = useRouter();
   const searchRef = useRef<HTMLInputElement>(null);
-  const onQueue = pathname === "/" || pathname.startsWith("/task/");
+  const onQueue = pathname.startsWith("/queue") || pathname.startsWith("/task/");
   const onMap = pathname.startsWith("/process");
 
   // "/" focuses search, like the hint in the box
@@ -67,17 +67,17 @@ export function TopBar({ options }: { options: FilterOptions }) {
 
   // Queue filters live in the URL so a filtered view can be shared
   const setQueueParam = (key: string, value: string, empty: string) => {
-    const next = new URLSearchParams(pathname === "/" ? params : undefined);
+    const next = new URLSearchParams(pathname.startsWith("/queue") ? params : undefined);
     if (value && value !== empty) next.set(key, value);
     else next.delete(key);
     const qs = next.toString();
-    router.replace(qs ? `/?${qs}` : "/", { scroll: false });
+    router.replace(qs ? `/queue?${qs}` : "/queue", { scroll: false });
   };
 
   return (
     <div className={BAR}>
       {!onMap && (
-        <SearchBox inputRef={searchRef} value={pathname === "/" ? params.get("q") ?? "" : ""} onChange={(v) => setQueueParam("q", v, "")} />
+        <SearchBox inputRef={searchRef} value={pathname.startsWith("/queue") ? params.get("q") ?? "" : ""} onChange={(v) => setQueueParam("q", v, "")} />
       )}
       {onQueue && (
         <>

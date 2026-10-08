@@ -15,7 +15,7 @@ Synthetic task-routing data for a fictional CDN company. It must be realistic en
 | "Today" for open tasks | 2026-10-07 |
 | Historical (closed) tasks | 400 |
 | Open tasks | 100 |
-| Open tasks flagged at risk | ~8 |
+| Open tasks flagged at risk | ~8 (seed 42: 10) |
 | Backtest split | Train: Oct 2025–Jun 2026 (~300 tasks) · Test: Jul–Sep 2026 (~100 tasks) |
 
 ## Stakeholders (9)
@@ -118,6 +118,16 @@ Template placeholders vary the text: client name, region, domain, node count, er
 | P6 | Enterprise clients respond faster | Customer hold × 0.6 for Enterprise | Enterprise median Customer hold < SMB median Customer hold |
 | P7 | Holiday traffic spike | Traffic spike weight × 3.5 in Nov–Dec; closed-task creation dates are spread evenly across the year (with jitter) so monthly volume isn't lumpy | Nov–Dec traffic spike volume ≥ 1.5× the monthly average |
 
+### Added for the agent briefing (design v3)
+
+| # | Pattern | How it's planted | Validation check |
+|---|---|---|---|
+| P8 | Security rework rising | Rework rate for eligible tasks by creation date: 12% before Jul 2026, 30% Jul–Aug, 45% from Sep (separate quota per period) | Share of Security exits sent back to an already-visited team since Jul ≥ 1.5× the rate before Jul |
+| P9 | Ops process change | `events.json`: on 2026-08-01 Ops began requiring a rollback plan for config rollouts. Ops holds for tasks created before then are 1.5× longer | Ops median hold after the event ≤ 0.8× before |
+| Demo | T-4821 is the most overdue open task | Its hold ratio is set to max(2.8, highest other open task's ratio + 0.15), measured against the generated history | T-4821 has the highest hold ratio of any open task |
+
+Across seeds 1–30, all checks pass for 28. The two misses are near misses: seed 23 has 13 at-risk tasks (limit 12), seed 26 shows Ops only 12% faster (check needs 20%).
+
 ## Noise
 
 Keeps the data realistic and gives the cleaning step something to do.
@@ -138,7 +148,7 @@ Keeps the data realistic and gives the cleaning step something to do.
 - Created in the last 30 days, stopped partway through their route.
 - About 8 are at risk, so the queue has realistic red flags.
 - **At-risk rule:** time with the current stakeholder > 1.5× that stakeholder's median for the task type → **Medium**; > 2× → **High**.
-- **T-4821** (Cache purge bug, Northwind Media, family "Purge propagation delay") is guaranteed to exist as the demo task: Intake 0.2d → Support 0.8d → Network Eng (current). Its Network Eng hold is set to 2.2× the generated median for (Network Eng, Cache purge bug) so it always reads as **High** risk. With seed 42: **4.2 days** vs a 1.90-day median, open 5.2 days.
+- **T-4821** (Cache purge bug, Northwind Media, family "Purge propagation delay") is guaranteed to exist as the demo task: Intake 0.2d → Support 0.8d → Network Eng (current). Its Network Eng hold is set so it is **High** risk and the most overdue open task (see Demo row above). With seed 42: **4.7 days** vs a 1.6-day median (2.95×).
 - Task IDs are sequential by creation time, offset so the demo task is exactly T-4821.
 
 ## Output files (`data/`)
@@ -152,6 +162,7 @@ All timestamps are ISO 8601 UTC.
 | `modules.json` | `id`, `path`, `description` (one line, shown in the UI), `files[]` |
 | `tasks.json` | `id`, `title`, `description`, `client_id`, `type`, `family`, `status` (`open`/`closed`), `created_at`, `closed_at`, `code_areas[]` (file paths like `edge-sync/propagation.go`), `solution_note`, `current_stakeholder` |
 | `handoffs.json` | `task_id`, `seq`, `from_stakeholder`, `to_stakeholder`, `entered_at`, `left_at`, `hold_days` |
+| `events.json` | `date`, `stakeholder`, `title`, `description` (process changes the briefing can test for an effect) |
 
 Each `handoffs.json` row is one stint: the task arriving at `to_stakeholder` (from `from_stakeholder`, null for the first Intake row) at `entered_at` and leaving at `left_at`. An open task's current stint has `left_at` and `hold_days` null. A closed task ends with a row whose `to_stakeholder` is `closed`; its `entered_at` equals the task's `closed_at`.
 

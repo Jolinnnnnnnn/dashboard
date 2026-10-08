@@ -145,6 +145,29 @@ def main() -> int:
     check("P7 Holiday traffic spike", holiday >= 1.5 * overall,
           f"Nov–Dec avg {holiday:.1f}/month vs overall {overall:.1f}/month ({holiday / overall:.1f}×)")
 
+    # ── P8: Security rework rising ──
+    sec_exits = rd.with_rework(s)
+    sec_exits = sec_exits[(sec_exits["stakeholder"] == "security") & sec_exits["left_at"].notna()]
+    split = pd.Timestamp("2026-07-01T00:00:00Z")
+    before = sec_exits[sec_exits["left_at"] < split]["rework"].mean()
+    recent = sec_exits[sec_exits["left_at"] >= split]["rework"].mean()
+    check("P8 Security rework rising", recent >= 1.5 * before,
+          f"Security exits sent back: {before:.1%} before Jul → {recent:.1%} Jul–Oct ({recent / before:.1f}×)")
+
+    # ── P9: Ops process change ──
+    event = pd.Timestamp(d["events"].iloc[0]["date"], tz="UTC")
+    ops = s[(s["stakeholder"] == "ops") & s["left_at"].notna()]
+    ops_before = ops[ops["entered_at"] < event]["hold_days"].median()
+    ops_after = ops[ops["entered_at"] >= event]["hold_days"].median()
+    check("P9 Ops faster after process change", ops_after <= 0.8 * ops_before,
+          f"Ops median hold {ops_before:.2f}d before {event:%b %-d} → {ops_after:.2f}d after "
+          f"({1 - ops_after / ops_before:.0%} faster)")
+
+    # ── Demo task is the most overdue at-risk task ──
+    top = risk.sort_values("hold_ratio", ascending=False).iloc[0]
+    check("Demo task most overdue", top["task_id"] == "T-4821",
+          f"highest hold ratio: {top['task_id']} ({top['hold_ratio']:.2f}× its median)")
+
     # ── Report ──
     width = max(len(n) for n, _, _ in results)
     for name, passed, detail in results:

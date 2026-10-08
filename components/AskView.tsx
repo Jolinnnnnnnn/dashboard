@@ -3,6 +3,8 @@
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
+import { NOT_CONNECTED } from "@/components/AgentDock";
+
 // Placeholder until the agent (/api/agent) is built in Phase 7: same layout as the design,
 // but replies say plainly that the agent isn't connected instead of showing a canned answer.
 
@@ -66,7 +68,7 @@ export function AskView({ task = null }: { task?: string | null }) {
               <div className="flex items-center gap-[7px] text-xs font-medium text-muted"><div className="size-2 rounded-[2px] bg-accent" />Relay agent</div>
               <div className="flex items-center gap-2.5 rounded-lg border border-line bg-amber-soft px-3 py-2.5">
                 <div className="size-1.5 rounded-full bg-amber" />
-                <div className="flex-1 text-ink">The agent isn&apos;t connected in this build yet. Meanwhile, the Queue, task pages, and Process Map show live predictions and similar cases.</div>
+                <div className="flex-1 text-ink">{NOT_CONNECTED}</div>
               </div>
             </div>
           </div>

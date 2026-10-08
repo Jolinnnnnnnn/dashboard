@@ -17,7 +17,7 @@ MIN_PAIR_EXAMPLES = 5  # below this, (stakeholder, type) falls back to stakehold
 RISK_MEDIUM = 1.5
 RISK_HIGH = 2.0
 
-TABLES = ["stakeholders", "clients", "modules", "tasks", "handoffs"]
+TABLES = ["stakeholders", "clients", "modules", "tasks", "handoffs", "events"]
 
 
 def load(data_dir: Path = DATA_DIR) -> dict[str, pd.DataFrame]:
@@ -70,6 +70,20 @@ def stints(tasks: pd.DataFrame, handoffs_clean: pd.DataFrame, clients: pd.DataFr
     )
     s = s.merge(meta, left_on="task_id", right_on="id").drop(columns="id")
     return s.reset_index(drop=True)
+
+
+def with_rework(stints_df: pd.DataFrame) -> pd.DataFrame:
+    """Add `rework`: True when a stint hands the task back to a stakeholder it was already with
+    (docs/definitions.md). The final handoff of an open task's current stint is unknown, so False."""
+    s = stints_df.sort_values(["task_id", "seq"]).copy()
+    flags = []
+    for _, g in s.groupby("task_id", sort=False):
+        seen: set = set()
+        for stk, nxt in zip(g["stakeholder"], g["next_stakeholder"]):
+            seen = seen | {stk}
+            flags.append(isinstance(nxt, str) and nxt in seen)
+    s["rework"] = flags
+    return s
 
 
 def routes(handoffs_clean: pd.DataFrame) -> pd.Series:

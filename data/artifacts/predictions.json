@@ -1,93 +1,29 @@
 {
-  "T-4798": {
-    "current_stakeholder": "ops",
-    "hold_days": 0.51,
-    "median_hold_days": 0.98,
-    "hold_ratio": 0.52,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.742,
-        "count": 46
-      },
-      {
-        "stakeholder": "closed",
-        "probability": 0.21,
-        "count": 13
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.016,
-        "count": 1
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.016,
-        "count": 1
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.016,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "46 of 62 past new domain setup tasks went to Customer after Ops",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.5,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4802": {
+  "T-4805": {
     "current_stakeholder": "support",
-    "hold_days": 0.52,
-    "median_hold_days": 0.69,
-    "hold_ratio": 0.76,
+    "hold_days": 0.41,
+    "median_hold_days": 0.74,
+    "hold_ratio": 0.56,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "customer",
-        "probability": 0.824,
-        "count": 42
+        "probability": 0.796,
+        "count": 43
       },
       {
         "stakeholder": "security",
-        "probability": 0.157,
-        "count": 8
+        "probability": 0.185,
+        "count": 10
       },
       {
         "stakeholder": "ops",
-        "probability": 0.02,
+        "probability": 0.019,
         "count": 1
       }
     ],
     "basis": "type",
-    "reason": "42 of 51 past log access request tasks went to Customer after Support",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.1,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4803": {
-    "current_stakeholder": "ops",
-    "hold_days": 1.07,
-    "median_hold_days": 0.95,
-    "hold_ratio": 1.13,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 1.0,
-        "count": 61
-      }
-    ],
-    "basis": "type",
-    "reason": "61 of 61 past traffic spike tasks went to Customer after Ops",
+    "reason": "43 of 54 past log access request tasks went to Customer after Support",
     "expected_path": [
       "customer",
       "closed"
@@ -95,572 +31,120 @@
     "eta_days": 1.4,
     "estimated_close": "2026-10-08"
   },
-  "T-4804": {
+  "T-4808": {
     "current_stakeholder": "security",
-    "hold_days": 3.23,
-    "median_hold_days": 2.63,
-    "hold_ratio": 1.23,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "ops",
-        "probability": 0.836,
-        "count": 61
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.164,
-        "count": 12
-      }
-    ],
-    "basis": "type",
-    "reason": "61 of 73 past new domain setup tasks went to Ops after Security Review",
-    "expected_path": [
-      "ops",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 2.5,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4805": {
-    "current_stakeholder": "ops",
-    "hold_days": 1.13,
-    "median_hold_days": 0.98,
-    "hold_ratio": 1.15,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.742,
-        "count": 46
-      },
-      {
-        "stakeholder": "closed",
-        "probability": 0.21,
-        "count": 13
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.016,
-        "count": 1
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.016,
-        "count": 1
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.016,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "46 of 62 past new domain setup tasks went to Customer after Ops",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.7,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4806": {
-    "current_stakeholder": "dev",
-    "hold_days": 5.05,
-    "median_hold_days": 1.99,
-    "hold_ratio": 2.54,
+    "hold_days": 7.0,
+    "median_hold_days": 2.77,
+    "hold_ratio": 2.53,
     "risk": "High",
     "next": [
       {
-        "stakeholder": "qa",
-        "probability": 0.96,
-        "count": 24
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.04,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "24 of 25 past origin failover tasks went to QA after Dev",
-    "expected_path": [
-      "qa",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 2.1,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4807": {
-    "current_stakeholder": "ops",
-    "hold_days": 2.09,
-    "median_hold_days": 1.12,
-    "hold_ratio": 1.87,
-    "risk": "Medium",
-    "next": [
-      {
         "stakeholder": "support",
-        "probability": 0.929,
-        "count": 13
+        "probability": 0.811,
+        "count": 43
       },
       {
-        "stakeholder": "customer",
-        "probability": 0.071,
-        "count": 1
+        "stakeholder": "ops",
+        "probability": 0.189,
+        "count": 10
       }
     ],
     "basis": "type",
-    "reason": "13 of 14 past log access request tasks went to Support after Ops",
+    "reason": "43 of 53 past log access request tasks went to Support after Security Review",
     "expected_path": [
       "support",
       "customer",
       "closed"
     ],
-    "eta_days": 1.9,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4808": {
-    "current_stakeholder": "dev",
-    "hold_days": 5.09,
-    "median_hold_days": 1.99,
-    "hold_ratio": 2.56,
-    "risk": "High",
-    "next": [
-      {
-        "stakeholder": "qa",
-        "probability": 0.96,
-        "count": 24
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.04,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "24 of 25 past origin failover tasks went to QA after Dev",
-    "expected_path": [
-      "qa",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 2.1,
-    "estimated_close": "2026-10-09"
+    "eta_days": 2.8,
+    "estimated_close": "2026-10-10"
   },
   "T-4809": {
-    "current_stakeholder": "ops",
-    "hold_days": 2.24,
-    "median_hold_days": 0.95,
-    "hold_ratio": 2.36,
-    "risk": "High",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 1.0,
-        "count": 61
-      }
-    ],
-    "basis": "type",
-    "reason": "61 of 61 past traffic spike tasks went to Customer after Ops",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.1,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4810": {
-    "current_stakeholder": "customer",
-    "hold_days": 0.07,
-    "median_hold_days": 0.88,
-    "hold_ratio": 0.08,
+    "current_stakeholder": "security",
+    "hold_days": 1.88,
+    "median_hold_days": 3.07,
+    "hold_ratio": 0.61,
     "risk": "Low",
     "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 0.985,
-        "count": 67
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.015,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "67 of 68 past cache purge bug tasks went to Closed after Customer",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.8,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4811": {
-    "current_stakeholder": "customer",
-    "hold_days": 0.66,
-    "median_hold_days": 0.92,
-    "hold_ratio": 0.72,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 0.971,
-        "count": 34
-      },
-      {
-        "stakeholder": "qa",
-        "probability": 0.029,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "34 of 35 past origin failover tasks went to Closed after Customer",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.3,
-    "estimated_close": "2026-10-07"
-  },
-  "T-4812": {
-    "current_stakeholder": "customer",
-    "hold_days": 0.18,
-    "median_hold_days": 0.92,
-    "hold_ratio": 0.19,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 0.971,
-        "count": 34
-      },
-      {
-        "stakeholder": "qa",
-        "probability": 0.029,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "34 of 35 past origin failover tasks went to Closed after Customer",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.7,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4813": {
-    "current_stakeholder": "customer",
-    "hold_days": 0.36,
-    "median_hold_days": 0.92,
-    "hold_ratio": 0.39,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 0.971,
-        "count": 34
-      },
-      {
-        "stakeholder": "qa",
-        "probability": 0.029,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "34 of 35 past origin failover tasks went to Closed after Customer",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.6,
-    "estimated_close": "2026-10-07"
-  },
-  "T-4814": {
-    "current_stakeholder": "customer",
-    "hold_days": 0.84,
-    "median_hold_days": 0.88,
-    "hold_ratio": 0.95,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 0.985,
-        "count": 67
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.015,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "67 of 68 past cache purge bug tasks went to Closed after Customer",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.3,
-    "estimated_close": "2026-10-07"
-  },
-  "T-4815": {
-    "current_stakeholder": "ops",
-    "hold_days": 1.12,
-    "median_hold_days": 0.98,
-    "hold_ratio": 1.14,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.742,
-        "count": 46
-      },
-      {
-        "stakeholder": "closed",
-        "probability": 0.21,
-        "count": 13
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.016,
-        "count": 1
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.016,
-        "count": 1
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.016,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "46 of 62 past new domain setup tasks went to Customer after Ops",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.7,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4816": {
-    "current_stakeholder": "ops",
-    "hold_days": 0.06,
-    "median_hold_days": 0.98,
-    "hold_ratio": 0.06,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.742,
-        "count": 46
-      },
-      {
-        "stakeholder": "closed",
-        "probability": 0.21,
-        "count": 13
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.016,
-        "count": 1
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.016,
-        "count": 1
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.016,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "46 of 62 past new domain setup tasks went to Customer after Ops",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.9,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4817": {
-    "current_stakeholder": "customer",
-    "hold_days": 0.35,
-    "median_hold_days": 1.18,
-    "hold_ratio": 0.3,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 1.0,
-        "count": 7
-      }
-    ],
-    "basis": "type",
-    "reason": "7 of 7 past ssl renewal tasks went to Closed after Customer",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 1.0,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4818": {
-    "current_stakeholder": "ops",
-    "hold_days": 1.11,
-    "median_hold_days": 0.95,
-    "hold_ratio": 1.17,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 1.0,
-        "count": 61
-      }
-    ],
-    "basis": "type",
-    "reason": "61 of 61 past traffic spike tasks went to Customer after Ops",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.4,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4819": {
-    "current_stakeholder": "network_eng",
-    "hold_days": 3.16,
-    "median_hold_days": 1.9,
-    "hold_ratio": 1.66,
-    "risk": "Medium",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.676,
-        "count": 46
-      },
-      {
-        "stakeholder": "qa",
-        "probability": 0.206,
-        "count": 14
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.118,
-        "count": 8
-      }
-    ],
-    "basis": "type",
-    "reason": "46 of 68 past cache purge bug tasks went to Customer after Network Eng",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.5,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4820": {
-    "current_stakeholder": "support",
-    "hold_days": 0.65,
-    "median_hold_days": 0.88,
-    "hold_ratio": 0.74,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "security",
-        "probability": 0.973,
-        "count": 72
-      },
       {
         "stakeholder": "ops",
-        "probability": 0.014,
-        "count": 1
+        "probability": 0.857,
+        "count": 60
       },
       {
-        "stakeholder": "customer",
-        "probability": 0.014,
-        "count": 1
+        "stakeholder": "support",
+        "probability": 0.143,
+        "count": 10
       }
     ],
     "basis": "type",
-    "reason": "72 of 74 past new domain setup tasks went to Security Review after Support",
+    "reason": "60 of 70 past new domain setup tasks went to Ops after Security Review",
     "expected_path": [
-      "security",
       "ops",
       "customer",
       "closed"
     ],
-    "eta_days": 5.2,
-    "estimated_close": "2026-10-12"
+    "eta_days": 3.5,
+    "estimated_close": "2026-10-10"
   },
-  "T-4821": {
-    "current_stakeholder": "network_eng",
-    "hold_days": 4.2,
-    "median_hold_days": 1.9,
-    "hold_ratio": 2.2,
+  "T-4810": {
+    "current_stakeholder": "security",
+    "hold_days": 7.75,
+    "median_hold_days": 2.77,
+    "hold_ratio": 2.8,
     "risk": "High",
     "next": [
       {
-        "stakeholder": "customer",
-        "probability": 0.676,
-        "count": 46
+        "stakeholder": "support",
+        "probability": 0.811,
+        "count": 43
       },
       {
-        "stakeholder": "qa",
-        "probability": 0.206,
-        "count": 14
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.118,
-        "count": 8
+        "stakeholder": "ops",
+        "probability": 0.189,
+        "count": 10
       }
     ],
     "basis": "type",
-    "reason": "46 of 68 past cache purge bug tasks went to Customer after Network Eng",
+    "reason": "43 of 53 past log access request tasks went to Support after Security Review",
     "expected_path": [
+      "support",
       "customer",
       "closed"
     ],
-    "eta_days": 1.5,
-    "estimated_close": "2026-10-08"
+    "eta_days": 2.4,
+    "estimated_close": "2026-10-09"
   },
-  "T-4822": {
+  "T-4811": {
     "current_stakeholder": "ops",
-    "hold_days": 0.36,
-    "median_hold_days": 0.98,
-    "hold_ratio": 0.37,
+    "hold_days": 1.07,
+    "median_hold_days": 1.39,
+    "hold_ratio": 0.77,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "customer",
-        "probability": 0.742,
-        "count": 46
-      },
-      {
-        "stakeholder": "closed",
-        "probability": 0.21,
-        "count": 13
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.016,
-        "count": 1
+        "probability": 0.948,
+        "count": 55
       },
       {
         "stakeholder": "support",
-        "probability": 0.016,
+        "probability": 0.017,
         "count": 1
       },
       {
         "stakeholder": "dev",
-        "probability": 0.016,
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "security",
+        "probability": 0.017,
         "count": 1
       }
     ],
     "basis": "type",
-    "reason": "46 of 62 past new domain setup tasks went to Customer after Ops",
+    "reason": "55 of 58 past traffic spike tasks went to Customer after Ops",
     "expected_path": [
       "customer",
       "closed"
@@ -668,366 +152,696 @@
     "eta_days": 1.6,
     "estimated_close": "2026-10-08"
   },
-  "T-4823": {
-    "current_stakeholder": "support",
-    "hold_days": 0.73,
-    "median_hold_days": 0.69,
-    "hold_ratio": 1.05,
+  "T-4812": {
+    "current_stakeholder": "customer",
+    "hold_days": 2.44,
+    "median_hold_days": 0.9,
+    "hold_ratio": 2.71,
+    "risk": "High",
+    "next": [
+      {
+        "stakeholder": "closed",
+        "probability": 1.0,
+        "count": 49
+      }
+    ],
+    "basis": "type",
+    "reason": "49 of 49 past new domain setup tasks went to Closed after Customer",
+    "expected_path": [
+      "closed"
+    ],
+    "eta_days": 0.6,
+    "estimated_close": "2026-10-07"
+  },
+  "T-4813": {
+    "current_stakeholder": "ops",
+    "hold_days": 1.13,
+    "median_hold_days": 1.14,
+    "hold_ratio": 0.99,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "customer",
-        "probability": 0.824,
-        "count": 42
+        "probability": 0.77,
+        "count": 47
+      },
+      {
+        "stakeholder": "closed",
+        "probability": 0.18,
+        "count": 11
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.033,
+        "count": 2
       },
       {
         "stakeholder": "security",
-        "probability": 0.157,
-        "count": 8
-      },
-      {
-        "stakeholder": "ops",
-        "probability": 0.02,
+        "probability": 0.016,
         "count": 1
       }
     ],
     "basis": "type",
-    "reason": "42 of 51 past log access request tasks went to Customer after Support",
+    "reason": "47 of 61 past new domain setup tasks went to Customer after Ops",
     "expected_path": [
       "customer",
       "closed"
     ],
-    "eta_days": 1.2,
+    "eta_days": 1.6,
     "estimated_close": "2026-10-08"
   },
-  "T-4824": {
+  "T-4814": {
     "current_stakeholder": "customer",
-    "hold_days": 0.64,
-    "median_hold_days": 0.92,
-    "hold_ratio": 0.69,
+    "hold_days": 0.81,
+    "median_hold_days": 0.86,
+    "hold_ratio": 0.94,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "closed",
-        "probability": 0.971,
-        "count": 34
+        "probability": 0.967,
+        "count": 58
       },
       {
-        "stakeholder": "qa",
-        "probability": 0.029,
-        "count": 1
+        "stakeholder": "ops",
+        "probability": 0.033,
+        "count": 2
       }
     ],
     "basis": "type",
-    "reason": "34 of 35 past origin failover tasks went to Closed after Customer",
+    "reason": "58 of 60 past config change tasks went to Closed after Customer",
     "expected_path": [
       "closed"
     ],
     "eta_days": 0.4,
     "estimated_close": "2026-10-07"
   },
-  "T-4825": {
-    "current_stakeholder": "qa",
-    "hold_days": 0.8,
-    "median_hold_days": 0.71,
-    "hold_ratio": 1.13,
+  "T-4815": {
+    "current_stakeholder": "customer",
+    "hold_days": 0.16,
+    "median_hold_days": 0.9,
+    "hold_ratio": 0.18,
     "risk": "Low",
     "next": [
       {
-        "stakeholder": "customer",
-        "probability": 0.886,
-        "count": 31
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.029,
-        "count": 1
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.029,
-        "count": 1
-      },
-      {
-        "stakeholder": "ops",
-        "probability": 0.029,
-        "count": 1
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.029,
-        "count": 1
+        "stakeholder": "closed",
+        "probability": 1.0,
+        "count": 49
       }
     ],
     "basis": "type",
-    "reason": "31 of 35 past origin failover tasks went to Customer after QA",
+    "reason": "49 of 49 past new domain setup tasks went to Closed after Customer",
     "expected_path": [
-      "customer",
       "closed"
     ],
-    "eta_days": 1.1,
+    "eta_days": 0.7,
     "estimated_close": "2026-10-08"
   },
-  "T-4826": {
-    "current_stakeholder": "qa",
-    "hold_days": 0.55,
-    "median_hold_days": 0.71,
-    "hold_ratio": 0.77,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.886,
-        "count": 31
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.029,
-        "count": 1
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.029,
-        "count": 1
-      },
-      {
-        "stakeholder": "ops",
-        "probability": 0.029,
-        "count": 1
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.029,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "31 of 35 past origin failover tasks went to Customer after QA",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.2,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4827": {
+  "T-4816": {
     "current_stakeholder": "support",
-    "hold_days": 0.86,
-    "median_hold_days": 0.69,
-    "hold_ratio": 1.25,
+    "hold_days": 0.62,
+    "median_hold_days": 0.74,
+    "hold_ratio": 0.84,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "customer",
-        "probability": 0.824,
-        "count": 42
+        "probability": 0.796,
+        "count": 43
       },
       {
         "stakeholder": "security",
-        "probability": 0.157,
-        "count": 8
+        "probability": 0.185,
+        "count": 10
       },
       {
         "stakeholder": "ops",
-        "probability": 0.02,
+        "probability": 0.019,
         "count": 1
       }
     ],
     "basis": "type",
-    "reason": "42 of 51 past log access request tasks went to Customer after Support",
+    "reason": "43 of 54 past log access request tasks went to Customer after Support",
     "expected_path": [
       "customer",
       "closed"
     ],
-    "eta_days": 1.2,
+    "eta_days": 1.3,
     "estimated_close": "2026-10-08"
   },
-  "T-4828": {
+  "T-4817": {
+    "current_stakeholder": "security",
+    "hold_days": 6.44,
+    "median_hold_days": 2.65,
+    "hold_ratio": 2.43,
+    "risk": "High",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.971,
+        "count": 34
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.029,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "34 of 35 past ssl renewal tasks went to Ops after Security Review",
+    "expected_path": [
+      "ops",
+      "closed"
+    ],
+    "eta_days": 2.3,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4818": {
+    "current_stakeholder": "customer",
+    "hold_days": 0.68,
+    "median_hold_days": 0.99,
+    "hold_ratio": 0.69,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "closed",
+        "probability": 1.0,
+        "count": 44
+      }
+    ],
+    "basis": "type",
+    "reason": "44 of 44 past log access request tasks went to Closed after Customer",
+    "expected_path": [
+      "closed"
+    ],
+    "eta_days": 0.6,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4819": {
+    "current_stakeholder": "security",
+    "hold_days": 3.27,
+    "median_hold_days": 3.07,
+    "hold_ratio": 1.07,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.857,
+        "count": 60
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.143,
+        "count": 10
+      }
+    ],
+    "basis": "type",
+    "reason": "60 of 70 past new domain setup tasks went to Ops after Security Review",
+    "expected_path": [
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 2.9,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4820": {
+    "current_stakeholder": "security",
+    "hold_days": 5.58,
+    "median_hold_days": 2.77,
+    "hold_ratio": 2.01,
+    "risk": "High",
+    "next": [
+      {
+        "stakeholder": "support",
+        "probability": 0.811,
+        "count": 43
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.189,
+        "count": 10
+      }
+    ],
+    "basis": "type",
+    "reason": "43 of 53 past log access request tasks went to Support after Security Review",
+    "expected_path": [
+      "support",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 3.1,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4821": {
     "current_stakeholder": "network_eng",
-    "hold_days": 3.58,
-    "median_hold_days": 1.9,
-    "hold_ratio": 1.88,
-    "risk": "Medium",
+    "hold_days": 4.7,
+    "median_hold_days": 1.6,
+    "hold_ratio": 2.94,
+    "risk": "High",
     "next": [
       {
         "stakeholder": "customer",
-        "probability": 0.676,
-        "count": 46
+        "probability": 0.587,
+        "count": 37
       },
       {
         "stakeholder": "qa",
-        "probability": 0.206,
-        "count": 14
+        "probability": 0.27,
+        "count": 17
       },
       {
         "stakeholder": "dev",
-        "probability": 0.118,
-        "count": 8
+        "probability": 0.143,
+        "count": 9
       }
     ],
     "basis": "type",
-    "reason": "46 of 68 past cache purge bug tasks went to Customer after Network Eng",
+    "reason": "37 of 63 past cache purge bug tasks went to Customer after Network Eng",
     "expected_path": [
       "customer",
       "closed"
     ],
-    "eta_days": 1.2,
-    "estimated_close": "2026-10-08"
+    "eta_days": 2.3,
+    "estimated_close": "2026-10-09"
   },
-  "T-4829": {
-    "current_stakeholder": "support",
-    "hold_days": 0.39,
-    "median_hold_days": 0.77,
-    "hold_ratio": 0.51,
+  "T-4822": {
+    "current_stakeholder": "ops",
+    "hold_days": 1.11,
+    "median_hold_days": 1.39,
+    "hold_ratio": 0.8,
     "risk": "Low",
     "next": [
       {
-        "stakeholder": "network_eng",
-        "probability": 0.97,
-        "count": 65
+        "stakeholder": "customer",
+        "probability": 0.948,
+        "count": 55
       },
       {
-        "stakeholder": "dev",
-        "probability": 0.015,
+        "stakeholder": "support",
+        "probability": 0.017,
         "count": 1
       },
       {
-        "stakeholder": "customer",
-        "probability": 0.015,
+        "stakeholder": "dev",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "security",
+        "probability": 0.017,
         "count": 1
       }
     ],
     "basis": "type",
-    "reason": "65 of 67 past cache purge bug tasks went to Network Eng after Support",
+    "reason": "55 of 58 past traffic spike tasks went to Customer after Ops",
     "expected_path": [
-      "network_eng",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 1.5,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4823": {
+    "current_stakeholder": "network_eng",
+    "hold_days": 4.69,
+    "median_hold_days": 1.71,
+    "hold_ratio": 2.74,
+    "risk": "High",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.612,
+        "count": 41
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.254,
+        "count": 17
+      },
+      {
+        "stakeholder": "closed",
+        "probability": 0.134,
+        "count": 9
+      }
+    ],
+    "basis": "type",
+    "reason": "41 of 67 past traffic spike tasks went to Ops after Network Eng",
+    "expected_path": [
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 3.4,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4824": {
+    "current_stakeholder": "support",
+    "hold_days": 0.92,
+    "median_hold_days": 1.02,
+    "hold_ratio": 0.9,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "security",
+        "probability": 0.971,
+        "count": 68
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.014,
+        "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.014,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "68 of 70 past new domain setup tasks went to Security Review after Support",
+    "expected_path": [
+      "security",
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 5.6,
+    "estimated_close": "2026-10-12"
+  },
+  "T-4825": {
+    "current_stakeholder": "ops",
+    "hold_days": 0.52,
+    "median_hold_days": 1.68,
+    "hold_ratio": 0.31,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "support",
+        "probability": 0.909,
+        "count": 10
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.091,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "10 of 11 past log access request tasks went to Support after Ops",
+    "expected_path": [
+      "support",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 2.9,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4826": {
+    "current_stakeholder": "ops",
+    "hold_days": 0.12,
+    "median_hold_days": 1.39,
+    "hold_ratio": 0.08,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 0.948,
+        "count": 55
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "security",
+        "probability": 0.017,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "55 of 58 past traffic spike tasks went to Customer after Ops",
+    "expected_path": [
+      "customer",
+      "closed"
+    ],
+    "eta_days": 2.1,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4827": {
+    "current_stakeholder": "customer",
+    "hold_days": 0.59,
+    "median_hold_days": 0.83,
+    "hold_ratio": 0.71,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "closed",
+        "probability": 1.0,
+        "count": 58
+      }
+    ],
+    "basis": "type",
+    "reason": "58 of 58 past traffic spike tasks went to Closed after Customer",
+    "expected_path": [
+      "closed"
+    ],
+    "eta_days": 0.4,
+    "estimated_close": "2026-10-07"
+  },
+  "T-4828": {
+    "current_stakeholder": "customer",
+    "hold_days": 0.05,
+    "median_hold_days": 0.87,
+    "hold_ratio": 0.05,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "closed",
+        "probability": 0.977,
+        "count": 42
+      },
+      {
+        "stakeholder": "qa",
+        "probability": 0.023,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "42 of 43 past origin failover tasks went to Closed after Customer",
+    "expected_path": [
+      "closed"
+    ],
+    "eta_days": 0.8,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4829": {
+    "current_stakeholder": "security",
+    "hold_days": 3.43,
+    "median_hold_days": 3.07,
+    "hold_ratio": 1.12,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.857,
+        "count": 60
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.143,
+        "count": 10
+      }
+    ],
+    "basis": "type",
+    "reason": "60 of 70 past new domain setup tasks went to Ops after Security Review",
+    "expected_path": [
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 3.0,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4830": {
+    "current_stakeholder": "support",
+    "hold_days": 0.55,
+    "median_hold_days": 0.74,
+    "hold_ratio": 0.75,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 0.796,
+        "count": 43
+      },
+      {
+        "stakeholder": "security",
+        "probability": 0.185,
+        "count": 10
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.019,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "43 of 54 past log access request tasks went to Customer after Support",
+    "expected_path": [
+      "customer",
+      "closed"
+    ],
+    "eta_days": 1.4,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4831": {
+    "current_stakeholder": "ops",
+    "hold_days": 0.8,
+    "median_hold_days": 1.39,
+    "hold_ratio": 0.57,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 0.948,
+        "count": 55
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "security",
+        "probability": 0.017,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "55 of 58 past traffic spike tasks went to Customer after Ops",
+    "expected_path": [
+      "customer",
+      "closed"
+    ],
+    "eta_days": 1.6,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4832": {
+    "current_stakeholder": "dev",
+    "hold_days": 1.88,
+    "median_hold_days": 2.33,
+    "hold_ratio": 0.81,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "qa",
+        "probability": 0.96,
+        "count": 24
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.04,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "24 of 25 past origin failover tasks went to QA after Dev",
+    "expected_path": [
+      "qa",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 2.5,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4833": {
+    "current_stakeholder": "qa",
+    "hold_days": 1.79,
+    "median_hold_days": 0.7,
+    "hold_ratio": 2.58,
+    "risk": "High",
+    "next": [
+      {
+        "stakeholder": "closed",
+        "probability": 1.0,
+        "count": 24
+      }
+    ],
+    "basis": "type",
+    "reason": "24 of 24 past dns routing issue tasks went to Closed after QA",
+    "expected_path": [
+      "closed"
+    ],
+    "eta_days": 0.2,
+    "estimated_close": "2026-10-07"
+  },
+  "T-4834": {
+    "current_stakeholder": "security",
+    "hold_days": 2.45,
+    "median_hold_days": 3.07,
+    "hold_ratio": 0.8,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.857,
+        "count": 60
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.143,
+        "count": 10
+      }
+    ],
+    "basis": "type",
+    "reason": "60 of 70 past new domain setup tasks went to Ops after Security Review",
+    "expected_path": [
+      "ops",
       "customer",
       "closed"
     ],
     "eta_days": 3.2,
     "estimated_close": "2026-10-10"
   },
-  "T-4830": {
-    "current_stakeholder": "customer",
-    "hold_days": 0.38,
-    "median_hold_days": 0.88,
-    "hold_ratio": 0.44,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 0.985,
-        "count": 67
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.015,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "67 of 68 past cache purge bug tasks went to Closed after Customer",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.5,
-    "estimated_close": "2026-10-07"
-  },
-  "T-4831": {
-    "current_stakeholder": "qa",
-    "hold_days": 1.92,
-    "median_hold_days": 0.71,
-    "hold_ratio": 2.71,
-    "risk": "High",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.886,
-        "count": 31
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.029,
-        "count": 1
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.029,
-        "count": 1
-      },
-      {
-        "stakeholder": "ops",
-        "probability": 0.029,
-        "count": 1
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.029,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "31 of 35 past origin failover tasks went to Customer after QA",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.1,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4832": {
-    "current_stakeholder": "customer",
-    "hold_days": 0.67,
-    "median_hold_days": 0.91,
-    "hold_ratio": 0.74,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 0.984,
-        "count": 61
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.016,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "61 of 62 past traffic spike tasks went to Closed after Customer",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.5,
-    "estimated_close": "2026-10-07"
-  },
-  "T-4833": {
+  "T-4835": {
     "current_stakeholder": "customer",
     "hold_days": 0.61,
-    "median_hold_days": 0.92,
-    "hold_ratio": 0.66,
+    "median_hold_days": 0.87,
+    "hold_ratio": 0.7,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "closed",
-        "probability": 0.971,
-        "count": 34
+        "probability": 0.977,
+        "count": 42
       },
       {
         "stakeholder": "qa",
-        "probability": 0.029,
+        "probability": 0.023,
         "count": 1
       }
     ],
     "basis": "type",
-    "reason": "34 of 35 past origin failover tasks went to Closed after Customer",
+    "reason": "42 of 43 past origin failover tasks went to Closed after Customer",
     "expected_path": [
       "closed"
     ],
     "eta_days": 0.4,
     "estimated_close": "2026-10-07"
   },
-  "T-4834": {
+  "T-4836": {
     "current_stakeholder": "security",
     "hold_days": 3.43,
     "median_hold_days": 2.77,
@@ -1036,622 +850,50 @@
     "next": [
       {
         "stakeholder": "support",
-        "probability": 0.72,
-        "count": 36
+        "probability": 0.811,
+        "count": 43
       },
       {
         "stakeholder": "ops",
-        "probability": 0.26,
-        "count": 13
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.02,
-        "count": 1
+        "probability": 0.189,
+        "count": 10
       }
     ],
     "basis": "type",
-    "reason": "36 of 50 past log access request tasks went to Support after Security Review",
+    "reason": "43 of 53 past log access request tasks went to Support after Security Review",
     "expected_path": [
       "support",
       "customer",
       "closed"
     ],
-    "eta_days": 4.3,
+    "eta_days": 3.8,
     "estimated_close": "2026-10-11"
-  },
-  "T-4835": {
-    "current_stakeholder": "support",
-    "hold_days": 0.6,
-    "median_hold_days": 0.69,
-    "hold_ratio": 0.87,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.824,
-        "count": 42
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.157,
-        "count": 8
-      },
-      {
-        "stakeholder": "ops",
-        "probability": 0.02,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "42 of 51 past log access request tasks went to Customer after Support",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.1,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4836": {
-    "current_stakeholder": "dev",
-    "hold_days": 2.0,
-    "median_hold_days": 1.99,
-    "hold_ratio": 1.01,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "qa",
-        "probability": 0.96,
-        "count": 24
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.04,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "24 of 25 past origin failover tasks went to QA after Dev",
-    "expected_path": [
-      "qa",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 2.6,
-    "estimated_close": "2026-10-09"
   },
   "T-4837": {
-    "current_stakeholder": "customer",
-    "hold_days": 0.58,
-    "median_hold_days": 0.91,
-    "hold_ratio": 0.65,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 0.984,
-        "count": 61
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.016,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "61 of 62 past traffic spike tasks went to Closed after Customer",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.6,
-    "estimated_close": "2026-10-07"
-  },
-  "T-4838": {
-    "current_stakeholder": "security",
-    "hold_days": 3.35,
-    "median_hold_days": 2.67,
-    "hold_ratio": 1.25,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "ops",
-        "probability": 1.0,
-        "count": 32
-      }
-    ],
-    "basis": "type",
-    "reason": "32 of 32 past ssl renewal tasks went to Ops after Security Review",
-    "expected_path": [
-      "ops",
-      "closed"
-    ],
-    "eta_days": 1.8,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4839": {
-    "current_stakeholder": "ops",
-    "hold_days": 0.06,
-    "median_hold_days": 0.95,
-    "hold_ratio": 0.07,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 1.0,
-        "count": 61
-      }
-    ],
-    "basis": "type",
-    "reason": "61 of 61 past traffic spike tasks went to Customer after Ops",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.8,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4840": {
-    "current_stakeholder": "ops",
-    "hold_days": 1.14,
-    "median_hold_days": 1.12,
-    "hold_ratio": 1.01,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 0.781,
-        "count": 25
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.219,
-        "count": 7
-      }
-    ],
-    "basis": "type",
-    "reason": "25 of 32 past ssl renewal tasks went to Closed after Ops",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.4,
-    "estimated_close": "2026-10-07"
-  },
-  "T-4841": {
-    "current_stakeholder": "security",
-    "hold_days": 3.12,
-    "median_hold_days": 2.77,
-    "hold_ratio": 1.13,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "support",
-        "probability": 0.72,
-        "count": 36
-      },
-      {
-        "stakeholder": "ops",
-        "probability": 0.26,
-        "count": 13
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.02,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "36 of 50 past log access request tasks went to Support after Security Review",
-    "expected_path": [
-      "support",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 4.1,
-    "estimated_close": "2026-10-11"
-  },
-  "T-4842": {
-    "current_stakeholder": "ops",
-    "hold_days": 0.48,
-    "median_hold_days": 0.93,
-    "hold_ratio": 0.52,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "qa",
-        "probability": 0.621,
-        "count": 36
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.362,
-        "count": 21
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.017,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "36 of 58 past config change tasks went to QA after Ops",
-    "expected_path": [
-      "qa",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 2.2,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4843": {
-    "current_stakeholder": "ops",
-    "hold_days": 0.65,
-    "median_hold_days": 0.95,
-    "hold_ratio": 0.68,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 1.0,
-        "count": 61
-      }
-    ],
-    "basis": "type",
-    "reason": "61 of 61 past traffic spike tasks went to Customer after Ops",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.5,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4844": {
-    "current_stakeholder": "ops",
-    "hold_days": 0.48,
-    "median_hold_days": 1.12,
-    "hold_ratio": 0.43,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 0.781,
-        "count": 25
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.219,
-        "count": 7
-      }
-    ],
-    "basis": "type",
-    "reason": "25 of 32 past ssl renewal tasks went to Closed after Ops",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.6,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4845": {
-    "current_stakeholder": "support",
-    "hold_days": 0.4,
-    "median_hold_days": 0.69,
-    "hold_ratio": 0.57,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.824,
-        "count": 42
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.157,
-        "count": 8
-      },
-      {
-        "stakeholder": "ops",
-        "probability": 0.02,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "42 of 51 past log access request tasks went to Customer after Support",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.2,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4846": {
-    "current_stakeholder": "customer",
-    "hold_days": 1.28,
-    "median_hold_days": 0.99,
-    "hold_ratio": 1.3,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 1.0,
-        "count": 58
-      }
-    ],
-    "basis": "type",
-    "reason": "58 of 58 past config change tasks went to Closed after Customer",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.3,
-    "estimated_close": "2026-10-07"
-  },
-  "T-4847": {
-    "current_stakeholder": "customer",
-    "hold_days": 0.2,
-    "median_hold_days": 0.88,
-    "hold_ratio": 0.23,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 0.985,
-        "count": 67
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.015,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "67 of 68 past cache purge bug tasks went to Closed after Customer",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.7,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4848": {
-    "current_stakeholder": "qa",
-    "hold_days": 0.32,
-    "median_hold_days": 0.75,
-    "hold_ratio": 0.43,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.946,
-        "count": 35
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.027,
-        "count": 1
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.027,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "35 of 37 past config change tasks went to Customer after QA",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.4,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4849": {
-    "current_stakeholder": "qa",
-    "hold_days": 0.68,
-    "median_hold_days": 0.66,
-    "hold_ratio": 1.03,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 1.0,
-        "count": 20
-      }
-    ],
-    "basis": "type",
-    "reason": "20 of 20 past dns routing issue tasks went to Closed after QA",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.1,
-    "estimated_close": "2026-10-07"
-  },
-  "T-4850": {
     "current_stakeholder": "network_eng",
     "hold_days": 1.66,
-    "median_hold_days": 1.94,
-    "hold_ratio": 0.86,
+    "median_hold_days": 1.6,
+    "hold_ratio": 1.04,
     "risk": "Low",
     "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 0.587,
+        "count": 37
+      },
       {
         "stakeholder": "qa",
-        "probability": 0.528,
-        "count": 19
+        "probability": 0.27,
+        "count": 17
       },
       {
-        "stakeholder": "customer",
-        "probability": 0.417,
-        "count": 15
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.028,
-        "count": 1
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.028,
-        "count": 1
+        "stakeholder": "dev",
+        "probability": 0.143,
+        "count": 9
       }
     ],
     "basis": "type",
-    "reason": "19 of 36 past dns routing issue tasks went to QA after Network Eng",
-    "expected_path": [
-      "qa",
-      "closed"
-    ],
-    "eta_days": 1.7,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4851": {
-    "current_stakeholder": "security",
-    "hold_days": 2.6,
-    "median_hold_days": 2.67,
-    "hold_ratio": 0.97,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "ops",
-        "probability": 1.0,
-        "count": 32
-      }
-    ],
-    "basis": "type",
-    "reason": "32 of 32 past ssl renewal tasks went to Ops after Security Review",
-    "expected_path": [
-      "ops",
-      "closed"
-    ],
-    "eta_days": 2.1,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4852": {
-    "current_stakeholder": "security",
-    "hold_days": 1.23,
-    "median_hold_days": 2.63,
-    "hold_ratio": 0.47,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "ops",
-        "probability": 0.836,
-        "count": 61
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.164,
-        "count": 12
-      }
-    ],
-    "basis": "type",
-    "reason": "61 of 73 past new domain setup tasks went to Ops after Security Review",
-    "expected_path": [
-      "ops",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 3.4,
-    "estimated_close": "2026-10-10"
-  },
-  "T-4853": {
-    "current_stakeholder": "security",
-    "hold_days": 1.57,
-    "median_hold_days": 2.63,
-    "hold_ratio": 0.6,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "ops",
-        "probability": 0.836,
-        "count": 61
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.164,
-        "count": 12
-      }
-    ],
-    "basis": "type",
-    "reason": "61 of 73 past new domain setup tasks went to Ops after Security Review",
-    "expected_path": [
-      "ops",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 3.2,
-    "estimated_close": "2026-10-10"
-  },
-  "T-4854": {
-    "current_stakeholder": "dev",
-    "hold_days": 0.55,
-    "median_hold_days": 1.99,
-    "hold_ratio": 0.28,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "qa",
-        "probability": 0.96,
-        "count": 24
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.04,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "24 of 25 past origin failover tasks went to QA after Dev",
-    "expected_path": [
-      "qa",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 3.1,
-    "estimated_close": "2026-10-10"
-  },
-  "T-4855": {
-    "current_stakeholder": "security",
-    "hold_days": 2.37,
-    "median_hold_days": 2.67,
-    "hold_ratio": 0.88,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "ops",
-        "probability": 1.0,
-        "count": 32
-      }
-    ],
-    "basis": "type",
-    "reason": "32 of 32 past ssl renewal tasks went to Ops after Security Review",
-    "expected_path": [
-      "ops",
-      "closed"
-    ],
-    "eta_days": 2.2,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4856": {
-    "current_stakeholder": "qa",
-    "hold_days": 0.38,
-    "median_hold_days": 0.75,
-    "hold_ratio": 0.51,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.946,
-        "count": 35
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.027,
-        "count": 1
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.027,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "35 of 37 past config change tasks went to Customer after QA",
+    "reason": "37 of 63 past cache purge bug tasks went to Customer after Network Eng",
     "expected_path": [
       "customer",
       "closed"
@@ -1659,756 +901,420 @@
     "eta_days": 1.4,
     "estimated_close": "2026-10-08"
   },
-  "T-4857": {
-    "current_stakeholder": "network_eng",
-    "hold_days": 1.45,
-    "median_hold_days": 1.9,
-    "hold_ratio": 0.76,
+  "T-4838": {
+    "current_stakeholder": "support",
+    "hold_days": 0.55,
+    "median_hold_days": 1.02,
+    "hold_ratio": 0.54,
     "risk": "Low",
     "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.676,
-        "count": 46
-      },
-      {
-        "stakeholder": "qa",
-        "probability": 0.206,
-        "count": 14
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.118,
-        "count": 8
-      }
-    ],
-    "basis": "type",
-    "reason": "46 of 68 past cache purge bug tasks went to Customer after Network Eng",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.5,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4858": {
-    "current_stakeholder": "ops",
-    "hold_days": 0.52,
-    "median_hold_days": 0.95,
-    "hold_ratio": 0.55,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 1.0,
-        "count": 61
-      }
-    ],
-    "basis": "type",
-    "reason": "61 of 61 past traffic spike tasks went to Customer after Ops",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.5,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4859": {
-    "current_stakeholder": "ops",
-    "hold_days": 0.3,
-    "median_hold_days": 1.12,
-    "hold_ratio": 0.27,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 0.781,
-        "count": 25
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.219,
-        "count": 7
-      }
-    ],
-    "basis": "type",
-    "reason": "25 of 32 past ssl renewal tasks went to Closed after Ops",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.8,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4860": {
-    "current_stakeholder": "network_eng",
-    "hold_days": 1.4,
-    "median_hold_days": 1.94,
-    "hold_ratio": 0.72,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "qa",
-        "probability": 0.528,
-        "count": 19
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.417,
-        "count": 15
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.028,
-        "count": 1
-      },
       {
         "stakeholder": "security",
-        "probability": 0.028,
+        "probability": 0.971,
+        "count": 68
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.014,
+        "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.014,
         "count": 1
       }
     ],
     "basis": "type",
-    "reason": "19 of 36 past dns routing issue tasks went to QA after Network Eng",
+    "reason": "68 of 70 past new domain setup tasks went to Security Review after Support",
     "expected_path": [
-      "qa",
-      "closed"
-    ],
-    "eta_days": 1.9,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4861": {
-    "current_stakeholder": "security",
-    "hold_days": 0.91,
-    "median_hold_days": 2.63,
-    "hold_ratio": 0.34,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "ops",
-        "probability": 0.836,
-        "count": 61
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.164,
-        "count": 12
-      }
-    ],
-    "basis": "type",
-    "reason": "61 of 73 past new domain setup tasks went to Ops after Security Review",
-    "expected_path": [
+      "security",
       "ops",
       "customer",
       "closed"
     ],
-    "eta_days": 3.6,
-    "estimated_close": "2026-10-11"
+    "eta_days": 5.8,
+    "estimated_close": "2026-10-13"
   },
-  "T-4862": {
-    "current_stakeholder": "ops",
-    "hold_days": 0.06,
-    "median_hold_days": 0.98,
-    "hold_ratio": 0.07,
+  "T-4839": {
+    "current_stakeholder": "qa",
+    "hold_days": 0.25,
+    "median_hold_days": 0.71,
+    "hold_ratio": 0.35,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "customer",
-        "probability": 0.742,
-        "count": 46
-      },
-      {
-        "stakeholder": "closed",
-        "probability": 0.21,
-        "count": 13
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.016,
-        "count": 1
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.016,
-        "count": 1
+        "probability": 0.93,
+        "count": 40
       },
       {
         "stakeholder": "dev",
-        "probability": 0.016,
+        "probability": 0.023,
         "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "46 of 62 past new domain setup tasks went to Customer after Ops",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.9,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4863": {
-    "current_stakeholder": "qa",
-    "hold_days": 0.6,
-    "median_hold_days": 0.75,
-    "hold_ratio": 0.8,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.946,
-        "count": 35
       },
       {
         "stakeholder": "network_eng",
-        "probability": 0.027,
+        "probability": 0.023,
         "count": 1
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.027,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "35 of 37 past config change tasks went to Customer after QA",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.2,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4864": {
-    "current_stakeholder": "customer",
-    "hold_days": 0.17,
-    "median_hold_days": 0.88,
-    "hold_ratio": 0.2,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 0.985,
-        "count": 67
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.015,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "67 of 68 past cache purge bug tasks went to Closed after Customer",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 0.7,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4865": {
-    "current_stakeholder": "security",
-    "hold_days": 1.61,
-    "median_hold_days": 2.77,
-    "hold_ratio": 0.58,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "support",
-        "probability": 0.72,
-        "count": 36
       },
       {
         "stakeholder": "ops",
-        "probability": 0.26,
-        "count": 13
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.02,
+        "probability": 0.023,
         "count": 1
       }
     ],
     "basis": "type",
-    "reason": "36 of 50 past log access request tasks went to Support after Security Review",
+    "reason": "40 of 43 past origin failover tasks went to Customer after QA",
     "expected_path": [
-      "support",
       "customer",
       "closed"
     ],
-    "eta_days": 3.0,
-    "estimated_close": "2026-10-10"
+    "eta_days": 1.3,
+    "estimated_close": "2026-10-08"
   },
-  "T-4866": {
-    "current_stakeholder": "qa",
-    "hold_days": 0.58,
-    "median_hold_days": 0.75,
+  "T-4840": {
+    "current_stakeholder": "customer",
+    "hold_days": 0.67,
+    "median_hold_days": 0.86,
     "hold_ratio": 0.77,
     "risk": "Low",
     "next": [
       {
-        "stakeholder": "customer",
-        "probability": 0.946,
-        "count": 35
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.027,
-        "count": 1
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.027,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "35 of 37 past config change tasks went to Customer after QA",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.2,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4867": {
-    "current_stakeholder": "customer",
-    "hold_days": 0.48,
-    "median_hold_days": 0.88,
-    "hold_ratio": 0.55,
-    "risk": "Low",
-    "next": [
-      {
         "stakeholder": "closed",
-        "probability": 0.985,
-        "count": 67
+        "probability": 0.967,
+        "count": 58
       },
       {
-        "stakeholder": "network_eng",
-        "probability": 0.015,
-        "count": 1
+        "stakeholder": "ops",
+        "probability": 0.033,
+        "count": 2
       }
     ],
     "basis": "type",
-    "reason": "67 of 68 past cache purge bug tasks went to Closed after Customer",
+    "reason": "58 of 60 past config change tasks went to Closed after Customer",
     "expected_path": [
       "closed"
     ],
     "eta_days": 0.5,
     "estimated_close": "2026-10-07"
   },
-  "T-4868": {
+  "T-4841": {
     "current_stakeholder": "ops",
-    "hold_days": 0.07,
-    "median_hold_days": 1.12,
-    "hold_ratio": 0.06,
+    "hold_days": 1.06,
+    "median_hold_days": 1.14,
+    "hold_ratio": 0.93,
     "risk": "Low",
     "next": [
-      {
-        "stakeholder": "closed",
-        "probability": 0.781,
-        "count": 25
-      },
       {
         "stakeholder": "customer",
-        "probability": 0.219,
-        "count": 7
-      }
-    ],
-    "basis": "type",
-    "reason": "25 of 32 past ssl renewal tasks went to Closed after Ops",
-    "expected_path": [
-      "closed"
-    ],
-    "eta_days": 1.1,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4869": {
-    "current_stakeholder": "network_eng",
-    "hold_days": 1.44,
-    "median_hold_days": 1.78,
-    "hold_ratio": 0.81,
-    "risk": "Low",
-    "next": [
+        "probability": 0.77,
+        "count": 47
+      },
       {
-        "stakeholder": "ops",
-        "probability": 0.667,
-        "count": 46
+        "stakeholder": "closed",
+        "probability": 0.18,
+        "count": 11
       },
       {
         "stakeholder": "dev",
-        "probability": 0.203,
-        "count": 14
+        "probability": 0.033,
+        "count": 2
       },
       {
-        "stakeholder": "closed",
-        "probability": 0.116,
-        "count": 8
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.014,
+        "stakeholder": "security",
+        "probability": 0.016,
         "count": 1
       }
     ],
     "basis": "type",
-    "reason": "46 of 69 past traffic spike tasks went to Ops after Network Eng",
+    "reason": "47 of 61 past new domain setup tasks went to Customer after Ops",
+    "expected_path": [
+      "customer",
+      "closed"
+    ],
+    "eta_days": 1.5,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4842": {
+    "current_stakeholder": "security",
+    "hold_days": 3.35,
+    "median_hold_days": 2.65,
+    "hold_ratio": 1.26,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.971,
+        "count": 34
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.029,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "34 of 35 past ssl renewal tasks went to Ops after Security Review",
     "expected_path": [
       "ops",
-      "customer",
       "closed"
     ],
     "eta_days": 2.6,
     "estimated_close": "2026-10-09"
   },
-  "T-4870": {
+  "T-4843": {
+    "current_stakeholder": "ops",
+    "hold_days": 0.38,
+    "median_hold_days": 1.39,
+    "hold_ratio": 0.28,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "closed",
+        "probability": 0.771,
+        "count": 27
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.229,
+        "count": 8
+      }
+    ],
+    "basis": "type",
+    "reason": "27 of 35 past ssl renewal tasks went to Closed after Ops",
+    "expected_path": [
+      "closed"
+    ],
+    "eta_days": 1.0,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4844": {
+    "current_stakeholder": "customer",
+    "hold_days": 1.3,
+    "median_hold_days": 0.84,
+    "hold_ratio": 1.54,
+    "risk": "Medium",
+    "next": [
+      {
+        "stakeholder": "closed",
+        "probability": 1.0,
+        "count": 63
+      }
+    ],
+    "basis": "type",
+    "reason": "63 of 63 past cache purge bug tasks went to Closed after Customer",
+    "expected_path": [
+      "closed"
+    ],
+    "eta_days": 0.7,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4845": {
+    "current_stakeholder": "customer",
+    "hold_days": 0.58,
+    "median_hold_days": 1.18,
+    "hold_ratio": 0.49,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "closed",
+        "probability": 0.8,
+        "count": 8
+      },
+      {
+        "stakeholder": "security",
+        "probability": 0.1,
+        "count": 1
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.1,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "8 of 10 past ssl renewal tasks went to Closed after Customer",
+    "expected_path": [
+      "closed"
+    ],
+    "eta_days": 0.6,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4846": {
     "current_stakeholder": "security",
-    "hold_days": 0.34,
-    "median_hold_days": 2.63,
-    "hold_ratio": 0.13,
+    "hold_days": 2.6,
+    "median_hold_days": 2.65,
+    "hold_ratio": 0.98,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "ops",
-        "probability": 0.836,
-        "count": 61
+        "probability": 0.971,
+        "count": 34
       },
       {
-        "stakeholder": "support",
-        "probability": 0.164,
-        "count": 12
+        "stakeholder": "customer",
+        "probability": 0.029,
+        "count": 1
       }
     ],
     "basis": "type",
-    "reason": "61 of 73 past new domain setup tasks went to Ops after Security Review",
+    "reason": "34 of 35 past ssl renewal tasks went to Ops after Security Review",
+    "expected_path": [
+      "ops",
+      "closed"
+    ],
+    "eta_days": 2.8,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4847": {
+    "current_stakeholder": "qa",
+    "hold_days": 0.8,
+    "median_hold_days": 0.71,
+    "hold_ratio": 1.13,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 0.93,
+        "count": 40
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.023,
+        "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.023,
+        "count": 1
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.023,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "40 of 43 past origin failover tasks went to Customer after QA",
+    "expected_path": [
+      "customer",
+      "closed"
+    ],
+    "eta_days": 1.1,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4848": {
+    "current_stakeholder": "security",
+    "hold_days": 1.23,
+    "median_hold_days": 3.07,
+    "hold_ratio": 0.4,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.857,
+        "count": 60
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.143,
+        "count": 10
+      }
+    ],
+    "basis": "type",
+    "reason": "60 of 70 past new domain setup tasks went to Ops after Security Review",
     "expected_path": [
       "ops",
       "customer",
       "closed"
     ],
-    "eta_days": 4.2,
+    "eta_days": 4.0,
     "estimated_close": "2026-10-11"
   },
-  "T-4871": {
+  "T-4849": {
     "current_stakeholder": "ops",
-    "hold_days": 0.59,
-    "median_hold_days": 0.93,
-    "hold_ratio": 0.64,
+    "hold_days": 1.01,
+    "median_hold_days": 1.39,
+    "hold_ratio": 0.72,
     "risk": "Low",
     "next": [
       {
-        "stakeholder": "qa",
-        "probability": 0.621,
-        "count": 36
-      },
-      {
         "stakeholder": "customer",
-        "probability": 0.362,
-        "count": 21
+        "probability": 0.948,
+        "count": 55
       },
       {
         "stakeholder": "support",
         "probability": 0.017,
         "count": 1
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "security",
+        "probability": 0.017,
+        "count": 1
       }
     ],
     "basis": "type",
-    "reason": "36 of 58 past config change tasks went to QA after Ops",
+    "reason": "55 of 58 past traffic spike tasks went to Customer after Ops",
     "expected_path": [
-      "qa",
       "customer",
       "closed"
     ],
-    "eta_days": 2.2,
-    "estimated_close": "2026-10-09"
+    "eta_days": 1.6,
+    "estimated_close": "2026-10-08"
   },
-  "T-4872": {
+  "T-4850": {
     "current_stakeholder": "customer",
-    "hold_days": 0.62,
-    "median_hold_days": 0.99,
-    "hold_ratio": 0.62,
+    "hold_days": 0.85,
+    "median_hold_days": 0.86,
+    "hold_ratio": 0.99,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "closed",
-        "probability": 1.0,
+        "probability": 0.967,
         "count": 58
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.033,
+        "count": 2
       }
     ],
     "basis": "type",
-    "reason": "58 of 58 past config change tasks went to Closed after Customer",
+    "reason": "58 of 60 past config change tasks went to Closed after Customer",
     "expected_path": [
       "closed"
     ],
     "eta_days": 0.4,
     "estimated_close": "2026-10-07"
   },
-  "T-4873": {
-    "current_stakeholder": "support",
-    "hold_days": 0.89,
-    "median_hold_days": 0.95,
-    "hold_ratio": 0.94,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.919,
-        "count": 34
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.054,
-        "count": 2
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.027,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "34 of 37 past dns routing issue tasks went to Network Eng after Support",
-    "expected_path": [
-      "network_eng",
-      "qa",
-      "closed"
-    ],
-    "eta_days": 2.9,
-    "estimated_close": "2026-10-10"
-  },
-  "T-4874": {
-    "current_stakeholder": "network_eng",
-    "hold_days": 0.2,
-    "median_hold_days": 1.94,
-    "hold_ratio": 0.1,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "qa",
-        "probability": 0.528,
-        "count": 19
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.417,
-        "count": 15
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.028,
-        "count": 1
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.028,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "19 of 36 past dns routing issue tasks went to QA after Network Eng",
-    "expected_path": [
-      "qa",
-      "closed"
-    ],
-    "eta_days": 2.4,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4875": {
-    "current_stakeholder": "qa",
-    "hold_days": 0.35,
-    "median_hold_days": 0.75,
-    "hold_ratio": 0.47,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.946,
-        "count": 35
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.027,
-        "count": 1
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.027,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "35 of 37 past config change tasks went to Customer after QA",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.4,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4876": {
-    "current_stakeholder": "ops",
-    "hold_days": 0.98,
-    "median_hold_days": 0.93,
-    "hold_ratio": 1.05,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "qa",
-        "probability": 0.621,
-        "count": 36
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.362,
-        "count": 21
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.017,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "36 of 58 past config change tasks went to QA after Ops",
-    "expected_path": [
-      "qa",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 2.1,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4877": {
-    "current_stakeholder": "security",
-    "hold_days": 0.84,
-    "median_hold_days": 2.67,
-    "hold_ratio": 0.31,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "ops",
-        "probability": 1.0,
-        "count": 32
-      }
-    ],
-    "basis": "type",
-    "reason": "32 of 32 past ssl renewal tasks went to Ops after Security Review",
-    "expected_path": [
-      "ops",
-      "closed"
-    ],
-    "eta_days": 3.0,
-    "estimated_close": "2026-10-10"
-  },
-  "T-4878": {
-    "current_stakeholder": "network_eng",
-    "hold_days": 1.04,
-    "median_hold_days": 1.74,
-    "hold_ratio": 0.6,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "dev",
-        "probability": 0.676,
-        "count": 23
-      },
-      {
-        "stakeholder": "qa",
-        "probability": 0.265,
-        "count": 9
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.029,
-        "count": 1
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.029,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "23 of 34 past origin failover tasks went to Dev after Network Eng",
-    "expected_path": [
-      "dev",
-      "qa",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 4.7,
-    "estimated_close": "2026-10-12"
-  },
-  "T-4879": {
-    "current_stakeholder": "qa",
-    "hold_days": 0.41,
-    "median_hold_days": 0.75,
-    "hold_ratio": 0.55,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.946,
-        "count": 35
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.027,
-        "count": 1
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.027,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "35 of 37 past config change tasks went to Customer after QA",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.4,
-    "estimated_close": "2026-10-08"
-  },
-  "T-4880": {
+  "T-4851": {
     "current_stakeholder": "dev",
-    "hold_days": 0.38,
-    "median_hold_days": 2.11,
-    "hold_ratio": 0.18,
+    "hold_days": 0.55,
+    "median_hold_days": 2.33,
+    "hold_ratio": 0.24,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "qa",
-        "probability": 0.453,
+        "probability": 0.96,
         "count": 24
       },
       {
-        "stakeholder": "ops",
-        "probability": 0.283,
-        "count": 15
-      },
-      {
         "stakeholder": "customer",
-        "probability": 0.189,
-        "count": 10
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.038,
-        "count": 2
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.019,
-        "count": 1
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.019,
+        "probability": 0.04,
         "count": 1
       }
     ],
-    "basis": "stakeholder",
-    "reason": "24 of 53 past tasks at Dev went to QA next (too few new domain setup examples to split by type)",
+    "basis": "type",
+    "reason": "24 of 25 past origin failover tasks went to QA after Dev",
     "expected_path": [
       "qa",
       "customer",
@@ -2417,132 +1323,632 @@
     "eta_days": 3.4,
     "estimated_close": "2026-10-10"
   },
-  "T-4881": {
-    "current_stakeholder": "ops",
-    "hold_days": 0.9,
-    "median_hold_days": 0.93,
-    "hold_ratio": 0.97,
+  "T-4852": {
+    "current_stakeholder": "security",
+    "hold_days": 2.37,
+    "median_hold_days": 2.65,
+    "hold_ratio": 0.89,
     "risk": "Low",
     "next": [
       {
-        "stakeholder": "qa",
-        "probability": 0.621,
-        "count": 36
+        "stakeholder": "ops",
+        "probability": 0.971,
+        "count": 34
       },
       {
         "stakeholder": "customer",
-        "probability": 0.362,
-        "count": 21
+        "probability": 0.029,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "34 of 35 past ssl renewal tasks went to Ops after Security Review",
+    "expected_path": [
+      "ops",
+      "closed"
+    ],
+    "eta_days": 2.8,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4853": {
+    "current_stakeholder": "network_eng",
+    "hold_days": 0.36,
+    "median_hold_days": 1.6,
+    "hold_ratio": 0.22,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 0.587,
+        "count": 37
+      },
+      {
+        "stakeholder": "qa",
+        "probability": 0.27,
+        "count": 17
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.143,
+        "count": 9
+      }
+    ],
+    "basis": "type",
+    "reason": "37 of 63 past cache purge bug tasks went to Customer after Network Eng",
+    "expected_path": [
+      "customer",
+      "closed"
+    ],
+    "eta_days": 2.1,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4854": {
+    "current_stakeholder": "ops",
+    "hold_days": 2.12,
+    "median_hold_days": 1.35,
+    "hold_ratio": 1.57,
+    "risk": "Medium",
+    "next": [
+      {
+        "stakeholder": "qa",
+        "probability": 0.638,
+        "count": 37
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.31,
+        "count": 18
       },
       {
         "stakeholder": "support",
         "probability": 0.017,
         "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.017,
+        "count": 1
       }
     ],
     "basis": "type",
-    "reason": "36 of 58 past config change tasks went to QA after Ops",
+    "reason": "37 of 58 past config change tasks went to QA after Ops",
     "expected_path": [
       "qa",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 1.9,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4855": {
+    "current_stakeholder": "customer",
+    "hold_days": 0.11,
+    "median_hold_days": 0.87,
+    "hold_ratio": 0.13,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "closed",
+        "probability": 0.977,
+        "count": 42
+      },
+      {
+        "stakeholder": "qa",
+        "probability": 0.023,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "42 of 43 past origin failover tasks went to Closed after Customer",
+    "expected_path": [
+      "closed"
+    ],
+    "eta_days": 0.8,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4856": {
+    "current_stakeholder": "customer",
+    "hold_days": 0.39,
+    "median_hold_days": 0.86,
+    "hold_ratio": 0.46,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "closed",
+        "probability": 0.967,
+        "count": 58
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.033,
+        "count": 2
+      }
+    ],
+    "basis": "type",
+    "reason": "58 of 60 past config change tasks went to Closed after Customer",
+    "expected_path": [
+      "closed"
+    ],
+    "eta_days": 0.5,
+    "estimated_close": "2026-10-07"
+  },
+  "T-4857": {
+    "current_stakeholder": "network_eng",
+    "hold_days": 1.56,
+    "median_hold_days": 1.71,
+    "hold_ratio": 0.91,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.612,
+        "count": 41
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.254,
+        "count": 17
+      },
+      {
+        "stakeholder": "closed",
+        "probability": 0.134,
+        "count": 9
+      }
+    ],
+    "basis": "type",
+    "reason": "41 of 67 past traffic spike tasks went to Ops after Network Eng",
+    "expected_path": [
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 3.0,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4858": {
+    "current_stakeholder": "customer",
+    "hold_days": 0.49,
+    "median_hold_days": 0.87,
+    "hold_ratio": 0.57,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "closed",
+        "probability": 0.977,
+        "count": 42
+      },
+      {
+        "stakeholder": "qa",
+        "probability": 0.023,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "42 of 43 past origin failover tasks went to Closed after Customer",
+    "expected_path": [
+      "closed"
+    ],
+    "eta_days": 0.5,
+    "estimated_close": "2026-10-07"
+  },
+  "T-4859": {
+    "current_stakeholder": "security",
+    "hold_days": 1.94,
+    "median_hold_days": 2.65,
+    "hold_ratio": 0.73,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.971,
+        "count": 34
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.029,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "34 of 35 past ssl renewal tasks went to Ops after Security Review",
+    "expected_path": [
+      "ops",
+      "closed"
+    ],
+    "eta_days": 2.8,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4860": {
+    "current_stakeholder": "qa",
+    "hold_days": 0.56,
+    "median_hold_days": 0.71,
+    "hold_ratio": 0.78,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 0.93,
+        "count": 40
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.023,
+        "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.023,
+        "count": 1
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.023,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "40 of 43 past origin failover tasks went to Customer after QA",
+    "expected_path": [
+      "customer",
+      "closed"
+    ],
+    "eta_days": 1.1,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4861": {
+    "current_stakeholder": "network_eng",
+    "hold_days": 1.95,
+    "median_hold_days": 1.71,
+    "hold_ratio": 1.14,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.612,
+        "count": 41
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.254,
+        "count": 17
+      },
+      {
+        "stakeholder": "closed",
+        "probability": 0.134,
+        "count": 9
+      }
+    ],
+    "basis": "type",
+    "reason": "41 of 67 past traffic spike tasks went to Ops after Network Eng",
+    "expected_path": [
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 2.9,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4862": {
+    "current_stakeholder": "qa",
+    "hold_days": 0.6,
+    "median_hold_days": 0.66,
+    "hold_ratio": 0.91,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 1.0,
+        "count": 38
+      }
+    ],
+    "basis": "type",
+    "reason": "38 of 38 past config change tasks went to Customer after QA",
+    "expected_path": [
+      "customer",
+      "closed"
+    ],
+    "eta_days": 1.1,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4863": {
+    "current_stakeholder": "customer",
+    "hold_days": 0.13,
+    "median_hold_days": 0.75,
+    "hold_ratio": 0.17,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "closed",
+        "probability": 0.875,
+        "count": 7
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.125,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "7 of 8 past dns routing issue tasks went to Closed after Customer",
+    "expected_path": [
+      "closed"
+    ],
+    "eta_days": 0.6,
+    "estimated_close": "2026-10-07"
+  },
+  "T-4864": {
+    "current_stakeholder": "qa",
+    "hold_days": 0.58,
+    "median_hold_days": 0.66,
+    "hold_ratio": 0.88,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 1.0,
+        "count": 38
+      }
+    ],
+    "basis": "type",
+    "reason": "38 of 38 past config change tasks went to Customer after QA",
+    "expected_path": [
+      "customer",
+      "closed"
+    ],
+    "eta_days": 1.1,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4865": {
+    "current_stakeholder": "customer",
+    "hold_days": 0.48,
+    "median_hold_days": 0.84,
+    "hold_ratio": 0.57,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "closed",
+        "probability": 1.0,
+        "count": 63
+      }
+    ],
+    "basis": "type",
+    "reason": "63 of 63 past cache purge bug tasks went to Closed after Customer",
+    "expected_path": [
+      "closed"
+    ],
+    "eta_days": 0.4,
+    "estimated_close": "2026-10-07"
+  },
+  "T-4866": {
+    "current_stakeholder": "network_eng",
+    "hold_days": 1.05,
+    "median_hold_days": 1.6,
+    "hold_ratio": 0.66,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 0.587,
+        "count": 37
+      },
+      {
+        "stakeholder": "qa",
+        "probability": 0.27,
+        "count": 17
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.143,
+        "count": 9
+      }
+    ],
+    "basis": "type",
+    "reason": "37 of 63 past cache purge bug tasks went to Customer after Network Eng",
+    "expected_path": [
+      "customer",
+      "closed"
+    ],
+    "eta_days": 1.6,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4867": {
+    "current_stakeholder": "security",
+    "hold_days": 0.34,
+    "median_hold_days": 3.07,
+    "hold_ratio": 0.11,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.857,
+        "count": 60
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.143,
+        "count": 10
+      }
+    ],
+    "basis": "type",
+    "reason": "60 of 70 past new domain setup tasks went to Ops after Security Review",
+    "expected_path": [
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 4.8,
+    "estimated_close": "2026-10-12"
+  },
+  "T-4868": {
+    "current_stakeholder": "ops",
+    "hold_days": 0.05,
+    "median_hold_days": 1.39,
+    "hold_ratio": 0.04,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 0.948,
+        "count": 55
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "security",
+        "probability": 0.017,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "55 of 58 past traffic spike tasks went to Customer after Ops",
+    "expected_path": [
       "customer",
       "closed"
     ],
     "eta_days": 2.2,
     "estimated_close": "2026-10-09"
   },
-  "T-4882": {
-    "current_stakeholder": "support",
-    "hold_days": 0.92,
-    "median_hold_days": 0.88,
-    "hold_ratio": 1.04,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "security",
-        "probability": 0.973,
-        "count": 72
-      },
-      {
-        "stakeholder": "ops",
-        "probability": 0.014,
-        "count": 1
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.014,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "72 of 74 past new domain setup tasks went to Security Review after Support",
-    "expected_path": [
-      "security",
-      "ops",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 5.1,
-    "estimated_close": "2026-10-12"
-  },
-  "T-4883": {
-    "current_stakeholder": "support",
-    "hold_days": 0.93,
-    "median_hold_days": 0.88,
-    "hold_ratio": 1.06,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "security",
-        "probability": 0.973,
-        "count": 72
-      },
-      {
-        "stakeholder": "ops",
-        "probability": 0.014,
-        "count": 1
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.014,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "72 of 74 past new domain setup tasks went to Security Review after Support",
-    "expected_path": [
-      "security",
-      "ops",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 5.1,
-    "estimated_close": "2026-10-12"
-  },
-  "T-4884": {
-    "current_stakeholder": "qa",
+  "T-4869": {
+    "current_stakeholder": "ops",
     "hold_days": 0.59,
-    "median_hold_days": 0.75,
-    "hold_ratio": 0.78,
+    "median_hold_days": 1.35,
+    "hold_ratio": 0.44,
     "risk": "Low",
     "next": [
       {
-        "stakeholder": "customer",
-        "probability": 0.946,
-        "count": 35
+        "stakeholder": "qa",
+        "probability": 0.638,
+        "count": 37
       },
       {
-        "stakeholder": "network_eng",
-        "probability": 0.027,
-        "count": 1
+        "stakeholder": "customer",
+        "probability": 0.31,
+        "count": 18
       },
       {
         "stakeholder": "support",
-        "probability": 0.027,
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.017,
         "count": 1
       }
     ],
     "basis": "type",
-    "reason": "35 of 37 past config change tasks went to Customer after QA",
+    "reason": "37 of 58 past config change tasks went to QA after Ops",
+    "expected_path": [
+      "qa",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 2.3,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4870": {
+    "current_stakeholder": "network_eng",
+    "hold_days": 1.31,
+    "median_hold_days": 1.71,
+    "hold_ratio": 0.77,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.612,
+        "count": 41
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.254,
+        "count": 17
+      },
+      {
+        "stakeholder": "closed",
+        "probability": 0.134,
+        "count": 9
+      }
+    ],
+    "basis": "type",
+    "reason": "41 of 67 past traffic spike tasks went to Ops after Network Eng",
+    "expected_path": [
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 3.0,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4871": {
+    "current_stakeholder": "network_eng",
+    "hold_days": 0.2,
+    "median_hold_days": 1.43,
+    "hold_ratio": 0.14,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "qa",
+        "probability": 0.742,
+        "count": 23
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.194,
+        "count": 6
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.032,
+        "count": 1
+      },
+      {
+        "stakeholder": "security",
+        "probability": 0.032,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "23 of 31 past dns routing issue tasks went to QA after Network Eng",
+    "expected_path": [
+      "qa",
+      "closed"
+    ],
+    "eta_days": 1.9,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4872": {
+    "current_stakeholder": "qa",
+    "hold_days": 0.35,
+    "median_hold_days": 0.66,
+    "hold_ratio": 0.53,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 1.0,
+        "count": 38
+      }
+    ],
+    "basis": "type",
+    "reason": "38 of 38 past config change tasks went to Customer after QA",
     "expected_path": [
       "customer",
       "closed"
@@ -2550,31 +1956,73 @@
     "eta_days": 1.2,
     "estimated_close": "2026-10-08"
   },
-  "T-4885": {
+  "T-4873": {
+    "current_stakeholder": "network_eng",
+    "hold_days": 0.49,
+    "median_hold_days": 1.6,
+    "hold_ratio": 0.31,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 0.587,
+        "count": 37
+      },
+      {
+        "stakeholder": "qa",
+        "probability": 0.27,
+        "count": 17
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.143,
+        "count": 9
+      }
+    ],
+    "basis": "type",
+    "reason": "37 of 63 past cache purge bug tasks went to Customer after Network Eng",
+    "expected_path": [
+      "customer",
+      "closed"
+    ],
+    "eta_days": 1.9,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4874": {
     "current_stakeholder": "ops",
-    "hold_days": 0.76,
-    "median_hold_days": 0.93,
-    "hold_ratio": 0.82,
+    "hold_days": 0.98,
+    "median_hold_days": 1.35,
+    "hold_ratio": 0.72,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "qa",
-        "probability": 0.621,
-        "count": 36
+        "probability": 0.638,
+        "count": 37
       },
       {
         "stakeholder": "customer",
-        "probability": 0.362,
-        "count": 21
+        "probability": 0.31,
+        "count": 18
       },
       {
         "stakeholder": "support",
         "probability": 0.017,
         "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.017,
+        "count": 1
       }
     ],
     "basis": "type",
-    "reason": "36 of 58 past config change tasks went to QA after Ops",
+    "reason": "37 of 58 past config change tasks went to QA after Ops",
     "expected_path": [
       "qa",
       "customer",
@@ -2583,31 +2031,429 @@
     "eta_days": 2.1,
     "estimated_close": "2026-10-09"
   },
-  "T-4886": {
+  "T-4875": {
     "current_stakeholder": "ops",
-    "hold_days": 0.89,
-    "median_hold_days": 0.93,
-    "hold_ratio": 0.95,
+    "hold_days": 1.08,
+    "median_hold_days": 1.35,
+    "hold_ratio": 0.8,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "qa",
-        "probability": 0.621,
-        "count": 36
+        "probability": 0.638,
+        "count": 37
       },
       {
         "stakeholder": "customer",
-        "probability": 0.362,
-        "count": 21
+        "probability": 0.31,
+        "count": 18
       },
       {
         "stakeholder": "support",
         "probability": 0.017,
         "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.017,
+        "count": 1
       }
     ],
     "basis": "type",
-    "reason": "36 of 58 past config change tasks went to QA after Ops",
+    "reason": "37 of 58 past config change tasks went to QA after Ops",
+    "expected_path": [
+      "qa",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 2.1,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4876": {
+    "current_stakeholder": "network_eng",
+    "hold_days": 1.04,
+    "median_hold_days": 1.77,
+    "hold_ratio": 0.59,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "dev",
+        "probability": 0.524,
+        "count": 22
+      },
+      {
+        "stakeholder": "qa",
+        "probability": 0.405,
+        "count": 17
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.024,
+        "count": 1
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.024,
+        "count": 1
+      },
+      {
+        "stakeholder": "security",
+        "probability": 0.024,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "22 of 42 past origin failover tasks went to Dev after Network Eng",
+    "expected_path": [
+      "dev",
+      "qa",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 5.0,
+    "estimated_close": "2026-10-12"
+  },
+  "T-4877": {
+    "current_stakeholder": "dev",
+    "hold_days": 0.38,
+    "median_hold_days": 2.13,
+    "hold_ratio": 0.18,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "qa",
+        "probability": 0.414,
+        "count": 24
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.31,
+        "count": 18
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.241,
+        "count": 14
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.034,
+        "count": 2
+      }
+    ],
+    "basis": "stakeholder",
+    "reason": "24 of 58 past tasks at Dev went to QA next (too few new domain setup examples to split by type)",
+    "expected_path": [
+      "qa",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 3.4,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4878": {
+    "current_stakeholder": "ops",
+    "hold_days": 0.9,
+    "median_hold_days": 1.35,
+    "hold_ratio": 0.67,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "qa",
+        "probability": 0.638,
+        "count": 37
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.31,
+        "count": 18
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.017,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "37 of 58 past config change tasks went to QA after Ops",
+    "expected_path": [
+      "qa",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 2.1,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4879": {
+    "current_stakeholder": "network_eng",
+    "hold_days": 0.69,
+    "median_hold_days": 1.43,
+    "hold_ratio": 0.48,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "qa",
+        "probability": 0.742,
+        "count": 23
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.194,
+        "count": 6
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.032,
+        "count": 1
+      },
+      {
+        "stakeholder": "security",
+        "probability": 0.032,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "23 of 31 past dns routing issue tasks went to QA after Network Eng",
+    "expected_path": [
+      "qa",
+      "closed"
+    ],
+    "eta_days": 1.4,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4880": {
+    "current_stakeholder": "security",
+    "hold_days": 0.17,
+    "median_hold_days": 3.07,
+    "hold_ratio": 0.06,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.857,
+        "count": 60
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.143,
+        "count": 10
+      }
+    ],
+    "basis": "type",
+    "reason": "60 of 70 past new domain setup tasks went to Ops after Security Review",
+    "expected_path": [
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 4.9,
+    "estimated_close": "2026-10-12"
+  },
+  "T-4881": {
+    "current_stakeholder": "support",
+    "hold_days": 0.91,
+    "median_hold_days": 0.74,
+    "hold_ratio": 1.23,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.984,
+        "count": 62
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.016,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "62 of 63 past cache purge bug tasks went to Network Eng after Support",
+    "expected_path": [
+      "network_eng",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 2.7,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4882": {
+    "current_stakeholder": "support",
+    "hold_days": 0.95,
+    "median_hold_days": 0.74,
+    "hold_ratio": 1.28,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.984,
+        "count": 62
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.016,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "62 of 63 past cache purge bug tasks went to Network Eng after Support",
+    "expected_path": [
+      "network_eng",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 2.8,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4883": {
+    "current_stakeholder": "qa",
+    "hold_days": 0.06,
+    "median_hold_days": 0.66,
+    "hold_ratio": 0.08,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 1.0,
+        "count": 38
+      }
+    ],
+    "basis": "type",
+    "reason": "38 of 38 past config change tasks went to Customer after QA",
+    "expected_path": [
+      "customer",
+      "closed"
+    ],
+    "eta_days": 1.5,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4884": {
+    "current_stakeholder": "ops",
+    "hold_days": 0.62,
+    "median_hold_days": 1.35,
+    "hold_ratio": 0.46,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "qa",
+        "probability": 0.638,
+        "count": 37
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.31,
+        "count": 18
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.017,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "37 of 58 past config change tasks went to QA after Ops",
+    "expected_path": [
+      "qa",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 2.3,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4885": {
+    "current_stakeholder": "support",
+    "hold_days": 0.52,
+    "median_hold_days": 1.02,
+    "hold_ratio": 0.51,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "security",
+        "probability": 0.971,
+        "count": 68
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.014,
+        "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.014,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "68 of 70 past new domain setup tasks went to Security Review after Support",
+    "expected_path": [
+      "security",
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 5.7,
+    "estimated_close": "2026-10-13"
+  },
+  "T-4886": {
+    "current_stakeholder": "ops",
+    "hold_days": 0.89,
+    "median_hold_days": 1.35,
+    "hold_ratio": 0.65,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "qa",
+        "probability": 0.638,
+        "count": 37
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.31,
+        "count": 18
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.017,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "37 of 58 past config change tasks went to QA after Ops",
     "expected_path": [
       "qa",
       "customer",
@@ -2618,465 +2464,561 @@
   },
   "T-4887": {
     "current_stakeholder": "support",
-    "hold_days": 0.75,
-    "median_hold_days": 0.77,
-    "hold_ratio": 0.98,
+    "hold_days": 0.8,
+    "median_hold_days": 0.85,
+    "hold_ratio": 0.94,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "network_eng",
-        "probability": 0.97,
-        "count": 65
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.015,
-        "count": 1
+        "probability": 0.906,
+        "count": 29
       },
       {
         "stakeholder": "customer",
-        "probability": 0.015,
+        "probability": 0.062,
+        "count": 2
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.031,
         "count": 1
       }
     ],
     "basis": "type",
-    "reason": "65 of 67 past cache purge bug tasks went to Network Eng after Support",
+    "reason": "29 of 32 past dns routing issue tasks went to Network Eng after Support",
+    "expected_path": [
+      "network_eng",
+      "qa",
+      "closed"
+    ],
+    "eta_days": 2.4,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4888": {
+    "current_stakeholder": "support",
+    "hold_days": 0.8,
+    "median_hold_days": 0.74,
+    "hold_ratio": 1.08,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.984,
+        "count": 62
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.016,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "62 of 63 past cache purge bug tasks went to Network Eng after Support",
     "expected_path": [
       "network_eng",
       "customer",
       "closed"
     ],
-    "eta_days": 3.2,
+    "eta_days": 2.7,
     "estimated_close": "2026-10-10"
   },
-  "T-4888": {
+  "T-4889": {
     "current_stakeholder": "qa",
     "hold_days": 0.05,
-    "median_hold_days": 0.75,
-    "hold_ratio": 0.06,
+    "median_hold_days": 0.66,
+    "hold_ratio": 0.07,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "customer",
-        "probability": 0.946,
-        "count": 35
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.027,
-        "count": 1
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.027,
-        "count": 1
+        "probability": 1.0,
+        "count": 38
       }
     ],
     "basis": "type",
-    "reason": "35 of 37 past config change tasks went to Customer after QA",
+    "reason": "38 of 38 past config change tasks went to Customer after QA",
     "expected_path": [
       "customer",
       "closed"
     ],
-    "eta_days": 1.7,
-    "estimated_close": "2026-10-09"
+    "eta_days": 1.5,
+    "estimated_close": "2026-10-08"
   },
-  "T-4889": {
+  "T-4890": {
     "current_stakeholder": "network_eng",
     "hold_days": 0.63,
-    "median_hold_days": 1.78,
-    "hold_ratio": 0.35,
+    "median_hold_days": 1.71,
+    "hold_ratio": 0.37,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "ops",
-        "probability": 0.667,
-        "count": 46
+        "probability": 0.612,
+        "count": 41
       },
       {
         "stakeholder": "dev",
-        "probability": 0.203,
-        "count": 14
+        "probability": 0.254,
+        "count": 17
       },
       {
         "stakeholder": "closed",
-        "probability": 0.116,
-        "count": 8
+        "probability": 0.134,
+        "count": 9
+      }
+    ],
+    "basis": "type",
+    "reason": "41 of 67 past traffic spike tasks went to Ops after Network Eng",
+    "expected_path": [
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 3.4,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4891": {
+    "current_stakeholder": "qa",
+    "hold_days": 0.24,
+    "median_hold_days": 0.66,
+    "hold_ratio": 0.36,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "customer",
+        "probability": 1.0,
+        "count": 38
+      }
+    ],
+    "basis": "type",
+    "reason": "38 of 38 past config change tasks went to Customer after QA",
+    "expected_path": [
+      "customer",
+      "closed"
+    ],
+    "eta_days": 1.3,
+    "estimated_close": "2026-10-08"
+  },
+  "T-4892": {
+    "current_stakeholder": "support",
+    "hold_days": 0.59,
+    "median_hold_days": 0.85,
+    "hold_ratio": 0.7,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.906,
+        "count": 29
       },
       {
         "stakeholder": "customer",
+        "probability": 0.062,
+        "count": 2
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.031,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "29 of 32 past dns routing issue tasks went to Network Eng after Support",
+    "expected_path": [
+      "network_eng",
+      "qa",
+      "closed"
+    ],
+    "eta_days": 2.5,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4893": {
+    "current_stakeholder": "support",
+    "hold_days": 0.49,
+    "median_hold_days": 1.02,
+    "hold_ratio": 0.48,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "security",
+        "probability": 0.971,
+        "count": 68
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.014,
+        "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
         "probability": 0.014,
         "count": 1
       }
     ],
     "basis": "type",
-    "reason": "46 of 69 past traffic spike tasks went to Ops after Network Eng",
+    "reason": "68 of 70 past new domain setup tasks went to Security Review after Support",
+    "expected_path": [
+      "security",
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 5.8,
+    "estimated_close": "2026-10-13"
+  },
+  "T-4894": {
+    "current_stakeholder": "support",
+    "hold_days": 0.71,
+    "median_hold_days": 1.02,
+    "hold_ratio": 0.7,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "security",
+        "probability": 0.971,
+        "count": 68
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.014,
+        "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.014,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "68 of 70 past new domain setup tasks went to Security Review after Support",
+    "expected_path": [
+      "security",
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 5.7,
+    "estimated_close": "2026-10-13"
+  },
+  "T-4895": {
+    "current_stakeholder": "network_eng",
+    "hold_days": 0.3,
+    "median_hold_days": 1.71,
+    "hold_ratio": 0.18,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.612,
+        "count": 41
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.254,
+        "count": 17
+      },
+      {
+        "stakeholder": "closed",
+        "probability": 0.134,
+        "count": 9
+      }
+    ],
+    "basis": "type",
+    "reason": "41 of 67 past traffic spike tasks went to Ops after Network Eng",
     "expected_path": [
       "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 3.6,
+    "estimated_close": "2026-10-11"
+  },
+  "T-4896": {
+    "current_stakeholder": "support",
+    "hold_days": 0.44,
+    "median_hold_days": 0.74,
+    "hold_ratio": 0.59,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.984,
+        "count": 62
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.016,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "62 of 63 past cache purge bug tasks went to Network Eng after Support",
+    "expected_path": [
+      "network_eng",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 2.9,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4897": {
+    "current_stakeholder": "support",
+    "hold_days": 0.62,
+    "median_hold_days": 0.85,
+    "hold_ratio": 0.73,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.906,
+        "count": 29
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.062,
+        "count": 2
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.031,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "29 of 32 past dns routing issue tasks went to Network Eng after Support",
+    "expected_path": [
+      "network_eng",
+      "qa",
+      "closed"
+    ],
+    "eta_days": 2.5,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4898": {
+    "current_stakeholder": "support",
+    "hold_days": 0.63,
+    "median_hold_days": 0.85,
+    "hold_ratio": 0.74,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.906,
+        "count": 29
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.062,
+        "count": 2
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.031,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "29 of 32 past dns routing issue tasks went to Network Eng after Support",
+    "expected_path": [
+      "network_eng",
+      "qa",
+      "closed"
+    ],
+    "eta_days": 2.5,
+    "estimated_close": "2026-10-09"
+  },
+  "T-4899": {
+    "current_stakeholder": "support",
+    "hold_days": 0.55,
+    "median_hold_days": 1.02,
+    "hold_ratio": 0.53,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "security",
+        "probability": 0.971,
+        "count": 68
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.014,
+        "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.014,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "68 of 70 past new domain setup tasks went to Security Review after Support",
+    "expected_path": [
+      "security",
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 5.7,
+    "estimated_close": "2026-10-13"
+  },
+  "T-4900": {
+    "current_stakeholder": "support",
+    "hold_days": 0.45,
+    "median_hold_days": 1.02,
+    "hold_ratio": 0.44,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "security",
+        "probability": 0.971,
+        "count": 68
+      },
+      {
+        "stakeholder": "ops",
+        "probability": 0.014,
+        "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.014,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "68 of 70 past new domain setup tasks went to Security Review after Support",
+    "expected_path": [
+      "security",
+      "ops",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 5.8,
+    "estimated_close": "2026-10-13"
+  },
+  "T-4901": {
+    "current_stakeholder": "support",
+    "hold_days": 0.43,
+    "median_hold_days": 0.85,
+    "hold_ratio": 0.51,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.906,
+        "count": 29
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.062,
+        "count": 2
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.031,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "29 of 32 past dns routing issue tasks went to Network Eng after Support",
+    "expected_path": [
+      "network_eng",
+      "qa",
+      "closed"
+    ],
+    "eta_days": 2.6,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4902": {
+    "current_stakeholder": "security",
+    "hold_days": 0.17,
+    "median_hold_days": 2.65,
+    "hold_ratio": 0.06,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "ops",
+        "probability": 0.971,
+        "count": 34
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.029,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "34 of 35 past ssl renewal tasks went to Ops after Security Review",
+    "expected_path": [
+      "ops",
+      "closed"
+    ],
+    "eta_days": 3.9,
+    "estimated_close": "2026-10-11"
+  },
+  "T-4903": {
+    "current_stakeholder": "support",
+    "hold_days": 0.19,
+    "median_hold_days": 0.74,
+    "hold_ratio": 0.25,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.984,
+        "count": 62
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.016,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "62 of 63 past cache purge bug tasks went to Network Eng after Support",
+    "expected_path": [
+      "network_eng",
       "customer",
       "closed"
     ],
     "eta_days": 3.0,
     "estimated_close": "2026-10-10"
   },
-  "T-4890": {
-    "current_stakeholder": "support",
-    "hold_days": 0.49,
-    "median_hold_days": 0.88,
-    "hold_ratio": 0.55,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "security",
-        "probability": 0.973,
-        "count": 72
-      },
-      {
-        "stakeholder": "ops",
-        "probability": 0.014,
-        "count": 1
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.014,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "72 of 74 past new domain setup tasks went to Security Review after Support",
-    "expected_path": [
-      "security",
-      "ops",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 5.1,
-    "estimated_close": "2026-10-12"
-  },
-  "T-4891": {
-    "current_stakeholder": "network_eng",
-    "hold_days": 0.64,
-    "median_hold_days": 1.74,
-    "hold_ratio": 0.37,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "dev",
-        "probability": 0.676,
-        "count": 23
-      },
-      {
-        "stakeholder": "qa",
-        "probability": 0.265,
-        "count": 9
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.029,
-        "count": 1
-      },
-      {
-        "stakeholder": "security",
-        "probability": 0.029,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "23 of 34 past origin failover tasks went to Dev after Network Eng",
-    "expected_path": [
-      "dev",
-      "qa",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 4.8,
-    "estimated_close": "2026-10-12"
-  },
-  "T-4892": {
-    "current_stakeholder": "support",
-    "hold_days": 0.71,
-    "median_hold_days": 0.88,
-    "hold_ratio": 0.81,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "security",
-        "probability": 0.973,
-        "count": 72
-      },
-      {
-        "stakeholder": "ops",
-        "probability": 0.014,
-        "count": 1
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.014,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "72 of 74 past new domain setup tasks went to Security Review after Support",
-    "expected_path": [
-      "security",
-      "ops",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 5.2,
-    "estimated_close": "2026-10-12"
-  },
-  "T-4893": {
-    "current_stakeholder": "security",
-    "hold_days": 0.62,
-    "median_hold_days": 2.77,
-    "hold_ratio": 0.22,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "support",
-        "probability": 0.72,
-        "count": 36
-      },
-      {
-        "stakeholder": "ops",
-        "probability": 0.26,
-        "count": 13
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.02,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "36 of 50 past log access request tasks went to Support after Security Review",
-    "expected_path": [
-      "support",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 3.7,
-    "estimated_close": "2026-10-11"
-  },
-  "T-4894": {
-    "current_stakeholder": "network_eng",
-    "hold_days": 0.3,
-    "median_hold_days": 1.78,
-    "hold_ratio": 0.17,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "ops",
-        "probability": 0.667,
-        "count": 46
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.203,
-        "count": 14
-      },
-      {
-        "stakeholder": "closed",
-        "probability": 0.116,
-        "count": 8
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.014,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "46 of 69 past traffic spike tasks went to Ops after Network Eng",
-    "expected_path": [
-      "ops",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 3.3,
-    "estimated_close": "2026-10-10"
-  },
-  "T-4895": {
-    "current_stakeholder": "support",
-    "hold_days": 0.62,
-    "median_hold_days": 0.88,
-    "hold_ratio": 0.71,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "security",
-        "probability": 0.973,
-        "count": 72
-      },
-      {
-        "stakeholder": "ops",
-        "probability": 0.014,
-        "count": 1
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.014,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "72 of 74 past new domain setup tasks went to Security Review after Support",
-    "expected_path": [
-      "security",
-      "ops",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 5.2,
-    "estimated_close": "2026-10-12"
-  },
-  "T-4896": {
-    "current_stakeholder": "qa",
-    "hold_days": 0.09,
-    "median_hold_days": 0.75,
-    "hold_ratio": 0.12,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "customer",
-        "probability": 0.946,
-        "count": 35
-      },
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.027,
-        "count": 1
-      },
-      {
-        "stakeholder": "support",
-        "probability": 0.027,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "35 of 37 past config change tasks went to Customer after QA",
-    "expected_path": [
-      "customer",
-      "closed"
-    ],
-    "eta_days": 1.7,
-    "estimated_close": "2026-10-09"
-  },
-  "T-4897": {
-    "current_stakeholder": "support",
-    "hold_days": 0.45,
-    "median_hold_days": 0.88,
-    "hold_ratio": 0.51,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "security",
-        "probability": 0.973,
-        "count": 72
-      },
-      {
-        "stakeholder": "ops",
-        "probability": 0.014,
-        "count": 1
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.014,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "72 of 74 past new domain setup tasks went to Security Review after Support",
-    "expected_path": [
-      "security",
-      "ops",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 5.1,
-    "estimated_close": "2026-10-12"
-  },
-  "T-4898": {
-    "current_stakeholder": "support",
-    "hold_days": 0.44,
-    "median_hold_days": 0.77,
-    "hold_ratio": 0.57,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "network_eng",
-        "probability": 0.97,
-        "count": 65
-      },
-      {
-        "stakeholder": "dev",
-        "probability": 0.015,
-        "count": 1
-      },
-      {
-        "stakeholder": "customer",
-        "probability": 0.015,
-        "count": 1
-      }
-    ],
-    "basis": "type",
-    "reason": "65 of 67 past cache purge bug tasks went to Network Eng after Support",
-    "expected_path": [
-      "network_eng",
-      "customer",
-      "closed"
-    ],
-    "eta_days": 3.2,
-    "estimated_close": "2026-10-10"
-  },
-  "T-4899": {
-    "current_stakeholder": "security",
-    "hold_days": 0.15,
-    "median_hold_days": 2.67,
-    "hold_ratio": 0.06,
-    "risk": "Low",
-    "next": [
-      {
-        "stakeholder": "ops",
-        "probability": 1.0,
-        "count": 32
-      }
-    ],
-    "basis": "type",
-    "reason": "32 of 32 past ssl renewal tasks went to Ops after Security Review",
-    "expected_path": [
-      "ops",
-      "closed"
-    ],
-    "eta_days": 3.6,
-    "estimated_close": "2026-10-11"
-  },
-  "T-4900": {
+  "T-4904": {
     "current_stakeholder": "ops",
-    "hold_days": 0.12,
-    "median_hold_days": 0.93,
-    "hold_ratio": 0.12,
+    "hold_days": 0.27,
+    "median_hold_days": 1.35,
+    "hold_ratio": 0.2,
     "risk": "Low",
     "next": [
       {
         "stakeholder": "qa",
-        "probability": 0.621,
-        "count": 36
+        "probability": 0.638,
+        "count": 37
       },
       {
         "stakeholder": "customer",
-        "probability": 0.362,
-        "count": 21
+        "probability": 0.31,
+        "count": 18
       },
       {
         "stakeholder": "support",
         "probability": 0.017,
         "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.017,
+        "count": 1
       }
     ],
     "basis": "type",
-    "reason": "36 of 58 past config change tasks went to QA after Ops",
+    "reason": "37 of 58 past config change tasks went to QA after Ops",
     "expected_path": [
       "qa",
       "customer",
@@ -3084,5 +3026,76 @@
     ],
     "eta_days": 2.6,
     "estimated_close": "2026-10-09"
+  },
+  "T-4905": {
+    "current_stakeholder": "support",
+    "hold_days": 0.07,
+    "median_hold_days": 0.74,
+    "hold_ratio": 0.09,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.984,
+        "count": 62
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.016,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "62 of 63 past cache purge bug tasks went to Network Eng after Support",
+    "expected_path": [
+      "network_eng",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 3.1,
+    "estimated_close": "2026-10-10"
+  },
+  "T-4906": {
+    "current_stakeholder": "ops",
+    "hold_days": 0.12,
+    "median_hold_days": 1.35,
+    "hold_ratio": 0.09,
+    "risk": "Low",
+    "next": [
+      {
+        "stakeholder": "qa",
+        "probability": 0.638,
+        "count": 37
+      },
+      {
+        "stakeholder": "customer",
+        "probability": 0.31,
+        "count": 18
+      },
+      {
+        "stakeholder": "support",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "network_eng",
+        "probability": 0.017,
+        "count": 1
+      },
+      {
+        "stakeholder": "dev",
+        "probability": 0.017,
+        "count": 1
+      }
+    ],
+    "basis": "type",
+    "reason": "37 of 58 past config change tasks went to QA after Ops",
+    "expected_path": [
+      "qa",
+      "customer",
+      "closed"
+    ],
+    "eta_days": 2.8,
+    "estimated_close": "2026-10-10"
   }
 }

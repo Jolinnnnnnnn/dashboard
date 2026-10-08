@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
-/* Design tokens from design/project/Relay.dc.html */
+/* Design tokens from design/project/Relay v3.dc.html (ultramarine accent) */
 [data-theme="light"] {
   color-scheme: light;
-  --bg: #f4f6f8; --surface: #ffffff; --surface2: #f1f3f6; --surface3: #e5e8ed;
+  --bg: #f7f8fa; --surface: #ffffff; --surface2: #f1f3f6; --surface3: #e5e8ed;
   --border: #e2e6eb; --border2: #cdd3db; --text: #0f1318; --muted: #58616d; --faint: #868e9b;
-  --accent: oklch(0.48 0.085 195); --accent-soft: oklch(0.955 0.02 195); --accent-ink: oklch(0.42 0.08 195); --on-accent: #fff;
+  --accent: oklch(0.5 0.2 266); --accent-soft: oklch(0.955 0.025 266); --accent-ink: oklch(0.45 0.19 266); --on-accent: #fff;
   --green: oklch(0.62 0.14 152); --green-soft: oklch(0.955 0.035 152); --green-ink: oklch(0.45 0.11 152);
   --amber: oklch(0.76 0.14 75); --amber-soft: oklch(0.96 0.045 85); --amber-ink: oklch(0.5 0.11 65);
   --red: oklch(0.6 0.19 27); --red-soft: oklch(0.955 0.03 25); --red-ink: oklch(0.5 0.17 27);
@@ -14,7 +14,7 @@
   color-scheme: dark;
   --bg: #0c0e11; --surface: #13161a; --surface2: #1a1e23; --surface3: #252a31;
   --border: #242a31; --border2: #363d47; --text: #e6e9ed; --muted: #9aa3ae; --faint: #6d7682;
-  --accent: oklch(0.72 0.1 190); --accent-soft: oklch(0.29 0.045 195); --accent-ink: oklch(0.83 0.08 190); --on-accent: #0c0e11;
+  --accent: oklch(0.7 0.16 266); --accent-soft: oklch(0.28 0.07 266); --accent-ink: oklch(0.82 0.11 266); --on-accent: #0c0e11;
   --green: oklch(0.7 0.14 152); --green-soft: oklch(0.29 0.05 152); --green-ink: oklch(0.83 0.12 152);
   --amber: oklch(0.8 0.13 80); --amber-soft: oklch(0.31 0.05 75); --amber-ink: oklch(0.87 0.11 85);
   --red: oklch(0.68 0.17 25); --red-soft: oklch(0.29 0.06 25); --red-ink: oklch(0.82 0.11 25);
@@ -45,6 +45,7 @@
   --color-red-ink: var(--red-ink);
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-serif: var(--font-instrument), Georgia, serif;
 }
 
 /* In the base layer so Tailwind utilities (e.g. text-ink on a link) can override them */
@@ -70,6 +71,7 @@
 @keyframes slideIn { from { opacity: 0; transform: translateX(16px) } to { opacity: 1; transform: none } }
 @keyframes draw { from { stroke-dashoffset: 1 } to { stroke-dashoffset: 0 } }
 @keyframes spin { to { transform: rotate(360deg) } }
+@keyframes breathe { 0%, 100% { box-shadow: 0 0 0 0 oklch(0.7 0.16 266 / .55) } 50% { box-shadow: 0 0 0 5px oklch(0.7 0.16 266 / 0) } }
 
 .anim-pulse { animation: pulse 1.2s ease-in-out infinite; }
 .anim-fill { animation: fillX 300ms ease-out both; }
@@ -77,9 +79,11 @@
 .anim-rise { animation: rise 200ms ease-out both; }
 .anim-slide { animation: slideIn 240ms ease-out both; }
 .anim-spin { animation: spin 700ms linear infinite; }
+.anim-breathe { animation: breathe 2.4s ease-in-out infinite; }
 
 @layer components {
 /* Shared building blocks */
+.rule { border-top: 1px solid var(--border2); padding-top: 16px; }
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
 .btn {
   height: 32px; padding: 0 12px; border: 1px solid var(--border2); border-radius: 8px;

@@ -96,6 +96,7 @@ def main() -> None:
     preds = json.loads((ARTIFACTS / "predictions.json").read_text())
     similar = json.loads((ARTIFACTS / "similar_cases.json").read_text())
     cache = json.loads(OUT.read_text()) if OUT.exists() else {}
+    cache = {k: v for k, v in cache.items() if k in preds}  # drop tasks that are no longer open
 
     selected = sorted(preds)[: args.limit]
     jobs = {}

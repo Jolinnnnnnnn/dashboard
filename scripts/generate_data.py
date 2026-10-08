@@ -18,7 +18,7 @@ import relay_data as rd
 SEED = 42
 N_CLOSED = 400
 N_OPEN = 100
-N_AT_RISK = 7  # plus the demo task
+N_AT_RISK = 9  # plus the demo task; some land under 1.5× the empirical median, so ~8 end up at risk
 HOLD_SIGMA = 0.55  # lognormal spread around each stakeholder's median hold
 
 HISTORY_START = datetime(2025, 10, 1, tzinfo=timezone.utc)
@@ -27,7 +27,7 @@ TODAY = rd.TODAY.to_pydatetime()
 OPEN_WINDOW_DAYS = 30
 
 DEMO_ID = "T-4821"
-DEMO_RATIO = 2.2  # demo task's hold vs. its (stakeholder, type) median, so it reads as High risk
+DEMO_RATIO = 2.8  # demo task's hold vs. its (stakeholder, type) median: High risk, and the highest ratio of any open task
 
 
 def make_rngs(seed: int) -> tuple[np.random.Generator, np.random.Generator]:
@@ -186,7 +186,24 @@ TYPES = {
 }
 TYPE_NAMES = list(TYPES)
 REWORK_TYPES = {"New domain setup", "Log access request"}
-REWORK_RATE = 0.18  # P3
+# P3 + P8: Security → Support rework, rising in the last two months. Rate applies to eligible
+# tasks by creation date; each period has its own quota so the rates hold on small samples.
+REWORK_SCHEDULE = [  # (period starts, rate)
+    (datetime(2025, 10, 1, tzinfo=timezone.utc), 0.12),
+    (datetime(2026, 7, 1, tzinfo=timezone.utc), 0.30),
+    (datetime(2026, 9, 1, tzinfo=timezone.utc), 0.45),
+]
+
+# P9: a process change at Ops. Before it, Ops holds run 1.5× longer.
+EVENTS = [{
+    "date": "2026-08-01",
+    "stakeholder": "ops",
+    "title": "Rollback plan required for config rollouts",
+    "description": "Ops started requiring a written rollback plan before any config rollout, "
+                   "so fewer rollouts stall waiting for sign-off.",
+}]
+OPS_CHANGE = datetime(2026, 8, 1, tzinfo=timezone.utc)
+OPS_HOLD_BEFORE_CHANGE = 1.5
 DETOUR_RATE = 0.08
 SEASONAL_TYPE = "Traffic spike"
 SEASONAL_MONTHS = {11, 12}
@@ -459,24 +476,27 @@ def pick_type(created: datetime) -> str:
     return weighted(TYPE_NAMES, weights)
 
 
-rework_quota = {"eligible": 0, "reworked": 0}
+rework_quota: dict[int, dict[str, int]] = {}
 
 
-def wants_rework() -> bool:
-    """Systematic sampling: keeps the running rework share at REWORK_RATE (P3) instead of
-    leaving it to independent coin flips, which swing ±4 points over ~100 tasks."""
-    rework_quota["eligible"] += 1
-    shortfall = REWORK_RATE * rework_quota["eligible"] - rework_quota["reworked"]
+def wants_rework(created: datetime) -> bool:
+    """Systematic sampling: keeps each period's running rework share at its scheduled rate
+    instead of leaving it to independent coin flips, which swing ±4 points over ~100 tasks."""
+    period = max(i for i, (start, _) in enumerate(REWORK_SCHEDULE) if created >= start)
+    rate = REWORK_SCHEDULE[period][1]
+    q = rework_quota.setdefault(period, {"eligible": 0, "reworked": 0})
+    q["eligible"] += 1
+    shortfall = rate * q["eligible"] - q["reworked"]
     if rng.random() < shortfall:
-        rework_quota["reworked"] += 1
+        q["reworked"] += 1
         return True
     return False
 
 
-def build_route(task_type: str) -> list[str]:
+def build_route(task_type: str, created: datetime) -> list[str]:
     options = TYPES[task_type][1]
     route = list(weighted([r for _, r in options], [p for p, _ in options]))
-    if task_type in REWORK_TYPES and wants_rework():
+    if task_type in REWORK_TYPES and wants_rework(created):
         i = route.index(SE)
         route[i + 1:i + 1] = [SU, SE]
     if rng.random() < DETOUR_RATE:
@@ -486,10 +506,12 @@ def build_route(task_type: str) -> list[str]:
     return route
 
 
-def sample_hold(stakeholder: str, tier: str) -> float:
+def sample_hold(stakeholder: str, tier: str, created: datetime) -> float:
     median = MEDIAN_HOLD[stakeholder]
     if stakeholder == CU:
         median *= CUSTOMER_HOLD_BY_TIER[tier]
+    if stakeholder == OP and created < OPS_CHANGE:  # P9
+        median *= OPS_HOLD_BEFORE_CHANGE
     return max(0.05, float(rng.lognormal(np.log(median), HOLD_SIGMA)))
 
 
@@ -591,8 +613,8 @@ def generate_closed(clients) -> list[dict]:
         created = HISTORY_START + timedelta(seconds=span * (k + float(rng.uniform())) / N_CLOSED)
         client = pick_client(clients)
         task_type = pick_type(created)
-        route = build_route(task_type)
-        stints = [(s, sample_hold(s, client["tier"])) for s in route[:-1]]
+        route = build_route(task_type, created)
+        stints = [(s, sample_hold(s, client["tier"], created)) for s in route[:-1]]
         duration = timedelta(days=sum(h for _, h in stints))
         if created + duration > HISTORY_END:  # must be resolved inside the history window
             created = HISTORY_END - duration - timedelta(hours=float(rng.uniform(1, 48)))
@@ -608,19 +630,39 @@ def generate_closed(clients) -> list[dict]:
     return tasks
 
 
-def network_eng_cache_median(closed_tasks) -> float:
-    holds = []
+def stint_medians(closed_tasks):
+    """Median hold by (stakeholder, type) with stakeholder-only fallback under 5 examples,
+    the same rule the risk calculation uses (relay_data.risk_levels)."""
+    by_pair: dict = {}
     for t in closed_tasks:
-        if t["type"] != "Cache purge bug":
-            continue
+        holds: list[tuple[str, float]] = []
         for r in t["rows"]:
-            if r["to_stakeholder"] != NE:
+            if r["hold_days"] is None:
                 continue
-            if r["from_stakeholder"] == NE:  # duplicate split: belongs to the previous stint
-                holds[-1] += r["hold_days"]
+            if r["from_stakeholder"] == r["to_stakeholder"]:  # duplicate split: same stint
+                holds[-1] = (holds[-1][0], holds[-1][1] + r["hold_days"])
             else:
-                holds.append(r["hold_days"])
-    return float(np.median(holds))
+                holds.append((r["to_stakeholder"], r["hold_days"]))
+        for stk, h in holds:
+            by_pair.setdefault((stk, t["type"]), []).append(h)
+    by_stk: dict = {}
+    for (stk, _), hs in by_pair.items():
+        by_stk.setdefault(stk, []).extend(hs)
+
+    def median(stk: str, typ: str) -> float:
+        hs = by_pair.get((stk, typ), [])
+        return float(np.median(hs if len(hs) >= 5 else by_stk[stk]))
+    return median
+
+
+def max_open_ratio(open_tasks, median) -> float:
+    """Highest current-hold ratio among the generated open tasks."""
+    out = 0.0
+    for t in open_tasks:
+        current = t["rows"][-1]
+        elapsed = (TODAY - current["entered_at"]).total_seconds() / 86400
+        out = max(out, elapsed / median(current["to_stakeholder"], t["type"]))
+    return out
 
 
 def generate_open(clients) -> list[dict]:
@@ -630,10 +672,10 @@ def generate_open(clients) -> list[dict]:
         while True:
             client = pick_client(clients)
             task_type = pick_type(TODAY)
-            route = build_route(task_type)
+            route = build_route(task_type, TODAY)
             stakeholders = route[:-1]
             i = int(rng.integers(1, len(stakeholders)))
-            prior = [(s, sample_hold(s, client["tier"])) for s in stakeholders[:i]]
+            prior = [(s, sample_hold(s, client["tier"], TODAY)) for s in stakeholders[:i]]
             current = stakeholders[i]
             ratio = rng.uniform(1.6, 2.8) if k in at_risk else rng.uniform(0.05, 1.2)
             median = MEDIAN_HOLD[current] * (CUSTOMER_HOLD_BY_TIER[client["tier"]] if current == CU else 1)
@@ -650,10 +692,10 @@ def generate_open(clients) -> list[dict]:
     return tasks
 
 
-def demo_task(clients, ne_median: float) -> dict:
+def demo_task(clients, ne_median: float, ratio: float) -> dict:
     """T-4821: the task the demo script walks through (see data-spec.md)."""
     client = next(c for c in clients if c["name"] == "Northwind Media")
-    elapsed = round(DEMO_RATIO * ne_median, 1)
+    elapsed = round(ratio * ne_median, 1)
     prior = [(I, 0.2), (SU, 0.8)]
     created = (TODAY - timedelta(days=sum(h for _, h in prior) + elapsed)).replace(second=0, microsecond=0)
     domain = "static.northwindmedia.com"
@@ -703,8 +745,12 @@ def main() -> None:
 
     clients = build_clients()
     closed = generate_closed(clients)
-    ne_median = network_eng_cache_median(closed)
-    tasks = closed + generate_open(clients) + [demo_task(clients, ne_median)]
+    median = stint_medians(closed)
+    ne_median = median(NE, "Cache purge bug")
+    open_tasks = generate_open(clients)
+    # The demo task must have the highest hold ratio of any open task (featured in the briefing)
+    demo_ratio = max(DEMO_RATIO, max_open_ratio(open_tasks, median) + 0.15)
+    tasks = closed + open_tasks + [demo_task(clients, ne_median, demo_ratio)]
     assign_ids(tasks)
 
     task_rows, handoff_rows = [], []
@@ -740,12 +786,13 @@ def main() -> None:
                                           for m, files in MODULES.items()])
     write_json(args.data_dir, "tasks", task_rows)
     write_json(args.data_dir, "handoffs", handoff_rows)
+    write_json(args.data_dir, "events", EVENTS)
 
     n_open = sum(t["status"] == "open" for t in tasks)
     print(f"Wrote {len(tasks)} tasks ({len(tasks) - n_open} closed, {n_open} open), "
           f"{len(handoff_rows)} handoff rows to {args.data_dir}/ (seed {args.seed})")
-    print(f"Demo task {DEMO_ID}: Network Eng hold {round(DEMO_RATIO * ne_median, 1)}d "
-          f"(cache-type median {ne_median:.2f}d)")
+    print(f"Demo task {DEMO_ID}: Network Eng hold {round(demo_ratio * ne_median, 1)}d "
+          f"({demo_ratio:.2f}× the {ne_median:.2f}d cache-type median)")
 
 
 if __name__ == "__main__":

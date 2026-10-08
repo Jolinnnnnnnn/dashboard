@@ -2,194 +2,196 @@
   "min_pair_examples": 5,
   "by_stakeholder": {
     "customer": {
-      "n": 338,
+      "n": 335,
       "next": {
-        "closed": 334,
-        "network_eng": 2,
+        "closed": 329,
+        "ops": 3,
         "qa": 1,
-        "dev": 1
+        "security": 1,
+        "network_eng": 1
       },
-      "median_hold_days": 0.93
+      "median_hold_days": 0.87
     },
     "dev": {
-      "n": 53,
+      "n": 58,
       "next": {
         "qa": 24,
-        "ops": 15,
-        "customer": 10,
-        "network_eng": 2,
-        "support": 1,
-        "security": 1
+        "ops": 18,
+        "customer": 14,
+        "network_eng": 2
       },
-      "median_hold_days": 2.11
+      "median_hold_days": 2.13
     },
     "intake": {
       "n": 400,
       "next": {
-        "support": 163,
-        "network_eng": 100,
-        "security": 77,
-        "ops": 57,
-        "qa": 2,
+        "support": 155,
+        "network_eng": 104,
+        "security": 80,
+        "ops": 54,
+        "qa": 3,
+        "customer": 3,
         "dev": 1
       },
       "median_hold_days": 0.2
     },
     "network_eng": {
-      "n": 208,
+      "n": 205,
       "next": {
-        "customer": 64,
-        "ops": 46,
-        "dev": 45,
-        "qa": 42,
-        "closed": 8,
-        "security": 2,
-        "support": 1
+        "qa": 57,
+        "dev": 48,
+        "customer": 45,
+        "ops": 41,
+        "closed": 9,
+        "security": 3,
+        "support": 2
       },
-      "median_hold_days": 1.88
+      "median_hold_days": 1.65
     },
     "ops": {
-      "n": 229,
+      "n": 224,
       "next": {
-        "customer": 137,
+        "customer": 130,
         "closed": 38,
-        "qa": 36,
-        "support": 16,
-        "security": 1,
-        "dev": 1
+        "qa": 37,
+        "support": 12,
+        "dev": 4,
+        "security": 2,
+        "network_eng": 1
       },
-      "median_hold_days": 1.01
+      "median_hold_days": 1.37
     },
     "qa": {
-      "n": 107,
+      "n": 124,
       "next": {
-        "customer": 79,
-        "closed": 20,
-        "network_eng": 3,
-        "support": 2,
+        "customer": 95,
+        "closed": 24,
+        "network_eng": 2,
+        "support": 1,
         "dev": 1,
-        "ops": 1,
-        "security": 1
+        "ops": 1
       },
-      "median_hold_days": 0.73
+      "median_hold_days": 0.71
     },
     "security": {
-      "n": 162,
+      "n": 164,
       "next": {
-        "ops": 108,
-        "support": 48,
-        "dev": 2,
+        "ops": 105,
+        "support": 53,
         "network_eng": 2,
-        "customer": 1,
-        "qa": 1
+        "customer": 2,
+        "qa": 1,
+        "dev": 1
       },
-      "median_hold_days": 2.71
+      "median_hold_days": 2.93
     },
     "support": {
-      "n": 231,
+      "n": 223,
       "next": {
-        "network_eng": 99,
-        "security": 80,
-        "customer": 47,
-        "dev": 2,
+        "network_eng": 93,
+        "security": 78,
+        "customer": 46,
+        "dev": 3,
         "ops": 2,
         "qa": 1
       },
-      "median_hold_days": 0.78
+      "median_hold_days": 0.81
     }
   },
   "by_pair": {
     "customer": {
       "Cache purge bug": {
-        "n": 68,
+        "n": 63,
         "next": {
-          "closed": 67,
-          "network_eng": 1
+          "closed": 63
         },
-        "median_hold_days": 0.88
+        "median_hold_days": 0.84
       },
       "Config change": {
-        "n": 58,
+        "n": 60,
         "next": {
-          "closed": 58
+          "closed": 58,
+          "ops": 2
+        },
+        "median_hold_days": 0.86
+      },
+      "DNS routing issue": {
+        "n": 8,
+        "next": {
+          "closed": 7,
+          "network_eng": 1
+        },
+        "median_hold_days": 0.75
+      },
+      "Log access request": {
+        "n": 44,
+        "next": {
+          "closed": 44
         },
         "median_hold_days": 0.99
       },
-      "DNS routing issue": {
-        "n": 17,
-        "next": {
-          "closed": 16,
-          "network_eng": 1
-        },
-        "median_hold_days": 0.78
-      },
-      "Log access request": {
-        "n": 43,
-        "next": {
-          "closed": 43
-        },
-        "median_hold_days": 0.88
-      },
       "New domain setup": {
-        "n": 48,
+        "n": 49,
         "next": {
-          "closed": 48
+          "closed": 49
         },
-        "median_hold_days": 0.94
+        "median_hold_days": 0.9
       },
       "Origin failover": {
-        "n": 35,
+        "n": 43,
         "next": {
-          "closed": 34,
+          "closed": 42,
           "qa": 1
         },
-        "median_hold_days": 0.92
+        "median_hold_days": 0.87
       },
       "SSL renewal": {
-        "n": 7,
+        "n": 10,
         "next": {
-          "closed": 7
+          "closed": 8,
+          "security": 1,
+          "ops": 1
         },
         "median_hold_days": 1.18
       },
       "Traffic spike": {
-        "n": 62,
+        "n": 58,
         "next": {
-          "closed": 61,
-          "dev": 1
+          "closed": 58
         },
-        "median_hold_days": 0.91
+        "median_hold_days": 0.83
       }
     },
     "dev": {
       "Cache purge bug": {
-        "n": 9,
+        "n": 10,
         "next": {
-          "customer": 8,
+          "customer": 9,
           "network_eng": 1
         },
-        "median_hold_days": 2.6
+        "median_hold_days": 2.23
+      },
+      "Config change": {
+        "n": 2,
+        "next": {
+          "ops": 1,
+          "customer": 1
+        },
+        "median_hold_days": 2.2
       },
       "DNS routing issue": {
         "n": 1,
         "next": {
           "network_eng": 1
         },
-        "median_hold_days": 4.12
-      },
-      "Log access request": {
-        "n": 1,
-        "next": {
-          "support": 1
-        },
-        "median_hold_days": 1.95
+        "median_hold_days": 0.88
       },
       "New domain setup": {
-        "n": 1,
+        "n": 2,
         "next": {
-          "customer": 1
+          "customer": 2
         },
-        "median_hold_days": 1.76
+        "median_hold_days": 2.33
       },
       "Origin failover": {
         "n": 25,
@@ -197,334 +199,351 @@
           "qa": 24,
           "customer": 1
         },
-        "median_hold_days": 1.99
-      },
-      "SSL renewal": {
-        "n": 1,
-        "next": {
-          "security": 1
-        },
-        "median_hold_days": 2.52
+        "median_hold_days": 2.33
       },
       "Traffic spike": {
-        "n": 15,
+        "n": 18,
         "next": {
-          "ops": 15
+          "ops": 17,
+          "customer": 1
         },
-        "median_hold_days": 2.11
+        "median_hold_days": 2.0
       }
     },
     "intake": {
       "Cache purge bug": {
-        "n": 67,
+        "n": 63,
         "next": {
-          "support": 65,
-          "qa": 1,
-          "ops": 1
+          "support": 62,
+          "qa": 1
         },
-        "median_hold_days": 0.22
+        "median_hold_days": 0.19
       },
       "Config change": {
         "n": 58,
         "next": {
-          "ops": 56,
-          "security": 2
+          "ops": 54,
+          "customer": 2,
+          "dev": 1,
+          "security": 1
         },
         "median_hold_days": 0.19
       },
       "DNS routing issue": {
-        "n": 36,
+        "n": 31,
         "next": {
-          "support": 36
+          "support": 31
         },
-        "median_hold_days": 0.19
+        "median_hold_days": 0.16
       },
       "Log access request": {
-        "n": 43,
+        "n": 44,
         "next": {
-          "security": 42,
+          "security": 43,
           "support": 1
         },
-        "median_hold_days": 0.2
+        "median_hold_days": 0.21
       },
       "New domain setup": {
-        "n": 61,
+        "n": 60,
         "next": {
-          "support": 61
+          "support": 60
         },
         "median_hold_days": 0.21
       },
       "Origin failover": {
-        "n": 34,
+        "n": 42,
         "next": {
-          "network_eng": 32,
+          "network_eng": 40,
           "security": 1,
           "qa": 1
         },
-        "median_hold_days": 0.19
+        "median_hold_days": 0.21
       },
       "SSL renewal": {
-        "n": 32,
+        "n": 35,
         "next": {
-          "security": 31,
-          "dev": 1
+          "security": 34,
+          "customer": 1
         },
-        "median_hold_days": 0.2
+        "median_hold_days": 0.22
       },
       "Traffic spike": {
-        "n": 69,
+        "n": 67,
         "next": {
-          "network_eng": 68,
-          "security": 1
+          "network_eng": 64,
+          "support": 1,
+          "security": 1,
+          "qa": 1
         },
-        "median_hold_days": 0.18
+        "median_hold_days": 0.2
       }
     },
     "network_eng": {
       "Cache purge bug": {
-        "n": 68,
+        "n": 63,
         "next": {
-          "customer": 46,
-          "qa": 14,
-          "dev": 8
+          "customer": 37,
+          "qa": 17,
+          "dev": 9
         },
-        "median_hold_days": 1.9
+        "median_hold_days": 1.6
       },
       "Config change": {
         "n": 1,
         "next": {
           "customer": 1
         },
-        "median_hold_days": 1.38
+        "median_hold_days": 1.63
       },
       "DNS routing issue": {
-        "n": 36,
+        "n": 31,
         "next": {
-          "qa": 19,
-          "customer": 15,
+          "qa": 23,
+          "customer": 6,
           "support": 1,
           "security": 1
         },
-        "median_hold_days": 1.94
+        "median_hold_days": 1.43
       },
-      "Origin failover": {
-        "n": 34,
+      "New domain setup": {
+        "n": 1,
         "next": {
-          "dev": 23,
-          "qa": 9,
-          "customer": 1,
           "security": 1
         },
-        "median_hold_days": 1.74
+        "median_hold_days": 1.92
+      },
+      "Origin failover": {
+        "n": 42,
+        "next": {
+          "dev": 22,
+          "qa": 17,
+          "customer": 1,
+          "support": 1,
+          "security": 1
+        },
+        "median_hold_days": 1.77
       },
       "Traffic spike": {
-        "n": 69,
+        "n": 67,
         "next": {
-          "ops": 46,
-          "dev": 14,
-          "closed": 8,
-          "customer": 1
+          "ops": 41,
+          "dev": 17,
+          "closed": 9
         },
-        "median_hold_days": 1.78
+        "median_hold_days": 1.71
       }
     },
     "ops": {
-      "Cache purge bug": {
-        "n": 1,
-        "next": {
-          "support": 1
-        },
-        "median_hold_days": 0.68
-      },
       "Config change": {
         "n": 58,
         "next": {
-          "qa": 36,
-          "customer": 21,
-          "support": 1
-        },
-        "median_hold_days": 0.93
-      },
-      "Log access request": {
-        "n": 14,
-        "next": {
-          "support": 13,
-          "customer": 1
-        },
-        "median_hold_days": 1.12
-      },
-      "New domain setup": {
-        "n": 62,
-        "next": {
-          "customer": 46,
-          "closed": 13,
-          "security": 1,
+          "qa": 37,
+          "customer": 18,
           "support": 1,
+          "network_eng": 1,
           "dev": 1
         },
-        "median_hold_days": 0.98
+        "median_hold_days": 1.35
+      },
+      "Log access request": {
+        "n": 11,
+        "next": {
+          "support": 10,
+          "customer": 1
+        },
+        "median_hold_days": 1.68
+      },
+      "New domain setup": {
+        "n": 61,
+        "next": {
+          "customer": 47,
+          "closed": 11,
+          "dev": 2,
+          "security": 1
+        },
+        "median_hold_days": 1.14
       },
       "Origin failover": {
         "n": 1,
         "next": {
           "customer": 1
         },
-        "median_hold_days": 1.1
+        "median_hold_days": 1.65
       },
       "SSL renewal": {
-        "n": 32,
+        "n": 35,
         "next": {
-          "closed": 25,
-          "customer": 7
+          "closed": 27,
+          "customer": 8
         },
-        "median_hold_days": 1.12
+        "median_hold_days": 1.39
       },
       "Traffic spike": {
-        "n": 61,
+        "n": 58,
         "next": {
-          "customer": 61
+          "customer": 55,
+          "support": 1,
+          "dev": 1,
+          "security": 1
         },
-        "median_hold_days": 0.95
+        "median_hold_days": 1.39
       }
     },
     "qa": {
       "Cache purge bug": {
-        "n": 15,
+        "n": 18,
         "next": {
-          "customer": 13,
-          "support": 1,
-          "network_eng": 1
-        },
-        "median_hold_days": 0.89
-      },
-      "Config change": {
-        "n": 37,
-        "next": {
-          "customer": 35,
-          "network_eng": 1,
+          "customer": 17,
           "support": 1
         },
-        "median_hold_days": 0.75
+        "median_hold_days": 0.72
       },
-      "DNS routing issue": {
-        "n": 20,
+      "Config change": {
+        "n": 38,
         "next": {
-          "closed": 20
+          "customer": 38
         },
         "median_hold_days": 0.66
       },
-      "Origin failover": {
-        "n": 35,
+      "DNS routing issue": {
+        "n": 24,
         "next": {
-          "customer": 31,
+          "closed": 24
+        },
+        "median_hold_days": 0.7
+      },
+      "Origin failover": {
+        "n": 43,
+        "next": {
+          "customer": 40,
           "dev": 1,
           "network_eng": 1,
-          "ops": 1,
-          "security": 1
+          "ops": 1
         },
         "median_hold_days": 0.71
+      },
+      "Traffic spike": {
+        "n": 1,
+        "next": {
+          "network_eng": 1
+        },
+        "median_hold_days": 1.61
       }
     },
     "security": {
       "Config change": {
-        "n": 2,
+        "n": 1,
         "next": {
-          "ops": 2
+          "ops": 1
         },
-        "median_hold_days": 3.15
+        "median_hold_days": 2.94
       },
       "DNS routing issue": {
         "n": 1,
         "next": {
           "qa": 1
         },
-        "median_hold_days": 1.44
+        "median_hold_days": 5.81
       },
       "Log access request": {
-        "n": 50,
+        "n": 53,
         "next": {
-          "support": 36,
-          "ops": 13,
-          "dev": 1
+          "support": 43,
+          "ops": 10
         },
         "median_hold_days": 2.77
       },
       "New domain setup": {
-        "n": 73,
+        "n": 70,
         "next": {
-          "ops": 61,
-          "support": 12
+          "ops": 60,
+          "support": 10
         },
-        "median_hold_days": 2.63
+        "median_hold_days": 3.07
       },
       "Origin failover": {
-        "n": 3,
+        "n": 2,
         "next": {
           "network_eng": 1,
-          "dev": 1,
-          "customer": 1
+          "dev": 1
         },
-        "median_hold_days": 3.9
+        "median_hold_days": 4.14
       },
       "SSL renewal": {
-        "n": 32,
+        "n": 35,
         "next": {
-          "ops": 32
+          "ops": 34,
+          "customer": 1
         },
-        "median_hold_days": 2.67
+        "median_hold_days": 2.65
       },
       "Traffic spike": {
-        "n": 1,
+        "n": 2,
         "next": {
-          "network_eng": 1
+          "network_eng": 1,
+          "customer": 1
         },
-        "median_hold_days": 4.31
+        "median_hold_days": 2.44
       }
     },
     "support": {
       "Cache purge bug": {
-        "n": 67,
+        "n": 63,
         "next": {
-          "network_eng": 65,
-          "dev": 1,
-          "customer": 1
+          "network_eng": 62,
+          "dev": 1
         },
-        "median_hold_days": 0.77
+        "median_hold_days": 0.74
       },
       "Config change": {
-        "n": 2,
+        "n": 1,
         "next": {
-          "qa": 1,
-          "customer": 1
+          "qa": 1
         },
-        "median_hold_days": 0.47
+        "median_hold_days": 0.52
       },
       "DNS routing issue": {
-        "n": 37,
+        "n": 32,
         "next": {
-          "network_eng": 34,
+          "network_eng": 29,
           "customer": 2,
           "dev": 1
         },
-        "median_hold_days": 0.95
+        "median_hold_days": 0.85
       },
       "Log access request": {
-        "n": 51,
+        "n": 54,
         "next": {
-          "customer": 42,
-          "security": 8,
+          "customer": 43,
+          "security": 10,
           "ops": 1
         },
-        "median_hold_days": 0.69
+        "median_hold_days": 0.74
       },
       "New domain setup": {
-        "n": 74,
+        "n": 70,
         "next": {
-          "security": 72,
+          "security": 68,
           "ops": 1,
+          "network_eng": 1
+        },
+        "median_hold_days": 1.02
+      },
+      "Origin failover": {
+        "n": 1,
+        "next": {
+          "dev": 1
+        },
+        "median_hold_days": 0.84
+      },
+      "Traffic spike": {
+        "n": 2,
+        "next": {
+          "network_eng": 1,
           "customer": 1
         },
-        "median_hold_days": 0.88
+        "median_hold_days": 0.93
       }
     }
   }

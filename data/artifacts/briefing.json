@@ -1,0 +1,414 @@
+{
+  "as_of": "WED OCT 7",
+  "headline": "Two things need you today.",
+  "subhead": "I checked 100 open tasks and 818 handoffs from the last 90 days. 2 need a decision from you, 2 are worth knowing about.",
+  "featured": {
+    "kind": "need",
+    "id": "featured",
+    "facts": {
+      "task": "T-4821",
+      "client": "Northwind Media",
+      "type": "Cache purge bug",
+      "stakeholder": "Network Eng",
+      "days_with_stakeholder": 4.7,
+      "stakeholder_median_days": 1.6,
+      "times_median": 2.9,
+      "estimated_close": "Oct 9",
+      "similar_case": "T-4670",
+      "similar_client": "Mosaic Studio",
+      "similar_match": "71%",
+      "similar_fix": "Lowered the edge-sync propagation batch interval for LATAM from 60s to 15s; purges now land in under 2 minutes.",
+      "task_title": "Cache purge not propagating to edge nodes"
+    },
+    "meta": "Risk · Northwind Media",
+    "bars": [
+      {
+        "label": "T-4821 with Network Eng",
+        "value": 4.7,
+        "unit": "d",
+        "tone": "red"
+      },
+      {
+        "label": "Stakeholder median",
+        "value": 1.6,
+        "unit": "d",
+        "tone": "muted"
+      }
+    ],
+    "evidence": [
+      "T-4821",
+      "T-4670"
+    ],
+    "actions": [
+      {
+        "label": "Open T-4821",
+        "href": "/task/T-4821",
+        "primary": true
+      },
+      {
+        "label": "Ask agent why",
+        "ask": "Why is T-4821 at risk?"
+      },
+      {
+        "label": "Draft ping to Network Eng",
+        "ask": "Draft a ping to Network Eng about T-4821"
+      }
+    ],
+    "title": "Northwind Media cache purge task sits 4.7 days with Network Eng, 2.9 times median",
+    "body": "Network Eng has held T-4821 for 4.7 days against a 1.6-day median, with estimated close Oct 9. Similar T-4670 (Mosaic Studio, 71% match) was fixed by lowering the LATAM edge-sync batch interval from 60s to 15s, so purges now land in under 2 minutes.",
+    "written_by": "claude"
+  },
+  "insights": [
+    {
+      "kind": "need",
+      "id": "module",
+      "facts": {
+        "module": "edge-sync/",
+        "at_risk_tasks_touching_module": 4,
+        "at_risk_tasks_total": 10,
+        "clients_affected": [
+          "Kestrel Retail",
+          "Lumen Games",
+          "Northwind Media"
+        ],
+        "client_count": 3,
+        "tasks_touching_module_12_months": 157,
+        "most_tasks_of_any_module": true
+      },
+      "meta": "Risk · 3 clients affected",
+      "bars": [
+        {
+          "label": "edge-sync/",
+          "value": 4,
+          "unit": " at-risk",
+          "tone": "red"
+        },
+        {
+          "label": "log-export/",
+          "value": 3,
+          "unit": " at-risk",
+          "tone": "accent"
+        },
+        {
+          "label": "edge-auth/",
+          "value": 3,
+          "unit": " at-risk",
+          "tone": "accent"
+        }
+      ],
+      "evidence": [
+        "T-4821",
+        "T-4823",
+        "T-4833",
+        "T-4844"
+      ],
+      "actions": [
+        {
+          "label": "Ask agent",
+          "ask": "Which clients are blocked on edge-sync/?"
+        },
+        {
+          "label": "See modules on map",
+          "href": "/process"
+        }
+      ],
+      "title": "edge-sync/ touches 4 of 10 at-risk tasks, the most of any module.",
+      "body": "The module appears in 157 tasks over the last 12 months and is linked to at-risk work for three clients: Kestrel Retail, Lumen Games, and Northwind Media. Because it carries the highest task volume of any module and sits under 4 of the 10 at-risk tasks, changes here could ripple across several client commitments.",
+      "written_by": "claude"
+    },
+    {
+      "kind": "pattern",
+      "id": "rework",
+      "facts": {
+        "team": "Security Review",
+        "measure": "share of tasks leaving Security Review that were sent back to a team they had already been with (rework)",
+        "rate_before_july": "9%",
+        "rate_since_july": "21%",
+        "bounces_since_july": 15,
+        "top_type": "New domain setup",
+        "top_type_bounces": 9,
+        "monthly_rates": {
+          "May": "14%",
+          "Jun": "6%",
+          "Jul": "12%",
+          "Aug": "20%",
+          "Sep": "20%",
+          "Oct": "32%"
+        }
+      },
+      "meta": "Pattern · Security handoffs, last 12 months",
+      "cols": [
+        {
+          "label": "May",
+          "value": 14
+        },
+        {
+          "label": "Jun",
+          "value": 6
+        },
+        {
+          "label": "Jul",
+          "value": 12
+        },
+        {
+          "label": "Aug",
+          "value": 20
+        },
+        {
+          "label": "Sep",
+          "value": 20
+        },
+        {
+          "label": "Oct",
+          "value": 32
+        }
+      ],
+      "evidence": [
+        "T-4707",
+        "T-4726",
+        "T-4736"
+      ],
+      "actions": [
+        {
+          "label": "Ask agent",
+          "ask": "Why is Security rework rising?"
+        },
+        {
+          "label": "See on process map",
+          "href": "/process?node=security"
+        }
+      ],
+      "title": "Security Review rework rose from 9% to 21% since July, with 15 bounces.",
+      "body": "Tasks leaving Security Review were sent back to a team they had already been with in 21% of cases since July, versus 9% before, and the monthly rate reached 32% in October. New domain setup accounted for 9 of the 15 bounces, so that task type is the first place to look.",
+      "written_by": "claude"
+    },
+    {
+      "kind": "win",
+      "id": "event-ops",
+      "facts": {
+        "stakeholder": "Ops",
+        "change": "Rollback plan required for config rollouts",
+        "change_date": "Aug 1",
+        "measure": "median time a task of any type spends with Ops",
+        "median_hold_before_days": 1.4,
+        "median_hold_after_days": 1.0,
+        "faster": "29%"
+      },
+      "meta": "Process change · since Aug 1",
+      "bars": [
+        {
+          "label": "Before Aug 1",
+          "value": 1.4,
+          "unit": "d",
+          "tone": "muted"
+        },
+        {
+          "label": "After Aug 1",
+          "value": 1.0,
+          "unit": "d",
+          "tone": "green"
+        }
+      ],
+      "evidence": [],
+      "actions": [
+        {
+          "label": "Ask agent",
+          "ask": "Why did Ops get faster?"
+        },
+        {
+          "label": "Open Ops on map",
+          "href": "/process?node=ops"
+        }
+      ],
+      "title": "Ops median task hold fell 29% after the Aug 1 rollback-plan requirement",
+      "body": "The median time any task spends with Ops dropped from 1.4 days to 1.0 days after the rollback-plan requirement for config rollouts took effect on Aug 1. The drop coincides with the change, so TPMs planning Ops-dependent work should check whether the faster turnaround holds.",
+      "written_by": "claude"
+    }
+  ],
+  "watch_rules": [
+    {
+      "label": "Holds over 2× stakeholder median",
+      "count": 8,
+      "tone": "red"
+    },
+    {
+      "label": "Open tasks in a rework loop",
+      "count": 8,
+      "tone": "amber"
+    },
+    {
+      "label": "Modules behind 2+ at-risk tasks",
+      "count": 5,
+      "tone": "red"
+    },
+    {
+      "label": "Client-side waits over 2 days",
+      "count": 1,
+      "tone": "amber"
+    },
+    {
+      "label": "Process changes with measurable effect",
+      "count": 1,
+      "tone": "green"
+    }
+  ],
+  "stats": {
+    "open": 100,
+    "handoffs_90d": 818,
+    "insights": 4
+  },
+  "classic": {
+    "kpis": {
+      "open": 100,
+      "at_risk": 10,
+      "avg_days_open": 3.0,
+      "handoffs_90d": 818
+    },
+    "charts": [
+      {
+        "title": "Open tasks by stakeholder",
+        "bars": [
+          {
+            "label": "Support",
+            "value": 21
+          },
+          {
+            "label": "Ops",
+            "value": 19
+          },
+          {
+            "label": "Security Review",
+            "value": 17
+          },
+          {
+            "label": "Customer",
+            "value": 16
+          },
+          {
+            "label": "Network Eng",
+            "value": 14
+          },
+          {
+            "label": "QA",
+            "value": 10
+          },
+          {
+            "label": "Dev",
+            "value": 3
+          }
+        ]
+      },
+      {
+        "title": "Open tasks by type",
+        "bars": [
+          {
+            "label": "New domain setup",
+            "value": 19
+          },
+          {
+            "label": "Config change",
+            "value": 19
+          },
+          {
+            "label": "Traffic spike",
+            "value": 13
+          },
+          {
+            "label": "Cache purge bug",
+            "value": 13
+          },
+          {
+            "label": "Origin failover",
+            "value": 10
+          },
+          {
+            "label": "Log access request",
+            "value": 9
+          },
+          {
+            "label": "DNS routing issue",
+            "value": 9
+          },
+          {
+            "label": "SSL renewal",
+            "value": 8
+          }
+        ]
+      },
+      {
+        "title": "Avg days open by client",
+        "bars": [
+          {
+            "label": "Halcyon Bank",
+            "value": 5.3
+          },
+          {
+            "label": "Pebble Labs",
+            "value": 4.3
+          },
+          {
+            "label": "Northwind Media",
+            "value": 3.9
+          },
+          {
+            "label": "Brightline Sports",
+            "value": 3.7
+          },
+          {
+            "label": "Tidepool Apps",
+            "value": 3.2
+          },
+          {
+            "label": "Copperleaf Health",
+            "value": 3.1
+          },
+          {
+            "label": "Driftwood Outdoor",
+            "value": 3.1
+          },
+          {
+            "label": "Saffron Foods",
+            "value": 2.9
+          }
+        ]
+      },
+      {
+        "title": "Tasks opened per week",
+        "cols": [
+          {
+            "label": "W33",
+            "value": 8
+          },
+          {
+            "label": "W34",
+            "value": 8
+          },
+          {
+            "label": "W35",
+            "value": 7
+          },
+          {
+            "label": "W36",
+            "value": 8
+          },
+          {
+            "label": "W37",
+            "value": 7
+          },
+          {
+            "label": "W38",
+            "value": 9
+          },
+          {
+            "label": "W39",
+            "value": 12
+          },
+          {
+            "label": "W40",
+            "value": 46
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,502 +1,502 @@
 {
-  "T-4798": {
-    "summary": "Task T-4798 is low risk: it has been with Ops for 0.5 days against a 1.0-day median, and the most likely next step is a customer action (74%). The closest past fix is T-4729, same client and same security-check failure, resolved by completing ownership verification after the client corrected its TXT record, then applying the default WAF ruleset.\n\nSuggested action: Ask Copperleaf to verify the TXT record for api.copperleafhealth.com, then apply the default WAF ruleset.",
-    "model": "claude-haiku-5-5",
-    "input_hash": "8d541ae80c5d41b9"
-  },
-  "T-4802": {
-    "summary": "Task T-4802 is low risk: it sits with Support for a median-consistent 0.5 days, and 42 of 51 similar requests went to Customer next. Most likely next step is Customer sign-off, with Security Review possible at 16%. The closest past fix is T-4517, where Security approved and s3_sink was configured with signed credentials scoped to the client domain.\n\nSuggested action: Prepare a domain-scoped signed-credential plan for s3_sink and send it to Copperleaf for confirmation.",
-    "model": "claude-haiku-5-5",
-    "input_hash": "00b791254d02c33a"
-  },
-  "T-4803": {
-    "summary": "T-4803 is at low risk of stalling: it has sat with Ops 1.1 days against a 0.9-day median, and past spike tasks went to Customer 61 of 61 times. The most relevant precedent is T-4430 (Orbital Streaming, NA, 32% errors), fixed by raising NA regional capacity and adjusting rate-limit thresholds.\n\nSuggested action: Apply the T-4430 NA capacity and rate-limit changes, then confirm 408 rate returns to baseline.",
-    "model": "claude-haiku-5-5",
-    "input_hash": "76dddea87464ca31"
-  },
-  "T-4804": {
-    "summary": "Security Review has held T-4804 for 3.2 days against a 2.6-day median (1.2x), so risk is rated Low, though the domain cannot go live until verification and WAF baseline are applied. Ops is the likely next owner (84%). The closest fix is T-4776, the same client's static.lumengames.com case, which fixed the subdomain lookup in verify_ownership.py and applied baseline WAF rules.\n\nSuggested action: Check whether verify_ownership.py has the same subdomain lookup bug for media.lumengames.com, then queue Ops with the WAF baseline.",
-    "model": "claude-haiku-5-5",
-    "input_hash": "8e7d84a25ca81fd8"
-  },
   "T-4805": {
-    "summary": "Task T-4805 is at low risk: it has sat with Ops for 1.1 days against a 1.0-day median, and 46 of 62 similar tasks moved to Customer next. The most relevant past fix is T-4552, which corrected a subdomain lookup in verify_ownership.py and then applied baseline WAF rules.\n\nSuggested action: Check verify_ownership.py for the post-maintenance lookup regression, as T-4552 did, and confirm the TXT record with Northwind.",
+    "summary": "Task T-4805 is low risk: Support has held it 0.4 days, below the 0.7-day median, and 80% of similar requests go to Customer next. The closest precedent is T-4578 (89% match), which was fixed by enabling log export with an edge-auth scoped token after review.\n\nSuggested action: Confirm the Halcyon storage bucket and edge-auth scoped token setup, then send the export to the client for receipt.",
     "model": "claude-haiku-5-5",
-    "input_hash": "035eac53c9950de5"
-  },
-  "T-4806": {
-    "summary": "T-4806 is at high risk: it has sat in Dev for 5.0 days against a 2.0-day median, and 40% of APAC requests failed during the outage. It will most likely move to QA next (96%), then Customer. The most relevant past fix is T-4579, which tuned health-check thresholds in failover_policy.go to trigger failover after 3 failed probes instead of 10.\n\nSuggested action: Check whether the failover_policy.go threshold change from T-4579 applies here, and escalate Dev review.",
-    "model": "claude-haiku-5-5",
-    "input_hash": "c3c0a7e70f91e5ce"
-  },
-  "T-4807": {
-    "summary": "T-4807 is at medium risk: Ops has held it 2.1 days against a 1.1-day median, and it will likely move to Support next (93%). The closest precedent is T-4511 (94% match), which Security approved and resolved by limiting s3_sink credentials to the client's domain.\n\nSuggested action: Pre-scope s3_sink credentials to www.pebblelabs.com and request Security sign-off so Support review isn't delayed.",
-    "model": "claude-haiku-5-5",
-    "input_hash": "0550bb9fc076e847"
+    "input_hash": "68f3232c23ec756f"
   },
   "T-4808": {
-    "summary": "T-4808 is High risk: it has been in Dev for 5.1 days against a 2.0-day median, and it will likely move to QA next (96%). The closest precedent is T-4596, the same client's failover miss, fixed by tuning the origin_probe timeout and failover threshold and verified end to end with Orbital Streaming. Estimated close is 2026-10-09.\n\nSuggested action: Check whether T-4596's probe timeout and threshold changes apply to this origin, and schedule an end-to-end failover test with Orbital.",
+    "summary": "T-4808 is high risk: it has sat in Security Review for 7.0 days against a 2.8-day median. It is likely to move to Support (81%), then Customer, with an estimated close of 2026-10-10. The closest precedent, T-4689 (70% match), granted scoped bucket access after security approval.\n\nSuggested action: Escalate the Security Review decision now and prepare scoped bucket credentials so Support can proceed.",
     "model": "claude-haiku-5-5",
-    "input_hash": "f1a32be56a02bd43"
+    "input_hash": "c21977022061398e"
   },
   "T-4809": {
-    "summary": "Task T-4809 is at High risk: it has sat with Ops for 2.2 days against a 0.9-day median, and p95 latency is above 2s for a Mid-market EU client. Past traffic spike tasks all moved to Customer after Ops, so expect handoff there and an estimated close on 2026-10-08. The closest useful precedent is T-4493, which raised EU regional capacity and adjusted rate-limit thresholds, returning errors to baseline.\n\nSuggested action: Check whether EU capacity was raised as in T-4493 and review rate-limiter thresholds before handing to Customer.",
+    "summary": "T-4809 is low risk: it has spent 1.9 days in Security Review, below the 3.1-day median, and is likely to move to Ops (86%). The closest precedent is T-4736, the same client and media subdomain, which was fixed by applying baseline WAF rules and activating the domain, though it took 14.9 days.\n\nSuggested action: Route to Ops now, apply the default WAF ruleset, and activate media.copperleafhealth.com, following T-4736 to protect the launch date.",
     "model": "claude-haiku-5-5",
-    "input_hash": "87e211a04746c67d"
+    "input_hash": "00cff4efa12e3f54"
   },
   "T-4810": {
-    "summary": "Task T-4810 is low risk: it sits with the customer for only 0.1 days against a 0.9-day median, and 67 of 68 similar cache purge bugs closed after customer review. The most relevant past fix is T-4483, same customer and TTL override, where removing the conflicting static.halcyonbank.com override and re-purging resolved it.\n\nSuggested action: Check whether the /static TTL override in ttl_rules.yaml still conflicts with origin Cache-Control, then confirm fresh assets at edges.",
+    "summary": "T-4810 is at high risk: it has sat in Security Review for 7.8 days against a 2.8-day median. It is likely to move to Support next (81%), then Customer and Closed, with estimated close 2026-10-09. The closest past fix is T-4553, which granted scoped bucket access after security approval and resolved in 4.2 days.\n\nSuggested action: Escalate the Security Review approval now and prepare scoped bucket access for the Support handoff, following T-4553.",
     "model": "claude-haiku-5-5",
-    "input_hash": "8344a4559c301a1d"
+    "input_hash": "5f1d65932dadf7fd"
   },
   "T-4811": {
-    "summary": "T-4811 is low risk: it has sat with the customer 0.7 days against a 0.9-day median, and 34 of 35 similar origin failover tasks closed from this stage. The most relevant past fix is T-4661 (77% match), which tuned failover_policy.go to trigger after 3 failed probes instead of 10. Expected close is 2026-10-07.\n\nSuggested action: Confirm the probe threshold in failover_policy.go and origin_probe.go matches the T-4661 fix before customer sign-off.",
+    "summary": "Task T-4811 is at low risk on timing: Ops has held it 1.1 days against a 1.4-day median, and 55 of 58 past traffic spike tasks moved to Customer next. Still, 38% of production requests are returning 502, so impact is high. The closest precedent is T-4694, which shifted traffic to neighboring POPs and raised rate-limiter thresholds during the campaign.\n\nSuggested action: Confirm whether traffic shifting to neighboring POPs and a threshold increase, as in T-4694, is in place now.",
     "model": "claude-haiku-5-5",
-    "input_hash": "840a9c1892f04c98"
+    "input_hash": "ff1f3b444ae3a3fd"
   },
   "T-4812": {
-    "summary": "Task T-4812 is low risk: it has spent only 0.2 days with the customer against a 0.9-day median, and 34 of 35 similar origin failover tasks closed after this stage. The most relevant past fix is T-4579, which tuned health-check thresholds in failover_policy.go so failover triggers after 3 failed probes instead of 10. Expected close is 2026-10-08.\n\nSuggested action: Check whether failover_policy.go probe thresholds match the T-4579 fix before the Lumen launch.",
+    "summary": "T-4812 is High risk: it has sat with the customer 2.4 days against a 0.9-day median, and the LATAM launch is next week. All 49 past new-domain tasks closed after customer handoff, with estimated close 2026-10-07. The closest precedent is T-4585 (71% match), which manually verified ownership, attached the default WAF ruleset, and rolled out config to edges.\n\nSuggested action: Verify ownership and attach the default WAF ruleset as in T-4585, then confirm rollout to LATAM edges before launch.",
     "model": "claude-haiku-5-5",
-    "input_hash": "cd8306c208114a36"
+    "input_hash": "1e7b18134e35ebfb"
   },
   "T-4813": {
-    "summary": "Task T-4813 is low risk: it is with the customer for 0.4 days, faster than the 0.9-day median, and 34 of 35 similar origin failover tasks closed from this stage. Likely next step is Closed by 2026-10-07. The most relevant past fix is T-4795, which corrected the origin_probe timeout and failover threshold for a sibling Quillstone domain and was verified end to end.\n\nSuggested action: Confirm the customer has accepted the fix, and reuse T-4795's end-to-end failover test before closing.",
+    "summary": "Activation is blocked on the missing TXT verification and absent WAF policy, with an NA launch next week, though the dashboard rates risk Low. Next hop is most likely Customer (77%), with close expected 2026-10-08. Closest precedent T-4484 (same customer, 85% match) manually verified ownership, attached the default WAF ruleset, and rolled out to NA edges.\nSuggested action: Manually verify ownership and attach the default WAF ruleset as in T-4484, then confirm NA edge rollout before launch.",
     "model": "claude-haiku-5-5",
-    "input_hash": "965dc8bbe4b48c00"
+    "input_hash": "f8131c0771f522bc"
   },
   "T-4814": {
-    "summary": "Dashboard rates this Low with a likely close around 2026-10-07, but NA errors and latency are visible, and T-4513 (same client, same /static TTL override) was marked Urgent. T-4513 fixed a 7-day TTL rule pinned in ttl_rules.yaml that ignored purges, by redeploying corrected config.\n\nSuggested action: Check the /static TTL rule in ttl_rules.yaml against T-4513's fix, and confirm NA purges reach origin before closing.",
+    "summary": "Task T-4814 is currently with the customer for 0.8 days, in line with the 0.9-day median, so it is not showing signs of stalling. Past config change tasks almost always close after this step (58 of 60), with an estimated close of 2026-10-07. The most relevant prior fix is T-4779, a Kestrel Retail rollback that corrected the gateway middleware rule and redeployed with validation enabled.\n\nSuggested action: Confirm the customer has verified the EU redirects, then close, or apply the T-4779 rollback and validation approach if still failing.",
     "model": "claude-haiku-5-5",
-    "input_hash": "4eccd2ad57c14474"
+    "input_hash": "697c6552646e938b"
   },
   "T-4815": {
-    "summary": "Task T-4815 is low risk: it has spent 1.1 days in Ops against a 1.0-day median, and 74% of similar tasks go to the customer next. The most relevant past fix is T-4580, where the client corrected the TXT record, the default WAF ruleset was applied, and the domain was activated in 4.5 days. Estimated close is 2026-10-09, which leaves room before next week's APAC launch.\n\nSuggested action: Ask Tidepool Apps to confirm the TXT record value, then apply the default WAF ruleset as in T-4580.",
+    "summary": "Risk is shown as Low because the task has been with the customer only 0.2 days, but the TXT record is still undetected and no WAF policy is attached before next week's APAC launch. The predicted route is Closed by about 2026-10-08. The closest precedent is T-4729 (same client, 74% match), which was resolved by manually verifying ownership, attaching the default WAF ruleset, and rolling out to APAC edges.\n\nSuggested action: Confirm the TXT record with the customer now, and if it still fails, follow the T-4729 fix to meet the launch date.",
     "model": "claude-haiku-5-5",
-    "input_hash": "cdd94d10f4cf6545"
+    "input_hash": "d83831f6883bf096"
   },
   "T-4816": {
-    "summary": "T-4816 is at low risk: the cert expires in 9 days and Ops has held it only 0.1 days, with 74% odds it goes to the customer next. The closest past fix is T-4647 (same client, same symptom), which restored the _acme-challenge record, re-ran renewal, and confirmed the new cert.\n\nSuggested action: Ask Quillstone to restore the _acme-challenge DNS record, then re-run renewal per T-4647.",
+    "summary": "Risk is low for now: Support has held it 0.6 days, under the 0.7-day median. The predicted Customer handoff (80%) skips the security approval and scoped credentials the description requires, which past matches handled through Security. Closest precedent is T-4581 (same client), where Security approved and configured s3_sink with signed credentials scoped to one domain.\n\nSuggested action: Confirm with Security whether approval is needed before the Customer handoff, and scope credentials to media.orbitalstreaming.com as T-4581 did.",
     "model": "claude-haiku-5-5",
-    "input_hash": "4d62840fe02c4b0d"
+    "input_hash": "1c9b0757f5f1a21b"
   },
   "T-4817": {
-    "summary": "Task T-4817 is low risk: it has spent 0.3 days with the customer, well under the 1.2-day median, and 7 of 7 similar SSL renewal tasks closed after customer review. The closest past fix is T-4694, which updated acme_client.py to use the delegated challenge record and cleared expiry alerts.\n\nSuggested action: Confirm the DNS TXT record for the ACME challenge exists at the client's DNS, then apply the T-4694 delegated-record change in acme_client.py.",
+    "summary": "T-4817 is at high risk: it has sat in Security Review for 6.4 days against a 2.6-day median, with the certificate expiring in 13 days. Ops is predicted next (97%), and the closest past fix is T-4682, which updated acme_client.py to use the delegated challenge record.\n\nSuggested action: Escalate Security Review now and check whether the delegated challenge record fix from T-4682 applies here.",
     "model": "claude-haiku-5-5",
-    "input_hash": "4fcc3292d6ee631b"
+    "input_hash": "2c68ad83691af1aa"
   },
   "T-4818": {
-    "summary": "T-4818 is on pace (1.1 days in Ops vs. a 0.9-day median), but 19% of Frankfurt requests are still returning 503s. The next step is likely Customer, based on 61 of 61 similar spikes, with close estimated 2026-10-08. The closest precedent is T-4484 (same client, 71% match), where raising EU regional capacity and adjusting rate-limit thresholds returned errors to baseline.\n\nSuggested action: Confirm whether EU capacity and rate-limit thresholds were adjusted as in T-4484, and check that 503s have returned to baseline.",
+    "summary": "Task T-4818 is low risk: it has waited 0.7 days in Customer, below the 1.0-day median, and 44 of 44 similar log access tasks closed after this stage. Likely next step is Closed by 2026-10-08. The closest past fix is T-4777, where Security approved the request and s3_sink was configured with signed credentials scoped to the client's domain.\n\nSuggested action: No intervention needed; confirm scoped credentials for cdn.tidepoolapps.com in s3_sink.py once approved.",
     "model": "claude-haiku-5-5",
-    "input_hash": "f8cd9824aeed6b06"
+    "input_hash": "2f9b8a4f765b0831"
   },
   "T-4819": {
-    "summary": "T-4819 is at Medium risk: it has sat with Network Eng for 3.2 days against a 1.9-day median, and 68% of similar tasks next go to Customer. T-4712 is the most relevant past fix, since it resolved a node_registry timeout by adding purge retries, which matches the São Paulo logs. T-4613 has no solution note.\n\nSuggested action: Check whether T-4712's node_registry timeout fix applies to the São Paulo edges before routing to Customer.",
+    "summary": "Task T-4819 is at low risk: it has spent 3.3 days in Security Review against a 3.1-day median, and 60 of 70 similar tasks moved to Ops next. The most relevant past fix is T-4438, where ownership verification was completed after the client corrected its TXT record, then the default WAF ruleset was applied.\n\nSuggested action: Confirm the client has corrected the TXT record, then apply the default WAF ruleset and activate the domain.",
     "model": "claude-haiku-5-5",
-    "input_hash": "bd4479f91036603c"
+    "input_hash": "2508d3113cf6f3da"
   },
   "T-4820": {
-    "summary": "T-4820 is low risk for now, but 97% of similar tasks move to Security Review next, and the closest precedent, T-4794, was a Northwind subdomain that failed the same checks. Its fix was a subdomain lookup fix in verify_ownership.py plus applying baseline WAF rules and activating the domain, which took 7.9 days.\n\nSuggested action: Check verify_ownership.py for the subdomain lookup issue and apply baseline WAF rules, following T-4794.",
+    "summary": "Task T-4820 is at high risk: it has sat in Security Review for 5.6 days against a 2.8-day median, and the static.fernwaytravel.com onboarding failure is unresolved. Likely next step is Support (81%). The closest past fix is T-4524, which manually verified domain ownership, attached the default WAF ruleset, and rolled out config to EU edges.\n\nSuggested action: Check whether T-4524's domain verification and WAF steps apply to static.fernwaytravel.com.",
     "model": "claude-haiku-5-5",
-    "input_hash": "7285bfb6d176f2d2"
+    "input_hash": "587efa50318a28c7"
   },
   "T-4821": {
-    "summary": "Task T-4821 is at high risk: it has sat with Network Eng for 4.2 days against a 1.9-day median, and 68% of similar tasks are predicted to go to Customer next. The most relevant past fix is T-4663, which lowered the edge-sync propagation batch interval from 60s to 15s, bringing purges under 2 minutes.\n\nSuggested action: Escalate to Network Eng and check whether the edge-sync batch interval for NA can be lowered as in T-4663.",
+    "summary": "T-4821 is at high risk: it has sat with Network Eng for 4.7 days against a 1.6-day median, and 18 Ashburn nodes are still serving stale objects. The most relevant past fix is T-4670, which lowered the edge-sync propagation batch interval from 60s to 15s and got purges under 2 minutes. Predicted path is Customer after Network Eng, with a close estimate of 2026-10-09.\n\nSuggested action: Escalate to Network Eng and check whether the edge-sync batch interval for NA matches the T-4670 change.",
     "model": "claude-haiku-5-5",
-    "input_hash": "12a700da0ff02f2c"
+    "input_hash": "6adfecfa41944ed4"
   },
   "T-4822": {
-    "summary": "Risk is Low: Ops has held the task 0.4 days against a 1.0-day median, and it is most likely to move to Customer (74%). The closest past fix is T-4675, where a DNS TXT record was corrected at the client's provider and the ACME challenge re-validated. No code areas are recorded.\n\nSuggested action: Ask Halcyon Bank to confirm the verification TXT record at their DNS provider, and attach a WAF policy before the APAC launch.",
+    "summary": "T-4822 is at low risk: it has sat with Ops for about 1.1 days against a 1.4-day median, and 55 of 58 similar traffic spikes went to the customer next. The most relevant precedent is T-4503, a Juniper Analytics EU capacity exhaustion on the same modules, fixed by adding temporary Amsterdam capacity and tuning thresholds.yaml.\n\nSuggested action: Check whether Amsterdam temporary capacity and thresholds.yaml tuning from T-4503 apply, then confirm the fix with Juniper.",
     "model": "claude-haiku-5-5",
-    "input_hash": "f72174c76156bc2b"
+    "input_hash": "fa359b8a51fa338d"
   },
   "T-4823": {
-    "summary": "Risk is low: Support has held this for a median-typical 0.7 days, and 42 of 51 similar log access requests went to Customer next. The most relevant past fix is T-4614, which enabled log export with an edge-auth scoped token after review. T-4650 is the same client but has no solution note.\n\nSuggested action: Confirm the TXT record and WAF attachment with Driftwood before the LATAM launch, and check whether a T-4614-style scoped token is needed.",
+    "summary": "Risk is high: T-4823 has sat with Network Eng for 4.7 days against a 1.7-day median, and throttled legitimate users in APAC. Likely next step is Ops (61%). The closest past fix is T-4633, which shifted traffic to neighboring POPs with a traffic-shaping policy and raised rate-limiter thresholds.\n\nSuggested action: Escalate Network Eng to confirm whether the T-4633 traffic-shaping and threshold fix applies.",
     "model": "claude-haiku-5-5",
-    "input_hash": "971a3886cac6912f"
+    "input_hash": "3cd3e04a6245e44e"
   },
   "T-4824": {
-    "summary": "T-4824 is low risk: it has sat with the customer for 0.6 days against a 0.9-day median, and 34 of 35 similar origin failover tasks closed after this step. The closest past fix is T-4420 (48% match), which tuned health-check thresholds in failover_policy.go so failover triggers after 3 failed probes instead of 10. Expected route is Closed by 2026-10-07.\n\nSuggested action: Check whether failover_policy.go probe thresholds match T-4420's 3-probe fix before the customer replies.",
+    "summary": "Task T-4824 is low risk: Support is handling it in about 0.9 days against a 1.0-day median, and it is predicted to move to Security Review next with 97% confidence. The closest precedent is T-4505, where fixing the subdomain lookup in verify_ownership.py resolved a failing ACME challenge; estimated close is 2026-10-12.\n\nSuggested action: Confirm the ACME TXT record is published for static.orbitalstreaming.com, then hand off to Security Review.",
     "model": "claude-haiku-5-5",
-    "input_hash": "8b59c9c6d32f446d"
+    "input_hash": "f659fd62613cc0e8"
   },
   "T-4825": {
-    "summary": "Risk is Low: T-4825 has spent 0.8 days in QA, close to the 0.7-day median, and 31 of 35 past origin failover tasks went to the customer after QA. Customer sign-off is the likely next step (89%), with closure estimated for 2026-10-08. The closest past fix is T-4410 (44% match, shared monitoring-alerts and origin-failover modules), which lowered the failover threshold and added a failover alert.\n\nSuggested action: Confirm EU routing and latency have recovered for Fernway users, then send the task to the customer for sign-off.",
+    "summary": "Task T-4825 is low risk: it sits with Ops for 0.5 days against a 1.7-day median, and the expected route is Support then Customer. Most similar log access requests went to Support after Ops (10 of 11), so Support is the likely next stop. The closest past fix is T-4678, which enabled log export with an edge-auth scoped token after review.\n\nSuggested action: Pull T-4678's scoped-token steps and check edge-auth/signed_urls.go before Support picks this up.",
     "model": "claude-haiku-5-5",
-    "input_hash": "2da278eb480d0582"
+    "input_hash": "6f8ce76bc7235c28"
   },
   "T-4826": {
-    "summary": "Task T-4826 is low risk: it sits in QA for 0.6 days, below the 0.7-day median, and is expected to go to Customer and close around 2026-10-08. The most relevant past fix is T-4410 (Kestrel Retail, 54% match), which lowered the failover threshold and added a failover alert in monitoring-alerts.\n\nSuggested action: Confirm the geo resolver maps the LATAM range to São Paulo, then send the Customer verification request.",
+    "summary": "Risk is low: the task sits with Ops for only 0.1 days, and 55 of 58 similar traffic spike tasks went to Customer next. The closest precedent, T-4469 (85% match), fixed EU saturation by raising regional capacity and adjusting rate-limit thresholds, returning errors to baseline.\n\nSuggested action: Check whether EU capacity is raised and rate-limit thresholds match T-4469 before the campaign peak.",
     "model": "claude-haiku-5-5",
-    "input_hash": "1a79137406b5b6ab"
+    "input_hash": "ce6cb07924a44e04"
   },
   "T-4827": {
-    "summary": "Risk is low: Support has held T-4827 for 0.9 days against a 0.7-day median, though the escalation adds visibility. Customer is the likeliest next stop (82%), with Security Review at 16% because access must be limited to their domains. T-4511 (78% match) is the closest precedent: Security approved it and configured s3_sink with signed credentials scoped to the client's domain.\n\nSuggested action: Ask Security to confirm the domain-scoped signed-credential approach now so the task can skip review.",
+    "summary": "T-4827 is currently low risk: it has sat with the customer for 0.6 days against a 0.8-day median, and 58 of 58 similar traffic spike tasks closed after this stage. The closest precedent is T-4627 (78% match, same client, same NA saturation), which was fixed by adding temporary Toronto capacity and tuning thresholds.yaml, bringing latency back under 300ms.\n\nSuggested action: Confirm whether T-4627's Toronto capacity and thresholds.yaml tuning can be reapplied to T-4827.",
     "model": "claude-haiku-5-5",
-    "input_hash": "85c194e5bdf9ad49"
+    "input_hash": "e5044e18396552c7"
   },
   "T-4828": {
-    "summary": "Task T-4828 is at Medium risk: it has sat with Network Eng for 3.6 days against a 1.9-day median, and 9 propagation nodes are backlogged. Most likely next step is Customer (68%), since 46 of 68 similar purge bugs closed that way. The closest past fix is T-4592 (76% match, same client and modules): it raised Ashburn propagation workers and lowered the batch interval.\n\nSuggested action: Check whether the San Jose backlog matches T-4592's batch-interval fix, and verify with test purges.",
+    "summary": "Risk is low: the task has been with the customer for 0.1 days against a 0.9-day median, and 42 of 43 similar origin failover tasks closed from this stage, with estimated close 2026-10-08. The core issue is edges retrying a down primary origin for 49 minutes in origin-failover and monitoring-alerts. The closest past fix is T-4589 (Fernway Travel), which lowered the failover threshold and added a failover-event alert.\n\nSuggested action: Confirm with Lumen Games whether the T-4589 threshold change and failover alert address the cdn.lumengames.com failure.",
     "model": "claude-haiku-5-5",
-    "input_hash": "22918ca35badd87e"
+    "input_hash": "cab86285eadee8b7"
   },
   "T-4829": {
-    "summary": "Support is at 0.4 days against a 0.8-day median, so risk is Low for now, but Northwind is re-purging manually while 17 NA nodes return 504 without retry. Network Eng is the likely next owner (97%), and T-4781 is the closest precedent: it fixed a node_registry timeout and added retries for failed purge targets.\n\nSuggested action: Route to Network Eng now and check node_registry.go timeouts and retry handling for purge targets, following T-4781.",
+    "summary": "T-4829 is at low risk: it sits in Security Review at 3.4 days, близко to the 3.1-day median, and 86% of similar tasks move to Ops next. The closest precedent is T-4736 (same client, 86% match), where the fix was a subdomain lookup fix in verify_ownership.py plus applying baseline WAF rules.\n\nSuggested action: Check whether verify_ownership.py subdomain lookup and default WAF ruleset are applied to static.copperleafhealth.com, as in T-4736.",
     "model": "claude-haiku-5-5",
-    "input_hash": "bd9aa38685696ba5"
+    "input_hash": "1651ef1bce00b75d"
   },
   "T-4830": {
-    "summary": "Low risk: Customer holds it for 0.4 days, under the 0.9-day median, and 67 of 68 similar purge bugs closed next. Expected route is Closed by 2026-10-07. The closest past fix, T-4608 (89% match, same edge-sync module), added exponential backoff for 503 responses and confirmed the purge succeeded.\n\nSuggested action: Verify propagation.go retries 503 responses with backoff; if not, apply the T-4608 change.",
+    "summary": "Task T-4830 is low risk: Support has held it 0.6 days, below the median, and 43 of 54 similar log access requests went to Customer next. The closest past fix is T-4408, which enabled log export with an edge-auth scoped token after review and was confirmed received by the client.\n\nSuggested action: Confirm the scoped edge-auth token setup from T-4408 and send the export to the customer for receipt.",
     "model": "claude-haiku-5-5",
-    "input_hash": "bedd0a7230f551bc"
+    "input_hash": "715947b002cffe27"
   },
   "T-4831": {
-    "summary": "T-4831 is at High risk: it has sat in QA for 1.9 days against a 0.7-day median, and it is most likely heading to Customer (89%) with an expected close around 2026-10-08. The most relevant past fix is T-4451, which updated the geo resolver mapping for the affected NA ISP ranges and resolved in 2.9 days.\n\nSuggested action: Verify the geo resolver mapping for the NA ISP range serving San Jose, following T-4451, before handing off to Customer.",
+    "summary": "Risk is Low: Ops has held T-4831 for 0.8 days against a 1.4-day median, and 55 of 58 similar spikes went to Customer after Ops. The most relevant past fix is T-4662, which added temporary Ashburn capacity and tuned rate-limiter thresholds, bringing latency under 300ms.\n\nSuggested action: Confirm the T-4662 capacity and threshold changes still apply, then notify Copperleaf Health's account manager of status.",
     "model": "claude-haiku-5-5",
-    "input_hash": "1c945c48ee8ac65a"
+    "input_hash": "2fc3fc37b07499c9"
   },
   "T-4832": {
-    "summary": "T-4832 is low risk by timing (0.7 days with the customer, against a 0.9-day median), and 61 of 62 similar traffic spike tasks closed, but 21% of NA nodes serving stale content breaks Northwind's 5-minute release SLA. The closest match, T-4476 (76%), has no fix note. T-4725 tuned batch_scheduler.go for purge latency and is the most relevant recorded fix.\nSuggested action: Check the batch_scheduler.go propagation backlog for NA node groups, as in T-4725, and confirm purges reach all nodes within 5 minutes.",
+    "summary": "Task T-4832 is low risk: it has spent 1.9 days in Dev against a 2.3-day median, and 24 of 25 similar origin failover tasks moved to QA next. The closest past fix is T-4596, a Saffron Foods case with the same modules, which lowered the failover threshold and added a failover alert.\n\nSuggested action: Check whether the T-4596 threshold change and failover alert apply to this retry loop before QA.",
     "model": "claude-haiku-5-5",
-    "input_hash": "cd6ff138df3de568"
+    "input_hash": "2af3dee5ed241416"
   },
   "T-4833": {
-    "summary": "Task T-4833 is low risk: it sits with the customer for 0.6 days, below the 0.9-day median, and 34 of 35 similar origin failover tasks closed after this stage. The most relevant past fix is T-4579, which tuned health-check thresholds in failover_policy.go so failover triggers after 3 failed probes instead of 10. Expect closure around 2026-10-07.\n\nSuggested action: Confirm the customer has verified failover with the 3-probe threshold change from T-4579.",
+    "summary": "Task T-4833 is High risk: it has sat in QA 1.8 days against a 0.7-day median (2.6x), and 40% of EU users are misrouted for Enterprise client Kestrel Retail. It is likely to close by 2026-10-07, since all 24 past DNS routing tasks closed after QA. The closest past fix is T-4451, same client and module, which corrected the IP range table in geo_resolver.go and refreshed DNS.\n\nSuggested action: Verify the geo_resolver.go IP range table against the post-maintenance change, as T-4451 did.",
     "model": "claude-haiku-5-5",
-    "input_hash": "020aed783dc7d7ac"
+    "input_hash": "b230b4c4f2797b99"
   },
   "T-4834": {
-    "summary": "Task T-4834 is at low risk but has run 3.4 days in Security Review against a 2.8-day median, so it is slipping. Most likely next step is Support (72%), then Customer close by 2026-10-11. The closest past fix is T-4546 (same client): an edge-auth scoped token enabled after review.\n\nSuggested action: Ask Security Review for a decision on ownership verification and WAF baseline, and reuse the T-4546 scoped-token approach.",
+    "summary": "Risk is rated Low: Security Review at 2.5 days is under the 3.1-day median (0.8x), and 86% of similar tasks move to Ops next. The closest past fix is T-4660 (same client, 60% match), which manually verified ownership, attached the default WAF ruleset, and rolled out to NA edges.\n\nSuggested action: Check whether Security Review has verified ownership for media.pebblelabs.com, then apply the default WAF ruleset as T-4660 did.",
     "model": "claude-haiku-5-5",
-    "input_hash": "b9436f5831c2fbcc"
+    "input_hash": "77f4bb72cee46416"
   },
   "T-4835": {
-    "summary": "Risk is low: Support has held the task 0.6 days, under the 0.7-day median, and Customer is the predicted next step (82%). Security Review is still possible (16%), since the same-domain case T-4567 needed security approval before granting scoped bucket access. Estimated close is 2026-10-08.\n\nSuggested action: Confirm whether Security approval is required before granting bucket access, as in T-4567.",
+    "summary": "Task T-4835 is low risk: it sits with the customer for 0.6 days, below the 0.9-day median, and 42 of 43 similar origin failover tasks closed after this stage. The most relevant past fix is T-4612, which tuned failover_policy.go to trigger after 3 failed probes instead of 10.\n\nSuggested action: Check whether the failover threshold in failover_policy.go needs the same tuning as T-4612 before closing.",
     "model": "claude-haiku-5-5",
-    "input_hash": "3979fba073ecb191"
+    "input_hash": "ff500d1dc5dd325c"
   },
   "T-4836": {
-    "summary": "Risk is low: the task is in Dev for a median-length 2.0 days, and 24 of 25 similar origin failover tasks went to QA next. The most relevant past fix is T-4633, which tuned health-check thresholds in failover_policy.go so failover triggers after 3 failed probes instead of 10.\nSuggested action: Check failover_policy.go health-check thresholds first, using the T-4633 fix as the reference.",
+    "summary": "Task T-4836 is low risk: it has spent 3.4 days in Security Review against a 2.8-day median (1.2x), and it is likely to move to Support next (81%). The closest past fix is T-4762, where Security approved the request and s3_sink was configured with signed credentials limited to the client's domain.\n\nSuggested action: Confirm Security approval is near, then prepare s3_sink signed credentials scoped to cdn.brightlinesports.com.",
     "model": "claude-haiku-5-5",
-    "input_hash": "5238747115a78e6e"
+    "input_hash": "a94e5bd22f0e4084"
   },
   "T-4837": {
-    "summary": "Task T-4837 is low risk: it has sat with the customer 0.6 days against a 0.9-day median, and 61 of 62 similar spike tasks closed after this stage. Expected closure is 2026-10-07. The closest precedent is T-4434 (same client, 78% match), which fixed Tokyo overload by adding temporary capacity and tuning thresholds.yaml.\n\nSuggested action: Confirm Tokyo temporary capacity and thresholds.yaml tuning match T-4434 before customer sign-off.",
+    "summary": "Task T-4837 is low risk: it has been with Network Eng for 1.7 days against a 1.6-day median. It will likely go to Customer next (59%), and it may close around 2026-10-08. The closest fix is T-4806, which added exponential-backoff retry for 503 responses in edge-sync propagation.\n\nSuggested action: Check whether T-4806's retry-with-backoff change in propagation.go is already in place for the Singapore nodes.",
     "model": "claude-haiku-5-5",
-    "input_hash": "504ccb146d17c13e"
+    "input_hash": "cb910abdd87c27c8"
   },
   "T-4838": {
-    "summary": "T-4838 is low risk: Security Review is at 3.4 days against a 2.7-day median (1.2x). It will most likely move to Ops next, as in 32 of 32 past SSL renewal tasks, and is estimated to close around 2026-10-09. The closest precedent is T-4676, where restoring the missing _acme-challenge DNS record and re-running renewal fixed the certificate.\n\nSuggested action: Ops should restore the missing ACME challenge TXT record for static.pebblelabs.com, re-run renewal, and confirm the new cert, following T-4676.",
+    "summary": "Task T-4838 is at elevated risk despite the Low rating: the client launches in LATAM next week and the TXT record is still undetected. It will most likely move to Security Review (97%) before Ops and Customer. The closest precedent is T-4567 (76% match, same client), where the fix was completing ownership verification after the client corrected the TXT record, then applying the default WAF ruleset.\n\nSuggested action: Ask Mosaic Studio to confirm the TXT record value and TTL, then verify ownership manually and attach the default WAF ruleset.",
     "model": "claude-haiku-5-5",
-    "input_hash": "de02783bf4e7aa12"
+    "input_hash": "3b42245998a6d2f6"
   },
   "T-4839": {
-    "summary": "Task T-4839 is low risk: it has spent only 0.1 days with Ops against a 0.9-day median, and all 61 past traffic spike tasks moved to Customer next. The closest precedent is T-4498 (84% match), which added temporary Dallas capacity and tuned thresholds.yaml, bringing latency back under 300ms.\n\nSuggested action: Confirm whether Ashburn needs temporary capacity or threshold tuning as in T-4498, then hand off to Customer.",
+    "summary": "T-4839 is low risk: it has been in QA for 0.2 days against a 0.7-day median, and 40 of 43 similar origin failover tasks went to the customer after QA. It will likely go to Customer (93%) and close around 2026-10-08. The closest past fix is T-4496, which corrected the origin_probe timeout and failover threshold and was tested end to end with its client.\nSuggested action: Check failover threshold and origin_probe settings for static.northwindmedia.com, as T-4496 did, since no code areas are recorded.",
     "model": "claude-haiku-5-5",
-    "input_hash": "15234a5954c537e5"
+    "input_hash": "6db305ab069b05b2"
   },
   "T-4840": {
-    "summary": "Risk is Low: Ops typically clears this in about 1.1 days, against 4 days until expiry, though London customers already see warnings. Closure through Ops is the likely route (78%). The most relevant past fix is T-4768, same client, where updating acme_client.py to use the delegated challenge record got renewal working.\nSuggested action: Check whether acme_client.py uses the delegated challenge record, as in T-4768, before the certificate expires.",
+    "summary": "Task T-4840 is currently with the customer for 0.7 days, below the 0.9-day median, so risk is Low. Past config change tasks like this went to Closed 58 of 60 times, with an estimated close of 2026-10-07. The closest past fix is T-4504 (88% match, same customer): revert the config version, fix the redirect rule, and add a pre-deploy validation check in config_loader.go.\n\nSuggested action: Confirm the v86 header rewrite is reverted or fixed, and check whether a validation check like T-4504's is needed.",
     "model": "claude-haiku-5-5",
-    "input_hash": "8adf8c766d4647ac"
+    "input_hash": "39f095d78a5b201d"
   },
   "T-4841": {
-    "summary": "Task T-4841 is low risk: it has spent 3.1 days in Security Review against a 2.8-day median, and 36 of 50 similar tasks moved to Support next. Expect it to route Support, then Customer, with an estimated close of 2026-10-11. The most relevant precedent is T-4432, a Halcyon Bank case resolved in 6.7 days by configuring s3_sink with signed credentials scoped to the client domain.\n\nSuggested action: Confirm Security approval and that s3_sink credentials are scoped to cdn.halcyonbank.com only.",
+    "summary": "Ownership verification for T-4841 has been pending for days, but Ops has held it only 1.1 days against a 1.1-day median, so risk is Low. Next step is most likely Customer (77%), probably awaiting a corrected TXT record. The closest past fix is T-4598: client corrected the TXT record, then the default WAF ruleset was applied and the domain activated.\n\nSuggested action: Ask Tidepool Apps to verify and correct the TXT record, then apply the default WAF ruleset.",
     "model": "claude-haiku-5-5",
-    "input_hash": "3f8aa68dfaed2c4f"
+    "input_hash": "951a751f57bc4c22"
   },
   "T-4842": {
-    "summary": "Risk is low: the task has sat with Ops for 0.5 days, well under the 0.9-day median, and the likely next step is QA (62%). The closest precedent, T-4556 (Northwind Media, 71% match), reverted config v73, fixed the redirect rule, and added a pre-deploy validation check in config_loader.go.\n\nSuggested action: Check whether a config rollback is safe for media.driftwoodoutdoor.com, then review the redirect rule in router.go.",
+    "summary": "Task T-4842 is at low risk: it is 3.4 days into Security Review against a 2.6-day median, and 34 of 35 similar SSL renewals went to Ops next. The closest precedent is T-4524 (Fernway Travel, 42% match), which fixed the same missing default WAF ruleset by attaching it and rolling out config.\n\nSuggested action: Confirm the default WAF ruleset is attached to static.pebblelabs.com, then hand off to Ops for renewal.",
     "model": "claude-haiku-5-5",
-    "input_hash": "33902cc81f878fb8"
+    "input_hash": "7563b182f83b7397"
   },
   "T-4843": {
-    "summary": "Task T-4843 is low risk: it has been with Ops for 0.7 days, below the 0.9-day median, and all 61 past traffic spike tasks went to Customer after Ops. The closest precedent is T-4470 (69% match), which fixed a similar overload by raising regional capacity and adjusting rate-limit thresholds.\n\nSuggested action: Confirm Amsterdam capacity and rate-limit thresholds for Kestrel Retail, then move to Customer verification.",
+    "summary": "Renewal is at low risk: Ops has held it 0.4 days against a 1.4-day median, and 27 of 35 similar renewals closed after Ops, with an estimated close of 2026-10-08. The most relevant past fix is T-4615, a near-identical ACME challenge failure for Orbital Streaming, resolved by updating acme_client.py to use the delegated challenge record.\n\nSuggested action: Check whether the delegated challenge record for static.orbitalstreaming.com was disturbed by the weekend maintenance, then apply the T-4615 fix.",
     "model": "claude-haiku-5-5",
-    "input_hash": "a90f32c23cb3d36e"
+    "input_hash": "2f80965a13c7a733"
   },
   "T-4844": {
-    "summary": "Risk is low: Ops has held the task 0.5 days against a 1.1-day median, and 25 of 32 similar SSL renewals closed after Ops. Closure is the likely route (78%), with an estimated close of 2026-10-08. T-4676 (Halcyon Bank) is the closest past fix: it restored the _acme-challenge record and re-ran renewal.\n\nSuggested action: Confirm the _acme-challenge TXT record for api.fernwaytravel.com is published, then re-run renewal and verify the new cert on EU edges.",
+    "summary": "Medium risk: the task has sat with the customer 1.3 days against a 0.8-day median, and 38 Toronto nodes still serve stale objects. Closure is the expected next step, but T-4450 (same client, San Jose purge lag) was fixed by adding propagation workers and lowering the batch interval, verified with test purges.\n\nSuggested action: Check whether the T-4450 fix (more propagation workers, shorter batch interval) applies to Toronto, then confirm with test purges on api.northwindmedia.com.",
     "model": "claude-haiku-5-5",
-    "input_hash": "1e1103e1661ae19f"
+    "input_hash": "08f50d9c1236692f"
   },
   "T-4845": {
-    "summary": "Task T-4845 is low risk: Support has it for 0.4 days, below the 0.7-day median, and 82% of similar log access requests go to the customer next and then close. The most relevant past fix is T-4609, which applied baseline WAF rules to a same-customer subdomain that failed onboarding, and T-4733 shows the same default-WAF-ruleset fix for a different customer.\n\nSuggested action: Attach the default WAF ruleset to cdn.orbitalstreaming.com as in T-4609, then confirm with the customer.",
+    "summary": "Risk is rated Low because the task is with the customer, but production HTTPS is already failing, so it's more urgent than the label suggests. Closure is the likely next step (80%) once Kestrel responds. The closest past fix is T-4784, which restored the _acme-challenge CNAME and re-ran renewal.\n\nSuggested action: Ask Kestrel Retail to confirm the _acme-challenge CNAME exists at their new DNS provider, then re-run renewal.",
     "model": "claude-haiku-5-5",
-    "input_hash": "532f594b27067bbd"
+    "input_hash": "6f9722002b87b08f"
   },
   "T-4846": {
-    "summary": "Task T-4846 is low risk: it has been with the customer 1.3 days against a 1.0-day median, and all 58 past config change tasks closed after this stage. Its closest precedent is T-4628 (84% match, same client), where rolling back and adding config validation resolved a similar gateway regression.\n\nSuggested action: Confirm the customer has verified EU redirects on static.juniperanalytics.com after the rollback.",
+    "summary": "Task T-4846 is currently in Security Review at low risk, with 2.6 days in stage matching the median, and 97% predicted to move to Ops next. The likely cause is the DNS provider change, and T-4683 fixed a similar failure by correcting the DNS TXT record at the client's new provider and re-validating the ACME challenge.\n\nSuggested action: Confirm the _acme-challenge record exists at Orbital's new DNS provider, then re-run the renewal.",
     "model": "claude-haiku-5-5",
-    "input_hash": "229ff9aaa1fb15ca"
+    "input_hash": "96bc47be99caf69e"
   },
   "T-4847": {
-    "summary": "Task T-4847 is low risk: it has spent only 0.2 days with the customer against a 0.9-day median, and 67 of 68 similar purge bugs closed after this step. The closest past fix is T-4672, which added retry with backoff for failed edge-sync propagation, and T-4648 also fixed failed purge targets with retries.\n\nSuggested action: Confirm the customer has tested the purge on the failing APAC nodes, then close if it succeeds.",
+    "summary": "T-4847 is low risk on timing: QA is at 0.8 days against a 0.7-day median, and 40 of 43 similar failover tasks went to Customer after QA, so it is likely to close around 2026-10-08. The closest precedent is T-4677 (same client, shared monitoring-alerts and origin-failover code), which lowered the failover threshold and added a failover-event alert.\n\nSuggested action: Confirm whether the T-4677 threshold and alert changes apply to this network change before handing off to Customer.",
     "model": "claude-haiku-5-5",
-    "input_hash": "b23682b7c9f40c45"
+    "input_hash": "952c26df7b9ee03e"
   },
   "T-4848": {
-    "summary": "T-4848 is low risk: it has spent 0.3 days in QA against a 0.8-day median, and 35 of 37 similar config changes went to the customer next. The 5% stale responses likely come from a TTL override, as in T-4788, the same client's case where a ttl_rules.yaml rule pinned /static to 7 days regardless of purge.\n\nSuggested action: Check ttl_rules.yaml for TTL overrides covering the affected paths before handoff to the customer.",
+    "summary": "Risk is Low: Security Review has run 1.2 days against a 3.1-day median, and 86% of similar tasks move to Ops next. The closest past fix is T-4488, which fixed a subdomain lookup in verify_ownership.py and then applied baseline WAF rules.\n\nSuggested action: Check whether verify_ownership.py has the same subdomain lookup issue for api.kestrelretail.com, as T-4488 did.",
     "model": "claude-haiku-5-5",
-    "input_hash": "69dac9f1553b4d20"
+    "input_hash": "0c759bbfd2a17593"
   },
   "T-4849": {
-    "summary": "Task T-4849 is low risk: it sits in QA for a median 0.7 days, and all 20 past DNS routing tasks closed after QA. It is likely to close, with an estimated close of 2026-10-07. The closest past fix is T-4562 (same client, EU latency), which updated the geo resolver mapping for affected EU ISP ranges.\n\nSuggested action: Confirm the EU geo resolver mapping change from T-4562 is applied, then verify EU latency recovers before closing.",
+    "summary": "Risk is low: T-4849 has been with Ops for 1.0 days against a 1.4-day median, and 55 of 58 similar traffic spike tasks went to Customer after Ops. The closest past fix is T-4463 (Brightline Sports, 62% match), which added temporary capacity in São Paulo and tuned thresholds.yaml to bring latency under 300ms.\n\nSuggested action: Confirm Santiago edge-sync backlog is draining, then apply T-4463's capacity and thresholds.yaml approach.",
     "model": "claude-haiku-5-5",
-    "input_hash": "7d80fb48b1a1607f"
+    "input_hash": "8457b4f03ac21731"
   },
   "T-4850": {
-    "summary": "Task T-4850 is currently low risk: it sits with Network Eng at a median-consistent pace (1.7 days against a 1.9-day median), and it is likely to move to QA next (53%). The closest past fix is T-4709, the same client's static.tidepoolapps.com case, where correcting the IP range table in geo_resolver.go and refreshing DNS restored latency.\n\nSuggested action: Check the IP range table in geo_resolver.go first, then confirm APAC resolution before the launch.",
+    "summary": "Low risk: the task has sat with the customer for 0.8 days, in line with the 0.9-day median, and 58 of 60 similar config changes closed from this stage. Expected close is 2026-10-07 (97% Closed). The most relevant prior fix is T-4791, which rolled back to the previous config and added a rule blocking malformed header rewrites.\n\nSuggested action: Confirm the customer has validated the header rewrite in v86; if the gateway still rejects it, roll back as T-4791 did.",
     "model": "claude-haiku-5-5",
-    "input_hash": "e076749315b2186b"
+    "input_hash": "53265e1e344eae5a"
   },
   "T-4851": {
-    "summary": "T-4851 is low risk: Security Review is at 2.6 days, just under the 2.7-day median. It likely moves to Ops next, as all 32 past SSL renewal tasks did, with close estimated 2026-10-09. The most relevant fix is T-4494, which re-validated the ACME challenge after correcting the DNS TXT record at the client's new DNS provider.\n\nSuggested action: Verify the DNS TXT challenge record at Orbital's new provider, as in T-4494, before Ops takes the renewal.",
+    "summary": "Task T-4851 is currently low risk: it sits with Dev for 0.6 days against a 2.3-day median, and 24 of 25 similar origin failover tasks moved to QA next. The most relevant past fix is T-4416, which lowered the failover threshold and added a failover alert in monitoring-alerts; T-4734 and T-4668 fixed origin_probe timeouts and failover thresholds, with end-to-end failover testing.\n\nSuggested action: Confirm the geo resolver fix covers the Sydney ISP range and get QA scheduled before the launch window.",
     "model": "claude-haiku-5-5",
-    "input_hash": "4b807c97fa3e8352"
+    "input_hash": "8c99ea37e7c902c8"
   },
   "T-4852": {
-    "summary": "Task T-4852 is currently in Security Review at 1.2 days, below the 2.6-day median, so risk is Low. Ops is the likely next stop (84%), since 61 of 73 similar tasks moved there after review, and the EU launch next week makes the timeline tight. The closest precedent is T-4787 (Kestrel Retail, 78% match), which was fixed by manually verifying domain ownership, attaching the default WAF ruleset, and rolling out config to EU edges.\n\nSuggested action: Check the TXT record and apply the default WAF ruleset as in T-4787, then roll out to EU edges.",
+    "summary": "Task T-4852 is low risk: it sits in Security Review for 2.4 days against a 2.6-day median, and 34 of 35 similar renewals went to Ops next, so closure around 2026-10-10 looks on track. The closest past fix is T-4651, same client and module, which restored the _acme-challenge CNAME and re-ran renewal.\n\nSuggested action: Check whether the _acme-challenge CNAME is missing as in T-4651, and restore it with Juniper Analytics.",
     "model": "claude-haiku-5-5",
-    "input_hash": "00b26c12b5ec8698"
+    "input_hash": "6eb46fe4d9d548ee"
   },
   "T-4853": {
-    "summary": "Task T-4853 is at low risk: it sits in Security Review at 0.6x the median time, and 61 of 73 similar tasks moved to Ops next. It will likely go to Ops for WAF attachment and TXT verification, with Mosaic's LATAM launch next week as the deadline pressure. The most relevant past fix is T-4698, which fixed subdomain lookup in verify_ownership.py and applied baseline WAF rules for a media subdomain.\n\nSuggested action: Confirm the TXT record is published and check the verify_ownership.py subdomain lookup before handing off to Ops.",
+    "summary": "Task T-4853 is low risk: it's with Network Eng for 0.4 days against a 1.6-day median, and it is most likely heading to the customer (59%). The closest past fix is T-4463 (same client, edge-sync), which added temporary São Paulo capacity and tuned thresholds.yaml, but this task's Mexico City backlog on 26 nodes may need a different fix.\n\nSuggested action: Check whether the 26-node Mexico City propagation backlog has cleared before the customer hears back.",
     "model": "claude-haiku-5-5",
-    "input_hash": "def862822277ce55"
+    "input_hash": "8e516e6692a5f6a7"
   },
   "T-4854": {
-    "summary": "Risk is low: T-4854 has spent 0.6 days in Dev against a 2.0-day median, and 24 of 25 past origin failover tasks went to QA next. The most relevant fix is T-4795, which corrected origin_probe timeouts and the failover threshold and was verified end to end.\n\nSuggested action: Check origin_probe timeout and failover threshold against T-4795's fix before QA handoff.",
+    "summary": "Task T-4854 is at medium risk: it has sat in Ops for 2.1 days against a 1.4-day median, and the likely next step is QA (64%). The closest past fix is T-4791, which rolled back the prior config version and added a validation rule to block malformed header rewrites.\n\nSuggested action: Consider rolling back to v39 and adding header-rewrite validation, as T-4791 did, to speed the Ops hand-off.",
     "model": "claude-haiku-5-5",
-    "input_hash": "5908f5d97a73ad58"
+    "input_hash": "28526ce8a1be1a68"
   },
   "T-4855": {
-    "summary": "Task T-4855 is low risk: it has spent 2.4 days in Security Review against a 2.7-day median, and all 32 past SSL renewals moved to Ops next. The most relevant fix is T-4675, which re-validated the ACME challenge after correcting the DNS TXT record at the client's new DNS provider. T-4458 is similar but has no recorded fix.\n\nSuggested action: Check the TXT record at the DNS provider and re-run ACME validation, following T-4675, before the EU launch next week.",
+    "summary": "Task T-4855 is low risk: it sits with the customer for 0.1 days against a 0.9-day median, and 42 of 43 similar origin failover tasks closed after this stage. The most relevant past fix is T-4612, which tuned failover_policy.go to trigger after 3 failed probes instead of 10.\n\nSuggested action: Confirm the failover policy switches www.copperleafhealth.com to backup after health check failures, then close.",
     "model": "claude-haiku-5-5",
-    "input_hash": "bfdff0ab22aa0630"
+    "input_hash": "3b5da238118ee1ef"
   },
   "T-4856": {
-    "summary": "Task T-4856 is currently low risk: it has sat in QA for 0.4 days against a 0.8-day median, and it is expected to go to Customer next (95%) and then close, with estimated close 2026-10-08. The most relevant past fix is T-4662, which also hit Tidepool Apps: roll back to the previous config version and add a validation rule to block malformed header rewrites.\n\nSuggested action: Confirm the rollback to the prior config is verified on static.tidepoolapps.com in APAC before Customer sign-off.",
+    "summary": "T-4856 is rated Low risk, but it is a production 502 outage on Mosaic Studio LATAM redirects that began right after a config deploy, so the rating understates it. It is with the customer and predicted to close by 2026-10-07, which depends on the redirects actually recovering. The closest precedent is T-4549 (Orbital Streaming), which reverted the config, fixed the redirect rule, and added a pre-deploy check in config_loader.go.\n\nSuggested action: Confirm the LATAM redirect 502s are resolved; if not, follow T-4549 by reverting the config and fixing the redirect rule.",
     "model": "claude-haiku-5-5",
-    "input_hash": "7ee7f40f45ba9d49"
+    "input_hash": "38827dbf963d3be2"
   },
   "T-4857": {
-    "summary": "Task T-4857 is with Network Eng for 1.4 days, under the 1.9-day median, so risk is Low even though a 51-minute purge delay for an enterprise customer is serious. Predicted next step is Customer (68%), which suggests the fix may be verified externally rather than in-house. The closest past fix is T-4480, which lowered the edge-sync propagation batch interval from 60s to 15s, bringing purges under 2 minutes.\n\nSuggested action: Check whether the San Jose edge-sync batch interval matches the 60s-to-15s change made in T-4480.",
+    "summary": "Task T-4857 is not at risk: it has been with Network Eng for 1.6 days, under the 1.7-day median, and is likely to move to Ops next (61%). The most relevant past fix is T-4469, which raised EU regional capacity and adjusted rate-limit thresholds, returning errors to baseline.\n\nSuggested action: Check whether EU capacity and rate-limit thresholds were raised as in T-4469 before handing to Ops.",
     "model": "claude-haiku-5-5",
-    "input_hash": "24aae9472192fe45"
+    "input_hash": "dbd0cf2081acec13"
   },
   "T-4858": {
-    "summary": "Task T-4858 is low risk: it sits with Ops for 0.5 days against a 0.9-day median, and 61 of 61 past traffic spike tasks went to Customer next. The closest precedent is T-4430, the same client with a 32% error rate, fixed by raising NA regional capacity and adjusting rate-limit thresholds for the domain.\n\nSuggested action: Check whether NA regional capacity was raised and rate-limit thresholds were adjusted for www.orbitalstreaming.com, as in T-4430.",
+    "summary": "Task T-4858 is low risk: it is with the customer for a median-length wait (0.5 days against a 0.9-day median), and 42 of 43 similar origin failover tasks closed after this stage. The most relevant past fix is T-4656, which restored geo routing after health_check flapping; no past case confirms that same cause here.\n\nSuggested action: Check whether the network change caused health_check flapping, as in T-4656, before waiting on customer reply.",
     "model": "claude-haiku-5-5",
-    "input_hash": "8d6ac77e8fd293b9"
+    "input_hash": "f0fa42e04af638f7"
   },
   "T-4859": {
-    "summary": "Risk is low: the task is with Ops for 0.3 days, well under the 1.1-day median, and 25 of 32 similar renewals closed after Ops. The most relevant past fix is T-4676 (91% match, same client), which restored the _acme-challenge record and re-ran renewal; T-4536 is also relevant for a DNS TXT fix.\n\nSuggested action: Check whether the _acme-challenge TXT record was dropped in the weekend maintenance and restore it, then re-run renewal per T-4676.",
+    "summary": "Task T-4859 is at risk despite the Low risk label: the cert expires in 12 days, validation keeps failing after Lumen's DNS move, and the task has sat in Security Review 1.9 days. The closest past case, T-4793 (same client, same failure), was fixed by restoring the _acme-challenge CNAME and re-running renewal.\n\nSuggested action: Check whether the _acme-challenge CNAME exists at Lumen's new DNS provider, and restore it as in T-4793.",
     "model": "claude-haiku-5-5",
-    "input_hash": "46bfe3bd9613b9ec"
+    "input_hash": "f44fb8e416574017"
   },
   "T-4860": {
-    "summary": "Risk is low: T-4860 has been with Network Eng for 1.4 days, below the 1.9-day median, and 19 of 36 similar DNS routing tasks moved to QA next. The closest precedent is T-4649, a 67% match for this Orbital Streaming NA latency case, fixed by correcting the IP range table in geo_resolver.go and refreshing DNS.\n\nSuggested action: Check whether the geo_resolver.go IP range table has the same stale entries as T-4649.",
+    "summary": "Task T-4860 is low risk: it sits in QA for 0.6 days, below the 0.7-day median, and 40 of 43 past origin failover tasks went to Customer after QA, so closure is expected around 2026-10-08. The most relevant past fix is T-4612, which tuned failover_policy.go to trigger after 3 failed probes instead of 10.\n\nSuggested action: Confirm the failover threshold in failover_policy.go against T-4612's 3-probe fix before customer sign-off.",
     "model": "claude-haiku-5-5",
-    "input_hash": "413e93e4a7fb75b4"
+    "input_hash": "c886370f5f957f54"
   },
   "T-4861": {
-    "summary": "Risk is low: Security Review is at 0.9 days against a 2.6-day median, and the task is likely to move to Ops (84%). The closest precedent, T-4586 (82% match, resolved in 7.4 days), fixed a blocked domain by manually verifying ownership and attaching the default WAF ruleset. Estimated close is 2026-10-11.\n\nSuggested action: Manually verify ownership of www.mosaicstudio.com and attach the default WAF ruleset, as in T-4586.",
+    "summary": "Task T-4861 is at low risk: it has been with Network Eng for 1.9 days, close to the 1.7-day median. It will most likely move to Ops (61%), where 41 of 67 past traffic spike tasks went. The closest useful precedent is T-4520, which shifted traffic to neighboring POPs with a traffic-shaping policy and raised rate-limiter thresholds during the campaign.\n\nSuggested action: Ops should apply the T-4520 approach (neighboring-POP traffic shift, traffic-shaping policy, rate-limiter threshold increase) while the campaign runs.",
     "model": "claude-haiku-5-5",
-    "input_hash": "913499062a37d2fc"
+    "input_hash": "cb388f134474cef1"
   },
   "T-4862": {
-    "summary": "Low risk: the task has been with Ops only 0.1 days against a 1.0-day median, and it will likely go to Customer next (74%), probably for verification input. The closest past case, T-4552 (75% match), was stuck at verification and was fixed by correcting the subdomain lookup in verify_ownership.py and applying baseline WAF rules. Estimated close is 2026-10-09.\n\nSuggested action: Check the subdomain lookup in verify_ownership.py against the T-4552 fix, and be ready to request verification details from Northwind.",
+    "summary": "Task T-4862 is currently low risk: it has spent 0.6 days in QA, below the 0.7-day median, and is predicted to move to Customer and then close by 2026-10-08. The most relevant past fix is T-4446, which rolled back the prior config version and added a validation rule to block malformed header rewrites. T-4595 and T-4802 have no recorded fix.\n\nSuggested action: Check whether v65 can be rolled back to the prior config version, following T-4446, and confirm the header rewrite validation.",
     "model": "claude-haiku-5-5",
-    "input_hash": "3193c3927c50de3f"
+    "input_hash": "9364fb41bf37eb24"
   },
   "T-4863": {
-    "summary": "Risk is marked Low because QA is fast, but 42% of Orbital Streaming requests still serve stale JS/CSS despite the purge, so customer impact is high. Likely next step is Customer (95%), with estimated close 2026-10-08. Closest past fix is T-4527 (72% match, same customer): config reverted, redirect rule fixed, and a pre-deploy check added in config_loader.go.\n\nSuggested action: Check whether ttl_rules.yaml overrides the origin no-cache header, and consider a config revert as in T-4527.",
+    "summary": "Task T-4863 is low risk: it sits with the customer for only 0.1 days against a 0.8-day median, and the model expects it to close around 2026-10-07. The closest precedent is T-4769, the same client with a near-identical APAC geo mapping error, fixed by updating the geo resolver mapping so traffic lands on Singapore.\n\nSuggested action: Check whether the geo_resolver.go mapping fix from T-4769 applies to this ISP range.",
     "model": "claude-haiku-5-5",
-    "input_hash": "b403ded915486b2b"
+    "input_hash": "1c4ed58692b4799e"
   },
   "T-4864": {
-    "summary": "Task T-4864 is low risk: it has sat with the customer for only 0.2 days against a 0.9-day median, and 67 of 68 similar purge bugs closed after that step. It is likely to close around 2026-10-08. The closest prior fix is T-4592, which raised Ashburn propagation workers and lowered the batch interval, then verified with test purges.\n\nSuggested action: Confirm the 16-node backlog has drained and run test purges on static.northwindmedia.com from Ashburn.",
+    "summary": "Task T-4864 is currently low risk: it is in QA for 0.6 days, against a 0.7-day median, and is predicted to move to Customer and then close by 2026-10-08. The most relevant past fix is T-4669, a same-client gateway header problem that was resolved by rolling back, correcting the middleware rule, and redeploying with config validation enabled.\n\nSuggested action: Confirm the header rule passes config validation before QA signs off, referencing T-4669's fix.",
     "model": "claude-haiku-5-5",
-    "input_hash": "4477be6582edcf20"
+    "input_hash": "041c30da7521411d"
   },
   "T-4865": {
-    "summary": "Task T-4865 is low risk: it has spent 1.6 days in Security Review against a 2.8-day median, and it is likely to move to Support next (72%). The closest past fix is T-4682 (Mosaic Studio, 61% match, shared edge-auth and log-export modules), which enabled log export with an edge-auth scoped token after review.\n\nSuggested action: Confirm Security Review approval timing and prepare scoped edge-auth credentials so Support can hand off quickly before the 2026-10-10 estimate.",
+    "summary": "Risk is low: the task has spent 0.5 days with the customer, below the 0.8-day median, and all 63 past cache purge bug tasks closed from this stage. The closest prior fix is T-4700 (58% match), which added retry-with-backoff in propagation.go for 503 failures, but this case shows Ashburn timeouts in node_registry.go.\n\nSuggested action: Confirm the Ashburn node_registry timeouts are resolved, and check whether T-4700's retry-with-backoff approach applies before closing.",
     "model": "claude-haiku-5-5",
-    "input_hash": "c0877e305e7e13aa"
+    "input_hash": "8b782ed3dbe9b00b"
   },
   "T-4866": {
-    "summary": "Risk shows Low only because QA is moving quickly (0.6 days vs. 0.8 median). The description reports live redirect failures on www.tidepoolapps.com in APAC, which the label doesn't capture. Customer is the likely next stop (95%), with estimated close 2026-10-08. Closest past fix: T-4556 reverted config v73, corrected the redirect rule, and added a pre-deploy check in config_loader.go.\n\nSuggested action: Confirm whether the APAC redirect failures are still active, and if so, consider reverting the config as T-4556 did.",
+    "summary": "T-4866 is low risk: it has spent 1.1 days with Network Eng against a 1.6-day median, and the expected route is Customer, then Closed, by 2026-10-08. The closest past case, T-4700 (68% match, same edge-sync module), fixed similar 503 partial failures by adding retry with backoff in propagation.go, which took partial failures to zero in testing.\n\nSuggested action: Check whether the T-4700 retry-with-backoff change in propagation.go applies to the Toronto node_registry timeouts before handing off to Customer.",
     "model": "claude-haiku-5-5",
-    "input_hash": "19b50cde8baecc74"
+    "input_hash": "b76374ac334824f6"
   },
   "T-4867": {
-    "summary": "Task T-4867 is low risk: it sits with the customer for 0.5 days against a 0.9-day median, and 67 of 68 past cache purge bugs closed after this stage. It is likely to close by 2026-10-07. The closest useful precedent is T-4712, which fixed a node_registry timeout and added purge retries.\n\nSuggested action: Confirm the Ashburn node_registry timeouts are fixed as in T-4712, then close if the customer verifies full purge success.",
+    "summary": "Task T-4867 is low risk: it sits in Security Review for 0.3 days against a 3.1-day median, and 60 of 70 similar tasks moved to Ops next (86% predicted). The closest past fix is T-4768, where the client corrected the TXT record, verification completed, and the default WAF ruleset was applied before activation.\n\nSuggested action: Ask Orbital Streaming to confirm the TXT record is correct, then let the flow proceed to Ops.",
     "model": "claude-haiku-5-5",
-    "input_hash": "da69fe953a504a9b"
+    "input_hash": "8d4a4f668319a31d"
   },
   "T-4868": {
-    "summary": "Risk is Low: the task has been with Ops only 0.1 days against a 1.1-day median, and 25 of 32 similar renewals closed after Ops. The most relevant precedent is T-4647, where restoring the _acme-challenge record and re-running renewal fixed a similar missing-challenge failure.\n\nSuggested action: Verify the _acme-challenge TXT record for media.driftwoodoutdoor.com, then re-run cert_renewal.py and confirm Mexico City edges.",
+    "summary": "Risk is rated Low with only 0.1 days in Ops, but APAC capacity is saturated and errors are live, so this needs watching. Likely next step is Customer (95%), and the closest past fix is T-4445 (88% match), which raised APAC regional capacity and adjusted rate-limit thresholds, returning errors to baseline.\n\nSuggested action: Check whether APAC regional capacity has been raised and rate-limit thresholds tuned, following T-4445.",
     "model": "claude-haiku-5-5",
-    "input_hash": "20fa810ec9cc44c1"
+    "input_hash": "e887b58a9f39401a"
   },
   "T-4869": {
-    "summary": "Risk is low: the task has spent 1.4 days with Network Eng, under its 1.8-day median, but 13% of NA nodes still serve stale content against a 5-minute release SLA for Copperleaf Health. Most likely next step is Ops (67%). The closest past fix is T-4514, which added retry with backoff for 502s in edge-sync propagation; T-4476 (80% match) has no solution note.\n\nSuggested action: Check edge-sync propagation logs for 502s on the stalled NA nodes, and compare against T-4514's retry fix.",
+    "summary": "T-4869 is low risk: it has been with Ops for 0.6 days against a 1.4-day median, though 36% of Fernway requests return 408 after v68. It most likely moves to QA (64%), then Customer, with close estimated 2026-10-09. The closest past fix is T-4688 (70% match), which reverted config v55 and added a pre-deploy check in config_loader.go.\n\nSuggested action: Check whether v68 can be reverted to the prior config version, as T-4688 did, while QA validates.",
     "model": "claude-haiku-5-5",
-    "input_hash": "faa708948ac43b09"
+    "input_hash": "de45e5aa557cdf0b"
   },
   "T-4870": {
-    "summary": "Task T-4870 is at low risk: it sits in Security Review, which is clearing faster than usual (0.3 days against a 2.6-day median). It will likely move to Ops (84%), then Customer. The closest past case, T-4793 (same client, 87% match), fixed a subdomain lookup in verify_ownership.py and activated api.orbitalstreaming.com.\n\nSuggested action: Check the _acme-challenge CNAME at Orbital's new DNS provider first, then review T-4793's verify_ownership.py fix.",
+    "summary": "Task T-4870 is currently low risk: it has sat with Network Eng for 1.3 days against a 1.7-day median, and 41 of 67 similar spike tasks moved to Ops next. The most relevant past fix is T-4652, which raised regional capacity and adjusted rate-limit thresholds, returning errors to baseline.\n\nSuggested action: Check whether APAC capacity can be raised and rate-limiter thresholds tuned per T-4652, then prepare Ops handoff.",
     "model": "claude-haiku-5-5",
-    "input_hash": "a99f5ffff5e75a7a"
+    "input_hash": "5e05c169a53e7a29"
   },
   "T-4871": {
-    "summary": "Task T-4871 is low risk: it has spent 0.6 days in Ops against a 0.9-day median, and it is likely to move to QA (62%) before Customer (36%). The closest past fix is T-4678, which reverted config v84, fixed the redirect rule, and added a pre-deploy validation check in config_loader.go.\n\nSuggested action: Check whether config v84 revert or a config_loader.go validation check applies here, per T-4678.",
+    "summary": "Task T-4871 is low risk: it has spent only 0.2 days with Network Eng against a 1.4-day median, and it is likely to move to QA next (74%). The closest solved case, T-4452, fixed a similar geo misresolution by updating the geo resolver mapping for affected ISP ranges.\n\nSuggested action: Check whether the APAC resolver mapping for Mumbai ISP ranges matches the T-4452 fix before QA.",
     "model": "claude-haiku-5-5",
-    "input_hash": "ed3c55fe4c58e13d"
+    "input_hash": "9637b3745b4b0100"
   },
   "T-4872": {
-    "summary": "T-4872 is rated Low risk: the customer has held it 0.6 days against a 1.0-day median, and all 58 past config change tasks closed, so it is likely to close by 2026-10-07. The closest precedent, T-4699 (74% match), reverted config v42, fixed a redirect rule, and added a pre-deploy check in config_loader.go. With 34% of requests returning 504, the severity is high even though the risk score is low.\n\nSuggested action: Confirm whether config v85 has been reverted, as in T-4699, and check that the 504 rate is falling.",
+    "summary": "T-4872 is urgent: config v44 causes 22% of media.orbitalstreaming.com API requests to return 502, yet it is rated Low risk because QA is moving faster than median. It will likely go to Customer next, with estimated close on 2026-10-08. The closest precedent is T-4504, same client and domain, which reverted v97 and added a pre-deploy check in config_loader.go.\n\nSuggested action: Override the Low risk rating and consider reverting to the previous config version while QA continues.",
     "model": "claude-haiku-5-5",
-    "input_hash": "3bded4b86dcf43ba"
+    "input_hash": "fbddea2eaa27d001"
   },
   "T-4873": {
-    "summary": "T-4873 is low risk: Support's 0.9-day hold matches the median, and the wrong-POP geo mapping is a known pattern. Network Eng is the likely next owner (92%), then QA, with estimated close 2026-10-10. The closest past fix is T-4438, which updated the geo resolver mapping for affected APAC ISP ranges.\n\nSuggested action: Route to Network Eng to review the ISP range mapping in dns-routing/geo_resolver.go, using T-4438 as the reference fix.",
+    "summary": "Risk is Low: T-4873 has spent 0.5 days in Network Eng, well under the 1.6-day median, and the likely next step is Customer (59%). The most relevant past fix is T-4594, which removed a conflicting TTL override in config-service and re-purged, the same suspected cause here. T-4659 and T-4804 point to the same ttl_rules.yaml pinning.\n\nSuggested action: Check ttl_rules.yaml for a /static override that ignores purge, as in T-4594.",
     "model": "claude-haiku-5-5",
-    "input_hash": "adc03a64c6f40d4f"
+    "input_hash": "48a615f44cb92a49"
   },
   "T-4874": {
-    "summary": "Task T-4874 is low risk: it has spent only 0.2 days with Network Eng against a 1.9-day median, and it is likely to move to QA next (53%). The closest past fix is T-4634, which corrected the IP range table in geo_resolver.go and refreshed DNS.\n\nSuggested action: Check the IP range table in geo_resolver.go for the APAC ranges serving Halcyon Bank, as T-4634 did.",
+    "summary": "Task T-4874 is low risk: it has sat with Ops for about 1 day, versus a median of 1.4, and 64% of similar config changes go next to QA. The closest past fix is T-4433 (same client, 90% match), which reverted config v67, fixed the redirect rule, and added a pre-deploy validation check in config_loader.go.\n\nSuggested action: Check whether T-4874 needs the same revert and config_loader.go validation before QA picks it up.",
     "model": "claude-haiku-5-5",
-    "input_hash": "018fd30ef1941aa6"
+    "input_hash": "b32cdb1593c4da93"
   },
   "T-4875": {
-    "summary": "T-4875 is urgent: a routing rule change broke redirects on cdn.orbitalstreaming.com in NA right after deploy, yet the dashboard rates its risk Low while it sits in QA. It will most likely go to the Customer (95%) and is estimated to close 2026-10-08. The closest past case, T-4544 (same client, 82% match), was fixed by rolling back to the previous config version and adding a validation rule.\n\nSuggested action: Escalate now and consider the T-4544 rollback to the prior config version, since the Low risk rating understates an active enterprise outage.",
+    "summary": "Ops has held this 1.1 days, faster than the 1.4-day median, so it is rated Low risk, though broken redirects on a live LATAM API are customer-impacting. QA is the likeliest next stop (64%), then Customer. The closest past fix is T-4561 (Northwind Media, 69% match), which rolled back to the previous config version and added a validation rule blocking malformed header rewrites.\n\nSuggested action: Roll back to the previous Driftwood config version now, following the T-4561 approach, and confirm redirects with QA.",
     "model": "claude-haiku-5-5",
-    "input_hash": "63a2db033a7db565"
+    "input_hash": "7370d5bce8687318"
   },
   "T-4876": {
-    "summary": "T-4876 has sat with Ops for 1.0 days, in line with the 0.9-day median, but it is rated Low risk while production traffic is failing. QA is the most likely next stop (62%), then Customer. The closest precedent is T-4623, which rolled back the previous config version and added a validation rule to block malformed header rewrites.\n\nSuggested action: Reassess the Low risk rating given live impact, and consider T-4623's rollback plus header validation rule.",
+    "summary": "Risk is low: the task has spent 1.0 day in Network Eng against a 1.8-day median, and 22 of 42 similar origin failover tasks went to Dev next. The closest precedent is T-4713 (Lumen Games, 67% match), which fixed the origin_probe timeout and failover threshold and was tested end to end, resolving in 4.9 days.\n\nSuggested action: Check whether the origin_probe timeout and failover threshold in failover_policy.go need the same fix before routing to Dev.",
     "model": "claude-haiku-5-5",
-    "input_hash": "a9b72a98c24db022"
+    "input_hash": "d510c52f3d7d81c7"
   },
   "T-4877": {
-    "summary": "Risk is low: this task has spent 0.8 days in Security Review against a 2.7-day median, and 32 of 32 past SSL renewals moved to Ops next, with an estimated close of 2026-10-10. The closest past fix is T-4647, also for Quillstone, which restored the _acme-challenge record, re-ran renewal, and confirmed the new cert on Paris edges.\n\nSuggested action: Restore the missing ACME challenge DNS record, re-run renewal, and verify the cert on London edges.",
+    "summary": "Risk is low: time at Dev is 0.4 days against a 2.1-day median, though verification has been pending for days. QA is the most likely next stop (41%), then Ops (31%), with an estimated close of 2026-10-10. The closest past case, T-4680, fixed the subdomain lookup in verify_ownership.py and applied baseline WAF rules before activation.\n\nSuggested action: Check the subdomain lookup in verify_ownership.py and apply baseline WAF rules, as T-4680 did.",
     "model": "claude-haiku-5-5",
-    "input_hash": "aca1f2fb8912b23f"
+    "input_hash": "4d812055ea7c0548"
   },
   "T-4878": {
-    "summary": "Task T-4878 is low risk: it has spent 1.0 day in Network Eng against a median of 1.7 days, and 68% of similar origin failover tasks move next to Dev. The closest precedent is T-4566, the same client's geo DNS misrouting fix, which updated the resolver mapping for affected LATAM ISP ranges and landed traffic on Mexico City.\n\nSuggested action: Check whether the geo resolver mapping for the LATAM ISP ranges needs the same update as T-4566.",
+    "summary": "T-4878 is an urgent regression: 38% of requests return 408 after config v45, and a launch depends on the fix, so the Low risk label understates exposure. Ops is moving faster than usual (0.9 days vs. 1.4 median), and QA is the likely next stop (64%). The closest past fix is T-4646, same client, which rolled back, corrected the gateway middleware rule, and redeployed with config validation.\n\nSuggested action: Confirm the v45 rollback is in progress with Ops, and check whether the gateway middleware issue from T-4646 applies here.",
     "model": "claude-haiku-5-5",
-    "input_hash": "122e0b37c41c54cf"
+    "input_hash": "600d2735e9183a09"
   },
   "T-4879": {
-    "summary": "T-4879 is low risk: it has spent 0.4 days in QA against a 0.8-day median. It will most likely go to Customer (95%) and close by 2026-10-08. The most relevant past fix is T-4777, which rolled back the previous config version and added a validation rule to block malformed header rewrites.\nSuggested action: Confirm the v72 header rewrite is rolled back or validated, following T-4777, before handing off to Customer.",
+    "summary": "Task T-4879 is low risk: it has been with Network Eng for 0.7 days against a 1.4-day median, and 74% of similar tasks move to QA next. The closest past fix is T-4756, which updated the geo resolver mapping for affected ISP ranges so traffic landed on the correct POP.\n\nSuggested action: Confirm the NA ISP range is remapped to Dallas in the geo resolver, and check whether the Orbital launch date needs flagging.",
     "model": "claude-haiku-5-5",
-    "input_hash": "d3278d26a16aaef8"
+    "input_hash": "11164a93125caf38"
   },
   "T-4880": {
-    "summary": "T-4880 is rated Low risk because it has spent only 0.4 days at Dev against a 2.1-day median, though verification has been pending for days. QA is the most likely next stop (45%), with an expected route of QA, Customer, Closed by 2026-10-10. The closest precedent is T-4700 (83% match, same client), resolved by manually verifying ownership and attaching the default WAF ruleset.\n\nSuggested action: Check whether ownership verification can be completed manually and the default WAF ruleset attached, following T-4700.",
+    "summary": "Risk is low: Security Review is at 0.2 days against a 3.1-day median, and 86% of similar tasks move to Ops next. The closest precedent is T-4743, a sibling Driftwood domain with the same blocker, fixed by manual ownership verification, attaching the default WAF ruleset, and rolling out to LATAM edges.\n\nSuggested action: Manually verify ownership and attach the default WAF ruleset as in T-4743, then roll out to LATAM edges.",
     "model": "claude-haiku-5-5",
-    "input_hash": "b7d07db686189969"
+    "input_hash": "2e31a61b6632ff0b"
   },
   "T-4881": {
-    "summary": "T-4881 is rated Low risk, which understates an 8% 502 rate on an urgent Tidepool Apps request. QA is the likely next stage (62%), then Customer, with estimated close 2026-10-09. The closest past fix is T-4417 (83% match), which reverted the config, fixed the redirect rule, and added a pre-deploy validation check in config_loader.go.\n\nSuggested action: Raise the risk rating and consider reverting v92 now, following T-4417.",
+    "summary": "Risk is understated: the \"Low\" rating reflects queue time, but Northwind has stale assets on Toronto edges for up to 46 minutes, 10 nodes are backlogged, and a launch is pending. Network Eng is the likely next owner (98%). The closest past fix is T-4649, same client and modules, where tuning the batch_scheduler.go interval for the NA node group cleared the backlog.\n\nSuggested action: Escalate to Network Eng now and check the batch_scheduler.go interval for the Toronto/NA node group, as in T-4649.",
     "model": "claude-haiku-5-5",
-    "input_hash": "690379195101a3f7"
+    "input_hash": "8dde2263b45fa32b"
   },
   "T-4882": {
-    "summary": "Task T-4882 is currently low risk at 0.9 days in Support, but it is likely to move to Security Review next (97%) before Ops and Customer. The closest precedent is T-4443, a similar Halcyon Bank block for media.halcyonbank.com, where the fix was a subdomain lookup fix in verify_ownership.py plus applying baseline WAF rules.\n\nSuggested action: Check the subdomain lookup in verify_ownership.py and apply baseline WAF rules, as in T-4443.",
+    "summary": "Task T-4882 is at low risk in Support (0.9 days, under the 1.3x median), but the 88-minute Tokyo lag on 37 nodes is a real SLA concern for an Enterprise APAC client. It will most likely move to Network Eng, where the batch propagation path is the suspect. The closest past fix is T-4629, which cut the edge-sync batch interval from 60s to 15s and brought purges under 2 minutes.\n\nSuggested action: Ask Network Eng to check the edge-sync batch interval for APAC/Tokyo against the T-4629 fix.",
     "model": "claude-haiku-5-5",
-    "input_hash": "d1e747f61763cb1a"
+    "input_hash": "3c56ca36c53d7489"
   },
   "T-4883": {
-    "summary": "Risk is understated: the Low label reflects Support dwell time, but the certificate expires in 7 days and production traffic is affected. Security Review is the likely next stop (97%). The closest precedent is T-4448, where re-validating the ACME challenge after fixing the DNS TXT record at the client's new DNS provider renewed the certificate.\nSuggested action: Verify the DNS TXT record for api.copperleafhealth.com with the client now, then re-run ACME validation before the expiry window closes.",
+    "summary": "T-4883 is low risk: it has been in QA for 0.1 days against a 0.7-day median and is expected to move to Customer, then close by 2026-10-08. The closest precedent is T-4468 (Saffron Foods, 64% match), which rolled back, corrected the gateway middleware rule, and redeployed with config validation enabled.\nSuggested action: Confirm QA verifies the v82 rollback and the corrected header rewrite, then hand off to Customer.",
     "model": "claude-haiku-5-5",
-    "input_hash": "78ba88a6819423b8"
+    "input_hash": "84a722c1105a156e"
   },
   "T-4884": {
-    "summary": "Task T-4884 is at low risk on paper, but 34% of requests returning 408 for a health customer who asked for an urgent fix is a serious incident. It is currently in QA for 0.6 days, and 35 of 37 similar config tasks went to Customer after QA, so expect a handoff to Customer soon. The most relevant past fix is T-4622, which rolled back, corrected the gateway middleware rule, and redeployed with config validation enabled.\n\nSuggested action: Roll back v94 now, then apply T-4622's validation-enabled redeploy path before Customer sign-off.",
+    "summary": "Queue risk is Low (0.6 days in Ops versus a 1.4-day median), but 41% of requests returning 503 is high impact and the client has requested urgency. QA is the likeliest next stage (64%), then Customer. The closest precedent is T-4473 (65% match), which reverted the prior config, fixed the redirect rule, and added a pre-deploy validation check in config_loader.go.\n\nSuggested action: Revert v91, fix the redirect rule, and add the config_loader.go pre-deploy validation, following T-4473.",
     "model": "claude-haiku-5-5",
-    "input_hash": "f1433999f12412f4"
+    "input_hash": "0631996e6a53d8fa"
   },
   "T-4885": {
-    "summary": "T-4885 is rated Low risk with Ops at 0.8 days against a 0.9-day median, but 21% of Halcyon Bank requests serving stale hashes is customer-impacting. QA is the likely next step (62%), then Customer, with estimated close 2026-10-09. The closest past fix is T-4416, which corrected path-matching order in ttl_rules.yaml so origin headers take precedence.\n\nSuggested action: Check ttl_rules.yaml path-matching order so origin no-cache headers override edge TTL, as in T-4416.",
+    "summary": "Task T-4885 is at low immediate risk: it has sat with Support for 0.5 days, under the 1.0-day median, and 68 of 70 similar tasks moved to Security Review next. The most relevant precedent is T-4768 (Orbital Streaming), where the client corrected the TXT record, verification completed, the default WAF ruleset was applied, and the domain went live.\n\nSuggested action: Confirm Halcyon's TXT record is correct, then hand off to Security Review with the T-4768 fix as the reference.",
     "model": "claude-haiku-5-5",
-    "input_hash": "aa73a15ec98e6cfd"
+    "input_hash": "9cdd1d18d1dfa6ca"
   },
   "T-4886": {
-    "summary": "T-4886 is rated Low risk on Ops timing (0.9 days), but 39% of api.copperleafhealth.com requests returning 504 after v90 is urgent customer impact. Likely next: QA (62%), then Customer (36%), with estimated close 2026-10-09. The closest precedent is T-4417 (69% match, 3.1 days), which reverted the config, fixed a redirect rule, and added a pre-deploy check in config_loader.go.\nSuggested action: Prioritize QA verification of v90 and evaluate a T-4417-style revert plus pre-deploy validation.",
+    "summary": "Risk is Low: the task has been with Ops only 0.9 days against a 1.4-day median, and 64% of similar config changes move to QA next. The closest fix is T-4791, which rolled back to the previous config version and added a validation rule to block malformed header rewrites, resolving in 1.9 days.\n\nSuggested action: Roll back to the prior config version as in T-4791, then add a header rewrite validation rule before the launch.",
     "model": "claude-haiku-5-5",
-    "input_hash": "9b162e24cf526797"
+    "input_hash": "2a147897516d73ad"
   },
   "T-4887": {
-    "summary": "Support has held T-4887 for 0.8 days, so risk is low, but the escalation from an enterprise bank on APAC purge failures matters. Expect it to move to Network Eng (97% predicted), with T-4648 the closest precedent: a node_registry fix that added retries for failed purge targets.\n\nSuggested action: Route to Network Eng and check whether node_registry.go retries failed purge targets, as T-4648 did.",
+    "summary": "Task T-4887 is low risk: Support holds it for a median 0.8 days, and 29 of 32 similar DNS routing tasks went to Network Eng next (91%). The closest past fix is T-4427, a LATAM wrong-POP case on the same client, resolved by updating the geo resolver mapping for the affected ISP ranges.\n\nSuggested action: Have Network Eng check geo_resolver.go ISP range mappings for LATAM first, as in T-4427.",
     "model": "claude-haiku-5-5",
-    "input_hash": "69ee30db59b8b2be"
+    "input_hash": "ecc713557a90438b"
   },
   "T-4888": {
-    "summary": "Task T-4888 is currently in QA with low risk, but it describes a production outage for an Enterprise EU client, so the rollback should not wait for the normal queue. The task is likely to move to Customer for confirmation, as 35 of 37 past config changes did. The most relevant past fix is T-4773, which reverted the config version, corrected the redirect rule, and added a pre-deploy validation check in config_loader.go.\n\nSuggested action: Roll back the config deploy now, then apply the T-4773 validation check.",
+    "summary": "Risk is low: Support holds T-4888 for 0.8 days, in line with its 0.7-day median, and 62 of 63 similar cache purge bugs went to Network Eng next. The closest past fix is T-4771, which raised propagation workers for Toronto and lowered the batch interval, then verified with test purges.\nSuggested action: Route to Network Eng and ask them to check EU edge propagation and batch interval settings against the 5-minute purge target.",
     "model": "claude-haiku-5-5",
-    "input_hash": "7a35136ca922409f"
+    "input_hash": "35e7b0771e0638d6"
   },
   "T-4889": {
-    "summary": "Task T-4889 is low risk: it has spent 0.6 days in Network Eng against a 1.8-day median, and 67% of similar traffic spikes move to Ops next. The closest past case, T-4455, was a Toronto purge delay fixed by adding temporary regional capacity and tuning thresholds.yaml.\n\nSuggested action: Check whether Singapore edge capacity needs temporary uplift and review batch_scheduler.go purge batching.",
+    "summary": "T-4889 is low risk: it has been in QA for only 0.1 days, against a 0.7-day median, and no code areas are recorded. It will likely move to Customer next, as 38 of 38 past config change tasks did, with an estimated close of 2026-10-08. The closest past fix is T-4446, which rolled back the previous config version and added a validation rule to block malformed header rewrites.\n\nSuggested action: Confirm the v62 header rewrite is rejected by api-gateway, and consider T-4446's rollback and validation approach if QA reproduces the failure.",
     "model": "claude-haiku-5-5",
-    "input_hash": "8a62f2847830b439"
+    "input_hash": "7492ee640dab270f"
   },
   "T-4890": {
-    "summary": "Risk is low at Support (0.5 days, faster than the 0.9-day median), but the ticket is likely to move to Security Review next, which is where this type of blockage typically sits. The closest precedent is T-4733, a near-identical Fernway onboarding failure fixed by manually verifying ownership, attaching the default WAF ruleset, and rolling out to EU edges.\n\nSuggested action: Verify domain ownership and attach the default WAF ruleset, following T-4733.",
+    "summary": "Task T-4890 is currently low risk: it has spent 0.6 days with Network Eng against a median of 1.7 days. It is likely to move to Ops (61%), and the closest precedent is T-4794, which added temporary Mumbai capacity and tuned thresholds.yaml to bring latency under 300ms.\n\nSuggested action: Confirm Mumbai temporary capacity and threshold tuning per T-4794 with Ops now.",
     "model": "claude-haiku-5-5",
-    "input_hash": "28847cde237583eb"
+    "input_hash": "ef034b32d9266696"
   },
   "T-4891": {
-    "summary": "Risk is low at 0.6 days in Network Eng against a 1.7-day median, but this is production traffic misrouting EU users, so it should move quickly. Dev is the likely next stop (68%), and the closest past case, T-4410 (89% match, same client and modules), was resolved by lowering the failover threshold and adding a failover alert.\n\nSuggested action: Check whether T-4410's threshold change and failover alert apply to the geo resolver mapping before Dev starts.",
+    "summary": "T-4891 is at real risk despite the Low QA rating, since 30% of requests returning 408 is a live outage for an SMB client requesting an urgent fix. It will likely go to Customer after QA, as all 38 past config change tasks did. The closest fix is T-4646, which rolled back, corrected the gateway middleware rule, and redeployed with config validation.\n\nSuggested action: Roll back to the prior config version now, then review middleware.go and ttl_rules.yaml before redeploying with validation.",
     "model": "claude-haiku-5-5",
-    "input_hash": "1dd807df26301697"
+    "input_hash": "f7639fb3e1e643f9"
   },
   "T-4892": {
-    "summary": "T-4892 is likely to move to Security Review next (97%) and is low risk right now, though the DNS provider change makes ownership verification the likely blocker. The closest past fix is T-4708, where ownership was completed after the client corrected the TXT record, then the default WAF ruleset was applied and the domain activated.\n\nSuggested action: Confirm the client's new DNS provider has the correct TXT record, then re-run verify_ownership.py.",
+    "summary": "Task T-4892 is low risk: it sits with Support for 0.6 days, below the 0.8-day median, and is likely to move to Network Eng (91%) next. The closest past fix is T-4642 (82% match), where a health_check flapping issue pulled Toronto out of rotation, so check health_check.go as well as geo_resolver.go.\n\nSuggested action: Route to Network Eng and verify Toronto's health_check status before changing the NA ISP mapping.",
     "model": "claude-haiku-5-5",
-    "input_hash": "5128bf06782f877b"
+    "input_hash": "e14cc0d380cd9553"
   },
   "T-4893": {
-    "summary": "Task T-4893 is low risk: it has spent 0.6 days in Security Review against a 2.8-day median. Next it most likely moves to Support (72%), then Customer and Closed, with estimated close 2026-10-11. The most relevant past fix is T-4533, where log export was enabled with an edge-auth scoped token after review and the client confirmed receipt.\n\nSuggested action: Confirm Security approval and issue Tidepool scoped credentials per T-4533.",
+    "summary": "Risk is Low for now: Support has held the task 0.5 days against a 1.0-day median, but ownership verification has been pending for days. It most likely moves to Security Review (97%), and the closest past fix is T-4488, which fixed the subdomain lookup in verify_ownership.py and applied baseline WAF rules. T-4674 has no solution note.\n\nSuggested action: Check whether the T-4488 subdomain lookup fix in verify_ownership.py applies here, and prepare the WAF baseline for Security Review.",
     "model": "claude-haiku-5-5",
-    "input_hash": "1dbf8b651945a9b9"
+    "input_hash": "44875c42ac2c74e6"
   },
   "T-4894": {
-    "summary": "Task T-4894 is low risk for now: it has spent 0.3 days in Network Eng against a 1.8-day median. Most likely next stop is Ops (67%), and the closest past case, T-4687 (79% match), was fixed by raising regional capacity and adjusting rate-limit thresholds.\n\nSuggested action: Check whether Amsterdam edge capacity and rate-limit thresholds for api.juniperanalytics.com match the T-4687 fix before routing to Ops.",
+    "summary": "Risk shows Low (Support at 0.7 days vs. 1.0 median), but production traffic is impacted, so don't deprioritize it. Likely next step is Security Review (97%), then Ops, with close around 2026-10-13. The closest precedent is T-4541, same client and failure, fixed by manually verifying ownership, attaching the default WAF ruleset, and rolling out to LATAM edges.\n\nSuggested action: Manually verify domain ownership and attach the default WAF ruleset, following T-4541, then route to Security Review.",
     "model": "claude-haiku-5-5",
-    "input_hash": "139adec67e9c2a21"
+    "input_hash": "7fc9e1ffae04052d"
   },
   "T-4895": {
-    "summary": "The task is currently with Support at low risk (0.6 days, faster than the 0.9-day median), but it will likely move to Security Review (97% predicted) since 72 of 74 similar tasks went that way. The closest past case, T-4776, was resolved by fixing the subdomain lookup in verify_ownership.py and applying baseline WAF rules.\n\nSuggested action: Pre-stage the WAF baseline and check the subdomain lookup in verify_ownership.py before Security Review.",
+    "summary": "Risk is low: the task has spent 0.3 days with Network Eng against a 1.7-day median. It will most likely move to Ops (61%), where a past fix for the same EU capacity exhaustion was T-4503, which added temporary Amsterdam capacity and tuned thresholds.yaml, bringing latency under 300ms.\nSuggested action: Check whether Amsterdam temporary capacity can be added, and review thresholds.yaml for Juniper Analytics per T-4503.",
     "model": "claude-haiku-5-5",
-    "input_hash": "6d89ede541125b93"
+    "input_hash": "304cb26157381c23"
   },
   "T-4896": {
-    "summary": "Task T-4896 is low risk: it has been in QA for 0.1 days against a median of 0.8, and 95% of similar config changes go to the customer next. Most likely next step is Customer, closing around 2026-10-09. The closest past fix is T-4716, which rolled back the prior config version and added a validation rule blocking malformed header rewrites.\n\nSuggested action: Confirm the Dallas edge rollback to config v70 and add the T-4716 header validation rule before customer handoff.",
+    "summary": "Copperleaf Health's purge partial-success bug is low risk: it sits with Support at 0.4 days, well under the 0.7-day median. It will most likely move to Network Eng (98%), which has handled 62 of 63 similar cache purge bugs. The closest past fix is T-4434, which added backoff retry for failed nodes in propagation.go and dropped partial failures to zero in testing.\n\nSuggested action: Route to Network Eng and check whether the T-4434 retry-with-backoff change covers the 5 NA nodes returning 503.",
     "model": "claude-haiku-5-5",
-    "input_hash": "297f860a3bc30d31"
+    "input_hash": "e75920e92814efb6"
   },
   "T-4897": {
-    "summary": "Task T-4897 is currently low risk in Support (0.5 days against a 0.9-day median), but it is likely to move to Security Review next (97%) because the TXT verification and WAF attachment are both unresolved. The most relevant past fix is T-4797, the same client's earlier stuck verification, which was resolved by correcting the TXT record and applying the default WAF ruleset.\n\nSuggested action: Ask Quillstone to confirm the TXT record value and TTL, then apply default.yaml and activate before next week's EU launch.",
+    "summary": "Task T-4897 is low risk: Support holds it at 0.6 days against a 0.8-day median, and 29 of 32 similar tasks moved to Network Eng next. The most relevant past fix is T-4641, the same Kestrel Retail geo-mapping problem, resolved by updating the resolver mapping for the affected EU ISP ranges.\n\nSuggested action: Route to Network Eng and check the geo resolver mapping for the EU ISP range against T-4641's fix.",
     "model": "claude-haiku-5-5",
-    "input_hash": "cfa5632548d4eebd"
+    "input_hash": "58da4f105ae3e715"
   },
   "T-4898": {
-    "summary": "Timing risk is low since Support has held it 0.4 days against a 0.8-day median, but 84-minute purges and 29 stale Singapore nodes are a serious customer impact. Network Eng is the likely next owner (97%), with estimated close 2026-10-10. The closest prior fix is T-4791 (same client, APAC), which cut the edge-sync batch interval from 60s to 15s and brought purges under 2 minutes.\n\nSuggested action: Route to Network Eng and check the APAC edge-sync batch interval against the T-4791 fix.",
+    "summary": "Risk is low: T-4898 sits with Support at 0.6 days, well under the 0.8-day median, and 91% of similar DNS routing tasks go next to Network Eng. The closest past fix is T-4769, which updated the geo resolver mapping for affected ISP ranges, the same code area as this issue.\n\nSuggested action: Route to Network Eng and check the EU ISP range mapping in dns-routing/geo_resolver.go, as T-4769 did.",
     "model": "claude-haiku-5-5",
-    "input_hash": "355630b6ad1e915d"
+    "input_hash": "024b940c7292884d"
   },
   "T-4899": {
-    "summary": "Task T-4899 is at moderate risk: the certificate expires in 7 days and Security Review is currently quick (median 2.7 days), but the path to Ops is well established. Ops is the likely next stage, and the closest precedent is T-4625, where the fix was updating acme_client.py to use the delegated challenge record.\n\nSuggested action: Check the delegated DNS challenge record for api.brightlinesports.com and confirm acme_client.py uses it, following T-4625.",
+    "summary": "T-4899 is low risk for now, with Support at 0.6 days against a 1.0-day median. It will most likely move to Security Review (97%), then Ops. The closest past fix is T-4421 (same client, 84% match), where the client corrected the TXT record, ownership verification completed, and the default WAF ruleset was applied.\n\nSuggested action: Confirm the TXT record with Mosaic Studio, then apply the default WAF ruleset as in T-4421.",
     "model": "claude-haiku-5-5",
-    "input_hash": "617c73594619cf67"
+    "input_hash": "9673c4f3f869c76a"
   },
   "T-4900": {
-    "summary": "Task T-4900 is currently low risk: it has spent 0.1 days in Ops against a 0.9-day median, and 62% of predicted next steps go to QA, with 36% to Customer. The closest past fix is T-4639, a Lumen Games config rollback that corrected the gateway middleware rule and redeployed with validation enabled. T-4641 has no solution note.\n\nSuggested action: Check whether the routing rule change can be rolled back to the prior config version, as T-4639 did, before QA.",
+    "summary": "Task T-4900 is low risk right now at 0.5 days in Support against a 1.0 day median, but it is likely to move to Security Review next (97%), which is the usual route for new domain setups. The closest past case is T-4440, same client and similar blocker on static.quillstonepublishing.com, fixed by correcting the subdomain lookup in verify_ownership.py and applying baseline WAF rules.\n\nSuggested action: Check whether the verify_ownership.py subdomain lookup issue from T-4440 applies to api.quillstonepublishing.com before handing off.",
     "model": "claude-haiku-5-5",
-    "input_hash": "fbaac702c7d8c808"
+    "input_hash": "44fe017085003335"
+  },
+  "T-4901": {
+    "summary": "Risk is low: Support is at 0.4 days against a 0.8-day median, and 29 of 32 similar DNS routing tasks moved to Network Eng next (91%). Most relevant past fix is T-4631 (Halcyon Bank, 67% match, shared dns-routing and edge-sync modules), where health_check flapping was corrected and geo routing restored.\n\nSuggested action: Route to Network Eng and check health_check.go against T-4631's flapping fix first.",
+    "model": "claude-haiku-5-5",
+    "input_hash": "b3e67d0d298fbda3"
+  },
+  "T-4902": {
+    "summary": "Task T-4902 is at risk because the certificate expires in 4 days and the ACME DNS challenge is failing, though it is currently in Security Review with low risk. Most similar past SSL tasks went to Ops next. The closest past fix is T-4793 (Lumen Games), which restored the _acme-challenge CNAME and re-ran renewal.\n\nSuggested action: Check the _acme-challenge CNAME/TXT record for static.northwindmedia.com and re-run renewal today.",
+    "model": "claude-haiku-5-5",
+    "input_hash": "04be73ca1090d860"
+  },
+  "T-4903": {
+    "summary": "Risk is Low since Support has held T-4903 for only 0.2 days, well under the 0.7-day median. It will likely move to Network Eng (98% predicted), which matches the usual path for cache purge bugs. The most relevant past fix is T-4570, which added retry-with-backoff in propagation.go to stop failed nodes from keeping stale content; T-4644 has no solution note.\n\nSuggested action: Route to Network Eng and review T-4570's retry patch in propagation.go as a starting point.",
+    "model": "claude-haiku-5-5",
+    "input_hash": "fe352fffe7e71aef"
+  },
+  "T-4904": {
+    "summary": "Ops risk is rated Low, but this breaks production redirects for an Enterprise APAC client, so the rating likely understates urgency. QA is the most likely next stage (64%), with an estimated close of 2026-10-09. The closest past case is T-4706 (same client, 84% match), which rolled back the previous config version and added a validation rule to block malformed header rewrites.\n\nSuggested action: Roll back to the previous config version now, following T-4706, and add the header-rewrite validation rule before QA.",
+    "model": "claude-haiku-5-5",
+    "input_hash": "7607109695269b33"
+  },
+  "T-4905": {
+    "summary": "Task T-4905 is low risk on timing: Support is at 0.7 days median, and 62 of 63 similar purge bugs routed to Network Eng next. The stale JS/CSS with Age above TTL points at TTL or override config, so the most relevant past fix is T-4709 (TTL override removed in config-service, edges then honored origin Cache-Control).\n\nSuggested action: Network Eng should check ttl_rules.yaml and config-service overrides for media.orbitalstreaming.com, as T-4709 did.",
+    "model": "claude-haiku-5-5",
+    "input_hash": "d59461070488c1f8"
+  },
+  "T-4906": {
+    "summary": "Low risk: Ops is clearing it in 0.1 days against a 1.4-day median, and QA is the likely next stop (64%). The closest precedent is T-4544, same client and title, resolved in 7.0 days by rolling back, correcting the gateway middleware rule, and redeploying with config validation enabled.\n\nSuggested action: Check whether the v92 header rewrite matches T-4544's middleware issue, and confirm config validation is enabled before redeploying.",
+    "model": "claude-haiku-5-5",
+    "input_hash": "7da6b0d4da68649d"
   }
 }

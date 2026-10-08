@@ -18,10 +18,10 @@ TPMs / support leads tracking client tasks across teams.
 - `scripts/`: `generate_data.py`, `validate_patterns.py`, `backtest.py`, `build_artifacts.py`
 - `data/`: generated JSON (committed); `data/artifacts/`: transition tables, similar cases, summaries
 - `lib/agent/`: agent tools + system prompt
-- `app/`: pages (`/` queue, `task/[id]`, `process`, `ask`; later `api/agent`)
-- `components/`: client components (TopBar, Sidebar, QueueTable, ProcessView, AskView, ui)
+- `app/`: pages (`/` briefing, `queue`, `task/[id]`, `process`, `ask`; later `api/agent`)
+- `components/`: client components (AgentDock: provider, dock, launcher, AskButton; BriefingView, TopBar, Sidebar, QueueTable, ProcessView, AskView, ui)
 - `lib/data.ts` (server-only data access) and `lib/types.ts` (view models)
-- `design/`: Claude Design handoff (`project/Relay.dc.html`), the visual source of truth; tokens copied into `app/globals.css`
+- `design/`: Claude Design handoff; `project/Relay v3.dc.html` is the current visual source of truth (v1/v2 kept for reference); tokens copied into `app/globals.css`
 - `docs/`: `plan.md`, `data-spec.md`, `definitions.md`, `prompt-log.md`
 - `evals/`: agent eval questions + runner
 
@@ -39,6 +39,7 @@ TPMs / support leads tracking client tasks across teams.
 - Secrets live only in `.env.local` / Vercel env vars. Never import them into client components.
 - The agent is read-only, must cite task IDs for claims, and says "I don't know" when the data doesn't support an answer. Max 6 tool calls per question.
 - The UI shows a "synthetic data" disclaimer; never present the data as real.
+- Every briefing insight must come from a detector over the data, never hand-written copy. If the design needs a finding the data can't support, plant the pattern in the generator (spec + validation) or drop the card.
 
 ## Workflow
 
@@ -63,7 +64,8 @@ Data pipeline, run from the repo root with the venv active (`source .venv/bin/ac
 - `python scripts/backtest.py`: train Oct–Jun / test Jul–Sep; next-stakeholder, ETA, and similar-case metrics → `data/artifacts/backtest.json`
 - `python scripts/build_artifacts.py`: `transitions.json`, `predictions.json` (open tasks), `similar_cases.json` (all tasks) in `data/artifacts/`
 - `python scripts/summarize_tasks.py [--limit N] [--force]`: Haiku summaries for open tasks → `summaries.json`. Calls the Claude API (reads `ANTHROPIC_API_KEY` from env or `.env.local`); cached by input hash, so only changed tasks are re-sent.
-- Pipeline order after changing data or model code: generate → validate → backtest → build_artifacts → summarize_tasks
+- `python scripts/build_briefing.py [--no-llm]`: agent briefing → `briefing.json`. Detectors find insights; Claude (Haiku) words them; wording with any number not in the facts is rejected for a template. Cached by input hash.
+- Pipeline order after changing data or model code: generate → validate → backtest → build_artifacts → summarize_tasks → build_briefing
 - `generate_data.py` and `validate_patterns.py` accept `--data-dir DIR` (and the generator `--seed N`) to test other seeds without touching `data/`. After changing the generator, check a range of seeds, not just 42.
 
 `scripts/relay_data.py` holds shared loading/cleaning (`load`, `clean_handoffs`, `stints`, `routes`, `risk_levels`); `scripts/relay_model.py` holds `TransitionModel` (prediction, ETA) and `SimilarityIndex`. Reuse them rather than re-implementing. The TypeScript app reads the precomputed artifacts; it doesn't re-implement the model.

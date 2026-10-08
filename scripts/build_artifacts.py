@@ -126,12 +126,7 @@ def process_map(tasks: pd.DataFrame, s: pd.DataFrame, names: dict) -> dict:
     out = {"as_of": rd.TODAY.strftime("%Y-%m-%d"), "windows": {}}
     for key, (label, days) in MAP_WINDOWS.items():
         ids = set(tasks.loc[tasks["created_at"] >= rd.TODAY - pd.Timedelta(days=days), "id"])
-        w = s[s["task_id"].isin(ids)].copy()
-        w["visited_before"] = [
-            nxt in seen
-            for _, g in w.groupby("task_id", sort=False)
-            for seen, nxt in zip(_prefix_sets(g["stakeholder"].tolist()), g["next_stakeholder"])
-        ]
+        w = rd.with_rework(s[s["task_id"].isin(ids)])
         done = w.dropna(subset=["next_stakeholder"])
         in_window = tasks[tasks["id"].isin(ids)]
         closed = in_window[in_window["status"] == "closed"]
@@ -143,7 +138,7 @@ def process_map(tasks: pd.DataFrame, s: pd.DataFrame, names: dict) -> dict:
                 "from": frm, "to": to, "count": len(g),
                 "share_of_tasks": round(g["task_id"].nunique() / len(ids), 3),
                 "avg_wait_days": round(float(g["hold_days"].mean()), 2),
-                "rework_tasks": int(g.loc[g["visited_before"], "task_id"].nunique()),
+                "rework_tasks": int(g.loc[g["rework"], "task_id"].nunique()),
             })
 
         medians = done.groupby("stakeholder")["hold_days"].median()
@@ -173,15 +168,6 @@ def process_map(tasks: pd.DataFrame, s: pd.DataFrame, names: dict) -> dict:
             "nodes": nodes, "edges": edges,
             "modules": [{"id": m, "count": int(c)} for m, c in module_counts.value_counts().items()],
         }
-    return out
-
-
-def _prefix_sets(route: list[str]) -> list[set]:
-    """For each stint, the set of stakeholders the task has already been with (including this one)."""
-    seen, out = set(), []
-    for stk in route:
-        seen = seen | {stk}
-        out.append(seen)
     return out
 
 

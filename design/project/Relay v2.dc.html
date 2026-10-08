@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+[data-theme="light"]{color-scheme:light;--bg:#f4f6f8;--surface:#ffffff;--surface2:#f1f3f6;--surface3:#e5e8ed;--border:#e2e6eb;--border2:#cdd3db;--text:#0f1318;--muted:#58616d;--faint:#868e9b;--accent:oklch(0.5 0.2 266);--accent-soft:oklch(0.955 0.025 266);--accent-ink:oklch(0.45 0.19 266);--on-accent:#fff;--green:oklch(0.62 0.14 152);--green-soft:oklch(0.955 0.035 152);--green-ink:oklch(0.45 0.11 152);--amber:oklch(0.76 0.14 75);--amber-soft:oklch(0.96 0.045 85);--amber-ink:oklch(0.5 0.11 65);--red:oklch(0.6 0.19 27);--red-soft:oklch(0.955 0.03 25);--red-ink:oklch(0.5 0.17 27)}
+[data-theme="dark"]{color-scheme:dark;--bg:#0c0e11;--surface:#13161a;--surface2:#1a1e23;--surface3:#252a31;--border:#242a31;--border2:#363d47;--text:#e6e9ed;--muted:#9aa3ae;--faint:#6d7682;--accent:oklch(0.7 0.16 266);--accent-soft:oklch(0.28 0.07 266);--accent-ink:oklch(0.82 0.11 266);--on-accent:#0c0e11;--green:oklch(0.7 0.14 152);--green-soft:oklch(0.29 0.05 152);--green-ink:oklch(0.83 0.12 152);--amber:oklch(0.8 0.13 80);--amber-soft:oklch(0.31 0.05 75);--amber-ink:oklch(0.87 0.11 85);--red:oklch(0.68 0.17 25);--red-soft:oklch(0.29 0.06 25);--red-ink:oklch(0.82 0.11 25)}
+[data-theme="light"][data-accent="teal"]{--accent:oklch(0.48 0.085 195);--accent-soft:oklch(0.955 0.02 195);--accent-ink:oklch(0.42 0.08 195)}
+[data-theme="dark"][data-accent="teal"]{--accent:oklch(0.72 0.1 190);--accent-soft:oklch(0.29 0.045 195);--accent-ink:oklch(0.83 0.08 190)}
+a{color:var(--accent-ink)}a:hover{color:var(--text)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes fillX{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes rise{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes slideIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 0 oklch(0.7 0.16 266 / .55)}50%{box-shadow:0 0 0 5px oklch(0.7 0.16 266 / 0)}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<div data-theme="{{ theme }}" data-accent="{{ accent }}" style="min-height:100vh;background:var(--bg);color:var(--text);font-family:'Geist',ui-sans-serif,system-ui,sans-serif;font-size:13px;line-height:1.45;display:flex;flex-direction:{{ rootDir }};-webkit-font-smoothing:antialiased">
+
+<sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+<aside style="width:232px;flex:0 0 232px;background:#0d0f13;color:#e8eaee;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;box-sizing:border-box;padding:20px 12px 16px">
+  <div style="display:flex;align-items:center;gap:10px;padding:0 10px 26px">
+    <div style="width:22px;height:22px;border-radius:6px;background:oklch(0.62 0.2 266);display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;border-radius:2px;background:#0d0f13"></div></div>
+    <div style="font-family:'Instrument Serif',Georgia,serif;font-size:28px;line-height:1;letter-spacing:-0.01em">Relay</div>
+  </div>
+  <nav style="display:flex;flex-direction:column;gap:2px">
+    <button onClick="{{ goBriefing }}" style="display:flex;align-items:center;gap:10px;padding:7px 10px;border:0;border-radius:6px;background:{{ navB.bg }};color:{{ navB.color }};font:inherit;font-weight:{{ navB.fw }};cursor:pointer;text-align:left" style-hover="background:rgba(255,255,255,0.06)">
+      <div style="width:14px;display:flex;justify-content:center"><div style="width:10px;height:10px;border:1.5px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;box-sizing:border-box"><div style="width:3px;height:3px;border-radius:50%;background:currentColor"></div></div></div>
+      <div style="flex:1">Briefing</div><div style="min-width:18px;height:18px;padding:0 5px;box-sizing:border-box;border-radius:9px;background:oklch(0.62 0.2 266);color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center">5</div>
+    </button>
+    <button onClick="{{ goQueue }}" style="display:flex;align-items:center;gap:10px;padding:7px 10px;border:0;border-radius:6px;background:{{ navQ.bg }};color:{{ navQ.color }};font:inherit;font-weight:{{ navQ.fw }};cursor:pointer;text-align:left" style-hover="background:rgba(255,255,255,0.06)">
+      <div style="width:14px;display:flex;flex-direction:column;gap:2.5px"><div style="height:1.5px;background:currentColor"></div><div style="height:1.5px;background:currentColor"></div><div style="height:1.5px;width:9px;background:currentColor"></div></div>
+      <div style="flex:1">Queue</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#6b7380">100</div>
+    </button>
+    <button onClick="{{ goMap }}" style="display:flex;align-items:center;gap:10px;padding:7px 10px;border:0;border-radius:6px;background:{{ navM.bg }};color:{{ navM.color }};font:inherit;font-weight:{{ navM.fw }};cursor:pointer;text-align:left" style-hover="background:rgba(255,255,255,0.06)">
+      <div style="width:14px;display:flex;align-items:center"><div style="width:4px;height:4px;border:1.5px solid currentColor;border-radius:50%"></div><div style="flex:1;height:1.5px;background:currentColor"></div><div style="width:4px;height:4px;border:1.5px solid currentColor;border-radius:50%"></div></div>
+      <div>Process Map</div>
+    </button>
+    <button onClick="{{ goAsk }}" style="display:flex;align-items:center;gap:10px;padding:7px 10px;border:0;border-radius:6px;background:{{ navA.bg }};color:{{ navA.color }};font:inherit;font-weight:{{ navA.fw }};cursor:pointer;text-align:left" style-hover="background:rgba(255,255,255,0.06)">
+      <div style="width:14px;display:flex;justify-content:center"><div style="width:11px;height:9px;border:1.5px solid currentColor;border-radius:3px"></div></div>
+      <div>Ask</div>
+    </button>
+  </nav>
+  <div style="flex:1"></div>
+  <button onClick="{{ openDock }}" style="text-align:left;border:1px solid #23272f;background:#14171c;border-radius:10px;padding:12px;color:inherit;font:inherit;cursor:pointer;display:flex;flex-direction:column;gap:6px" style-hover="border-color:#3a404a">
+    <div style="display:flex;align-items:center;gap:8px"><div style="width:7px;height:7px;border-radius:50%;background:oklch(0.74 0.15 266);animation:breathe 2.4s ease-in-out infinite"></div><div style="font-weight:500;font-size:12.5px">Agent watching</div></div>
+    <div style="color:#8f97a3;font-size:12px;line-height:1.5">100 open tasks · 412 handoffs<br>Last scan 08:02 · 5 insights</div>
+  </button>
+  <div style="padding:14px 10px 0;color:#6b7380;font-size:12px">Synthetic data · Built with Claude Code</div>
+</aside>
+</sc-if>
+
+<sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#0d0f13;color:#e8eaee;flex-wrap:wrap">
+  <div style="display:flex;align-items:center;gap:8px;margin-right:auto">
+    <div style="width:16px;height:16px;border-radius:4px;background:oklch(0.62 0.2 266)"></div>
+    <div style="font-family:'Instrument Serif',Georgia,serif;font-size:22px;line-height:1">Relay</div>
+  </div>
+  <div style="display:flex;gap:4px;flex-wrap:wrap">
+    <button onClick="{{ goBriefing }}" style="padding:6px 10px;border:0;border-radius:6px;background:{{ navB.bg }};color:{{ navB.color }};font:inherit;font-weight:{{ navB.fw }};cursor:pointer">Briefing</button>
+    <button onClick="{{ goQueue }}" style="padding:6px 10px;border:0;border-radius:6px;background:{{ navQ.bg }};color:{{ navQ.color }};font:inherit;font-weight:{{ navQ.fw }};cursor:pointer">Queue</button>
+    <button onClick="{{ goMap }}" style="padding:6px 10px;border:0;border-radius:6px;background:{{ navM.bg }};color:{{ navM.color }};font:inherit;font-weight:{{ navM.fw }};cursor:pointer">Map</button>
+    <button onClick="{{ goAsk }}" style="padding:6px 10px;border:0;border-radius:6px;background:{{ navA.bg }};color:{{ navA.color }};font:inherit;font-weight:{{ navA.fw }};cursor:pointer">Ask</button>
+  </div>
+</div>
+</sc-if>
+
+<main style="flex:1;min-width:0;display:flex;flex-direction:column">
+  <div style="position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--border);padding:10px {{ padX }};display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <div style="flex:1 1 220px;max-width:340px;display:flex;align-items:center;gap:8px;height:32px;padding:0 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);box-sizing:border-box">
+      <div style="width:9px;height:9px;border:1.5px solid var(--faint);border-radius:50%;flex:none"></div>
+      <input value="{{ q }}" onChange="{{ onSearch }}" placeholder="Search task ID or client" style="flex:1;min-width:0;border:0;outline:none;background:transparent;color:var(--text);font:inherit">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);border:1px solid var(--border);border-radius:4px;padding:0 5px">/</div>
+    </div>
+    <select value="{{ fType }}" onChange="{{ onType }}" style="height:32px;padding:0 8px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font:inherit;max-width:170px">
+      <sc-for list="{{ typeOpts }}" as="o" hint-placeholder-count="1"><option value="{{ o }}">{{ o }}</option></sc-for>
+    </select>
+    <select value="{{ fClient }}" onChange="{{ onClient }}" style="height:32px;padding:0 8px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font:inherit;max-width:170px">
+      <sc-for list="{{ clientOpts }}" as="o" hint-placeholder-count="1"><option value="{{ o }}">{{ o }}</option></sc-for>
+    </select>
+    <select value="{{ fStake }}" onChange="{{ onStake }}" style="height:32px;padding:0 8px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font:inherit;max-width:170px">
+      <sc-for list="{{ stakeOpts }}" as="o" hint-placeholder-count="1"><option value="{{ o }}">{{ o }}</option></sc-for>
+    </select>
+    <select value="{{ fDate }}" onChange="{{ onDate }}" style="height:32px;padding:0 8px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font:inherit">
+      <option value="Last 7 days">Last 7 days</option><option value="Last 30 days">Last 30 days</option><option value="Last 90 days">Last 90 days</option><option value="This quarter">This quarter</option>
+    </select>
+    <div style="flex:1"></div>
+    <button onClick="{{ toggleTheme }}" title="Toggle theme" style="height:32px;display:flex;align-items:center;gap:8px;padding:0 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--muted);font:inherit;cursor:pointer" style-hover="color:var(--text);border-color:var(--border2)">
+      <div style="width:10px;height:10px;border-radius:50%;border:1.5px solid currentColor;background:linear-gradient(90deg,currentColor 50%,transparent 50%)"></div>{{ themeLabel }}
+    </button>
+  </div>
+
+  <sc-if value="{{ showBanner }}" hint-placeholder-val="{{ true }}">
+  <div style="margin:16px {{ padX }} 0;display:flex;align-items:flex-start;gap:10px;padding:10px 12px 10px 14px;border:1px solid var(--border);border-radius:8px;background:var(--accent-soft);color:var(--text)">
+    <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);margin-top:6px;flex:none"></div>
+    <div style="flex:1;text-wrap:pretty">All data is synthetic, generated with realistic patterns. Try: open a high-risk task, explore the process map, or ask the agent a question.</div>
+    <button onClick="{{ closeBanner }}" aria-label="Dismiss" style="border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:16px;line-height:1;padding:0 2px" style-hover="color:var(--text)">×</button>
+  </div>
+  </sc-if>
+
+  <div style="padding:24px {{ padX }} 48px;width:100%;max-width:1400px;box-sizing:border-box">
+
+  <!-- QUEUE -->
+  <sc-if value="{{ isBriefing }}" hint-placeholder-val="{{ true }}">
+  <div style="display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
+      <div style="max-width:780px;min-width:0">
+        <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.08em;color:var(--muted)"><div style="width:7px;height:7px;border-radius:50%;background:var(--accent);animation:breathe 2.4s ease-in-out infinite"></div>AGENT BRIEFING · WED OCT 7 · 08:02</div>
+        <sc-if value="{{ isAgentMode }}" hint-placeholder-val="{{ true }}">
+          <h1 style="margin:14px 0 0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:{{ heroSize }};line-height:1;letter-spacing:-0.02em;text-wrap:balance">Three things need you today.</h1>
+          <div style="margin-top:12px;color:var(--muted);font-size:15px;line-height:1.5;max-width:600px;text-wrap:pretty">I scanned 100 open tasks and 412 handoffs overnight. Three need a decision from you, two are worth knowing about.</div>
+        </sc-if>
+        <sc-if value="{{ isClassic }}" hint-placeholder-val="{{ false }}">
+          <h1 style="margin:14px 0 0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:{{ heroSize }};line-height:1;letter-spacing:-0.02em;text-wrap:balance">Everything is here. <span style="font-style:italic;color:var(--muted)">You find the story.</span></h1>
+          <div style="margin-top:12px;color:var(--muted);font-size:15px;line-height:1.5;max-width:600px;text-wrap:pretty">The view we used to build in Tableau: four KPIs, four charts, six filters. Every number is right, and the analyst still has to hunt for what changed.</div>
+        </sc-if>
+      </div>
+      <div style="display:flex;padding:3px;border:1px solid var(--border);border-radius:9px;background:var(--surface)">
+        <button onClick="{{ setAgent }}" style="height:30px;padding:0 12px;border:0;border-radius:6px;background:{{ modeA.bg }};color:{{ modeA.color }};font:inherit;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:7px"><span style="width:6px;height:6px;border-radius:2px;background:var(--accent)"></span>Agent briefing</button>
+        <button onClick="{{ setClassic }}" style="height:30px;padding:0 12px;border:0;border-radius:6px;background:{{ modeC.bg }};color:{{ modeC.color }};font:inherit;font-weight:500;cursor:pointer">Classic dashboard</button>
+      </div>
+    </div>
+
+    <sc-if value="{{ isAgentMode }}" hint-placeholder-val="{{ true }}">
+    <div style="display:grid;grid-template-columns:{{ briefCols }};gap:20px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <div style="background:#0d0f13;color:#eef0f3;border-radius:12px;padding:24px 26px;display:flex;flex-direction:column;gap:16px;animation:rise 250ms ease-out both">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <span style="padding:2px 9px;border-radius:999px;background:oklch(0.6 0.19 27);color:#fff;font-size:12px;font-weight:500">Needs you today</span>
+            <div style="color:#9aa2ad;font-size:12px">Risk · 82% confidence · Northwind Media</div>
+            <div style="margin-left:auto;color:#6f7782;font-size:12px;font-family:'JetBrains Mono',monospace">found 06:14</div>
+          </div>
+          <div style="font-family:'Instrument Serif',Georgia,serif;font-size:{{ featSize }};line-height:1.08;letter-spacing:-0.01em;text-wrap:balance">T-4821 will miss its Oct 10 close unless Network Eng flushes edge-sync today.</div>
+          <div style="color:#b9c0c9;font-size:14px;line-height:1.6;max-width:640px;text-wrap:pretty">The cache purge has sat with Network Eng for 4.2 days, 2.2× the median. Two near-identical cases closed within a day of the same fix.</div>
+          <div style="display:flex;flex-direction:column;gap:8px;max-width:560px">
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:170px;flex:none;color:#b9c0c9;font-size:12.5px">T-4821 with Network Eng</div><div style="flex:1;height:8px;border-radius:4px;background:#22262e"><div style="height:100%;width:100%;border-radius:4px;background:oklch(0.66 0.18 27);animation:fillX 300ms ease-out both"></div></div><div style="width:36px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px">4.2d</div></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:170px;flex:none;color:#b9c0c9;font-size:12.5px">Stakeholder median</div><div style="flex:1;height:8px;border-radius:4px;background:#22262e"><div style="height:100%;width:45%;border-radius:4px;background:#5a616c;animation:fillX 300ms ease-out both"></div></div><div style="width:36px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px">1.9d</div></div>
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:170px;flex:none;color:#b9c0c9;font-size:12.5px">T-4417 close after flush</div><div style="flex:1;height:8px;border-radius:4px;background:#22262e"><div style="height:100%;width:21%;border-radius:4px;background:oklch(0.72 0.14 152);animation:fillX 300ms ease-out both"></div></div><div style="width:36px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px">0.9d</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:4px">
+            <button onClick="{{ openHero }}" style="height:32px;padding:0 14px;border:0;border-radius:8px;background:#fff;color:#0d0f13;font:inherit;font-weight:600;cursor:pointer" style-hover="background:#e6e8ec">Open T-4821</button>
+            <button onClick="{{ askHero }}" style="height:32px;padding:0 12px;border:0;border-radius:8px;background:oklch(0.55 0.2 266);color:#fff;font:inherit;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:7px" style-hover="background:oklch(0.6 0.2 266)"><span style="width:6px;height:6px;border-radius:2px;background:#fff"></span>Ask agent why</button>
+            <button onClick="{{ draftPing }}" style="height:32px;padding:0 12px;border:1px solid #333944;border-radius:8px;background:transparent;color:#e6e9ee;font:inherit;cursor:pointer" style-hover="border-color:#5a616c">Draft ping to Network Eng</button>
+            <div style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap"><span style="padding:1px 7px;border:1px solid #2a2f37;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9aa2ad">T-4417</span><span style="padding:1px 7px;border:1px solid #2a2f37;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#9aa2ad">T-4590</span></div>
+          </div>
+        </div>
+
+        <sc-for list="{{ insights }}" as="i" hint-placeholder-count="4">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:12px;animation:rise 250ms ease-out {{ i.delay }} both">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <span style="padding:2px 9px;border-radius:999px;background:{{ i.tagBg }};color:{{ i.tagInk }};font-size:12px;font-weight:500">{{ i.tagLabel }}</span>
+            <div style="color:var(--muted);font-size:12px">{{ i.meta }}</div>
+            <div style="margin-left:auto;color:var(--faint);font-size:12px;font-family:'JetBrains Mono',monospace">{{ i.time }}</div>
+          </div>
+          <div style="font-family:'Instrument Serif',Georgia,serif;font-size:25px;line-height:1.12;letter-spacing:-0.005em;text-wrap:balance">{{ i.title }}</div>
+          <div style="color:var(--muted);line-height:1.6;max-width:640px;text-wrap:pretty">{{ i.body }}</div>
+          <sc-if value="{{ i.isBars }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:7px;max-width:520px">
+            <sc-for list="{{ i.bars }}" as="b" hint-placeholder-count="2">
+            <div style="display:flex;align-items:center;gap:12px"><div style="width:130px;flex:none;font-size:12.5px">{{ b.label }}</div><div style="flex:1;height:8px;border-radius:4px;background:var(--surface3)"><div style="height:100%;width:{{ b.w }}%;border-radius:4px;background:{{ b.color }};animation:fillX 300ms ease-out both"></div></div><div style="width:56px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">{{ b.val }}</div></div>
+            </sc-for>
+          </div>
+          </sc-if>
+          <sc-if value="{{ i.isCols }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:flex-end;gap:8px;height:86px;max-width:420px">
+            <sc-for list="{{ i.cols }}" as="c" hint-placeholder-count="7">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:{{ c.vColor }}">{{ c.v }}</div>
+              <div style="width:100%;height:{{ c.h }}%;border-radius:3px 3px 0 0;background:{{ c.color }}"></div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--faint)">{{ c.label }}</div>
+            </div>
+            </sc-for>
+          </div>
+          </sc-if>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border)">
+            <button onClick="{{ i.ask }}" style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border:1px solid transparent;border-radius:7px;background:var(--accent-soft);color:var(--accent-ink);font:inherit;font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap" style-hover="border-color:var(--accent)"><span style="width:6px;height:6px;border-radius:2px;background:var(--accent)"></span>Ask agent</button>
+            <button onClick="{{ i.act2 }}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:7px;background:var(--surface);color:var(--text);font:inherit;font-size:12.5px;cursor:pointer;white-space:nowrap" style-hover="background:var(--surface2)">{{ i.act2Label }}</button>
+            <div style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ i.ev }}" as="e" hint-placeholder-count="2"><span style="padding:1px 7px;border:1px solid var(--border);border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted)">{{ e }}</span></sc-for></div>
+          </div>
+        </div>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+          <div style="padding:16px 18px;display:flex;flex-direction:column;gap:9px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--faint)">BEFORE · TABLEAU</div>
+            <div style="display:flex;gap:10px;color:var(--muted)"><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--faint);width:14px">1</span>Open four dashboards</div>
+            <div style="display:flex;gap:10px;color:var(--muted)"><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--faint);width:14px">2</span>Filter each stakeholder, compare to last week</div>
+            <div style="display:flex;gap:10px;color:var(--muted)"><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--faint);width:14px">3</span>Export to Sheets to spot outliers</div>
+            <div style="display:flex;gap:10px;color:var(--muted)"><span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--faint);width:14px">4</span>Write it up in Slack</div>
+            <div style="font-size:12px;color:var(--faint);padding-top:2px">~40 min · once a week</div>
+          </div>
+          <div style="padding:16px 18px;background:var(--accent-soft);border-top:1px solid var(--border);display:flex;flex-direction:column;gap:9px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--accent-ink)">NOW · RELAY AGENT</div>
+            <div style="display:flex;gap:10px"><span style="color:var(--accent-ink)">→</span>Scans every task and handoff, every hour</div>
+            <div style="display:flex;gap:10px"><span style="color:var(--accent-ink)">→</span>Pushes what changed, with evidence</div>
+            <div style="display:flex;gap:10px"><span style="color:var(--accent-ink)">→</span>Suggests a next step; you decide</div>
+            <div style="font-size:12px;color:var(--accent-ink);font-weight:500;padding-top:2px">Seconds · before standup, daily</div>
+          </div>
+          <button onClick="{{ setClassic }}" style="width:100%;height:40px;border:0;border-top:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;font-weight:500;cursor:pointer;text-align:left;padding:0 18px" style-hover="background:var(--surface2)">See the dashboard version →</button>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:4px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div style="font-weight:600">What I'm watching</div><div style="margin-left:auto;color:var(--faint);font-size:12px">5 rules</div></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--border)"><div style="width:6px;height:6px;border-radius:50%;background:var(--red)"></div><div style="flex:1">Holds over 2× stakeholder median</div><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">8</div></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--border)"><div style="width:6px;height:6px;border-radius:50%;background:var(--amber)"></div><div style="flex:1">Rework loops between teams</div><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">2</div></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--border)"><div style="width:6px;height:6px;border-radius:50%;background:var(--red)"></div><div style="flex:1">Modules behind multiple at-risk tasks</div><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">1</div></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--border)"><div style="width:6px;height:6px;border-radius:50%;background:var(--amber)"></div><div style="flex:1">Client-side waits over 2 days</div><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">4</div></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--border)"><div style="width:6px;height:6px;border-radius:50%;background:var(--green)"></div><div style="flex:1">Process changes with measurable effect</div><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">1</div></div>
+          <button onClick="{{ askRule }}" style="margin-top:8px;height:30px;border:1px dashed var(--border2);border-radius:7px;background:transparent;color:var(--muted);font:inherit;cursor:pointer" style-hover="color:var(--text);border-color:var(--accent)">+ Add a watch rule in plain language</button>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isClassic }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:12px;animation:fadeIn 200ms ease-out both">
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px dashed var(--border2);border-radius:8px;flex-wrap:wrap">
+        <div style="flex:1;min-width:240px;color:var(--muted);text-wrap:pretty">T-4821 is in here: part of one bar under Network Eng, one row under Northwind Media. Seeing that it's 2.2× over median takes three filters and a calculated field.</div>
+        <button onClick="{{ setAgent }}" style="height:30px;padding:0 12px;border:0;border-radius:7px;background:var(--accent);color:var(--on-accent);font:inherit;font-weight:500;cursor:pointer">Switch to agent briefing →</button>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span style="padding:4px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;color:var(--muted)">Stakeholder: All ▾</span><span style="padding:4px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;color:var(--muted)">Type: All ▾</span><span style="padding:4px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;color:var(--muted)">Client: All ▾</span><span style="padding:4px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;color:var(--muted)">Region: All ▾</span><span style="padding:4px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;color:var(--muted)">Risk: All ▾</span><span style="padding:4px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;color:var(--muted)">Date: Last 30 days ▾</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px"><div style="font-size:12px;color:var(--muted)">Open tasks</div><div style="font-size:26px;font-weight:600;margin-top:4px">100</div></div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px"><div style="font-size:12px;color:var(--muted)">At risk</div><div style="font-size:26px;font-weight:600;margin-top:4px">8</div></div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px"><div style="font-size:12px;color:var(--muted)">Avg days open</div><div style="font-size:26px;font-weight:600;margin-top:4px">3.2</div></div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px"><div style="font-size:12px;color:var(--muted)">Handoffs (90d)</div><div style="font-size:26px;font-weight:600;margin-top:4px">412</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px">
+        <sc-for list="{{ classicCharts }}" as="c" hint-placeholder-count="4">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:10px">
+          <div style="font-weight:500;font-size:12.5px">{{ c.title }}</div>
+          <sc-if value="{{ c.isBars }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <sc-for list="{{ c.bars }}" as="b" hint-placeholder-count="6">
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:120px;flex:none;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ b.label }}</div><div style="flex:1;height:12px"><div style="height:100%;width:{{ b.w }}%;background:{{ b.color }};border-radius:2px"></div></div><div style="width:32px;text-align:right;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums">{{ b.val }}</div></div>
+            </sc-for>
+          </div>
+          </sc-if>
+          <sc-if value="{{ c.isCols }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:flex-end;gap:6px;height:150px">
+            <sc-for list="{{ c.cols }}" as="k" hint-placeholder-count="8">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%"><div style="font-size:11px;color:var(--muted)">{{ k.v }}</div><div style="width:100%;height:{{ k.h }}%;background:{{ k.color }};border-radius:2px 2px 0 0"></div><div style="font-size:10.5px;color:var(--faint)">{{ k.label }}</div></div>
+            </sc-for>
+          </div>
+          </sc-if>
+        </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ isQueue }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div>
+        <h1 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.015em">Task queue</h1>
+        <div style="color:var(--muted);margin-top:3px">Open client tasks, where they sit now, and where they are likely to go next.</div>
+      </div>
+      <div style="color:var(--faint);font-size:12px">Updated 2 min ago</div>
+    </div>
+
+    <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:48px 24px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--red-soft);color:var(--red-ink);display:flex;align-items:center;justify-content:center;font-weight:600">!</div>
+      <div style="font-size:15px;font-weight:600;margin-top:4px">Couldn't load task data</div>
+      <div style="color:var(--muted);max-width:380px">The routing service didn't respond in time. Nothing was lost; your filters are kept.</div>
+      <button onClick="{{ retry }}" style="margin-top:10px;height:32px;padding:0 14px;border:1px solid var(--border2);border-radius:8px;background:var(--surface);color:var(--text);font:inherit;font-weight:500;cursor:pointer" style-hover="background:var(--surface2)">Retry</button>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ notError }}" hint-placeholder-val="{{ true }}">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+      <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+        <sc-for list="{{ skel4 }}" as="s" hint-placeholder-count="4">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px">
+          <div style="height:10px;width:40%;border-radius:4px;background:var(--surface3);animation:pulse 1.2s ease-in-out infinite"></div>
+          <div style="height:24px;width:30%;border-radius:4px;background:var(--surface3);animation:pulse 1.2s ease-in-out infinite"></div>
+          <div style="height:10px;width:60%;border-radius:4px;background:var(--surface3);animation:pulse 1.2s ease-in-out infinite"></div>
+        </div>
+        </sc-for>
+      </sc-if>
+      <sc-if value="{{ ready }}" hint-placeholder-val="{{ true }}">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div style="color:var(--muted);font-size:12px">Open tasks</div><button onClick="{{ askOpen }}" style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 7px;border:1px solid transparent;border-radius:6px;background:var(--accent-soft);color:var(--accent-ink);font:inherit;font-size:11.5px;font-weight:500;cursor:pointer" style-hover="border-color:var(--accent)"><span style="width:5px;height:5px;border-radius:1.5px;background:var(--accent)"></span>Ask</button></div>
+          <div style="font-size:28px;font-weight:600;letter-spacing:-0.02em;margin-top:6px;font-variant-numeric:tabular-nums">{{ cOpen }}</div>
+          <div style="color:var(--faint);font-size:12px;margin-top:2px">Across 12 clients</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div style="display:flex;align-items:center;gap:6px;color:var(--muted);font-size:12px"><div style="width:6px;height:6px;border-radius:50%;background:var(--red)"></div>At risk</div><button onClick="{{ askRisk }}" style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 7px;border:1px solid transparent;border-radius:6px;background:var(--accent-soft);color:var(--accent-ink);font:inherit;font-size:11.5px;font-weight:500;cursor:pointer" style-hover="border-color:var(--accent)"><span style="width:5px;height:5px;border-radius:1.5px;background:var(--accent)"></span>Ask</button></div>
+          <div style="font-size:28px;font-weight:600;letter-spacing:-0.02em;margin-top:6px;font-variant-numeric:tabular-nums;color:var(--red-ink)">{{ cRisk }}</div>
+          <div style="color:var(--faint);font-size:12px;margin-top:2px">Held over 2× their stakeholder median</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div style="color:var(--muted);font-size:12px">Avg days open</div><button onClick="{{ askAvg }}" style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 7px;border:1px solid transparent;border-radius:6px;background:var(--accent-soft);color:var(--accent-ink);font:inherit;font-size:11.5px;font-weight:500;cursor:pointer" style-hover="border-color:var(--accent)"><span style="width:5px;height:5px;border-radius:1.5px;background:var(--accent)"></span>Ask</button></div>
+          <div style="font-size:28px;font-weight:600;letter-spacing:-0.02em;margin-top:6px;font-variant-numeric:tabular-nums">{{ cAvg }}</div>
+          <div style="color:var(--faint);font-size:12px;margin-top:2px">Median 2.6 days</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;display:flex;flex-direction:column">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div style="color:var(--muted);font-size:12px">Biggest bottleneck</div><button onClick="{{ askBottleneck }}" style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 7px;border:1px solid transparent;border-radius:6px;background:var(--accent-soft);color:var(--accent-ink);font:inherit;font-size:11.5px;font-weight:500;cursor:pointer" style-hover="border-color:var(--accent)"><span style="width:5px;height:5px;border-radius:1.5px;background:var(--accent)"></span>Ask</button></div>
+          <div style="font-size:18px;font-weight:600;letter-spacing:-0.015em;margin-top:10px">Security Review</div>
+          <div style="display:flex;justify-content:space-between;gap:8px;margin-top:auto;padding-top:6px;font-size:12px">
+            <div style="color:var(--amber-ink)">2.7d median hold</div>
+            <button onClick="{{ goMapSecurity }}" style="border:0;background:transparent;padding:0;color:var(--accent-ink);font:inherit;cursor:pointer" style-hover="text-decoration:underline">View on map →</button>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap">
+        <div style="display:flex;align-items:baseline;gap:8px"><div style="font-weight:600">Open tasks</div><div style="color:var(--faint);font-size:12px">{{ countTxt }}</div></div>
+        <div style="display:flex;align-items:center;gap:14px;color:var(--faint);font-size:12px">
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:1px;height:10px;background:var(--text)"></div>Stakeholder median</div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:16px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent) 60%,var(--accent-soft) 60%)"></div>Next-stop probability</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;min-width:1000px">
+        <thead><tr>
+          <sc-for list="{{ headers }}" as="h" hint-placeholder-count="7">
+          <th onClick="{{ h.onClick }}" style="text-align:left;font-size:12px;font-weight:500;color:{{ h.color }};padding:9px 16px;border-bottom:1px solid var(--border);background:var(--surface2);cursor:pointer;white-space:nowrap;user-select:none;width:{{ h.w }}">{{ h.label }} <span style="color:var(--faint);font-family:'JetBrains Mono',monospace;font-size:11px">{{ h.arrow }}</span></th>
+          </sc-for>
+        </tr></thead>
+        <tbody>
+          <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+            <sc-for list="{{ skel8 }}" as="s" hint-placeholder-count="8">
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:15px 16px"><div style="height:10px;width:52px;border-radius:4px;background:var(--surface3);animation:pulse 1.2s ease-in-out infinite"></div></td>
+              <td style="padding:15px 16px"><div style="height:10px;width:110px;border-radius:4px;background:var(--surface3);animation:pulse 1.2s ease-in-out infinite"></div></td>
+              <td style="padding:15px 16px"><div style="height:10px;width:96px;border-radius:4px;background:var(--surface3);animation:pulse 1.2s ease-in-out infinite"></div></td>
+              <td style="padding:15px 16px"><div style="height:18px;width:84px;border-radius:4px;background:var(--surface3);animation:pulse 1.2s ease-in-out infinite"></div></td>
+              <td style="padding:15px 16px"><div style="height:10px;width:130px;border-radius:4px;background:var(--surface3);animation:pulse 1.2s ease-in-out infinite"></div></td>
+              <td style="padding:15px 16px"><div style="height:10px;width:120px;border-radius:4px;background:var(--surface3);animation:pulse 1.2s ease-in-out infinite"></div></td>
+              <td style="padding:15px 16px"><div style="height:18px;width:52px;border-radius:4px;background:var(--surface3);animation:pulse 1.2s ease-in-out infinite"></div></td>
+            </tr>
+            </sc-for>
+          </sc-if>
+          <sc-if value="{{ showRows }}" hint-placeholder-val="{{ true }}">
+            <sc-for list="{{ rows }}" as="r" hint-placeholder-count="10">
+            <tr onClick="{{ r.open }}" style="border-bottom:1px solid var(--border);cursor:pointer" style-hover="background:var(--surface2)">
+              <td style="padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:500;white-space:nowrap">{{ r.id }}</td>
+              <td style="padding:10px 16px;white-space:nowrap">{{ r.client }}</td>
+              <td style="padding:10px 16px;color:var(--muted);white-space:nowrap">{{ r.type }}</td>
+              <td style="padding:10px 16px"><span style="display:inline-block;padding:1px 8px;border:1px solid var(--border);border-radius:4px;background:var(--surface2);font-size:12px;white-space:nowrap">{{ r.stake }}</span></td>
+              <td style="padding:10px 16px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:34px;font-variant-numeric:tabular-nums;font-weight:500">{{ r.daysTxt }}</div>
+                  <div style="position:relative;width:76px;height:6px;border-radius:3px;background:var(--surface3)">
+                    <div style="position:absolute;left:0;top:0;bottom:0;width:{{ r.barW }}%;border-radius:3px;background:{{ r.barColor }}"></div>
+                    <div style="position:absolute;left:33.3%;top:-3px;width:1px;height:12px;background:var(--text)"></div>
+                  </div>
+                  <div style="color:var(--faint);font-size:11.5px;white-space:nowrap">med {{ r.med }}</div>
+                </div>
+              </td>
+              <td style="padding:10px 16px">
+                <div style="display:flex;justify-content:space-between;width:140px;font-size:12.5px"><div>{{ r.n1 }}</div><div style="color:var(--muted);font-variant-numeric:tabular-nums">{{ r.p1 }}%</div></div>
+                <div style="display:flex;gap:1px;width:140px;height:4px;margin-top:4px;border-radius:2px;overflow:hidden">
+                  <div title="{{ r.t1 }}" style="width:{{ r.p1 }}%;background:var(--accent)"></div>
+                  <div title="{{ r.t2 }}" style="width:{{ r.p2 }}%;background:var(--accent);opacity:.45"></div>
+                  <div title="{{ r.t3 }}" style="width:{{ r.p3 }}%;background:var(--accent);opacity:.2"></div>
+                </div>
+              </td>
+              <td style="padding:10px 16px"><span style="display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:999px;background:{{ r.rBg }};color:{{ r.rInk }};font-size:12px;font-weight:500"><span style="width:6px;height:6px;border-radius:50%;background:{{ r.rDot }}"></span>{{ r.risk }}</span></td>
+            </tr>
+            </sc-for>
+          </sc-if>
+          <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+            <tr><td colspan="7" style="padding:56px 16px;text-align:center">
+              <div style="font-size:14px;font-weight:600">No tasks match “{{ emptyTerm }}”</div>
+              <div style="color:var(--muted);margin-top:4px">Try a task ID like T-4821, a client name, or clear the filters.</div>
+              <button onClick="{{ clearFilters }}" style="margin-top:14px;height:30px;padding:0 12px;border:1px solid var(--border2);border-radius:8px;background:var(--surface);color:var(--text);font:inherit;cursor:pointer" style-hover="background:var(--surface2)">Clear search and filters</button>
+            </td></tr>
+          </sc-if>
+        </tbody>
+      </table>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;color:var(--muted);font-size:12px">
+        <div>{{ pageTxt }}</div>
+        <div style="display:flex;gap:6px">
+          <button onClick="{{ prevPage }}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text);font:inherit;cursor:pointer;opacity:{{ prevOp }}" style-hover="background:var(--surface2)">← Prev</button>
+          <button onClick="{{ nextPage }}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--text);font:inherit;cursor:pointer;opacity:{{ nextOp }}" style-hover="background:var(--surface2)">Next →</button>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+  </div>
+  </sc-if>
+
+  <!-- DETAIL -->
+  <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <button onClick="{{ goQueue }}" style="align-self:flex-start;border:0;background:transparent;padding:0;color:var(--muted);font:inherit;cursor:pointer" style-hover="color:var(--text)">← Queue</button>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+        <div style="min-width:0">
+          <h1 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.015em;text-wrap:pretty"><span style="font-family:'JetBrains Mono',monospace;font-weight:500">{{ d.id }}</span> · {{ d.title }}</h1>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:8px;color:var(--muted);flex-wrap:wrap">
+            <div style="color:var(--text)">{{ d.client }}</div><div style="color:var(--faint)">·</div><div>{{ d.type }}</div><div style="color:var(--faint)">·</div>
+            <span style="display:inline-flex;align-items:center;gap:6px;padding:2px 8px;border-radius:999px;background:{{ d.rBg }};color:{{ d.rInk }};font-size:12px;font-weight:500"><span style="width:6px;height:6px;border-radius:50%;background:{{ d.rDot }}"></span>{{ d.risk }} risk</span>
+            <div style="color:var(--faint)">·</div><div>Open {{ d.open }} days</div>
+          </div>
+        </div>
+        <button onClick="{{ askAboutTask }}" style="height:32px;padding:0 12px;border:1px solid var(--border2);border-radius:8px;background:var(--surface);color:var(--text);font:inherit;font-weight:500;cursor:pointer;white-space:nowrap" style-hover="background:var(--surface2)">Ask about this task</button>
+      </div>
+    </div>
+
+    <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+      <div style="height:150px;border-radius:8px;background:var(--surface);border:1px solid var(--border);padding:16px;box-sizing:border-box"><div style="height:28px;border-radius:4px;background:var(--surface3);animation:pulse 1.2s ease-in-out infinite;margin-top:40px"></div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px"><sc-for list="{{ skel3 }}" as="s" hint-placeholder-count="3"><div style="height:200px;border-radius:8px;background:var(--surface);border:1px solid var(--border);animation:pulse 1.2s ease-in-out infinite"></div></sc-for></div>
+    </sc-if>
+
+    <sc-if value="{{ readyNoErr }}" hint-placeholder-val="{{ true }}">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px 18px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px">
+        <div style="display:flex;align-items:center;gap:10px"><div style="font-weight:600">Handoff timeline</div><button onClick="{{ askTimeline }}" style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 7px;border:1px solid transparent;border-radius:6px;background:var(--accent-soft);color:var(--accent-ink);font:inherit;font-size:11.5px;font-weight:500;cursor:pointer" style-hover="border-color:var(--accent)"><span style="width:5px;height:5px;border-radius:1.5px;background:var(--accent)"></span>Ask agent</button></div>
+        <div style="display:flex;gap:14px;font-size:12px;color:var(--muted)">
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:8px;border-radius:2px;background:var(--surface3)"></div>Completed</div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:8px;border-radius:2px;background:var(--accent)"></div>Current</div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:8px;border-radius:2px;border:1.5px dashed var(--border2);box-sizing:border-box"></div>Predicted</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto"><div style="display:flex;gap:3px;min-width:560px">
+        <div style="flex:{{ d.actualFlex }} 1 0;display:flex;gap:3px;animation:fillX 300ms ease-out both">
+          <sc-for list="{{ d.actual }}" as="s" hint-placeholder-count="3">
+          <div style="flex:{{ s.flex }} 1 0;min-width:72px;display:flex;flex-direction:column;gap:8px">
+            <div style="height:28px;border-radius:4px;background:{{ s.bg }}"></div>
+            <div><div style="font-weight:500;font-size:12.5px;white-space:nowrap">{{ s.name }}</div><div style="color:{{ s.subColor }};font-size:12px;font-family:'JetBrains Mono',monospace;white-space:nowrap">{{ s.sub }}</div></div>
+          </div>
+          </sc-for>
+        </div>
+        <div style="flex:{{ d.predFlex }} 1 0;display:flex;gap:3px;animation:fadeIn 250ms ease-out 260ms both">
+          <sc-for list="{{ d.pred }}" as="s" hint-placeholder-count="2">
+          <div style="flex:{{ s.flex }} 1 0;min-width:72px;display:flex;flex-direction:column;gap:8px">
+            <div style="height:28px;border-radius:4px;border:1.5px dashed var(--border2);box-sizing:border-box"></div>
+            <div><div style="font-weight:500;font-size:12.5px;color:var(--muted);white-space:nowrap">{{ s.name }}</div><div style="color:var(--faint);font-size:12px;font-family:'JetBrains Mono',monospace;white-space:nowrap">{{ s.sub }}</div></div>
+          </div>
+          </sc-for>
+        </div>
+      </div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:14px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--faint)"><div>Opened {{ d.opened }}</div><div>Est. close {{ d.close }}</div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div style="font-weight:600">Predicted next stop</div><button onClick="{{ askPredict }}" style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 7px;border:1px solid transparent;border-radius:6px;background:var(--accent-soft);color:var(--accent-ink);font:inherit;font-size:11.5px;font-weight:500;cursor:pointer" style-hover="border-color:var(--accent)"><span style="width:5px;height:5px;border-radius:1.5px;background:var(--accent)"></span>Ask agent</button></div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ d.next }}" as="n" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:92px;font-size:12.5px">{{ n.name }}</div>
+            <div style="flex:1;height:8px;border-radius:4px;background:var(--surface3);overflow:hidden"><div style="height:100%;width:{{ n.p }}%;background:var(--accent);opacity:{{ n.op }};border-radius:4px"></div></div>
+            <div style="width:34px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">{{ n.p }}%</div>
+          </div>
+          </sc-for>
+        </div>
+        <div style="color:var(--muted);font-size:12.5px;text-wrap:pretty">{{ d.reason }}</div>
+        <div style="margin-top:auto;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:baseline"><div style="color:var(--muted);font-size:12px">Est. close</div><div style="font-weight:600;font-size:15px">{{ d.close }}</div></div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:600">Summary</div><div style="display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--faint)"><div style="width:6px;height:6px;border-radius:2px;background:var(--accent)"></div>Generated by Claude</div></div>
+        <div style="line-height:1.6;text-wrap:pretty">{{ d.summary }}</div>
+        <div style="padding:10px 12px;border-radius:6px;background:var(--surface2);border:1px solid var(--border)">
+          <div style="font-size:11.5px;color:var(--muted);font-weight:500;margin-bottom:3px">Suggested action</div>
+          <div style="line-height:1.55;text-wrap:pretty">{{ d.action }}</div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><div><div style="font-weight:600">Related code</div><div style="color:var(--faint);font-size:12px;margin-top:2px">From linked commits and similar cases</div></div><button onClick="{{ askCode }}" style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 7px;border:1px solid transparent;border-radius:6px;background:var(--accent-soft);color:var(--accent-ink);font:inherit;font-size:11.5px;font-weight:500;cursor:pointer" style-hover="border-color:var(--accent)"><span style="width:5px;height:5px;border-radius:1.5px;background:var(--accent)"></span>Ask agent</button></div>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ d.code }}" as="c" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--border)">
+            <div style="flex:1;min-width:0"><div style="font-family:'JetBrains Mono',monospace;font-size:12.5px;overflow-wrap:anywhere">{{ c.path }}</div><div style="color:var(--muted);font-size:12px">{{ c.note }}</div></div>
+            <sc-if value="{{ c.hot }}" hint-placeholder-val="{{ false }}"><span style="padding:1px 7px;border-radius:4px;background:var(--red-soft);color:var(--red-ink);font-size:11.5px;font-weight:500">hotspot</span></sc-if>
+            <div style="color:var(--faint);font-size:12px;white-space:nowrap">{{ c.n }} tasks</div>
+          </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:baseline;gap:8px"><div style="font-weight:600;font-size:15px">Similar cases</div><div style="color:var(--faint);font-size:12px">Solved for other clients</div><button onClick="{{ askSimilar }}" style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 7px;border:1px solid transparent;border-radius:6px;background:var(--accent-soft);color:var(--accent-ink);font:inherit;font-size:11.5px;font-weight:500;cursor:pointer;margin-left:4px" style-hover="border-color:var(--accent)"><span style="width:5px;height:5px;border-radius:1.5px;background:var(--accent)"></span>Which fix applies here?</button></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px">
+        <sc-for list="{{ d.similar }}" as="s" hint-placeholder-count="3">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;gap:10px" style-hover="border-color:var(--border2)">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent-ink);font-size:12px;font-weight:500">{{ s.score }}% match</span><div style="color:var(--muted);font-size:12px">Closed in {{ s.time }}</div></div>
+          <div><div style="font-size:12px;color:var(--muted)"><span style="font-family:'JetBrains Mono',monospace;color:var(--text)">{{ s.id }}</span> · {{ s.client }}</div><div style="font-weight:500;font-size:14px;margin-top:3px;text-wrap:pretty">{{ s.title }}</div></div>
+          <div style="font-size:12px;color:var(--muted)">Matched on: {{ s.matched }}</div>
+          <div style="font-size:12.5px;padding-top:10px;border-top:1px solid var(--border);margin-top:auto;text-wrap:pretty"><span style="color:var(--muted)">Solved by:</span> {{ s.solved }}</div>
+        </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+  </div>
+  </sc-if>
+
+  <!-- MAP -->
+  <sc-if value="{{ isMap }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div><h1 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.015em">Process map</h1><div style="color:var(--muted);margin-top:3px">How tasks move between stakeholders · last 90 days · 412 tasks</div></div>
+      <div style="display:flex;align-items:center;gap:16px;font-size:12px;color:var(--muted);flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:6px"><div style="width:18px;height:2px;background:var(--border2)"></div><div style="width:18px;height:6px;border-radius:3px;background:var(--border2)"></div>Handoff volume</div>
+        <div style="display:flex;align-items:center;gap:6px"><div style="width:56px;height:6px;border-radius:3px;background:linear-gradient(90deg,oklch(0.68 0.15 150),oklch(0.72 0.15 90),oklch(0.68 0.15 25))"></div>Avg wait 0.5d → 3d</div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;flex-direction:{{ mapDir }};min-height:480px">
+      <div style="flex:1;min-width:0;padding:14px 16px;position:relative">
+        <div style="color:var(--faint);font-size:12px">Click a stakeholder to inspect · node size = task volume</div>
+        <sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}"><div style="height:420px;margin-top:12px;border-radius:6px;background:var(--surface2);animation:pulse 1.2s ease-in-out infinite"></div></sc-if>
+        <sc-if value="{{ ready }}" hint-placeholder-val="{{ true }}"><div style="margin-top:6px">{{ mapSvg }}</div></sc-if>
+      </div>
+      <sc-if value="{{ hasNode }}" hint-placeholder-val="{{ false }}">
+      <div style="width:{{ panelW }};flex:none;align-self:stretch;min-width:0;border-left:{{ panelLeft }};border-top:{{ panelTop }};background:var(--surface);padding:16px 18px;box-sizing:border-box;display:flex;flex-direction:column;gap:16px;animation:slideIn 240ms ease-out both">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div><div style="font-size:15px;font-weight:600">{{ nd.name }}</div><div style="color:var(--muted);font-size:12px;margin-top:2px">{{ nd.vol }} tasks passed through · 90 days</div></div>
+          <button onClick="{{ closeNode }}" aria-label="Close" style="border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:16px;line-height:1" style-hover="color:var(--text)">×</button>
+        </div>
+        <sc-if value="{{ nd.hasHold }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:12px;color:var(--muted);font-weight:500">Avg hold vs median</div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:52px;font-size:12px">Avg</div><div style="flex:1;height:8px;border-radius:4px;background:var(--surface3)"><div style="height:100%;width:{{ nd.holdW }}%;border-radius:4px;background:{{ nd.holdColor }}"></div></div><div style="width:36px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px">{{ nd.hold }}d</div></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:52px;font-size:12px;color:var(--muted)">Median</div><div style="flex:1;height:8px;border-radius:4px;background:var(--surface3)"><div style="height:100%;width:{{ nd.medW }}%;border-radius:4px;background:var(--border2)"></div></div><div style="width:36px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">{{ nd.med }}d</div></div>
+        </div>
+        </sc-if>
+        <div>
+          <div style="font-size:12px;color:var(--muted);font-weight:500;margin-bottom:4px">Open here now ({{ nd.openCount }})</div>
+          <sc-for list="{{ nd.open }}" as="o" hint-placeholder-count="3">
+          <div onClick="{{ o.open }}" style="display:flex;align-items:center;gap:8px;padding:7px 6px;margin:0 -6px;border-radius:6px;cursor:pointer" style-hover="background:var(--surface2)">
+            <div style="width:6px;height:6px;border-radius:50%;background:{{ o.dot }}"></div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:12px">{{ o.id }}</div>
+            <div style="flex:1;min-width:0;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ o.client }}</div>
+            <div style="font-size:12px;font-variant-numeric:tabular-nums">{{ o.days }}d</div>
+          </div>
+          </sc-for>
+          <sc-if value="{{ nd.noOpen }}" hint-placeholder-val="{{ false }}"><div style="color:var(--faint);font-size:12px;padding:4px 0">No open tasks at this stage.</div></sc-if>
+        </div>
+        <sc-if value="{{ nd.hasNext }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:12px;color:var(--muted);font-weight:500">Top next stops</div>
+          <sc-for list="{{ nd.next }}" as="n" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:84px;font-size:12px">{{ n.name }}</div><div style="flex:1;height:6px;border-radius:3px;background:var(--surface3)"><div style="height:100%;width:{{ n.p }}%;border-radius:3px;background:var(--accent);opacity:{{ n.op }}"></div></div><div style="width:32px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)">{{ n.p }}%</div></div>
+          </sc-for>
+        </div>
+        </sc-if>
+        <div style="padding:10px 12px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);line-height:1.55;text-wrap:pretty">{{ nd.insight }}</div>
+        <button onClick="{{ askNode }}" style="display:flex;align-items:center;justify-content:center;gap:7px;height:32px;border:1px solid transparent;border-radius:8px;background:var(--accent-soft);color:var(--accent-ink);font:inherit;font-weight:500;cursor:pointer" style-hover="border-color:var(--accent)"><span style="width:6px;height:6px;border-radius:2px;background:var(--accent)"></span>Ask agent about {{ nd.name }}</button>
+      </div>
+      </sc-if>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px 18px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:14px"><div style="font-weight:600">Top problem modules</div><div style="display:flex;align-items:center;gap:10px"><div style="color:var(--faint);font-size:12px">Tasks touching each module · last 90 days</div><button onClick="{{ askModules }}" style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 7px;border:1px solid transparent;border-radius:6px;background:var(--accent-soft);color:var(--accent-ink);font:inherit;font-size:11.5px;font-weight:500;cursor:pointer" style-hover="border-color:var(--accent)"><span style="width:5px;height:5px;border-radius:1.5px;background:var(--accent)"></span>Ask agent</button></div></div>
+      <div style="display:flex;flex-direction:column;gap:9px">
+        <sc-for list="{{ modules }}" as="m" hint-placeholder-count="8">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:140px;flex:none;font-family:'JetBrains Mono',monospace;font-size:12px">{{ m.name }}</div>
+          <div style="flex:1;height:14px;border-radius:3px;background:var(--surface2)"><div style="height:100%;width:{{ m.w }}%;border-radius:3px;background:var(--accent);opacity:{{ m.op }};animation:fillX 300ms ease-out both"></div></div>
+          <div style="width:28px;text-align:right;font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px">{{ m.n }}</div>
+        </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ASK -->
+  <sc-if value="{{ isAsk }}" hint-placeholder-val="{{ false }}">
+  <div style="max-width:800px;margin:0 auto;display:flex;flex-direction:column;min-height:calc(100vh - 150px)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div style="display:flex;align-items:baseline;gap:8px"><h1 style="margin:0;font-size:20px;font-weight:600;letter-spacing:-0.015em">Ask</h1><div style="color:var(--faint);font-size:12px">Relay agent</div></div>
+      <button onClick="{{ newChat }}" style="height:30px;padding:0 12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font:inherit;cursor:pointer" style-hover="background:var(--surface2)">New chat</button>
+    </div>
+
+    <sc-if value="{{ showEmpty }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:64px 0 24px;gap:6px">
+      <div style="font-size:20px;font-weight:600;letter-spacing:-0.015em">Ask about any task, team, or past fix</div>
+      <div style="color:var(--muted)">The agent queries the task data with tools and shows its steps.</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px;width:100%;margin-top:24px">
+        <sc-for list="{{ chips }}" as="c" hint-placeholder-count="6">
+        <button onClick="{{ c.ask }}" style="text-align:left;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font:inherit;cursor:pointer" style-hover="border-color:var(--border2);background:var(--surface2)">{{ c.q }}</button>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <div style="display:flex;flex-direction:column;gap:28px">
+    <sc-if value="{{ showDemo }}" hint-placeholder-val="{{ true }}">
+      <div style="align-self:flex-end;max-width:80%;padding:9px 13px;border-radius:8px;background:var(--surface2);border:1px solid var(--border)">How have we solved cache purge delays before?</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-weight:500"><div style="width:8px;height:8px;border-radius:2px;background:var(--accent)"></div>Relay agent</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px;color:var(--muted)">
+          <div style="display:flex;gap:5px;animation:rise 200ms ease-out 0ms both"><span style="color:var(--green-ink)">✓</span>Searched similar cases</div>
+          <div style="display:flex;gap:5px;animation:rise 200ms ease-out 120ms both"><span style="color:var(--green-ink)">✓</span>Pulled routing stats</div>
+          <div style="display:flex;gap:5px;animation:rise 200ms ease-out 240ms both"><span style="color:var(--green-ink)">✓</span>Compared clients</div>
+        </div>
+        <div style="line-height:1.6;text-wrap:pretty">Across 25 resolved cache purge tasks this quarter, most delays traced to <span style="font-family:'JetBrains Mono',monospace;font-size:12.5px">edge-sync/</span> propagation rather than the purge API. The fastest fix was flushing the edge-sync batch queue. Config-related cases took longer because they needed QA sign-off before closing.</div>
+        <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--surface)">
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) 64px 150px;gap:12px;padding:8px 14px;background:var(--surface2);font-size:12px;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border)"><div>Fix</div><div style="text-align:right">Cases</div><div>Median close</div></div>
+          <sc-for list="{{ fixRows }}" as="f" hint-placeholder-count="3">
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) 64px 150px;gap:12px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:center">
+            <div>{{ f.fix }}</div><div style="text-align:right;font-variant-numeric:tabular-nums">{{ f.n }}</div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;border-radius:3px;background:var(--surface3)"><div style="height:100%;width:{{ f.w }}%;border-radius:3px;background:var(--accent)"></div></div><div style="font-family:'JetBrains Mono',monospace;font-size:12px;width:32px">{{ f.t }}</div></div>
+          </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><div style="font-size:12px;color:var(--faint);margin-right:2px">Sources</div>
+          <sc-for list="{{ sources }}" as="s" hint-placeholder-count="4"><span style="padding:1px 7px;border:1px solid var(--border);border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);background:var(--surface)">{{ s }}</span></sc-for>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <sc-for list="{{ followUps }}" as="c" hint-placeholder-count="3"><button onClick="{{ c.ask }}" style="padding:5px 10px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);font:inherit;font-size:12.5px;cursor:pointer" style-hover="border-color:var(--border2);background:var(--surface2)">{{ c.q }}</button></sc-for>
+        </div>
+      </div>
+
+      <div style="align-self:flex-end;max-width:80%;padding:9px 13px;border-radius:8px;background:var(--surface2);border:1px solid var(--border)">What's likely to breach SLA this week?</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-weight:500"><div style="width:8px;height:8px;border-radius:2px;background:var(--accent)"></div>Relay agent</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px;color:var(--muted)">
+          <div style="display:flex;gap:5px"><span style="color:var(--green-ink)">✓</span>Checked task schema</div>
+          <div style="display:flex;gap:5px"><span style="color:var(--amber-ink)">–</span>No SLA fields found</div>
+        </div>
+        <div style="line-height:1.6;text-wrap:pretty">There's no SLA contract data in this dataset, so I can't confirm breaches. I can show tasks open longer than the median for their type.</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><button onClick="{{ showOverMedian }}" style="padding:5px 10px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);font:inherit;font-size:12.5px;cursor:pointer" style-hover="border-color:var(--border2);background:var(--surface2)">Show tasks open longer than median</button></div>
+      </div>
+    </sc-if>
+
+    <sc-for list="{{ extra }}" as="m" hint-placeholder-count="0">
+      <div style="display:flex;flex-direction:column;gap:28px">
+      <div style="align-self:flex-end;max-width:80%;padding:9px 13px;border-radius:8px;background:var(--surface2);border:1px solid var(--border)">{{ m.q }}</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-weight:500"><div style="width:8px;height:8px;border-radius:2px;background:var(--accent)"></div>Relay agent<span style="color:var(--faint);font-weight:400">{{ m.status }}</span></div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <sc-for list="{{ m.steps }}" as="s" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:{{ s.color }};animation:rise 200ms ease-out both">
+            <sc-if value="{{ s.done }}" hint-placeholder-val="{{ false }}"><span style="width:12px;color:var(--green-ink);text-align:center">✓</span></sc-if>
+            <sc-if value="{{ s.active }}" hint-placeholder-val="{{ false }}"><span style="width:10px;height:10px;margin:0 1px;border-radius:50%;border:1.5px solid var(--accent);border-top-color:transparent;box-sizing:border-box;animation:spin 700ms linear infinite"></span></sc-if>
+            {{ s.label }}
+          </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ m.limited }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:var(--amber-soft);color:var(--amber-ink);border:1px solid var(--border);animation:rise 200ms ease-out both">
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--amber)"></div>
+          <div style="flex:1;color:var(--text)">Demo limit reached, try again in a minute.</div>
+        </div>
+        </sc-if>
+      </div>
+      </div>
+    </sc-for>
+    </div>
+
+    <div style="flex:1;min-height:24px"></div>
+    <div style="position:sticky;bottom:0;background:var(--bg);padding:12px 0 16px">
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 6px 6px 14px;border:1px solid var(--border2);border-radius:10px;background:var(--surface)">
+        <input value="{{ draft }}" onChange="{{ onDraft }}" onKeyDown="{{ onDraftKey }}" placeholder="{{ inputPh }}" disabled="{{ busy }}" style="flex:1;min-width:0;border:0;outline:none;background:transparent;color:var(--text);font:inherit;font-size:13.5px;height:30px">
+        <button onClick="{{ send }}" disabled="{{ busy }}" style="height:30px;padding:0 14px;border:0;border-radius:7px;background:var(--accent);color:var(--on-accent);font:inherit;font-weight:500;cursor:pointer;opacity:{{ sendOp }}">Send</button>
+      </div>
+      <div style="text-align:center;color:var(--faint);font-size:11.5px;margin-top:8px">Answers are generated from the task data via tool calls</div>
+    </div>
+  </div>
+  </sc-if>
+
+  </div>
+</main>
+
+<sc-if value="{{ dockOpen }}" hint-placeholder-val="{{ false }}">
+<aside style="width:{{ dockW }};flex:none;position:{{ dockPos }};top:0;right:0;bottom:0;z-index:50;height:100vh;box-sizing:border-box;background:#0d0f13;color:#e6e9ee;display:flex;flex-direction:column;border-left:1px solid #1f232a;box-shadow:{{ dockShadow }};animation:slideIn 240ms ease-out both">
+  <div style="display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid #1f232a">
+    <div style="width:8px;height:8px;border-radius:50%;background:oklch(0.74 0.15 266);animation:breathe 2.4s ease-in-out infinite"></div>
+    <div style="flex:1;min-width:0"><div style="font-weight:600">Relay agent</div><div style="color:#8f97a3;font-size:12px">Watching 100 open tasks · context: <span style="color:#e6e9ee;font-family:'JetBrains Mono',monospace;font-size:11.5px">{{ dockCtx }}</span></div></div>
+    <button onClick="{{ closeDock }}" aria-label="Close agent" style="border:0;background:transparent;color:#8f97a3;cursor:pointer;font-size:18px;line-height:1" style-hover="color:#fff">×</button>
+  </div>
+  <div ref="{{ dockRef }}" style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:26px">
+    <sc-if value="{{ dockEmpty }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-family:'Instrument Serif',Georgia,serif;font-size:26px;line-height:1.1">I'm already looking. Ask me where to start.</div>
+      <div style="color:#9aa2ad;line-height:1.55">Press <span style="color:#e6e9ee">Ask agent</span> on any card and I'll start from that context, or type below.</div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px">
+        <sc-for list="{{ dockChips }}" as="c" hint-placeholder-count="3"><button onClick="{{ c.ask }}" style="text-align:left;padding:9px 12px;border:1px solid #262b33;border-radius:8px;background:#14171c;color:#e6e9ee;font:inherit;cursor:pointer" style-hover="border-color:#3a404a">{{ c.q }}</button></sc-for>
+      </div>
+    </div>
+    </sc-if>
+    <sc-for list="{{ dockMsgs }}" as="m" hint-placeholder-count="0">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="align-self:flex-end;max-width:88%;padding:8px 12px;border-radius:8px;background:#1b1f26;border:1px solid #262b33">{{ m.q }}</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <sc-for list="{{ m.steps }}" as="s" hint-placeholder-count="2">
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:{{ s.color }};animation:rise 200ms ease-out both">
+          <sc-if value="{{ s.done }}" hint-placeholder-val="{{ false }}"><span style="width:12px;text-align:center;color:oklch(0.78 0.13 152)">✓</span></sc-if>
+          <sc-if value="{{ s.active }}" hint-placeholder-val="{{ false }}"><span style="width:10px;height:10px;margin:0 1px;border-radius:50%;border:1.5px solid oklch(0.74 0.15 266);border-top-color:transparent;box-sizing:border-box;animation:spin 700ms linear infinite"></span></sc-if>
+          {{ s.label }}
+        </div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ m.done }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:12px;animation:rise 220ms ease-out both">
+        <div style="line-height:1.6;text-wrap:pretty">{{ m.text }}</div>
+        <sc-if value="{{ m.hasBars }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:7px;padding:12px;border:1px solid #23272f;border-radius:8px;background:#121418">
+          <sc-for list="{{ m.bars }}" as="b" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:132px;flex:none;font-size:12px;color:#b9c0c9">{{ b.label }}</div><div style="flex:1;height:7px;border-radius:4px;background:#22262e"><div style="height:100%;width:{{ b.w }}%;border-radius:4px;background:{{ b.color }};animation:fillX 300ms ease-out both"></div></div><div style="width:48px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#b9c0c9">{{ b.val }}</div></div>
+          </sc-for>
+        </div>
+        </sc-if>
+        <sc-if value="{{ m.hasDraft }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:12px 14px;border:1px solid #2a2f38;border-radius:8px;background:#121418;display:flex;flex-direction:column;gap:10px">
+          <div style="line-height:1.6;color:#dfe3e8;text-wrap:pretty">{{ m.draft }}</div>
+          <button onClick="{{ m.copy }}" style="align-self:flex-start;height:26px;padding:0 10px;border:1px solid #333944;border-radius:6px;background:transparent;color:#e6e9ee;font:inherit;font-size:12px;cursor:pointer" style-hover="border-color:#5a616c">{{ m.copyLabel }}</button>
+        </div>
+        </sc-if>
+        <sc-if value="{{ m.hasSources }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><div style="font-size:11.5px;color:#6f7782">Sources</div><sc-for list="{{ m.sources }}" as="x" hint-placeholder-count="2"><span style="padding:1px 6px;border:1px solid #2a2f37;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#9aa2ad">{{ x }}</span></sc-for></div>
+        </sc-if>
+        <sc-if value="{{ m.hasFollow }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ m.follow }}" as="f" hint-placeholder-count="2"><button onClick="{{ f.ask }}" style="padding:5px 10px;border:1px solid #2f3540;border-radius:999px;background:transparent;color:#dfe3e8;font:inherit;font-size:12px;cursor:pointer" style-hover="border-color:oklch(0.7 0.16 266);color:#fff">{{ f.q }}</button></sc-for></div>
+        </sc-if>
+      </div>
+      </sc-if>
+      <sc-if value="{{ m.limited }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:oklch(0.3 0.05 75);border:1px solid oklch(0.4 0.07 75)"><div style="width:6px;height:6px;border-radius:50%;background:oklch(0.8 0.13 80)"></div><div>Demo limit reached, try again in a minute.</div></div>
+      </sc-if>
+    </div>
+    </sc-for>
+  </div>
+  <div style="padding:12px 14px 14px;border-top:1px solid #1f232a">
+    <div style="display:flex;align-items:center;gap:8px;padding:5px 5px 5px 12px;border:1px solid #2f3540;border-radius:10px;background:#14171c">
+      <input value="{{ dockDraft }}" onChange="{{ onDockDraft }}" onKeyDown="{{ onDockKey }}" placeholder="Ask a follow-up…" style="flex:1;min-width:0;border:0;outline:none;background:transparent;color:#e6e9ee;font:inherit;height:28px">
+      <button onClick="{{ dockSend }}" style="height:28px;padding:0 12px;border:0;border-radius:7px;background:oklch(0.55 0.2 266);color:#fff;font:inherit;font-weight:500;cursor:pointer">Send</button>
+    </div>
+    <div style="color:#6f7782;font-size:11px;margin-top:7px;text-align:center">Answers are generated from the task data via tool calls</div>
+  </div>
+</aside>
+</sc-if>
+
+<sc-if value="{{ showLauncher }}" hint-placeholder-val="{{ false }}">
+<button onClick="{{ openDock }}" style="position:fixed;right:20px;bottom:20px;z-index:40;display:flex;align-items:center;gap:10px;height:44px;padding:0 16px 0 14px;border:0;border-radius:22px;background:#0d0f13;color:#eef0f3;font:inherit;font-weight:500;cursor:pointer;box-shadow:0 6px 24px rgba(13,15,19,0.25)" style-hover="background:#1a1d23"><span style="width:8px;height:8px;border-radius:50%;background:oklch(0.74 0.15 266);animation:breathe 2.4s ease-in-out infinite"></span>Ask Relay agent<span style="min-width:18px;height:18px;padding:0 5px;box-sizing:border-box;border-radius:9px;background:oklch(0.55 0.2 266);font-size:11px;display:flex;align-items:center;justify-content:center">5</span></button>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light'|'dark'&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;ultramarine&quot;,&quot;teal&quot;],&quot;default&quot;:&quot;ultramarine&quot;,&quot;tsType&quot;:&quot;'ultramarine'|'teal'&quot;},&quot;dataState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;live&quot;,&quot;loading&quot;,&quot;error&quot;,&quot;empty&quot;],&quot;default&quot;:&quot;live&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showBanner&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  dockRef = React.createRef();
+  state = { screen: 'briefing', mode: 'agent', dockOpen: false, dock: [], dockStep: 0, dockDraft: '', copied: -1, taskId: 'T-4821', themeOverride: null, bannerClosed: false, q: '', fType: 'All task types', fClient: 'All clients', fStake: 'All stakeholders', fDate: 'Last 30 days', sortKey: 'risk', sortDir: 'desc', page: 0, booted: false, retrying: false, errCleared: false, node: null, countT: 0, narrow: false, mapSeen: false, askMode: 'thread', extra: [], thinkStep: 0, autoRan: false, draft: '' };
+
+  componentDidMount() {
+    this.reduced = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    this.onResize = () => { const n = window.innerWidth < 900, w = window.innerWidth >= 1280; if (n !== this.state.narrow || w !== this.state.wideDock) this.setState({ narrow: n, wideDock: w }); };
+    this.onResize(); window.addEventListener('resize', this.onResize);
+    this.t1 = setTimeout(() => { this.setState({ booted: true }); this.countUp(); }, 650);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); clearInterval(this.dockTimer); clearTimeout(this.t1); clearTimeout(this.t2); clearInterval(this.thinkTimer); cancelAnimationFrame(this.raf); }
+  countUp() {
+    if (this.reduced) return this.setState({ countT: 1 });
+    const s = performance.now();
+    const f = now => { const p = Math.min(1, (now - s) / 450); this.setState({ countT: 1 - Math.pow(1 - p, 3) }); if (p < 1) this.raf = requestAnimationFrame(f); };
+    this.raf = requestAnimationFrame(f);
+  }
+  rng(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  r1(x) { return Math.round(x * 10) / 10; }
+  rs(r) { const k = r === 'High' ? 'red' : r === 'Medium' ? 'amber' : 'green'; return { rBg: `var(--${k}-soft)`, rInk: `var(--${k}-ink)`, rDot: `var(--${k})` }; }
+
+  getData() {
+    if (this._d) return this._d;
+    const R = this.rng(20261007);
+    const TITLES = {
+      'Cache purge bug': ['Cache purge not propagating to edge nodes', 'Purge API returns 200 but assets stay stale', 'Wildcard purge timing out on large zones'],
+      'New domain setup': ['Onboard new storefront domain', 'Add apex domain with CNAME flattening', 'Provision staging hostnames'],
+      'SSL renewal': ['Wildcard cert renewal failing validation', 'Renew EV certificate before expiry', 'Cert chain mismatch on legacy edge'],
+      'Traffic spike': ['Origin overload during launch traffic', 'Unexpected 5× egress spike in EU', 'Bot surge on login endpoint'],
+      'Config change': ['Update cache key to ignore UTM params', 'Raise origin timeout for API routes', 'Enable Brotli on static paths'],
+      'DNS routing issue': ['Geo-routing sending APAC users to US', 'Intermittent NXDOMAIN on subdomain', 'Latency-based routing flapping'],
+      'Origin failover': ['Failover not triggering on 503s', 'Secondary origin health check misconfigured', 'Failback loop between origins'],
+      'Log access request': ['Raw log export to customer S3', 'Real-time log stream for SIEM', 'Historical logs for incident review']
+    };
+    const CODE = {
+      'Cache purge bug': [['cdn-cache-purge/', 'Purge API and fan-out', 27], ['edge-sync/propagation.go', 'Edge PoP propagation', 34], ['config-service/ttl_rules.yaml', 'TTL overrides', 12]],
+      'New domain setup': [['config-service/', 'Zone and hostname config', 12], ['dns-routing/zones.go', 'Zone provisioning', 9], ['ssl-cert/issuer.go', 'Certificate issuance', 7]],
+      'SSL renewal': [['ssl-cert/', 'Certificate lifecycle', 19], ['ssl-cert/acme_client.go', 'ACME validation', 11], ['edge-sync/cert_push.go', 'Certificate distribution', 8]],
+      'Traffic spike': [['edge-sync/', 'Edge state sync', 34], ['waf-rules/rate_limits.yaml', 'Rate limit rules', 7], ['origin-failover/shield.go', 'Origin shielding', 6]],
+      'Config change': [['config-service/', 'Config API', 12], ['config-service/validate.go', 'Schema validation', 8], ['edge-sync/config_push.go', 'Config rollout', 10]],
+      'DNS routing issue': [['dns-routing/', 'Resolver and steering', 15], ['dns-routing/geo_steering.go', 'Geo steering', 9], ['config-service/pop_map.yaml', 'PoP mapping', 5]],
+      'Origin failover': [['origin-failover/', 'Failover controller', 9], ['origin-failover/health_check.go', 'Origin health checks', 7], ['config-service/origins.yaml', 'Origin pools', 4]],
+      'Log access request': [['log-export/', 'Export pipeline', 4], ['log-export/s3_sink.go', 'S3 delivery', 3], ['config-service/log_fields.yaml', 'Log field config', 2]]
+    };
+    const FIX = {
+      'Cache purge bug': ['Network Eng flushed the edge-sync batch queue', 'TTL override corrected in config-service', 'Dev patched purge retry backoff'],
+      'New domain setup': ['Ops pre-validated DNS ownership before handoff', 'Hostnames provisioned via bulk config template', 'Security fast-tracked cert issuance'],
+      'SSL renewal': ['Switched validation from HTTP to DNS challenge', 'Re-issued chain with updated intermediate', 'Pushed cert manually to legacy edge pool'],
+      'Traffic spike': ['Enabled origin shield for the affected region', 'Tightened WAF rate limits on hot path', 'Raised edge cache TTL for static assets'],
+      'Config change': ['Rolled out behind staged config push', 'Validated schema change in QA first', 'Customer approved change window in advance'],
+      'DNS routing issue': ['Corrected PoP map for the APAC region', 'Raised steering hysteresis to stop flapping', 'Fixed stale geo-IP database'],
+      'Origin failover': ['Health check path updated to a real endpoint', 'Failover threshold tuned to 3 consecutive 503s', 'Dev fixed failback cooldown timer'],
+      'Log access request': ['Customer IAM role fixed for S3 sink', 'Security approved scoped log fields', 'Exported via existing log-export template']
+    };
+    const NODES = [
+      { id: 'Intake', x: 70, y: 220, vol: 412, hold: 0.3, med: 0.3, next: [['Support', 94], ['Security', 4], ['Ops', 2]], ins: 'Fast and stable. 94% of tasks go straight to Support within a few hours.' },
+      { id: 'Support', x: 245, y: 220, vol: 398, hold: 0.9, med: 0.8, next: [['Network Eng', 45], ['Ops', 30], ['Security', 25]], ins: '18% of tasks sent to Security come back here for rework, usually missing proof of domain ownership.' },
+      { id: 'Network Eng', x: 465, y: 92, vol: 156, hold: 2.6, med: 1.9, next: [['Customer', 64], ['QA', 23], ['Dev', 13]], ins: 'Cache purge tasks hold 2.3× longer here than DNS tasks; most involve edge-sync/.' },
+      { id: 'Ops', x: 465, y: 220, vol: 171, hold: 1.0, med: 1.1, next: [['Customer', 55], ['QA', 35], ['Dev', 10]], ins: 'Holding under median. Config changes clear fastest when the ticket includes a rollback plan.' },
+      { id: 'Security', x: 465, y: 350, vol: 92, hold: 3.4, med: 2.7, next: [['Support', 48], ['Ops', 37], ['Customer', 15]], ins: 'Biggest bottleneck. SSL and WAF reviews wait on a two-person approval queue.' },
+      { id: 'QA', x: 690, y: 122, vol: 118, hold: 1.5, med: 1.4, next: [['Customer', 61], ['Dev', 27], ['Closed', 12]], ins: '27% of QA handoffs go to Dev, mostly config-service regressions.' },
+      { id: 'Dev', x: 690, y: 322, vol: 64, hold: 2.9, med: 2.2, next: [['QA', 62], ['Customer', 30], ['Ops', 8]], ins: 'Low volume, long holds. Fixes in edge-sync/ take 1.6× longer than other modules.' },
+      { id: 'Customer', x: 890, y: 220, vol: 236, hold: 1.8, med: 1.6, next: [['Closed', 74], ['Support', 18], ['QA', 8]], ins: 'Most holds here are waiting on clients to confirm affected PoPs or approve change windows.' },
+      { id: 'Closed', x: 1050, y: 220, vol: 380, hold: 0, med: 0, next: [], ins: '380 tasks closed in the last 90 days. Median time to close: 4.1 days.' }
+    ];
+    const MED = {}; const NEXT = {};
+    NODES.forEach(n => { MED[n.id] = n.med; NEXT[n.id] = n.next; });
+    MED.Intake = 0.3;
+    const TYPES = Object.keys(TITLES);
+    const CLIENTS = ['Northwind Media', 'Lumen Games', 'Kestrel Retail', 'Halcyon Bank', 'Parallax Studios', 'Orbitline Travel', 'Cobalt Health', 'Fernway Foods', 'Atlas Freight', 'Juniper Learning', 'Brightwater Labs', 'Solace Audio'];
+    const W = [['Intake', 4], ['Support', 18], ['Network Eng', 22], ['Security', 14], ['Ops', 16], ['QA', 10], ['Dev', 7], ['Customer', 9]];
+    const pickW = () => { let x = R() * 100; for (const [s, w] of W) { if ((x -= w) < 0) return s; } return 'Support'; };
+    const used = new Set([4821]);
+    const nid = () => { let n; do { n = 4400 + Math.floor(R() * 600); } while (used.has(n)); used.add(n); return n; };
+    const tasks = [{ id: 'T-4821', client: 'Northwind Media', type: 'Cache purge bug', title: 'Cache purge not propagating to edge nodes', stake: 'Network Eng', days: 4.2, open: 5.2, next: [['Customer', 68], ['QA', 22], ['Dev', 10]] }];
+    for (let i = 1; i < 100; i++) {
+      const s = pickW(); const type = TYPES[Math.floor(R() * TYPES.length)];
+      const ratio = i <= 7 ? 1.95 + R() * 0.8 : 0.25 + R() * 1.5;
+      const days = Math.max(0.1, this.r1(MED[s] * ratio));
+      const open = this.r1(days + 0.3 + R() * 2.4);
+      let nx = NEXT[s].map(([k, p]) => [k, p * (0.75 + R() * 0.5)]);
+      const sum = nx.reduce((a, b) => a + b[1], 0);
+      nx = nx.map(([k, p]) => [k, Math.round(p / sum * 100)]).sort((a, b) => b[1] - a[1]);
+      nx[0][1] += 100 - nx.reduce((a, b) => a + b[1], 0);
+      const tl = TITLES[type];
+      tasks.push({ id: 'T-' + nid(), client: CLIENTS[Math.floor(R() * CLIENTS.length)], type, title: tl[Math.floor(R() * tl.length)], stake: s, days, open, next: nx });
+    }
+    tasks.forEach(t => { t.med = MED[t.stake]; t.ratio = t.days / t.med; });
+    [...tasks].sort((a, b) => b.ratio - a.ratio).forEach((t, i) => { t.risk = i < 8 ? 'High' : t.ratio > 1.25 ? 'Medium' : 'Low'; });
+    const EDGES = [
+      { f: 'Intake', t: 'Support', v: 100, w: 0.3 }, { f: 'Support', t: 'Network Eng', v: 38, w: 1.9 }, { f: 'Support', t: 'Ops', v: 30, w: 1.1 },
+      { f: 'Support', t: 'Security', v: 22, w: 2.7 }, { f: 'Security', t: 'Support', v: 18, w: 2.5, back: true }, { f: 'Security', t: 'Ops', v: 12, w: 1.6 },
+      { f: 'Network Eng', t: 'Customer', v: 24, w: 1.4 }, { f: 'Network Eng', t: 'QA', v: 9, w: 1.0 }, { f: 'Network Eng', t: 'Dev', v: 5, w: 2.1 },
+      { f: 'Ops', t: 'QA', v: 14, w: 0.9 }, { f: 'Ops', t: 'Customer', v: 20, w: 0.8 }, { f: 'QA', t: 'Customer', v: 18, w: 0.7 },
+      { f: 'QA', t: 'Dev', v: 6, w: 1.8 }, { f: 'Dev', t: 'Customer', v: 12, w: 2.3 }, { f: 'Customer', t: 'Closed', v: 70, w: 0.6 }, { f: 'QA', t: 'Closed', v: 8, w: 0.5 }
+    ];
+    this._d = { tasks, TITLES, CODE, FIX, NODES, EDGES, MED, TYPES, CLIENTS, STAKES: W.map(w => w[0]) };
+    return this._d;
+  }
+
+  go(screen, id) {
+    const patch = { screen };
+    if (id) patch.taskId = id;
+    this.setState(patch);
+    window.scrollTo(0, 0);
+    if (screen === 'map' && !this.state.mapSeen) { clearTimeout(this.t2); this.t2 = setTimeout(() => this.setState({ mapSeen: true }), 900); }
+    if (screen === 'ask' && !this.state.autoRan) this.startThink('Which clients hit edge-sync issues this quarter?');
+  }
+
+  startThink(q) {
+    if (this.state.extra.some(e => e.phase === 'thinking')) return;
+    this.setState(s => ({ extra: [...s.extra, { q, phase: 'thinking' }], thinkStep: 0, autoRan: true }));
+    clearInterval(this.thinkTimer);
+    let k = 0;
+    this.thinkTimer = setInterval(() => {
+      k++;
+      if (k < 3) this.setState({ thinkStep: k });
+      else { clearInterval(this.thinkTimer); this.setState(s => ({ thinkStep: 3, extra: s.extra.map((e, i) => i === s.extra.length - 1 ? { ...e, phase: 'limited' } : e) })); }
+    }, this.reduced ? 300 : 750);
+  }
+
+  askDock(key, q) {
+    if (this.state.dock.some(m => m.phase === 'thinking')) { this.setState({ dockOpen: true }); return; }
+    const a = this.answer(key, q);
+    const n = a.steps.length;
+    this.setState(s => ({ dockOpen: true, dock: [...s.dock, { key, q: a.q, phase: 'thinking' }], dockStep: 0 }), () => this.scrollDock());
+    clearInterval(this.dockTimer);
+    let k = 0;
+    this.dockTimer = setInterval(() => {
+      k++;
+      if (k < n) this.setState({ dockStep: k });
+      else { clearInterval(this.dockTimer); this.setState(s => ({ dockStep: n, dock: s.dock.map((m, i) => i === s.dock.length - 1 ? { ...m, phase: 'done' } : m) }), () => this.scrollDock()); }
+    }, this.reduced ? 250 : 600);
+  }
+  scrollDock() { setTimeout(() => { const el = this.dockRef.current; if (el) el.scrollTop = el.scrollHeight; }, 40); }
+
+  answer(key, q) {
+    const D = this.getData();
+    const A = {
+      t4821: { ctx: 'T-4821', q: 'Why is T-4821 at risk?', steps: ['Read task history', 'Compared 25 similar cache tasks', 'Checked edge-sync incidents'], text: 'It has been with Network Eng for 4.2 days against a 1.9-day median. The purge reaches the control plane but stalls in edge-sync propagation, the same failure as T-4417 and T-4590. Both closed within a day once the edge-sync batch queue was flushed, so Oct 10 is still realistic if that happens today.', bars: [['With Network Eng', '4.2d', 100, 'red'], ['Stakeholder median', '1.9d', 45, 'muted'], ['T-4417 after flush', '0.9d', 21, 'green']], sources: ['T-4821', 'T-4417', 'T-4590'], follow: [['Draft a ping to Network Eng', 'ping'], ['Who else is blocked on edge-sync?', 'edgesync']] },
+      ping: { ctx: 'T-4821', q: 'Draft a ping to Network Eng about T-4821', steps: ['Read task history', 'Found matching fix in T-4417'], text: 'Here is a short message you can paste into the Network Eng channel:', draft: 'Hi Network Eng, T-4821 (Northwind Media cache purge) has been with you 4.2 days. It matches T-4417, which closed within a day after flushing the edge-sync batch queue. Could someone try that today? Northwind is expecting a fix by Oct 10.', follow: [['Who usually owns edge-sync fixes?', 'owner']] },
+      predict4821: { ctx: 'T-4821', q: 'Why is Customer the likely next stop for T-4821?', steps: ['Pulled routing history', 'Matched 25 similar cache tasks'], text: '17 of 25 similar cache tasks went to Customer after Network Eng, usually so the client could confirm the purge on their side. QA is next most likely (22%) when the fix touches config-service.', bars: [['Customer', '68%', 68, 'accent'], ['QA', '22%', 22, 'accent'], ['Dev', '10%', 10, 'accent']], sources: ['T-4417', 'T-4590', 'T-4302'], follow: [['Why is T-4821 at risk?', 't4821']] },
+      code4821: { ctx: 'T-4821', q: 'Which code is behind T-4821?', steps: ['Read linked commits', 'Ranked modules by incident count'], text: 'edge-sync/propagation.go is the hotspot: it is linked to 34 tasks this quarter and 3 of the 8 at-risk ones. The purge API in cdn-cache-purge/ looks healthy; requests are accepted and stall afterward.', bars: [['edge-sync/', '34', 100, 'red'], ['cdn-cache-purge/', '27', 79, 'accent'], ['config-service/', '12', 35, 'accent']], sources: ['T-4417', 'T-4302'], follow: [['Who usually owns edge-sync fixes?', 'owner']] },
+      similar4821: { ctx: 'T-4821', q: 'Which past fix applies to T-4821?', steps: ['Searched similar cases', 'Compared descriptions and modules', 'Ranked by fit'], text: 'T-4417 is the best fit: same module, same symptom, and it closed in 2.1 days after Network Eng flushed the edge-sync batch queue. T-4590 only applies if the TTL rules turn out to be stale.', bars: [['T-4417 · flush queue', '92%', 92, 'green'], ['T-4590 · TTL fix', '87%', 87, 'accent'], ['T-4302 · rollback', '81%', 81, 'accent']], sources: ['T-4417', 'T-4590', 'T-4302'], follow: [['Draft a ping to Network Eng', 'ping']] },
+      security: { ctx: 'Security', q: 'Why is Security rework rising?', steps: ['Pulled 7 weeks of Security handoffs', 'Clustered rework reasons', 'Compared with last month'], text: '18% of tasks Security reviews now go back to Support, up from 11% in August. 9 of the 14 bounces this month were new domain setups missing proof of ownership. A required ownership field at intake would have caught all nine.', bars: [['Missing ownership proof', '9', 100, 'amber'], ['Unclear cert scope', '3', 33, 'muted'], ['Wrong WAF ruleset', '2', 22, 'muted']], sources: ['T-4655', 'T-4702', 'T-4733'], follow: [['Draft an intake checklist change', 'checklist'], ['What is open at Security now?', 'node:Security']] },
+      checklist: { ctx: 'Intake', q: 'Draft an intake checklist change', steps: ['Read rework reasons', 'Checked intake form fields'], text: 'A proposal you can post in the Intake channel:', draft: "Proposal: make 'Domain ownership proof' a required field for New domain setup tasks at Intake. Last month, 9 of 14 tasks Security sent back to Support were missing it. Expected effect: Security rework back near 11%, saving about 1.5 days per affected task." },
+      edgesync: { ctx: 'edge-sync/', q: 'Which clients are blocked on edge-sync?', steps: ['Matched tasks to modules', 'Filtered to at-risk', 'Grouped by client'], text: "Three clients have at-risk tasks touching edge-sync/. Northwind Media is the most exposed, with T-4821 already 2.2× over median. Dev's median fix time for this module is 3.1 days, the slowest of any module.", bars: [['Northwind Media', '4 tasks', 100, 'accent'], ['Lumen Games', '3 tasks', 75, 'accent'], ['Kestrel Retail', '2 tasks', 50, 'accent']], sources: ['T-4821', 'T-4417', 'T-4590'], follow: [['Why is T-4821 at risk?', 't4821'], ['Who usually owns edge-sync fixes?', 'owner']] },
+      owner: { ctx: 'edge-sync/', q: 'Who usually owns edge-sync fixes?', steps: ['Read resolution notes', 'Counted resolvers'], text: 'Network Eng closes most edge-sync tasks themselves (61%). The rest go to Dev, usually when the fix needs a code change in propagation.go rather than a queue flush.', bars: [['Network Eng', '61%', 100, 'accent'], ['Dev', '31%', 51, 'accent'], ['Ops', '8%', 13, 'accent']], sources: ['T-4417', 'T-4302'], follow: [['Draft a ping to Network Eng', 'ping']] },
+      kestrel: { ctx: 'Kestrel Retail', q: "What's Kestrel Retail waiting on?", steps: ['Pulled Kestrel tasks', 'Read latest customer messages', 'Compared client hold times'], text: 'All four are waiting on Kestrel to confirm which PoPs are affected. Their client-side hold averages 2.4 days against 1.6 for other clients. One message to their TPM listing all four would likely unblock them together.', bars: [['T-4512', '3.1d', 100, 'amber'], ['T-4688', '2.6d', 84, 'amber'], ['T-4740', '2.2d', 71, 'amber'], ['T-4791', '1.7d', 55, 'muted']], sources: ['T-4512', 'T-4688', 'T-4740', 'T-4791'], follow: [['Draft the message to Kestrel', 'kestrelmsg']] },
+      kestrelmsg: { ctx: 'Kestrel Retail', q: 'Draft the message to Kestrel', steps: ['Read open tasks', 'Listed missing info'], text: 'Draft for the Kestrel Retail TPM:', draft: 'Hi team, four of your open requests (T-4512, T-4688, T-4740, T-4791) are waiting on the same thing: confirmation of which PoPs are affected. One list covering all four would let us move them forward together. Thanks!' },
+      opswin: { ctx: 'Ops', q: 'Why did Ops get faster?', steps: ['Found process change on Sep 15', 'Compared before and after', 'Checked volume and staffing'], text: 'On Sep 15, config changes started requiring a rollback plan. Ops median hold fell from 1.6 to 1.1 days and rework to Dev halved. Volume and staffing were flat, so the rule change is the most likely cause.', bars: [['Before Sep 15', '1.6d', 100, 'muted'], ['After Sep 15', '1.1d', 69, 'green']], sources: ['T-4590', 'T-4611'], follow: [['Could this help Security?', 'security']] },
+      avgdays: { ctx: 'Queue', q: "What's pulling the average days open up?", steps: ['Grouped open tasks by stakeholder', 'Recomputed without outliers'], text: 'Security and Dev pull the average up: tasks there have been open 4.1 and 3.8 days on average. Without them the queue average would be 2.7 days.', bars: [['Security', '4.1d', 100, 'red'], ['Dev', '3.8d', 93, 'amber'], ['Everyone else', '2.7d', 66, 'muted']], follow: [['Why is Security rework rising?', 'security']] },
+      rule: { ctx: 'Watch rules', q: 'Add a watch rule', steps: ['Listed current rules'], text: "Tell me what to watch in plain language, for example 'SSL renewals with under 7 days to expiry' or 'any task bounced between the same two teams twice'. I'll check it on every scan and add hits to the morning briefing." }
+    };
+    if (A[key]) return A[key];
+    if (key === 'typed') return { ctx: 'Question', q, steps: ['Parsing question', 'Searching tasks', 'Pulling routing stats'], limited: true };
+    const byStake = {}; D.tasks.forEach(t => { byStake[t.stake] = (byStake[t.stake] || 0) + 1; });
+    if (key === 'opentasks') {
+      const s = Object.entries(byStake).sort((a, b) => b[1] - a[1]); const mx = s[0][1];
+      return { ctx: 'Queue', q: "What's in the 100 open tasks?", steps: ['Grouped by stakeholder', 'Checked risk flags'], text: s[0][0] + ' holds the most open tasks (' + s[0][1] + '), then ' + s[1][0] + ' (' + s[1][1] + ') and ' + s[2][0] + ' (' + s[2][1] + '). 8 are at risk, each held more than 2× its stakeholder median.', bars: s.slice(0, 5).map(([l, v]) => [l, String(v), v / mx * 100, 'accent']), follow: [['What do the 8 at-risk tasks have in common?', 'atrisk']] };
+    }
+    if (key === 'atrisk') {
+      const hi = D.tasks.filter(t => t.risk === 'High'); const g = {}; hi.forEach(t => { g[t.stake] = (g[t.stake] || 0) + 1; });
+      const s = Object.entries(g).sort((a, b) => b[1] - a[1]); const mx = s[0][1];
+      return { ctx: 'At risk', q: 'What do the 8 at-risk tasks have in common?', steps: ['Filtered high-risk tasks', 'Grouped by stakeholder', 'Checked for known fixes'], text: 'They are spread across ' + s.length + ' stakeholders; ' + s[0][0] + ' holds the most (' + s[0][1] + '). Every one is held over 2× its stakeholder median. T-4821 is the only one with a proven fix from a similar case.', bars: s.map(([l, v]) => [l, String(v), v / mx * 100, 'red']), sources: hi.slice(0, 5).map(t => t.id), follow: [['Why is T-4821 at risk?', 't4821']] };
+    }
+    const [kind, id, part] = key.split(':');
+    if (kind === 'node') {
+      const n = D.NODES.find(x => x.id === id); const here = D.tasks.filter(t => t.stake === id).sort((a, b) => b.ratio - a.ratio);
+      return { ctx: id, q: "What's happening at " + id + '?', steps: ['Pulled handoff stats', 'Listed open tasks'], text: (n.hold ? id + ' holds tasks ' + n.hold + ' days on average against a ' + n.med + '-day median, with ' + here.length + ' open now. ' : '') + n.ins, bars: n.next.map(([l, p]) => [l, p + '%', p, 'accent']), sources: here.slice(0, 4).map(t => t.id) };
+    }
+    if (kind === 'task') {
+      if (id === 'T-4821') return A[{ timeline: 't4821', summary: 't4821', predict: 'predict4821', code: 'code4821', similar: 'similar4821' }[part]];
+      const t = D.tasks.find(x => x.id === id) || D.tasks[0]; const d = this.detail(t);
+      if (part === 'timeline') { const mx = Math.max(...d.actual.map(s => s.flex)); return { ctx: id, q: 'Where has ' + id + ' spent its time?', steps: ['Read handoff history'], text: id + ' has spent ' + t.days + ' of its ' + t.open + ' open days with ' + t.stake + ', against a ' + t.med + '-day median there.', bars: d.actual.map(s => [s.name, s.flex + 'd', s.flex / mx * 100, s.name === t.stake ? 'accent' : 'muted']) }; }
+      if (part === 'predict') return { ctx: id, q: 'Why is ' + t.next[0][0] + ' the likely next stop?', steps: ['Pulled routing history', 'Matched similar tasks'], text: d.reason + '. Estimated close: ' + d.close + '.', bars: t.next.map(([l, p]) => [l, p + '%', p, 'accent']) };
+      if (part === 'code') return { ctx: id, q: 'Which code is behind ' + id + '?', steps: ['Read linked commits'], text: d.code[0].path + ' is the main module for ' + t.type.toLowerCase() + ' tasks, linked to ' + d.code[0].n + ' tasks this quarter.' + (d.code.some(c => c.hot) ? ' It also touches edge-sync/, the current hotspot.' : ''), bars: d.code.map(c => [c.path.split('/')[0] + '/', String(c.n), c.n / 34 * 100, c.hot ? 'red' : 'accent']) };
+      if (part === 'similar') { const s0 = d.similar[0]; return { ctx: id, q: 'Which past fix applies to ' + id + '?', steps: ['Searched similar cases', 'Ranked by fit'], text: 'The closest match, ' + s0.id + ' (' + s0.score + '%), closed in ' + s0.time + ': ' + s0.solved.charAt(0).toLowerCase() + s0.solved.slice(1) + '.', sources: d.similar.map(s => s.id) }; }
+      return { ctx: id, q: 'What should I do about ' + id + '?', steps: ['Read task history', 'Compared with similar tasks'], text: d.summary + ' ' + d.action };
+    }
+    return { ctx: 'Question', q: q || key, steps: ['Searching tasks'], limited: true };
+  }
+
+  detail(t) {
+    const D = this.getData(); const MED = D.MED; const hero = t.id === 'T-4821';
+    const S = t.stake; const segs = [];
+    if (S === 'Intake') segs.push({ n: 'Intake', d: t.days, cur: true });
+    else {
+      segs.push({ n: 'Intake', d: 0.2 });
+      const prior = Math.max(0.2, this.r1(t.open - t.days - 0.2));
+      if (['QA', 'Dev', 'Customer'].includes(S)) {
+        const mid = ['Cache purge bug', 'DNS routing issue', 'Traffic spike'].includes(t.type) ? 'Network Eng' : 'Ops';
+        const a = this.r1(Math.max(0.1, prior * 0.4));
+        segs.push({ n: 'Support', d: a }, { n: mid, d: this.r1(Math.max(0.1, prior - a)) });
+      } else if (S !== 'Support') segs.push({ n: 'Support', d: prior });
+      segs.push({ n: S, d: t.days, cur: true });
+    }
+    const top = t.next[0][0];
+    const day = 7 + Math.ceil((MED[top] || 0) + 1);
+    const close = 'Oct ' + day;
+    const od = 7 - Math.round(t.open);
+    const opened = od >= 1 ? 'Oct ' + od : 'Sep ' + (30 + od);
+    const pred = [{ name: top, sub: 'est. ' + (MED[top] || 0.5) + 'd', flex: MED[top] || 0.5 }];
+    if (top !== 'Closed') pred.push({ name: 'Closed', sub: close, flex: 0.4 });
+    const actual = segs.map(s => ({ name: s.n, flex: s.d, sub: s.cur ? s.d + 'd · ongoing' : s.d + 'd', bg: s.cur ? 'var(--accent)' : 'var(--surface3)', subColor: s.cur ? 'var(--accent-ink)' : 'var(--muted)' }));
+    const h = [...t.id].reduce((a, c) => a + c.charCodeAt(0), 0);
+    const n = 14 + (h % 15); const k = Math.round(n * t.next[0][1] / 100);
+    const ratioTxt = t.ratio >= 1.5 ? `${t.ratio.toFixed(1)}× the ${t.med}-day median` : t.ratio >= 1 ? `slightly over the ${t.med}-day median` : `under the ${t.med}-day median`;
+    const summary = hero
+      ? 'Purge requests reach the control plane but stall in edge-sync propagation, so edge nodes keep serving stale assets. T-4821 has been with Network Eng for 4.2 days, 2.2× the 1.9-day median for this stakeholder.'
+      : `${t.id} has been with ${S} for ${t.days} days, ${ratioTxt} for this stakeholder. Similar ${t.type.toLowerCase()} tasks usually move to ${top} next.`;
+    const action = hero
+      ? 'Ask Network Eng to flush the edge-sync batch queue (the fix used in T-4417), and loop in Northwind Media now to confirm affected PoPs, since Customer is the likely next stop.'
+      : t.risk === 'High' ? `Ping ${S} for an owner and ETA, and brief ${top} so the next handoff doesn't stall.`
+      : t.risk === 'Medium' ? `Check in with ${S} tomorrow if it hasn't moved. ${top} is the likely next stop.`
+      : 'No action needed. The task is within normal hold time.';
+    const code = D.CODE[t.type].map(([p, note, c]) => ({ path: p, note, n: c, hot: p.startsWith('edge-sync') }));
+    const others = D.CLIENTS.filter(c => c !== t.client);
+    const mod = D.CODE[t.type][0][0].replace('/', '');
+    const similar = hero ? [
+      { score: 92, id: 'T-4417', client: 'Lumen Games', title: 'Purge requests stuck in edge-sync queue', matched: 'shared module edge-sync, similar description', solved: 'Network Eng flushed the propagation batch queue and raised worker concurrency', time: '2.1d' },
+      { score: 87, id: 'T-4590', client: 'Kestrel Retail', title: 'Stale assets served after purge on APAC PoPs', matched: 'shared module cdn-cache-purge, same handoff path', solved: 'TTL override corrected in config-service/ttl_rules.yaml, verified by QA', time: '3.4d' },
+      { score: 81, id: 'T-4302', client: 'Halcyon Bank', title: 'Partial purge propagation after config deploy', matched: 'shared module edge-sync, similar description', solved: 'Config deploy rolled back; Dev patched purge retry backoff', time: '4.0d' }
+    ] : [0, 1, 2].map(i => ({ score: [89, 83, 77][i], id: 'T-' + (4000 + (h * (i + 3)) % 390), client: others[(h + i * 4) % others.length], title: D.TITLES[t.type][(i + 1) % 3], matched: [`shared module ${mod}, similar description`, 'same task type, same handoff path', 'similar description'][i], solved: D.FIX[t.type][i], time: ['1.8d', '2.9d', '3.6d'][i] }));
+    return {
+      id: t.id, title: t.title, client: t.client, type: t.type, risk: t.risk, ...this.rs(t.risk), open: t.open, opened, close,
+      actual, pred, actualFlex: segs.reduce((a, s) => a + s.d, 0), predFlex: pred.reduce((a, s) => a + s.flex, 0),
+      next: t.next.map(([nm, p], i) => ({ name: nm, p, op: [1, 0.5, 0.28][i] })),
+      reason: hero ? '17 of 25 similar cache tasks went to Customer after Network Eng' : `${k} of ${n} similar ${t.type.toLowerCase()} tasks went to ${top} after ${S}`,
+      summary, action, code, similar
+    };
+  }
+
+  mapSvg() {
+    const h = React.createElement; const D = this.getData(); const N = {};
+    D.NODES.forEach(n => { N[n.id] = { ...n, r: 12 + Math.sqrt(n.vol) * 1.45 }; });
+    const anim = !this.state.mapSeen && !this.reduced; const sel = this.state.node;
+    const col = w => { const t = Math.max(0, Math.min(1, (w - 0.5) / 2.3)); return `oklch(0.68 0.15 ${Math.round(150 - 125 * t)})`; };
+    const kids = [h('defs', { key: 'defs' }, h('marker', { id: 'arr', viewBox: '0 0 8 8', refX: 6, refY: 4, markerWidth: 8, markerHeight: 8, markerUnits: 'userSpaceOnUse', orient: 'auto' }, h('path', { d: 'M0,0 L8,4 L0,8 z', style: { fill: 'var(--muted)' } })))];
+    D.EDGES.forEach((e, i) => {
+      const a = N[e.f], b = N[e.t]; let d;
+      if (e.back) d = `M ${a.x - a.r * 0.75} ${a.y + a.r * 0.65} C ${a.x - 70} ${a.y + 80}, ${b.x + 30} ${b.y + 170}, ${b.x} ${b.y + b.r + 6}`;
+      else {
+        const dx = b.x - a.x, dy = b.y - a.y, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L;
+        const x1 = a.x + ux * a.r, y1 = a.y + uy * a.r, x2 = b.x - ux * (b.r + 6), y2 = b.y - uy * (b.r + 6), mx = (x1 + x2) / 2;
+        d = `M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`;
+      }
+      const dim = sel && e.f !== sel && e.t !== sel;
+      const p = { key: 'e' + i, d, fill: 'none', stroke: col(e.w), strokeWidth: 1.5 + e.v / 100 * 9, strokeLinecap: 'round', markerEnd: 'url(#arr)', opacity: dim ? 0.18 : 0.85, style: { transition: 'opacity 200ms' } };
+      if (anim) { p.pathLength = 1; p.strokeDasharray = 1; p.style = { animation: `draw 300ms ease-out ${i * 25}ms both` }; }
+      kids.push(h('path', p, h('title', null, `${e.f} → ${e.t} · ${e.v}% of tasks · ${e.w}d avg wait`)));
+      if (e.back) kids.push(h('text', { key: 'l' + i, x: 330, y: 412, fontSize: 12, fontWeight: 500, opacity: dim ? 0.3 : 1, style: { fill: 'var(--red-ink)', paintOrder: 'stroke', stroke: 'var(--surface)', strokeWidth: 4 } }, '18% rework'));
+    });
+    D.NODES.forEach(n0 => {
+      const n = N[n0.id]; const on = sel === n.id; const dim = sel && !on;
+      kids.push(h('g', { key: 'n' + n.id, onClick: () => this.setState({ node: on ? null : n.id }), style: { cursor: 'pointer', opacity: dim ? 0.55 : 1, transition: 'opacity 200ms' } },
+        h('circle', { cx: n.x, cy: n.y, r: n.r, strokeWidth: on ? 2 : 1.25, style: { fill: on ? 'var(--accent-soft)' : n.id === 'Closed' ? 'var(--surface2)' : 'var(--surface)', stroke: on ? 'var(--accent)' : 'var(--border2)' } }),
+        h('text', { x: n.x, y: n.y + 4, textAnchor: 'middle', fontSize: 12, fontFamily: 'JetBrains Mono, monospace', style: { fill: 'var(--muted)' } }, n.vol),
+        h('text', { x: n.x, y: n.y + n.r + 17, textAnchor: 'middle', fontSize: 13, fontWeight: 500, style: { fill: 'var(--text)' } }, n.id)));
+    });
+    return h('svg', { viewBox: '0 0 1120 440', style: { width: '100%', height: 'auto', display: 'block', fontFamily: 'inherit' } }, kids);
+  }
+
+  renderVals() {
+    const D = this.getData(); const st = this.state; const P = this.props;
+    const theme = st.themeOverride || P.theme || 'light';
+    const dataState = P.dataState || 'live';
+    const loading = !st.booted || st.retrying || dataState === 'loading';
+    const isError = dataState === 'error' && !st.errCleared && !loading;
+    const ready = !loading;
+    const narrow = st.narrow;
+    const navStyle = k => st.screen === k || (k === 'queue' && st.screen === 'detail') ? { bg: 'rgba(255,255,255,0.09)', color: '#ffffff', fw: 500 } : { bg: 'transparent', color: '#9aa2ad', fw: 400 };
+    const q = dataState === 'empty' && !st.q ? 'T-0000' : st.q;
+    const ql = q.trim().toLowerCase();
+    let list = D.tasks.filter(t => (!ql || t.id.toLowerCase().includes(ql) || t.client.toLowerCase().includes(ql))
+      && (st.fType === 'All task types' || t.type === st.fType) && (st.fClient === 'All clients' || t.client === st.fClient) && (st.fStake === 'All stakeholders' || t.stake === st.fStake));
+    const RK = { High: 3, Medium: 2, Low: 1 };
+    const keyFn = { id: t => t.id, client: t => t.client, type: t => t.type, stake: t => t.stake, days: t => t.ratio, next: t => t.next[0][1], risk: t => RK[t.risk] * 10 + t.ratio }[st.sortKey];
+    const dir = st.sortDir === 'asc' ? 1 : -1;
+    list = [...list].sort((a, b) => { const x = keyFn(a), y = keyFn(b); return (x > y ? 1 : x < y ? -1 : 0) * dir; });
+    const PS = 12; const pages = Math.max(1, Math.ceil(list.length / PS)); const page = Math.min(st.page, pages - 1);
+    const open = id => () => this.go('detail', id);
+    const rows = list.slice(page * PS, page * PS + PS).map(t => {
+      const c = t.ratio > 2 ? 'var(--red)' : t.ratio > 1.25 ? 'var(--amber)' : 'var(--green)';
+      const [n1, n2, n3] = t.next;
+      return { id: t.id, client: t.client, type: t.type, stake: t.stake, daysTxt: t.days + 'd', med: t.med, barW: Math.min(100, t.days / (t.med * 3) * 100).toFixed(1), barColor: c,
+        n1: n1[0], p1: n1[1], p2: n2[1], p3: n3[1], t1: `${n1[0]} ${n1[1]}%`, t2: `${n2[0]} ${n2[1]}%`, t3: `${n3[0]} ${n3[1]}%`, risk: t.risk, ...this.rs(t.risk), open: open(t.id) };
+    });
+    const cols = [['id', 'Task ID', '96px'], ['client', 'Client', 'auto'], ['type', 'Type', 'auto'], ['stake', 'Currently with', 'auto'], ['days', 'Days there', '210px'], ['next', 'Predicted next', '172px'], ['risk', 'Risk', '100px']];
+    const headers = cols.map(([k, label, w]) => ({ label, w, arrow: st.sortKey === k ? (st.sortDir === 'asc' ? '↑' : '↓') : '', color: st.sortKey === k ? 'var(--text)' : 'var(--muted)',
+      onClick: () => this.setState(s => ({ sortKey: k, sortDir: s.sortKey === k && s.sortDir === 'desc' ? 'asc' : 'desc', page: 0 })) }));
+    const isEmpty = ready && !isError && list.length === 0;
+    const t = D.tasks.find(x => x.id === st.taskId) || D.tasks[0];
+    const nodeObj = D.NODES.find(n => n.id === st.node);
+    let nd = null;
+    if (nodeObj) {
+      const here = D.tasks.filter(x => x.stake === nodeObj.id).sort((a, b) => b.ratio - a.ratio);
+      const mx = Math.max(nodeObj.hold, nodeObj.med) || 1;
+      const r = nodeObj.hold / (nodeObj.med || 1);
+      nd = { name: nodeObj.id, vol: nodeObj.vol, hasHold: nodeObj.hold > 0, hold: nodeObj.hold, med: nodeObj.med, holdW: nodeObj.hold / mx * 100, medW: nodeObj.med / mx * 100,
+        holdColor: r > 1.2 ? 'var(--red)' : r > 1 ? 'var(--amber)' : 'var(--green)', openCount: here.length, noOpen: here.length === 0, hasNext: nodeObj.next.length > 0,
+        open: here.slice(0, 4).map(x => ({ id: x.id, client: x.client, days: x.days, dot: this.rs(x.risk).rDot, open: open(x.id) })),
+        next: nodeObj.next.map(([nm, p], i) => ({ name: nm, p, op: [1, 0.5, 0.28][i] })), insight: nodeObj.ins };
+    }
+    const mods = [['edge-sync/', 34], ['cdn-cache-purge/', 27], ['ssl-cert/', 19], ['dns-routing/', 15], ['config-service/', 12], ['origin-failover/', 9], ['waf-rules/', 7], ['log-export/', 4]];
+    const askFn = q2 => () => { if (st.askMode === 'empty') this.setState({ askMode: 'fresh' }); this.startThink(q2); };
+    const CHIPS = ['Why is T-4821 at risk?', 'How have we solved cache purge delays before?', 'Which clients hit edge-sync issues this quarter?', 'Where do Security tasks get stuck?', 'Which team resolves SSL tasks fastest?', "What's likely to breach SLA this week?"];
+    const STEPS = ['Searching tasks', 'Pulling routing stats', 'Comparing clients'];
+    const busy = st.extra.some(e => e.phase === 'thinking');
+    const extra = st.extra.map((e, i) => {
+      const live = e.phase === 'thinking';
+      const k = live ? st.thinkStep : 3;
+      const steps = STEPS.slice(0, Math.min(3, k + 1)).map((l, j) => ({ label: j < k ? l.replace('ing ', 'ed ').replace('Searched', 'Searched').replace('Pulled', 'Pulled') : l + '…', done: j < k, active: j === k && live, color: j < k ? 'var(--muted)' : 'var(--text)' }));
+      return { q: e.q, steps, limited: e.phase === 'limited', status: live ? ' · thinking' : '' };
+    });
+    const doSend = () => { const v = st.draft.trim(); if (!v || busy) return; this.setState({ draft: '', askMode: st.askMode === 'empty' ? 'fresh' : st.askMode }); this.startThink(v); };
+    const cAvg = (3.2 * st.countT).toFixed(1);
+    const KS = { need: ['Needs you', 'var(--red-soft)', 'var(--red-ink)'], pattern: ['Pattern', 'var(--amber-soft)', 'var(--amber-ink)'], win: ['Win', 'var(--green-soft)', 'var(--green-ink)'] };
+    const BC = { accent: 'var(--accent)', muted: 'var(--border2)', amber: 'var(--amber)', green: 'var(--green)', red: 'var(--red)' };
+    const goFilter = patch => () => { this.setState(Object.assign({ page: 0, q: '', fType: 'All task types', fClient: 'All clients', fStake: 'All stakeholders' }, patch)); this.go('queue'); };
+    const INS = [
+      { kind: 'pattern', meta: 'Pattern · 7 weeks of handoffs', time: '06:40', title: 'Security rework jumped from 11% to 18% in a month.', body: '9 of 14 bounces back to Support were new domain setups missing proof of ownership. One required field at intake would have caught all nine.', cols: [['W33', 10], ['W34', 11], ['W35', 11], ['W36', 13], ['W37', 15], ['W38', 17], ['W39', 18]], ev: ['T-4655', 'T-4702', 'T-4733'], ask: 'security', act: ['See on process map', () => { this.setState({ node: 'Security' }); this.go('map'); }] },
+      { kind: 'need', meta: 'Risk · 3 clients affected', time: '07:05', title: 'edge-sync/ sits behind 3 of the 8 at-risk tasks.', body: 'Northwind Media, Lumen Games and Kestrel Retail are all waiting on it. It is also the module Dev takes longest to fix.', bars: [['edge-sync/', 100, '34 tasks', 'red'], ['cdn-cache-purge/', 79, '27 tasks', 'accent'], ['ssl-cert/', 56, '19 tasks', 'accent']], ev: ['T-4821', 'T-4417'], ask: 'edgesync', act: ['Show cache purge tasks', goFilter({ fType: 'Cache purge bug' })] },
+      { kind: 'need', meta: 'Client wait · Kestrel Retail', time: '07:30', title: 'Four Kestrel Retail tasks are waiting on the client for the same thing.', body: 'Each needs PoP confirmation. Their client-side hold averages 2.4 days against 1.6 for everyone else, so one message to their TPM could unblock all four.', bars: [['Kestrel Retail', 100, '2.4d', 'amber'], ['Other clients', 67, '1.6d', 'muted']], ev: ['T-4512', 'T-4688', 'T-4740', 'T-4791'], ask: 'kestrel', act: ['Show Kestrel tasks', goFilter({ fClient: 'Kestrel Retail' })] },
+      { kind: 'win', meta: 'Process change · since Sep 15', time: 'yesterday', title: 'Ops clears config changes 30% faster since rollback plans became required.', body: 'Median hold fell from 1.6 to 1.1 days and rework to Dev halved. The same rule could help Security, where rework is rising.', bars: [['Before Sep 15', 100, '1.6d', 'muted'], ['After Sep 15', 69, '1.1d', 'green']], ev: ['T-4590', 'T-4611'], ask: 'opswin', act: ['Open Ops on map', () => { this.setState({ node: 'Ops' }); this.go('map'); }] }
+    ];
+    const insights = INS.map((x, i) => ({ title: x.title, body: x.body, meta: x.meta, time: x.time, ev: x.ev, tagLabel: KS[x.kind][0], tagBg: KS[x.kind][1], tagInk: KS[x.kind][2], delay: (i + 1) * 60 + 'ms', isBars: !!x.bars, isCols: !!x.cols,
+      bars: (x.bars || []).map(([label, w, val, c]) => ({ label, w, val, color: BC[c] })),
+      cols: (x.cols || []).map(([label, v], j, arr) => { const last = j === arr.length - 1; return { label, v: v + '%', h: v / 20 * 100, color: last ? 'var(--amber)' : 'var(--surface3)', vColor: last ? 'var(--amber-ink)' : 'var(--faint)' }; }),
+      ask: () => this.askDock(x.ask), act2: x.act[1], act2Label: x.act[0] }));
+    const PAL = [250, 40, 160, 15, 300, 90, 200, 340].map(hh => 'oklch(0.68 0.12 ' + hh + ')');
+    const cnt = f => { const m = {}; D.tasks.forEach(x => { const k = f(x); m[k] = (m[k] || 0) + 1; }); return Object.entries(m).sort((a, b) => b[1] - a[1]); };
+    const toBars = (arr, fmt) => { const mx = Math.max(...arr.map(a => a[1])); return arr.map(([l, v], i) => ({ label: l, w: v / mx * 100, val: fmt ? fmt(v) : v, color: PAL[i % 8] })); };
+    const cs = {}; D.tasks.forEach(x => { cs[x.client] = cs[x.client] || [0, 0]; cs[x.client][0] += x.open; cs[x.client][1]++; });
+    const byClient = Object.entries(cs).map(([k, [s, n]]) => [k, s / n]).sort((a, b) => b[1] - a[1]).slice(0, 8);
+    const wk = [['W33', 31], ['W34', 28], ['W35', 35], ['W36', 33], ['W37', 38], ['W38', 36], ['W39', 41], ['W40', 39]];
+    const classicCharts = [
+      { title: 'Open tasks by stakeholder', isBars: true, isCols: false, bars: toBars(cnt(x => x.stake)), cols: [] },
+      { title: 'Open tasks by type', isBars: true, isCols: false, bars: toBars(cnt(x => x.type)), cols: [] },
+      { title: 'Avg days open by client', isBars: true, isCols: false, bars: toBars(byClient, v => v.toFixed(1)), cols: [] },
+      { title: 'Tasks opened per week', isBars: false, isCols: true, bars: [], cols: wk.map(([label, v]) => ({ label, v, h: v / 41 * 100, color: PAL[0] })) }
+    ];
+    const DBC = { accent: 'oklch(0.7 0.16 266)', muted: '#4a515c', amber: 'oklch(0.8 0.13 80)', green: 'oklch(0.72 0.14 152)', red: 'oklch(0.66 0.18 27)' };
+    const dockMsgs = st.dock.map((m, i) => {
+      const a = this.answer(m.key, m.q); const live = m.phase === 'thinking'; const k = live ? st.dockStep : a.steps.length;
+      const steps = a.steps.slice(0, Math.min(a.steps.length, k + 1)).map((l, j) => ({ label: l, done: j < k, active: j === k && live, color: j < k ? '#8f97a3' : '#e6e9ee' }));
+      return { q: a.q, steps, done: !live && !a.limited, limited: !live && !!a.limited, text: a.text || '', hasBars: !!a.bars, bars: (a.bars || []).map(([label, val, w, c]) => ({ label, val, w, color: DBC[c] })),
+        hasDraft: !!a.draft, draft: a.draft || '', copyLabel: st.copied === i ? 'Copied' : 'Copy', copy: () => { try { navigator.clipboard.writeText(a.draft); } catch (e) {} this.setState({ copied: i }); },
+        hasSources: !!(a.sources && a.sources.length), sources: a.sources || [], hasFollow: !!(a.follow && a.follow.length), follow: (a.follow || []).map(([fq, fk]) => ({ q: fq, ask: () => this.askDock(fk) })) };
+    });
+    const lastDock = st.dock[st.dock.length - 1];
+    const dockSendFn = () => { const v = st.dockDraft.trim(); if (!v) return; this.setState({ dockDraft: '' }); this.askDock('typed', v); };
+    const vB = {
+      isBriefing: st.screen === 'briefing', isAgentMode: st.mode === 'agent', isClassic: st.mode === 'classic',
+      setAgent: () => this.setState({ mode: 'agent' }), setClassic: () => this.setState({ mode: 'classic' }),
+      modeA: st.mode === 'agent' ? { bg: 'var(--text)', color: 'var(--bg)' } : { bg: 'transparent', color: 'var(--muted)' },
+      modeC: st.mode === 'classic' ? { bg: 'var(--text)', color: 'var(--bg)' } : { bg: 'transparent', color: 'var(--muted)' },
+      heroSize: narrow ? '40px' : '60px', featSize: narrow ? '24px' : '34px', briefCols: narrow ? 'minmax(0,1fr)' : 'minmax(0,1fr) 320px',
+      insights, classicCharts,
+      openHero: () => this.go('detail', 'T-4821'), askHero: () => this.askDock('t4821'), draftPing: () => this.askDock('ping'), askRule: () => this.askDock('rule'),
+      askOpen: () => this.askDock('opentasks'), askRisk: () => this.askDock('atrisk'), askAvg: () => this.askDock('avgdays'), askBottleneck: () => this.askDock('security'),
+      askTimeline: () => this.askDock('task:' + t.id + ':timeline'), askPredict: () => this.askDock('task:' + t.id + ':predict'), askCode: () => this.askDock('task:' + t.id + ':code'), askSimilar: () => this.askDock('task:' + t.id + ':similar'),
+      askNode: () => st.node && this.askDock('node:' + st.node), askModules: () => this.askDock('edgesync'),
+      dockOpen: st.dockOpen, openDock: () => this.setState({ dockOpen: true }), closeDock: () => this.setState({ dockOpen: false }),
+      dockW: narrow ? '100%' : '384px', dockPos: st.wideDock ? 'sticky' : 'fixed', dockShadow: st.wideDock ? 'none' : '-12px 0 40px rgba(13,15,19,0.28)', dockRef: this.dockRef,
+      dockCtx: lastDock ? this.answer(lastDock.key, lastDock.q).ctx : 'Briefing', dockEmpty: st.dock.length === 0, dockMsgs,
+      dockChips: [['Why is T-4821 at risk?', 't4821'], ['What do the 8 at-risk tasks have in common?', 'atrisk'], ['Why is Security rework rising?', 'security']].map(([cq, ck]) => ({ q: cq, ask: () => this.askDock(ck) })),
+      dockDraft: st.dockDraft, onDockDraft: e => this.setState({ dockDraft: e.target.value }), onDockKey: e => { if (e.key === 'Enter') dockSendFn(); }, dockSend: dockSendFn,
+      showLauncher: !st.dockOpen && st.screen !== 'ask'
+    };
+    return {
+      theme, accent: P.accent || 'ultramarine', themeLabel: theme === 'dark' ? 'Dark' : 'Light',
+      toggleTheme: () => this.setState({ themeOverride: theme === 'dark' ? 'light' : 'dark' }),
+      wide: !narrow, narrow, rootDir: narrow ? 'column' : 'row', padX: narrow ? '16px' : '32px',
+      navB: navStyle('briefing'), goBriefing: () => this.go('briefing'), navQ: navStyle('queue'), navM: navStyle('map'), navA: navStyle('ask'),
+      goQueue: () => this.go('queue'), goMap: () => this.go('map'), goAsk: () => this.go('ask'),
+      goMapSecurity: () => { this.setState({ node: 'Security' }); this.go('map'); },
+      showBanner: (P.showBanner ?? true) && !st.bannerClosed, closeBanner: () => this.setState({ bannerClosed: true }),
+      q: st.q, onSearch: e => { this.setState({ q: e.target.value, page: 0 }); if (st.screen !== 'queue') this.go('queue'); },
+      fType: st.fType, fClient: st.fClient, fStake: st.fStake, fDate: st.fDate,
+      typeOpts: ['All task types', ...D.TYPES], clientOpts: ['All clients', ...D.CLIENTS], stakeOpts: ['All stakeholders', ...D.STAKES], dateOpts: ['Last 7 days', 'Last 30 days', 'Last 90 days', 'This quarter'],
+      onType: e => this.setState({ fType: e.target.value, page: 0 }), onClient: e => this.setState({ fClient: e.target.value, page: 0 }),
+      onStake: e => this.setState({ fStake: e.target.value, page: 0 }), onDate: e => this.setState({ fDate: e.target.value }),
+      isQueue: st.screen === 'queue', isDetail: st.screen === 'detail', isMap: st.screen === 'map', isAsk: st.screen === 'ask',
+      loading, ready, isError, notError: !isError, readyNoErr: ready, showRows: ready && !isError,
+      retry: () => { this.setState({ retrying: true, errCleared: true }); setTimeout(() => this.setState({ retrying: false }), 700); },
+      skel3: [1, 2, 3], skel4: [1, 2, 3, 4], skel8: [1, 2, 3, 4, 5, 6, 7, 8],
+      cOpen: Math.round(100 * st.countT), cRisk: Math.round(8 * st.countT), cAvg,
+      countTxt: list.length === D.tasks.length ? '100 tasks' : `${list.length} of 100 tasks`,
+      headers, rows, isEmpty, emptyTerm: q || 'current filters',
+      clearFilters: () => this.setState({ q: '', fType: 'All task types', fClient: 'All clients', fStake: 'All stakeholders', page: 0 }),
+      pageTxt: list.length ? `${page * PS + 1}–${Math.min(list.length, page * PS + PS)} of ${list.length}` : '0 results',
+      prevPage: () => this.setState({ page: Math.max(0, page - 1) }), nextPage: () => this.setState({ page: Math.min(pages - 1, page + 1) }),
+      prevOp: page === 0 ? 0.4 : 1, nextOp: page >= pages - 1 ? 0.4 : 1,
+      d: this.detail(t), askAboutTask: () => this.askDock('task:' + t.id + ':summary'),
+      mapSvg: st.screen === 'map' ? this.mapSvg() : null, mapDir: narrow ? 'column' : 'row', panelW: narrow ? 'auto' : '320px', panelTop: narrow ? '1px solid var(--border)' : '0', panelLeft: narrow ? '0' : '1px solid var(--border)',
+      hasNode: !!nd, nd: nd || {}, closeNode: () => this.setState({ node: null }),
+      modules: mods.map(([name, n], i) => ({ name, n, w: n / 34 * 100, op: i === 0 ? 1 : 0.5 })),
+      newChat: () => { clearInterval(this.thinkTimer); this.setState({ askMode: 'empty', extra: [], autoRan: true }); },
+      showEmpty: st.askMode === 'empty' && st.extra.length === 0, showDemo: st.askMode === 'thread',
+      chips: CHIPS.map(c => ({ q: c, ask: askFn(c) })),
+      fixRows: [['Flushed edge-sync batch queue', 11, '2.1d', 2.1], ['Corrected TTL override in config-service', 8, '3.4d', 3.4], ['Rolled back config deploy, Dev patch', 6, '4.0d', 4.0]].map(([fix, n, tt, v]) => ({ fix, n, t: tt, w: v / 4 * 100 })),
+      sources: ['T-4417', 'T-4590', 'T-4302', 'T-4655'],
+      followUps: ['Which of these apply to T-4821?', 'Who usually owns edge-sync fixes?', 'Show open cache purge tasks'].map(c => ({ q: c, ask: askFn(c) })),
+      showOverMedian: () => { this.setState({ sortKey: 'days', sortDir: 'desc', page: 0 }); this.go('queue'); },
+      extra, busy, draft: st.draft, onDraft: e => this.setState({ draft: e.target.value }),
+      onDraftKey: e => { if (e.key === 'Enter') doSend(); }, send: doSend, sendOp: busy ? 0.5 : 1,
+      inputPh: busy ? 'Thinking…' : 'Ask about a task, team, or past fix',
+      ...vB
+    };
+  }
+}
+</script>
+</body>
+</html>

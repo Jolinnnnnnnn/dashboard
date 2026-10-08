@@ -12,9 +12,10 @@ import processMapJson from "@/data/artifacts/process_map.json";
 import similarJson from "@/data/artifacts/similar_cases.json";
 import summariesJson from "@/data/artifacts/summaries.json";
 import transitionsJson from "@/data/artifacts/transitions.json";
+import briefingJson from "@/data/artifacts/briefing.json";
 
 import type {
-  CodeArea, FilterOptions, MapWindow, QueueRow, QueueStats, Risk, Segment, SimilarCaseView, TaskDetail,
+  Briefing, CodeArea, FilterOptions, MapWindow, QueueRow, QueueStats, Risk, Segment, SimilarCaseView, TaskDetail,
 } from "@/lib/types";
 
 // ── Raw shapes (see docs/data-spec.md) ──
@@ -261,4 +262,10 @@ export function getProcessMap(): MapWindow[] {
     edges: w.edges.map((e) => ({ from: e.from, to: e.to, share: e.share_of_tasks, avgWait: e.avg_wait_days, rework: e.rework_tasks })),
     modules: w.modules,
   }));
+}
+
+// ── Briefing ──
+
+export function getBriefing(): Briefing {
+  return briefingJson as unknown as Briefing;
 }

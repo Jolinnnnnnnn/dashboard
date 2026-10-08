@@ -1,0 +1,8 @@
+[
+  {
+    "date": "2026-08-01",
+    "stakeholder": "ops",
+    "title": "Rollback plan required for config rollouts",
+    "description": "Ops started requiring a written rollback plan before any config rollout, so fewer rollouts stall waiting for sign-off."
+  }
+]

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
+import { AskButton, useAgent } from "@/components/AgentDock";
 import { DEFAULT_WINDOW } from "@/components/TopBar";
 import { riskVars } from "@/components/ui";
 import type { MapEdge, MapNode, MapWindow } from "@/lib/types";
@@ -125,6 +126,7 @@ function MapSvg({ w, selected, onSelect, animate }: {
 }
 
 function NodePanel({ n, label, onClose }: { n: MapNode; label: string; onClose: () => void }) {
+  const { ask } = useAgent();
   const max = Math.max(n.avgHold ?? 0, n.medianHold ?? 0) || 1;
   const ratio = (n.avgHold ?? 0) / (n.medianHold || 1);
   return (
@@ -175,6 +177,12 @@ function NodePanel({ n, label, onClose }: { n: MapNode; label: string; onClose: 
         </div>
       )}
       <div className="text-pretty rounded-md border border-line bg-surface2 px-3 py-2.5 leading-normal">{n.insight}</div>
+      <button
+        onClick={() => ask(`What's happening at ${n.name}?`, n.name)}
+        className="flex h-8 items-center justify-center gap-[7px] rounded-lg border border-transparent bg-accent-soft font-medium text-accent-ink hover:border-accent"
+      >
+        <span className="size-1.5 rounded-[2px] bg-accent" />Ask agent about {n.name}
+      </button>
     </div>
   );
 }
@@ -215,7 +223,7 @@ export function ProcessView({ windows }: { windows: MapWindow[] }) {
   return (
     <div className="flex flex-col gap-5">
       <Header w={w} />
-      <div className="card flex min-h-[480px] flex-col overflow-hidden min-[900px]:flex-row">
+      <div className="flex min-h-[480px] flex-col overflow-hidden rounded-xl bg-surface min-[900px]:flex-row">
         <div className="relative min-w-0 flex-1 px-4 py-3.5">
           <div className="text-xs text-faint">
             Click a stakeholder to inspect · node size = task volume · {hidden} minor routes under {MIN_EDGE_SHARE * 100}% of tasks hidden
@@ -227,10 +235,13 @@ export function ProcessView({ windows }: { windows: MapWindow[] }) {
         {node && <NodePanel n={node} label={w.label} onClose={() => setSelected(null)} />}
       </div>
 
-      <div className="card px-[18px] py-4">
+      <div className="rule">
         <div className="mb-3.5 flex flex-wrap items-baseline justify-between gap-2">
           <div className="font-semibold">Top problem modules</div>
-          <div className="text-xs text-faint">Tasks touching each module · {w.label.toLowerCase()}</div>
+          <div className="flex items-center gap-2.5">
+            <div className="text-xs text-faint">Tasks touching each module · {w.label.toLowerCase()}</div>
+            <AskButton q={`Which clients are blocked on ${w.modules[0]?.id}/?`} context={`${w.modules[0]?.id}/`} />
+          </div>
         </div>
         <div className="flex flex-col gap-[9px]">
           {w.modules.slice(0, 8).map((m, i) => (
@@ -252,7 +263,7 @@ export function ProcessViewFallback() {
   return (
     <div className="flex flex-col gap-5">
       <Header />
-      <div className="card min-h-[480px] px-4 py-3.5"><div className="skeleton mt-3 h-[420px] rounded-md" /></div>
+      <div className="min-h-[480px] rounded-xl bg-surface px-4 py-3.5"><div className="skeleton mt-3 h-[420px] rounded-md" /></div>
     </div>
   );
 }
