@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 import { AskButton, useAgent } from "@/components/AgentDock";
-import { DEFAULT_WINDOW } from "@/components/TopBar";
+import { DEFAULT_WINDOW, WINDOWS } from "@/components/TopBar";
 import { riskVars } from "@/components/ui";
 import type { MapEdge, MapNode, MapWindow } from "@/lib/types";
 
@@ -187,20 +187,32 @@ function NodePanel({ n, label, onClose }: { n: MapNode; label: string; onClose: 
   );
 }
 
-function Header({ w }: { w?: MapWindow }) {
+function Header({ w, onWindow }: { w?: MapWindow; onWindow?: (key: string) => void }) {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-3">
-      <div>
+    <div className="flex flex-wrap items-end justify-between gap-3 min-[900px]:flex-nowrap min-[900px]:gap-6">
+      <div className="min-w-0">
         <h1 className="m-0 text-xl font-semibold tracking-[-0.015em]">Process map</h1>
         <div className="mt-[3px] text-muted">
           How tasks move between stakeholders{w ? ` · ${w.label.toLowerCase()} · ${w.tasks} tasks, median ${w.medianDaysToClose}d to close` : ""}
         </div>
       </div>
-      <div className="flex flex-wrap items-center gap-4 text-xs text-muted">
+      <div className="flex flex-none flex-col items-start gap-2.5 min-[900px]:items-end">
+        {/* History window lives next to the map it controls */}
+        <select
+          aria-label="History window"
+          className="field"
+          value={w?.key ?? DEFAULT_WINDOW}
+          disabled={!onWindow}
+          onChange={(e) => onWindow?.(e.target.value)}
+        >
+          {WINDOWS.map((x) => <option key={x.key} value={x.key}>{x.label}</option>)}
+        </select>
+        <div className="flex flex-wrap items-center gap-4 text-xs text-muted">
         <div className="flex items-center gap-1.5"><div className="h-0.5 w-[18px] bg-line2" /><div className="h-1.5 w-[18px] rounded-[3px] bg-line2" />Share of tasks</div>
         <div className="flex items-center gap-1.5">
           <div className="h-1.5 w-14 rounded-[3px]" style={{ background: "linear-gradient(90deg,oklch(0.68 0.15 150),oklch(0.72 0.15 90),oklch(0.68 0.15 25))" }} />
           Avg wait 0.5d → 3d
+        </div>
         </div>
       </div>
     </div>
@@ -209,6 +221,7 @@ function Header({ w }: { w?: MapWindow }) {
 
 export function ProcessView({ windows }: { windows: MapWindow[] }) {
   const params = useSearchParams();
+  const router = useRouter();
   const w = windows.find((x) => x.key === (params.get("window") ?? DEFAULT_WINDOW)) ?? windows.at(-1)!;
   const [selected, setSelected] = useState<string | null>(params.get("node"));
   const [animate, setAnimate] = useState(true);
@@ -222,7 +235,7 @@ export function ProcessView({ windows }: { windows: MapWindow[] }) {
 
   return (
     <div className="flex flex-col gap-5">
-      <Header w={w} />
+      <Header w={w} onWindow={(key) => router.replace(key === DEFAULT_WINDOW ? "/process" : `/process?window=${key}`, { scroll: false })} />
       <div className="flex flex-col overflow-hidden rounded-xl bg-surface min-[900px]:h-[520px] min-[900px]:flex-row">
         <div className="relative flex min-w-0 flex-1 flex-col px-4 py-3.5">
           <div className="text-xs text-faint">

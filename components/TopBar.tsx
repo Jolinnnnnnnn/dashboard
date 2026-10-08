@@ -86,19 +86,6 @@ export function TopBar({ options }: { options: FilterOptions }) {
           <Select label="Currently with" value={params.get("stakeholder") ?? ALL.stakeholder} options={[ALL.stakeholder, ...options.stakeholders]} onChange={(v) => setQueueParam("stakeholder", v, ALL.stakeholder)} />
         </>
       )}
-      {onMap && (
-        <select
-          aria-label="History window"
-          className="field"
-          value={params.get("window") ?? DEFAULT_WINDOW}
-          onChange={(e) => {
-            const v = e.target.value;
-            router.replace(v === DEFAULT_WINDOW ? "/process" : `/process?window=${v}`, { scroll: false });
-          }}
-        >
-          {WINDOWS.map((w) => <option key={w.key} value={w.key}>{w.label}</option>)}
-        </select>
-      )}
       <div className="flex-1" />
       <ThemeToggle />
     </div>
