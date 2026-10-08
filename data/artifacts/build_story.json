@@ -4,12 +4,12 @@
   "first_commit": "2026-10-07T16:36:14-04:00",
   "agent_live": "2026-10-08T10:19:40-04:00",
   "hours_to_live_agent": 17.7,
-  "commits": 24,
+  "commits": 26,
   "lines": {
-    "typescript": 3839,
+    "typescript": 4186,
     "python": 2105
   },
-  "logged_decisions": 42,
+  "logged_decisions": 41,
   "validator_checks": 21,
   "evals": {
     "passed": 16,
@@ -144,6 +144,16 @@
       "hash": "a9deaf8",
       "date": "2026-10-08T13:14:49-04:00",
       "subject": "How it was built: plain language instead of marketing copy"
+    },
+    {
+      "hash": "06fba2f",
+      "date": "2026-10-08T13:21:03-04:00",
+      "subject": "How it was built: one interactive system diagram"
+    },
+    {
+      "hash": "25887c2",
+      "date": "2026-10-08T13:29:22-04:00",
+      "subject": "Revert \"How it was built: one interactive system diagram\""
     }
   ]
 }

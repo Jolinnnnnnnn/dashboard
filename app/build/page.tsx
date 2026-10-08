@@ -1,33 +1,115 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
-import { BuildDiagram } from "@/components/BuildDiagram";
-import { getBuildStory, getSourceCounts } from "@/lib/data";
+import { Architecture, Brainstorm, FromTableau, InsightSources, Journey, WireframeDashboard } from "@/components/BuildVisuals";
+import { getBriefing, getBuildStory, getSourceCounts } from "@/lib/data";
+import { CATCHES } from "@/lib/story";
 
 export const metadata: Metadata = { title: "How it was built · Signal" };
 
+function Section({ kicker, title, children }: { kicker: string; title: string; children: React.ReactNode }) {
+  return (
+    <section className="flex flex-col gap-6">
+      <div>
+        <div className="font-mono text-[11px] tracking-[.08em] text-faint">{kicker}</div>
+        <h2 className="m-0 mt-2 text-balance font-serif text-[34px] font-normal leading-[1.08] tracking-[-0.01em]">{title}</h2>
+      </div>
+      {children}
+    </section>
+  );
+}
+
 export default function BuildPage() {
   const s = getBuildStory();
-  const c = getSourceCounts();
-  const values = {
-    tasks: String(c.tasks),
-    handoffs: c.handoffs.toLocaleString("en-US"),
-    checks: "20",
-    backtest: "right 89% of the time, vs 56% for a simple baseline",
-    evals: `${s.evals.passed} of ${s.evals.total}`,
-  };
+  const briefing = getBriefing();
+  const repo = s.repo;
+  const times = Object.fromEntries(s.timeline.map((c) => [c.hash, c.date]));
+  const moduleInsight = briefing.insights.find((i) => i.id === "module");
 
   return (
-    <div className="flex max-w-[1000px] flex-col gap-8 pb-10">
-      <div>
-        <h1 className="m-0 font-serif text-[44px] font-normal leading-none tracking-[-0.02em] min-[900px]:text-[60px]">How I built Signal</h1>
-        <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[12.5px] text-muted">
-          <span>{s.hours_to_live_agent}h with Claude Code</span>
-          <span>{s.commits} commits</span>
-          <span>{s.evals.passed}/{s.evals.total} agent tests</span>
-          <a href={s.repo} target="_blank" rel="noreferrer">GitHub ↗</a>
+    <div className="flex max-w-[1100px] flex-col gap-20 pb-10">
+      <div className="flex flex-col gap-10">
+        <div>
+        <h1 className="m-0 max-w-[860px] text-balance font-serif text-[44px] font-normal leading-[1.02] tracking-[-0.02em] min-[900px]:text-[68px]">
+          How I built Signal
+        </h1>
+        <p className="m-0 mt-4 max-w-[640px] text-pretty text-[16px] leading-relaxed text-muted">
+          An operations dashboard where an AI agent writes the daily summary and answers questions. Built with Claude Code, on synthetic data.
+        </p>
+        </div>
+        <div className="grid grid-cols-3 gap-8">
+          {[[`${s.hours_to_live_agent}h`, "first commit to working agent"], [String(s.commits), "commits"], [`${s.evals.passed}/${s.evals.total}`, "agent test questions passed"]].map(([v, l]) => (
+            <div key={l} className="rule">
+              <div className="font-serif text-[44px] leading-none tracking-[-0.02em]">{v}</div>
+              <div className="mt-2 text-[13px] text-muted">{l}</div>
+            </div>
+          ))}
         </div>
       </div>
-      <BuildDiagram values={values} repo={s.repo} />
+
+      <Section kicker="01" title="What changes compared with a Tableau dashboard">
+        <FromTableau />
+      </Section>
+
+      <Section kicker="02" title="Where each insight comes from">
+        <InsightSources counts={getSourceCounts()} example={moduleInsight ? { title: moduleInsight.title, evidence: moduleInsight.evidence } : undefined} />
+      </Section>
+
+      <Section kicker="03" title="Notes from planning">
+        <Brainstorm />
+      </Section>
+
+      <Section kicker="04" title="Build order">
+        <div className="card px-5 py-7 min-[900px]:px-6">
+          <Journey times={times} firstCommit={s.first_commit} repo={repo} />
+        </div>
+      </Section>
+
+      <Section kicker="05" title="Architecture">
+        <div className="overflow-x-auto rounded-xl bg-surface p-4">
+          <Architecture evals={`tests ${s.evals.passed}/${s.evals.total}`} backtest="89% vs 56% baseline" />
+        </div>
+      </Section>
+
+      <Section kicker="06" title="Design versions">
+        <div className="grid items-start gap-6 min-[900px]:grid-cols-3">
+          <figure className="m-0 flex flex-col gap-2.5">
+            <div className="rounded-lg bg-surface2 p-3"><WireframeDashboard /></div>
+            <figcaption className="text-[13px] text-muted"><span className="font-medium text-ink">v1</span> · First layout: KPI cards and a table</figcaption>
+          </figure>
+          <figure className="m-0 flex flex-col gap-2.5">
+            <div className="overflow-hidden rounded-lg border border-line bg-surface2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/build/design-v3.webp" alt="Claude Design prototype of the agent briefing" className="block h-auto w-full" />
+            </div>
+            <figcaption className="text-[13px] text-muted"><span className="font-medium text-ink">v3</span> · Claude Design prototype; its numbers were placeholders</figcaption>
+          </figure>
+          <figure className="m-0 flex flex-col gap-2.5">
+            <Link href="/" className="card flex aspect-[640/406] flex-col justify-center gap-3 px-5 text-ink no-underline hover:border-line2 hover:text-ink">
+              <div className="font-mono text-[10px] tracking-[.08em] text-muted">AGENT BRIEFING · LIVE</div>
+              <div className="text-balance font-serif text-[26px] leading-none">{briefing.headline}</div>
+              <div className="text-[12px] font-medium text-accent-ink">Open the live page</div>
+            </Link>
+            <figcaption className="text-[13px] text-muted"><span className="font-medium text-ink">Live version</span> · Same layout; numbers come from the data</figcaption>
+          </figure>
+        </div>
+      </Section>
+
+      <Section kicker="07" title="Mistakes I caught">
+        <div className="grid gap-8 min-[800px]:grid-cols-3">
+          {CATCHES.map((c) => (
+            <a key={c.title} href={`${repo}/commit/${c.commit}`} target="_blank" rel="noreferrer" className="rule flex flex-col gap-3 text-ink no-underline hover:text-ink">
+              <div className="text-balance font-serif text-[24px] leading-[1.12]">{c.title}</div>
+              <span className="self-start rounded-full bg-green-soft px-2.5 py-0.5 text-xs font-medium text-green-ink">{c.caughtBy}</span>
+            </a>
+          ))}
+        </div>
+      </Section>
+
+      <div className="flex flex-wrap gap-x-6 gap-y-2 border-t border-line2 pt-5">
+        <a href={repo} target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a href={`${repo}/blob/main/docs/prompt-log.md`} target="_blank" rel="noreferrer">Full prompt log ↗</a>
+      </div>
     </div>
   );
 }
