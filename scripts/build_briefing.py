@@ -20,8 +20,8 @@ from concurrent.futures import ThreadPoolExecutor
 
 import pandas as pd
 
-import relay_data as rd
-import relay_model as rm
+import signal_data as rd
+import signal_model as rm
 from summarize_tasks import load_env
 
 MODEL = "claude-haiku-5-5"
@@ -94,7 +94,7 @@ def module_behind_risk(ctx) -> dict | None:
     for tid in at_risk["task_id"]:
         for m in rm.module_set(ctx["tasks"][tid]["code_areas"]):
             counts.setdefault(m, []).append(tid)
-    ranked = sorted(counts.items(), key=lambda kv: -len(kv[1]))
+    ranked = sorted(counts.items(), key=lambda kv: (-len(kv[1]), kv[0]))  # name breaks ties deterministically
     if not ranked or len(ranked[0][1]) < MIN_MODULE_AT_RISK:
         return None
     mod, ids = ranked[0]

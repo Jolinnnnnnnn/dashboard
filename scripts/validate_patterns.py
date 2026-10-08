@@ -14,8 +14,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-import relay_data as rd
-import relay_model as rm
+import signal_data as rd
+import signal_model as rm
 
 BACKTEST_SPLIT = pd.Timestamp("2026-07-01T00:00:00Z")
 

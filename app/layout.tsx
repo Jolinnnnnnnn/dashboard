@@ -14,12 +14,12 @@ const jetbrains = JetBrains_Mono({ variable: "--font-jetbrains", subsets: ["lati
 const instrument = Instrument_Serif({ variable: "--font-instrument", subsets: ["latin"], weight: "400", style: ["normal", "italic"] });
 
 export const metadata: Metadata = {
-  title: "Relay",
-  description: "Predicts where a stuck task goes next and how similar issues were solved. Synthetic data.",
+  title: "Signal",
+  description: "An AI agent that briefs you on what changed in your operations data, instead of a dashboard. Synthetic data.",
 };
 
 // Runs before hydration so the saved (or system) theme applies without a flash.
-const themeScript = `(function(){try{var t=localStorage.getItem('relay-theme');if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t}catch(e){}})()`;
+const themeScript = `(function(){try{var t=localStorage.getItem('signal-theme');if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.dataset.theme=t}catch(e){}})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   const options = getFilterOptions();

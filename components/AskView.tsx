@@ -41,7 +41,7 @@ export function AskView({ task = null }: { task?: string | null }) {
       <div className="mb-5 flex items-center justify-between">
         <div className="flex items-baseline gap-2">
           <h1 className="m-0 text-xl font-semibold tracking-[-0.015em]">Ask</h1>
-          <div className="text-xs text-faint">Relay agent</div>
+          <div className="text-xs text-faint">Signal agent</div>
         </div>
         <button onClick={() => { setMessages([]); setDraft(""); }} className="btn h-[30px] font-normal">New chat</button>
       </div>
@@ -65,7 +65,7 @@ export function AskView({ task = null }: { task?: string | null }) {
           <div key={i} className="flex flex-col gap-7">
             <div className="max-w-[80%] self-end rounded-lg border border-line bg-surface2 px-[13px] py-[9px]">{m.q}</div>
             <div className="anim-rise flex flex-col gap-3">
-              <div className="flex items-center gap-[7px] text-xs font-medium text-muted"><div className="size-2 rounded-[2px] bg-accent" />Relay agent</div>
+              <div className="flex items-center gap-[7px] text-xs font-medium text-muted"><div className="size-2 rounded-[2px] bg-accent" />Signal agent</div>
               <div className="flex items-center gap-2.5 rounded-lg border border-line bg-amber-soft px-3 py-2.5">
                 <div className="size-1.5 rounded-full bg-amber" />
                 <div className="flex-1 text-ink">{NOT_CONNECTED}</div>

@@ -1,6 +1,6 @@
-# Relay
+# Signal
 
-Relay predicts where a stuck task goes next and shows how similar issues were solved for other clients, so TPMs can unblock work before it slips.
+Signal is an AI agent for operations data: instead of a dashboard you have to dig through, it checks every client task and handoff, tells you what changed and what needs you, predicts where stuck tasks go next, and shows how similar issues were solved before.
 
 > **Status:** in progress. See [docs/plan.md](docs/plan.md).
 >

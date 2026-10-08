@@ -19,7 +19,7 @@ export function ThemeToggle() {
     const next: Theme = theme === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = next;
     try {
-      localStorage.setItem("relay-theme", next);
+      localStorage.setItem("signal-theme", next);
     } catch {
       // Storage can be unavailable (private mode); the toggle still works for this visit.
     }

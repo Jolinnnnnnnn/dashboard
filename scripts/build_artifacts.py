@@ -16,8 +16,8 @@ import json
 
 import pandas as pd
 
-import relay_data as rd
-import relay_model as rm
+import signal_data as rd
+import signal_model as rm
 
 OUT_DIR = rd.DATA_DIR / "artifacts"
 TOP_K = 5
@@ -166,7 +166,9 @@ def process_map(tasks: pd.DataFrame, s: pd.DataFrame, names: dict) -> dict:
             "bottleneck": bottleneck,
             "min_rework_tasks": MIN_REWORK_TASKS,
             "nodes": nodes, "edges": edges,
-            "modules": [{"id": m, "count": int(c)} for m, c in module_counts.value_counts().items()],
+            # Sort by count, then name: set iteration order varies between runs, so ties need a fixed order
+            "modules": [{"id": m, "count": int(c)} for m, c in
+                        sorted(module_counts.value_counts().items(), key=lambda kv: (-kv[1], kv[0]))],
         }
     return out
 

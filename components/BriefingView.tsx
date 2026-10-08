@@ -152,7 +152,7 @@ function SideColumn({ b, onClassic }: { b: Briefing; onClassic: () => void }) {
           <div className="pt-0.5 text-xs text-faint">~40 min · once a week</div>
         </div>
         <div className="flex flex-col gap-[9px] border-t border-line py-4">
-          <div className="font-mono text-[11px] tracking-[.08em] text-accent-ink">NOW · RELAY AGENT</div>
+          <div className="font-mono text-[11px] tracking-[.08em] text-accent-ink">NOW · SIGNAL AGENT</div>
           {["Checks every task and handoff on each data refresh", "Pushes what changed, with evidence", "Suggests a next step; you decide"].map((s) => (
             <div key={s} className="flex gap-2.5"><span className="text-accent-ink">→</span>{s}</div>
           ))}

@@ -1,4 +1,4 @@
-"""Shared loading and cleaning for Relay's synthetic data.
+"""Shared loading and cleaning for Signal's synthetic data.
 
 Terms follow docs/definitions.md. Used by validate_patterns.py and the Phase 3 scripts.
 """

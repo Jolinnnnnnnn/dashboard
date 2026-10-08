@@ -12,8 +12,8 @@ import json
 import numpy as np
 import pandas as pd
 
-import relay_data as rd
-import relay_model as rm
+import signal_data as rd
+import signal_model as rm
 
 SPLIT = pd.Timestamp("2026-07-01T00:00:00Z")
 OUT = rd.DATA_DIR / "artifacts" / "backtest.json"

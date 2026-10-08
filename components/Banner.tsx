@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const KEY = "relay-banner-dismissed";
+const KEY = "signal-banner-dismissed";
 
 export function Banner() {
   // Shown by default; hidden after mount if this viewer dismissed it before.

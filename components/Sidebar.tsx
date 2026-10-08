@@ -77,7 +77,7 @@ function SidebarView({ openCount, stats, pathname }: { openCount: number; stats:
       <aside className="sticky top-0 hidden h-screen w-[232px] flex-none flex-col bg-bg px-3 pb-4 pt-5 min-[900px]:flex">
         <Link href="/" className="flex items-center gap-2.5 px-2.5 pb-[26px] text-ink no-underline hover:text-ink">
           <Logo />
-          <div className="font-serif text-[28px] leading-none tracking-[-0.01em]">Relay</div>
+          <div className="font-serif text-[28px] leading-none tracking-[-0.01em]">Signal</div>
         </Link>
         <nav className="flex flex-col gap-0.5">
           {nav.map((it) => {
@@ -107,7 +107,7 @@ function SidebarView({ openCount, stats, pathname }: { openCount: number; stats:
       <div className="flex flex-wrap items-center gap-3 border-b border-line bg-bg px-4 py-3 min-[900px]:hidden">
         <Link href="/" className="mr-auto flex items-center gap-2 text-ink no-underline hover:text-ink">
           <Logo size={16} />
-          <div className="font-serif text-[22px] leading-none">Relay</div>
+          <div className="font-serif text-[22px] leading-none">Signal</div>
         </Link>
         <div className="flex flex-wrap gap-1">
           {nav.map((it) => {

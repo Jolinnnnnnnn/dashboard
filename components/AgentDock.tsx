@@ -60,13 +60,13 @@ function Dock({ openTasks, chips, messages, onClose, onAsk }: DockProps & {
 
   return (
     <aside
-      aria-label="Relay agent"
+      aria-label="Signal agent"
       className="anim-slide fixed inset-y-0 right-0 z-50 flex h-screen w-full flex-none flex-col border-l border-line bg-surface shadow-[-12px_0_40px_rgba(16,24,40,0.10)] min-[900px]:w-[384px] min-[1280px]:sticky min-[1280px]:top-0 min-[1280px]:shadow-none"
     >
       <div className="flex items-center gap-2.5 border-b border-line px-[18px] py-4">
         <div className="anim-breathe size-2 rounded-full bg-accent" />
         <div className="min-w-0 flex-1">
-          <div className="font-semibold">Relay agent</div>
+          <div className="font-semibold">Signal agent</div>
           <div className="text-xs text-muted">
             Watching {openTasks} open tasks · context: <span className="font-mono text-[11.5px] text-ink">{context}</span>
           </div>
@@ -119,7 +119,7 @@ function Dock({ openTasks, chips, messages, onClose, onAsk }: DockProps & {
   );
 }
 
-/** Floating "Ask Relay agent" button (hidden while the dock is open and on the Ask page). */
+/** Floating "Ask Signal" button (hidden while the dock is open and on the Ask page). */
 export function AgentLauncher({ insights }: { insights: number }) {
   const { isOpen, open } = useAgent();
   const pathname = usePathname();
@@ -130,7 +130,7 @@ export function AgentLauncher({ insights }: { insights: number }) {
       className="fixed bottom-5 right-5 z-40 flex h-11 items-center gap-2.5 rounded-[22px] border-0 bg-accent pl-3.5 pr-4 font-medium text-on-accent shadow-[0_6px_20px_oklch(0.5_0.2_266/0.28)] hover:opacity-90"
     >
       <span className="size-2 rounded-full bg-on-accent" />
-      Ask Relay agent
+      Ask Signal
       <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded-[9px] bg-white/20 px-[5px] text-[11px]">{insights}</span>
     </button>
   );

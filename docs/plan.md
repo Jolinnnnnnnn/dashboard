@@ -1,10 +1,12 @@
-# Relay: Plan
+# Signal: Plan
+
+> Renamed from the working name **Relay** on 2026-10-08. The Claude Design prompt in section 6 is kept verbatim as sent, so it still says Relay.
 
 **Status (update as phases finish):** Phase 0 ✅ · Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · Phase 4 ✅ · Phase 5 ✅ (deploy pending) · Phase 6 ✅ · Design v3 ✅ (briefing, classic view, agent dock UI) · next: Phase 7 (agent, wired into the dock and Ask page)
 
 ## 1. What it is
 
-**Pitch:** "Relay predicts where a stuck task goes next and shows how similar issues were solved for other clients, so TPMs can unblock work before it slips."
+**Pitch:** "Signal is an AI agent for operations data: instead of a dashboard you have to dig through, it checks every client task and handoff, tells you what changed and what needs you, predicts where stuck tasks go next, and shows how similar issues were solved before."
 
 - **User:** a TPM or support lead at a CDN company managing client tasks across teams.
 - **Views:** Task Queue, Task Detail, Process Map, Ask (agent). Knowledge Graph is a stretch.
@@ -40,7 +42,7 @@ Python handles data generation and analysis. The app reads static JSON, so it's 
 ## 4. Repo structure
 
 ```
-relay/
+signal/
 ├── CLAUDE.md                 # goal, users, data model, rules, conventions
 ├── README.md
 ├── .env.example              # required env var names, no values

@@ -1,6 +1,6 @@
 # Data Spec
 
-Source of truth for Relay's synthetic dataset. The generator (`scripts/generate_data.py`) implements this spec; the validator (`scripts/validate_patterns.py`) checks it. To change the data, change this spec and the generator, then regenerate. Never hand-edit `data/`.
+Source of truth for Signal's synthetic dataset. The generator (`scripts/generate_data.py`) implements this spec; the validator (`scripts/validate_patterns.py`) checks it. To change the data, change this spec and the generator, then regenerate. Never hand-edit `data/`.
 
 ## Purpose
 
@@ -135,7 +135,7 @@ Keeps the data realistic and gives the cleaning step something to do.
 - 8% of tasks take a random detour (one extra stakeholder hop).
 - 10% of closed tasks have an empty solution note.
 - 5% of tasks have no code areas; 30% get one extra unrelated module.
-- 3% of closed tasks have a duplicate consecutive handoff (data-entry mistake); `relay_data.clean_handoffs` merges these.
+- 3% of closed tasks have a duplicate consecutive handoff (data-entry mistake); `signal_data.clean_handoffs` merges these.
 - **Text overlap** (so similar-case search isn't trivially perfect): 25% of tasks get a vague title ("Issue with {domain}"); 40% get a generic sentence appended ("This is impacting production traffic."); 15% are worded (title + description) like a related family, e.g. a stale-content ticket that reads like a config regression. The family label and code areas stay true.
 
 ## Randomness

@@ -84,7 +84,7 @@
           "tone": "red"
         },
         {
-          "label": "log-export/",
+          "label": "cdn-cache-purge/",
           "value": 3,
           "unit": " at-risk",
           "tone": "accent"

@@ -1,4 +1,4 @@
-"""Generate Relay's synthetic dataset into data/. Implements docs/data-spec.md.
+"""Generate Signal's synthetic dataset into data/. Implements docs/data-spec.md.
 
 Usage (from repo root, venv active):
     python scripts/generate_data.py [--seed N] [--data-dir DIR]
@@ -13,7 +13,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-import relay_data as rd
+import signal_data as rd
 
 SEED = 42
 N_CLOSED = 400
@@ -632,7 +632,7 @@ def generate_closed(clients) -> list[dict]:
 
 def stint_medians(closed_tasks):
     """Median hold by (stakeholder, type) with stakeholder-only fallback under 5 examples,
-    the same rule the risk calculation uses (relay_data.risk_levels)."""
+    the same rule the risk calculation uses (signal_data.risk_levels)."""
     by_pair: dict = {}
     for t in closed_tasks:
         holds: list[tuple[str, float]] = []

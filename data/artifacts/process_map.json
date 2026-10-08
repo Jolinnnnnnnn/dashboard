@@ -484,11 +484,11 @@
           "count": 24
         },
         {
-          "id": "origin-failover",
+          "id": "log-export",
           "count": 23
         },
         {
-          "id": "log-export",
+          "id": "origin-failover",
           "count": 23
         },
         {
@@ -500,11 +500,11 @@
           "count": 20
         },
         {
-          "id": "ssl-cert",
+          "id": "rate-limiter",
           "count": 19
         },
         {
-          "id": "rate-limiter",
+          "id": "ssl-cert",
           "count": 19
         },
         {
@@ -1112,11 +1112,11 @@
           "count": 33
         },
         {
-          "id": "traffic-shaping",
+          "id": "cdn-cache-purge",
           "count": 32
         },
         {
-          "id": "cdn-cache-purge",
+          "id": "traffic-shaping",
           "count": 32
         },
         {
@@ -1780,11 +1780,11 @@
           "count": 61
         },
         {
-          "id": "monitoring-alerts",
+          "id": "edge-auth",
           "count": 58
         },
         {
-          "id": "edge-auth",
+          "id": "monitoring-alerts",
           "count": 58
         },
         {
@@ -1804,11 +1804,11 @@
           "count": 45
         },
         {
-          "id": "image-optimizer",
+          "id": "customer-portal",
           "count": 13
         },
         {
-          "id": "customer-portal",
+          "id": "image-optimizer",
           "count": 13
         },
         {
@@ -1820,11 +1820,11 @@
           "count": 8
         },
         {
-          "id": "ddos-mitigation",
+          "id": "analytics-pipeline",
           "count": 7
         },
         {
-          "id": "analytics-pipeline",
+          "id": "ddos-mitigation",
           "count": 7
         }
       ]

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Design tokens from design/project/Relay v3.dc.html (ultramarine accent) */
+/* Design tokens from design/project/Relay v3.dc.html (the design's working name; ultramarine accent) */
 [data-theme="light"] {
   color-scheme: light;
   --bg: #f7f8fa; --surface: #ffffff; --surface2: #f1f3f6; --surface3: #e5e8ed;

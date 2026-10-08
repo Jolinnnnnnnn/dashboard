@@ -1,4 +1,4 @@
-# Relay
+# Signal
 
 Operations dashboard for a (fictional) CDN company. Predicts which stakeholder a pending client task goes to next, shows where tasks get stuck, and surfaces how similar issues were solved for other clients. Includes a read-only AI agent that answers questions via tool calls. Portfolio project; all data is synthetic.
 
@@ -21,7 +21,7 @@ TPMs / support leads tracking client tasks across teams.
 - `app/`: pages (`/` briefing, `queue`, `task/[id]`, `process`, `ask`; later `api/agent`)
 - `components/`: client components (AgentDock: provider, dock, launcher, AskButton; BriefingView, TopBar, Sidebar, QueueTable, ProcessView, AskView, ui)
 - `lib/data.ts` (server-only data access) and `lib/types.ts` (view models)
-- `design/`: Claude Design handoff; `project/Relay v3.dc.html` is the current visual source of truth (v1/v2 kept for reference); tokens copied into `app/globals.css`
+- `design/`: Claude Design handoff; `project/Relay v3.dc.html` is the current visual source of truth (v1/v2 kept for reference; designed under the working name Relay); tokens copied into `app/globals.css`
 - `docs/`: `plan.md`, `data-spec.md`, `definitions.md`, `prompt-log.md`
 - `evals/`: agent eval questions + runner
 
@@ -68,4 +68,4 @@ Data pipeline, run from the repo root with the venv active (`source .venv/bin/ac
 - Pipeline order after changing data or model code: generate → validate → backtest → build_artifacts → summarize_tasks → build_briefing
 - `generate_data.py` and `validate_patterns.py` accept `--data-dir DIR` (and the generator `--seed N`) to test other seeds without touching `data/`. After changing the generator, check a range of seeds, not just 42.
 
-`scripts/relay_data.py` holds shared loading/cleaning (`load`, `clean_handoffs`, `stints`, `routes`, `risk_levels`); `scripts/relay_model.py` holds `TransitionModel` (prediction, ETA) and `SimilarityIndex`. Reuse them rather than re-implementing. The TypeScript app reads the precomputed artifacts; it doesn't re-implement the model.
+`scripts/signal_data.py` holds shared loading/cleaning (`load`, `clean_handoffs`, `stints`, `routes`, `risk_levels`); `scripts/signal_model.py` holds `TransitionModel` (prediction, ETA) and `SimilarityIndex`. Reuse them rather than re-implementing. The TypeScript app reads the precomputed artifacts; it doesn't re-implement the model.

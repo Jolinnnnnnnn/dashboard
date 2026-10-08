@@ -11,7 +11,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-import relay_data as rd
+import signal_data as rd
 
 TEXT_WEIGHT, MODULE_WEIGHT = 0.7, 0.3
 MIN_CONDITIONAL_EXAMPLES = 3  # for "remaining time given it's already been held this long"

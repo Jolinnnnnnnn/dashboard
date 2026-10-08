@@ -62,7 +62,7 @@ const TRANSITIONS = transitionsJson as unknown as {
 };
 const MAP = processMapJson as unknown as { as_of: string; windows: Record<string, RawMapWindow> };
 
-/** Fixed "today" for the synthetic data (matches scripts/relay_data.py). */
+/** Fixed "today" for the synthetic data (matches scripts/signal_data.py). */
 export const TODAY = new Date("2026-10-07T09:00:00Z");
 export const DATA_AS_OF = "Oct 7, 2026";
 
@@ -147,7 +147,7 @@ export function getFilterOptions(): FilterOptions {
 
 export const allTaskIds = () => TASKS.map((t) => t.id);
 
-/** Handoff stints for a task, merging duplicate consecutive rows (see relay_data.clean_handoffs). */
+/** Handoff stints for a task, merging duplicate consecutive rows (see signal_data.clean_handoffs). */
 function stints(taskId: string) {
   const out: { stakeholder: string; entered: string; hold: number | null }[] = [];
   for (const h of HANDOFFS_BY_TASK.get(taskId) ?? []) {

@@ -17,7 +17,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import anthropic
 
-import relay_data as rd
+import signal_data as rd
 
 MODEL = "claude-haiku-5-5"
 ARTIFACTS = rd.DATA_DIR / "artifacts"
