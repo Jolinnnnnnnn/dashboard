@@ -545,3 +545,9 @@ export function getClassicData(): ClassicData {
     weeks,
   };
 }
+
+/** Sizes of the data sources behind the insights (for the How it was built page). */
+export function getSourceCounts() {
+  const handoffs = TASKS.reduce((n, t) => n + stints(t.id).length, 0);
+  return { tasks: TASKS.length, handoffs, modules: modulesJson.length, clients: clientsJson.length, events: eventsJson.length };
+}

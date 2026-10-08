@@ -1,7 +1,7 @@
 // Illustrations for the "How it was built" page. Plain SVG/HTML using theme tokens, so they work in
 // light and dark mode without images.
 
-import { IDEAS, JOURNEY, LOOP } from "@/lib/story";
+import { DETECTORS, IDEAS, JOURNEY, SIGNAL, TABLEAU } from "@/lib/story";
 
 // ── Brainstorm board ──
 
@@ -57,7 +57,7 @@ export function Journey({ times, firstCommit, repo }: { times: Record<string, st
         const hours = at ? (new Date(at).getTime() - start) / 3_600_000 : null;
         const last = i === JOURNEY.length - 1;
         return (
-          <li key={j.step} className="relative flex gap-4 min-[900px]:flex-col min-[900px]:items-center min-[900px]:gap-3 min-[900px]:text-center">
+          <li key={j.phase} className="relative flex gap-4 min-[900px]:flex-col min-[900px]:items-center min-[900px]:gap-3 min-[900px]:text-center">
             <a
               href={`${repo}/commit/${j.commit}`}
               target="_blank"
@@ -68,6 +68,7 @@ export function Journey({ times, firstCommit, repo }: { times: Record<string, st
               <Icon name={j.icon} />
             </a>
             <div>
+              <div className="mb-1 font-mono text-[10.5px] tracking-[.08em] text-faint">PHASE {j.phase}</div>
               <div className="font-serif text-[22px] leading-none">{j.step}</div>
               <div className="mt-1.5 text-pretty text-[12.5px] leading-snug text-muted">{j.line}</div>
               {hours !== null && <div className="mt-1.5 font-mono text-[11px] text-faint">{hours < 0.05 ? "start" : `+${hours.toFixed(1)}h`}</div>}
@@ -116,9 +117,9 @@ export function Architecture({ evals, backtest }: { evals: string; backtest: str
     val: { x: L[0], y: 168, w: W, h: 76, title: "Validator", lines: ["20 checks on every rebuild"] },
     mod: { x: L[0], y: 272, w: W, h: 76, title: "Prediction & search", lines: [backtest] },
     art: { x: L[0], y: 376, w: W, h: 76, title: "Precomputed results", lines: ["predictions, fixes, map"] },
-    design: { x: L[1], y: 64, w: W, h: 76, title: "Claude Design", lines: ["prototype, v1 to v3"], kind: "claude" },
-    haiku: { x: L[1], y: 220, w: W, h: 76, title: "Claude Haiku", lines: ["writes summaries & briefing"], kind: "claude" },
-    agent: { x: L[1], y: 376, w: W, h: 76, title: "Claude Sonnet agent", lines: [`8 read-only tools · ${evals}`], kind: "claude" },
+    design: { x: L[1], y: 64, w: W, h: 76, title: "Claude Design", lines: ["the UI prototype, v1 to v3"], kind: "claude" },
+    haiku: { x: L[1], y: 206, w: W, h: 94, title: "Claude Haiku · the writer", lines: ["fast, low-cost model:", "task summaries & briefing text"], kind: "claude" },
+    agent: { x: L[1], y: 364, w: W, h: 94, title: "Claude Sonnet · the agent", lines: ["answers questions with", `8 read-only tools · ${evals}`], kind: "claude" },
     app: { x: L[2], y: 64, w: W, h: 232, title: "Signal (Next.js)", lines: ["Briefing", "Queue & task pages", "Process map", "Ask the agent", "Team notes"], kind: "live" },
     redis: { x: L[2], y: 376, w: W, h: 76, title: "Upstash Redis", lines: ["rate limits · team notes"] },
   };
@@ -178,39 +179,111 @@ export function WireframeDashboard() {
   );
 }
 
-// ── Working loop ──
+// ── From Tableau to Signal ──
 
-export function Loop() {
-  const cx = 180, cy = 150, r = 105;
-  const pts = LOOP.map((_, i) => {
-    const a = (-90 + (360 / LOOP.length) * i) * (Math.PI / 180);
-    return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
-  });
+export function FromTableau() {
   return (
-    <svg viewBox="0 0 360 300" className="mx-auto block h-auto w-full max-w-[380px]" role="img" aria-label="Working loop: plan, build, verify, ship, log">
-      <defs>
-        <marker id="loop-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-          <path d="M0,0 L8,4 L0,8 z" style={{ fill: "var(--accent)" }} />
-        </marker>
-      </defs>
-      <circle cx={cx} cy={cy} r={r} fill="none" strokeDasharray="3 5" style={{ stroke: "var(--border2)" }} />
-      {pts.map((p, i) => {
-        const q = pts[(i + 1) % pts.length];
-        // Start and end on the node edges (radius 30) so the arrowheads stay visible
-        const dx = q.x - p.x, dy = q.y - p.y, len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
-        const s = { x: p.x + ux * 34, y: p.y + uy * 34 }, e = { x: q.x - ux * 36, y: q.y - uy * 36 };
-        const mx = (s.x + e.x) / 2, my = (s.y + e.y) / 2;
-        const ox = (mx - cx) * 0.18, oy = (my - cy) * 0.18;
-        return <path key={i} d={`M${s.x} ${s.y} Q${mx + ox} ${my + oy} ${e.x} ${e.y}`} fill="none" strokeWidth={1.6} markerEnd="url(#loop-arrow)" style={{ stroke: "var(--accent)" }} />;
-      })}
-      {pts.map((p, i) => (
-        <g key={LOOP[i]}>
-          <circle cx={p.x} cy={p.y} r={30} style={{ fill: "var(--surface)", stroke: "var(--accent)" }} strokeWidth={1.4} />
-          <text x={p.x} y={p.y + 5} fontSize={14} fontWeight={600} textAnchor="middle" style={{ fill: "var(--text)" }}>{LOOP[i]}</text>
-        </g>
-      ))}
-      <text x={cx} y={cy - 6} fontSize={13} textAnchor="middle" style={{ fill: "var(--muted)" }}>Claude Code builds</text>
-      <text x={cx} y={cy + 14} fontSize={13} textAnchor="middle" style={{ fill: "var(--muted)" }}>I steer and check</text>
-    </svg>
+    <div className="flex flex-col gap-6">
+      <div className="grid gap-4 min-[800px]:grid-cols-2">
+        <div className="flex flex-col gap-4 rounded-xl border border-line bg-surface2 p-5">
+          <div className="flex items-baseline justify-between">
+            <div className="font-serif text-[26px] leading-none text-muted">Tableau</div>
+            <div className="font-mono text-[11px] text-faint">~40 min · weekly</div>
+          </div>
+          <ol className="m-0 flex list-none flex-col gap-2.5 p-0">
+            {TABLEAU.map((t, i) => (
+              <li key={t} className="flex items-center gap-3 text-muted">
+                <span className="flex size-6 flex-none items-center justify-center rounded-full border border-line2 font-mono text-[11px]">{i + 1}</span>{t}
+              </li>
+            ))}
+          </ol>
+          <div className="mt-auto border-t border-line pt-3 text-[13px] text-muted">You find the story.</div>
+        </div>
+        <div className="flex flex-col gap-4 rounded-xl border border-accent bg-accent-soft p-5">
+          <div className="flex items-baseline justify-between">
+            <div className="font-serif text-[26px] leading-none text-accent-ink">Signal</div>
+            <div className="font-mono text-[11px] text-accent-ink">seconds · daily</div>
+          </div>
+          <ol className="m-0 flex list-none flex-col gap-2.5 p-0">
+            {SIGNAL.map((t) => (
+              <li key={t} className="flex items-center gap-3 text-ink">
+                <span className="flex size-6 flex-none items-center justify-center rounded-full bg-accent text-[12px] text-on-accent">→</span>{t}
+              </li>
+            ))}
+          </ol>
+          <div className="mt-auto border-t border-accent/30 pt-3 text-[13px] font-medium text-accent-ink">It tells you the story, with sources.</div>
+        </div>
+      </div>
+      {/* Transfer: same sources, a different last mile */}
+      <div className="grid items-center gap-3 min-[800px]:grid-cols-[1fr_auto_1.2fr_auto_1fr]">
+        <Stage label="Your sources stay" items={["Data warehouse / BigQuery", "Tableau data sources", "CSV & Sheets"]} />
+        <Flow />
+        <Stage label="Signal layer" items={["Checks the data", "Detectors find changes", "Claude explains them"]} accent />
+        <Flow />
+        <Stage label="Instead of dashboards" items={["Daily briefing", "Ask in plain English", "Owners & notes"]} />
+      </div>
+    </div>
+  );
+}
+
+function Stage({ label, items, accent }: { label: string; items: string[]; accent?: boolean }) {
+  return (
+    <div className={`flex flex-col gap-2 rounded-lg border p-4 ${accent ? "border-accent bg-surface" : "border-line bg-surface"}`}>
+      <div className={`font-mono text-[10.5px] tracking-[.08em] ${accent ? "text-accent-ink" : "text-faint"}`}>{label.toUpperCase()}</div>
+      {items.map((x) => <div key={x} className="text-[13.5px]">{x}</div>)}
+    </div>
+  );
+}
+
+function Flow() {
+  return <div className="text-center text-xl text-faint" aria-hidden><span className="min-[800px]:hidden">↓</span><span className="hidden min-[800px]:inline">→</span></div>;
+}
+
+// ── Where insights come from ──
+
+export function InsightSources({ counts, example }: {
+  counts: { tasks: number; handoffs: number; modules: number; clients: number; events: number };
+  example?: { title: string; evidence: string[] };
+}) {
+  const sources: [string, string][] = [
+    ["Task records", `${counts.tasks} tasks`],
+    ["Handoff history", `${counts.handoffs.toLocaleString("en-US")} handoffs`],
+    ["Code areas", `${counts.modules} modules`],
+    ["Client profiles", `${counts.clients} clients`],
+    ["Process change log", `${counts.events} change`],
+  ];
+  return (
+    <div className="grid items-center gap-3 min-[900px]:grid-cols-[1fr_auto_1fr_auto_1.1fr]">
+      <div className="flex flex-col gap-2">
+        <div className="font-mono text-[10.5px] tracking-[.08em] text-faint">SOURCES</div>
+        {sources.map(([name, n]) => (
+          <div key={name} className="flex items-center justify-between gap-3 rounded-lg border border-line bg-surface px-3 py-2">
+            <span>{name}</span><span className="font-mono text-[11.5px] text-faint">{n}</span>
+          </div>
+        ))}
+      </div>
+      <Flow />
+      <div className="flex flex-col gap-2">
+        <div className="font-mono text-[10.5px] tracking-[.08em] text-faint">DETECTORS</div>
+        {DETECTORS.map((d) => (
+          <div key={d} className="flex items-center gap-2.5 rounded-lg border border-dashed border-line2 px-3 py-2">
+            <span className="size-1.5 flex-none rounded-full bg-accent" />{d}
+          </div>
+        ))}
+      </div>
+      <Flow />
+      <div className="flex flex-col gap-2">
+        <div className="font-mono text-[10.5px] tracking-[.08em] text-faint">INSIGHT</div>
+        <div className="flex flex-col gap-3 rounded-xl border border-line bg-surface p-4 shadow-[0_6px_18px_rgba(16,24,40,0.06)]">
+          <span className="self-start rounded-full bg-red-soft px-2.5 py-0.5 text-xs font-medium text-red-ink">Needs you</span>
+          <div className="text-balance font-serif text-[21px] leading-[1.15]">{example?.title}</div>
+          <div className="flex flex-wrap items-center gap-1.5 text-xs text-muted">
+            Evidence
+            {example?.evidence.slice(0, 3).map((id) => <span key={id} className="rounded border border-line px-1.5 font-mono text-[11px]">{id}</span>)}
+          </div>
+          <div className="border-t border-line pt-2.5 text-xs text-muted">Words by Claude, from these facts. Any number not in the facts is rejected.</div>
+        </div>
+      </div>
+    </div>
   );
 }

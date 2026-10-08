@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { Architecture, Brainstorm, Journey, Loop, WireframeDashboard } from "@/components/BuildVisuals";
-import { getBriefing, getBuildStory } from "@/lib/data";
+import { Architecture, Brainstorm, FromTableau, InsightSources, Journey, WireframeDashboard } from "@/components/BuildVisuals";
+import { getBriefing, getBuildStory, getSourceCounts } from "@/lib/data";
 import { CATCHES } from "@/lib/story";
 
 export const metadata: Metadata = { title: "How it was built · Signal" };
@@ -24,15 +24,16 @@ export default function BuildPage() {
   const briefing = getBriefing();
   const repo = s.repo;
   const times = Object.fromEntries(s.timeline.map((c) => [c.hash, c.date]));
+  const moduleInsight = briefing.insights.find((i) => i.id === "module");
 
   return (
     <div className="flex max-w-[1100px] flex-col gap-20 pb-10">
       <div className="flex flex-col gap-10">
         <h1 className="m-0 max-w-[860px] text-balance font-serif text-[44px] font-normal leading-[1.02] tracking-[-0.02em] min-[900px]:text-[68px]">
-          Blank repo to live AI agent in {Math.round(s.hours_to_live_agent)} hours.
+          From Tableau dashboards to an AI agent that tells you what matters.
         </h1>
         <div className="grid grid-cols-3 gap-8">
-          {[[`${s.hours_to_live_agent}h`, "with Claude Code"], [String(s.commits), "commits"], [`${s.evals.passed}/${s.evals.total}`, "agent tests passing"]].map(([v, l]) => (
+          {[[`${s.hours_to_live_agent}h`, "to build, with Claude Code"], [String(s.commits), "commits"], [`${s.evals.passed}/${s.evals.total}`, "agent tests passing"]].map(([v, l]) => (
             <div key={l} className="rule">
               <div className="font-serif text-[44px] leading-none tracking-[-0.02em]">{v}</div>
               <div className="mt-2 text-[13px] text-muted">{l}</div>
@@ -41,23 +42,31 @@ export default function BuildPage() {
         </div>
       </div>
 
-      <Section kicker="01 · IDEAS" title="Five sticky notes.">
+      <Section kicker="01 · THE SHIFT" title="Same data. No more hunting through dashboards.">
+        <FromTableau />
+      </Section>
+
+      <Section kicker="02 · WHERE INSIGHTS COME FROM" title="Five sources, five detectors, one card with evidence.">
+        <InsightSources counts={getSourceCounts()} example={moduleInsight ? { title: moduleInsight.title, evidence: moduleInsight.evidence } : undefined} />
+      </Section>
+
+      <Section kicker="03 · IDEAS" title="It started as five sticky notes.">
         <Brainstorm />
       </Section>
 
-      <Section kicker="02 · JOURNEY" title="Seven milestones.">
+      <Section kicker="04 · PHASES 1–7" title="How it was built.">
         <div className="card px-5 py-7 min-[900px]:px-6">
           <Journey times={times} firstCommit={s.first_commit} repo={repo} />
         </div>
       </Section>
 
-      <Section kicker="03 · ARCHITECTURE" title="Python computes. Claude writes. The app shows.">
+      <Section kicker="05 · ARCHITECTURE" title="Python computes. Claude writes. The app shows.">
         <div className="overflow-x-auto rounded-xl bg-surface p-4">
           <Architecture evals={`tests ${s.evals.passed}/${s.evals.total}`} backtest="89% vs 56% baseline" />
         </div>
       </Section>
 
-      <Section kicker="04 · DESIGN" title="Dashboard → briefing.">
+      <Section kicker="06 · DESIGN" title="Dashboard → briefing.">
         <div className="grid items-start gap-6 min-[900px]:grid-cols-3">
           <figure className="m-0 flex flex-col gap-2.5">
             <div className="rounded-lg bg-surface2 p-3"><WireframeDashboard /></div>
@@ -81,7 +90,7 @@ export default function BuildPage() {
         </div>
       </Section>
 
-      <Section kicker="05 · CAUGHT" title="Where the AI was wrong.">
+      <Section kicker="07 · CAUGHT" title="Where the AI was wrong.">
         <div className="grid gap-8 min-[800px]:grid-cols-3">
           {CATCHES.map((c) => (
             <a key={c.title} href={`${repo}/commit/${c.commit}`} target="_blank" rel="noreferrer" className="rule flex flex-col gap-3 text-ink no-underline hover:text-ink">
@@ -90,10 +99,6 @@ export default function BuildPage() {
             </a>
           ))}
         </div>
-      </Section>
-
-      <Section kicker="06 · LOOP" title="How I work with Claude Code.">
-        <Loop />
       </Section>
 
       <div className="flex flex-wrap gap-x-6 gap-y-2 border-t border-line2 pt-5">
