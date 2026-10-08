@@ -1,0 +1,102 @@
+{
+  "split": {
+    "train_before": "2026-07-01T00:00:00+00:00",
+    "train_stints": 1290,
+    "test_stints": 438,
+    "train_tasks": 299,
+    "test_tasks": 101
+  },
+  "next_stakeholder": {
+    "n": 438,
+    "model_top1": 0.8926940639269406,
+    "model_top3": 0.9726027397260274,
+    "baseline_top1": 0.6050228310502284,
+    "baseline_top3": 0.9018264840182648,
+    "by_stakeholder": [
+      {
+        "stakeholder": "intake",
+        "n": 101,
+        "model_top1": 0.9702970297029703,
+        "base_top1": 0.42574257425742573
+      },
+      {
+        "stakeholder": "customer",
+        "n": 86,
+        "model_top1": 0.9883720930232558,
+        "base_top1": 0.9883720930232558
+      },
+      {
+        "stakeholder": "ops",
+        "n": 60,
+        "model_top1": 0.7833333333333333,
+        "base_top1": 0.5666666666666667
+      },
+      {
+        "stakeholder": "support",
+        "n": 59,
+        "model_top1": 0.9322033898305084,
+        "base_top1": 0.4406779661016949
+      },
+      {
+        "stakeholder": "network_eng",
+        "n": 46,
+        "model_top1": 0.6956521739130435,
+        "base_top1": 0.34782608695652173
+      },
+      {
+        "stakeholder": "security",
+        "n": 44,
+        "model_top1": 0.7727272727272727,
+        "base_top1": 0.7045454545454546
+      },
+      {
+        "stakeholder": "qa",
+        "n": 31,
+        "model_top1": 0.9354838709677419,
+        "base_top1": 0.7096774193548387
+      },
+      {
+        "stakeholder": "dev",
+        "n": 11,
+        "model_top1": 1.0,
+        "base_top1": 0.7272727272727273
+      }
+    ]
+  },
+  "eta": {
+    "n": 438,
+    "model_median_abs_error_days": 0.7466898148148148,
+    "model_mae_days": 1.3304757790038897,
+    "model_within_2_days": 0.776255707762557,
+    "baseline_median_abs_error_days": 0.9926736111111113,
+    "baseline_mae_days": 1.432083029447827,
+    "baseline_within_2_days": 0.7488584474885844
+  },
+  "similar_cases": {
+    "n_queries": 100,
+    "text_only": {
+      "precision_at_3": 0.7366666666666667,
+      "hit_at_3": 0.9
+    },
+    "modules_only": {
+      "precision_at_3": 0.9333333333333333,
+      "hit_at_3": 0.98
+    },
+    "combined": {
+      "precision_at_3": 0.93,
+      "hit_at_3": 1.0
+    },
+    "combined_by_family": {
+      "cert_autorenew_failure": 0.9,
+      "config_rollout_regression": 0.963,
+      "domain_onboarding_blocked": 0.912,
+      "edge_overload_spike": 0.879,
+      "geo_misrouting": 1.0,
+      "log_export_access": 0.9,
+      "origin_failover_not_triggering": 0.929,
+      "partial_purge_failures": 1.0,
+      "purge_propagation_delay": 0.933,
+      "stale_content_after_purge": 1.0
+    }
+  }
+}

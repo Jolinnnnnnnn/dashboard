@@ -1,6 +1,6 @@
 # Relay: Plan
 
-**Status (update as phases finish):** Phase 0 ✅ · Phase 1 ✅ · Phase 2 ✅ · next: Phase 3 (prediction + similar cases + backtest)
+**Status (update as phases finish):** Phase 0 ✅ · Phase 1 ✅ · Phase 2 ✅ · Phase 3 ✅ · next: Phase 4 (Claude Design)
 
 ## 1. What it is
 
@@ -83,7 +83,7 @@ Folders are created in the phase that first needs them.
 
 **Done when:** validation passes, and you've spot-checked 5 tasks by hand (including T-4821).
 
-### Phase 3: Prediction + similar cases + backtest (~3 hrs, Claude Code, Python)
+### Phase 3: Prediction + similar cases + backtest ✅ (Claude Code, Python)
 - **Baseline:** most common next stakeholder overall.
 - **Model:** transition probabilities by (current stakeholder, task type), falling back to stakeholder-only when a pair has < 5 examples. Includes median remaining hold time.
 - **Backtest:** train Oct 2025–Jun 2026, test Jul–Sep 2026. Report top-1 and top-3 accuracy vs baseline.

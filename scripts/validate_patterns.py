@@ -13,13 +13,11 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
 import relay_data as rd
+import relay_model as rm
 
 BACKTEST_SPLIT = pd.Timestamp("2026-07-01T00:00:00Z")
-TEXT_WEIGHT, MODULE_WEIGHT = 0.7, 0.3  # similar-case score; recorded in docs/definitions.md
 
 results: list[tuple[str, bool, str]] = []
 
@@ -30,38 +28,13 @@ def check(name: str, passed: bool, detail: str) -> None:
 
 def predict_top1(train: pd.DataFrame, test: pd.DataFrame) -> tuple[float, float]:
     """Top-1 accuracy of (stakeholder, type) transitions vs. stakeholder-only baseline."""
-    by_pair = train.groupby(["stakeholder", "type"])["next_stakeholder"].agg(Counter)
-    by_stk = train.groupby("stakeholder")["next_stakeholder"].agg(Counter)
+    model = rm.TransitionModel(train)
     model_hits = base_hits = 0
     for row in test.itertuples():
-        base = by_stk[row.stakeholder].most_common(1)[0][0]
-        pair = by_pair.get((row.stakeholder, row.type))
-        model = pair.most_common(1)[0][0] if pair and sum(pair.values()) >= rd.MIN_PAIR_EXAMPLES else base
-        model_hits += model == row.next_stakeholder
-        base_hits += base == row.next_stakeholder
+        model_hits += model.distribution(row.stakeholder, row.type)[0][0] == row.next_stakeholder
+        base_hits += model.baseline(row.stakeholder)[0] == row.next_stakeholder
     return model_hits / len(test), base_hits / len(test)
 
-
-def module_sets(tasks: pd.DataFrame) -> list[set[str]]:
-    return [{p.split("/")[0] for p in areas} for areas in tasks["code_areas"]]
-
-
-def similar_family_rate(closed: pd.DataFrame) -> float:
-    """Share of each closed task's top-3 similar cases that come from the same issue family."""
-    text = (closed["title"] + ". " + closed["description"]).tolist()
-    cos = cosine_similarity(TfidfVectorizer(stop_words="english").fit_transform(text))
-    mods = module_sets(closed)
-    n = len(closed)
-    jac = np.zeros((n, n))
-    for i in range(n):
-        for j in range(n):
-            union = mods[i] | mods[j]
-            jac[i, j] = len(mods[i] & mods[j]) / len(union) if union else 0.0
-    score = TEXT_WEIGHT * cos + MODULE_WEIGHT * jac
-    np.fill_diagonal(score, -1)
-    families = closed["family"].to_numpy()
-    top3 = np.argsort(-score, axis=1)[:, :3]
-    return float((families[top3] == families[:, None]).mean())
 
 
 def main() -> int:
@@ -145,7 +118,7 @@ def main() -> int:
           f"{rework:.1%} of {len(eligible)} New domain / Log access tasks go Security → Support → Security")
 
     # ── P4: problem module ──
-    counts = Counter(m for ms in module_sets(tasks) for m in ms)
+    counts = Counter(m for areas in tasks["code_areas"] for m in rm.module_set(areas))
     all_modules = d["modules"]["id"].tolist()
     ranked = sorted(all_modules, key=lambda m: -counts.get(m, 0))
     avg = np.mean([counts.get(m, 0) for m in all_modules])
@@ -154,7 +127,7 @@ def main() -> int:
           f"#2 {ranked[1]} {counts[ranked[1]]}")
 
     # ── P5: issue families have consistent fixes ──
-    fam_rate = similar_family_rate(closed_tasks.reset_index(drop=True))
+    fam_rate = rm.family_match_rate(closed_tasks, rm.SimilarityIndex(closed_tasks))
     check("P5 Similar cases share family", fam_rate >= 0.70,
           f"{fam_rate:.1%} of top-3 similar cases share the family")
 

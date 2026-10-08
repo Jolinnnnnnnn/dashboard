@@ -14,3 +14,8 @@ Key prompts given to Claude Code and where its output needed correcting. Intervi
 | 2026-10-07 | 2 | Similar-case hit rate was 100%: too clean to be believable | Added text overlap (vague titles, generic sentences, tickets worded like a related family) |
 | 2026-10-07 | 2 | Adding text noise re-drew every route, and P3/P7 then failed by luck | Root cause: patterns depended on the seed. Split structure and text into separate random streams, assigned rework by quota, spread dates evenly, raised the holiday factor. Added `--seed`; all checks now pass on seeds 1–30. |
 | 2026-10-07 | 2 | Tried to push similar-case hit rate down to 80–90% | Measured why it stays ~93%: text alone 78%, code modules alone 90%, combined 93%. Stopped tuning: combining the signals beating either one is realistic and a Phase 3 talking point. |
+| 2026-10-07 | 3 | "next": prediction, ETA, similar cases, backtest, AI summaries | Moved shared logic into `relay_model.py`; validator refactored onto it and reproduced identical numbers (refactor check). |
+| 2026-10-07 | 3 | Backtest | Next stakeholder 89.3% vs 60.5% baseline. ETA only modestly better than baseline (0.75 vs 0.99 days median error), reported as-is rather than tuned on the test set. |
+| 2026-10-07 | 3 | First Haiku summaries were 4–5 sentences | Too long for a card; tightened prompt to ≤ 3 sentences / 70 words + a short action line. |
+| 2026-10-07 | 3 | A summary run hung for 3+ minutes | SDK default timeout is 10 min with retries; set a 60s timeout so a stalled request fails fast. Full run then took 29s. |
+| 2026-10-07 | 3 | Can the summaries be trusted? | Added an automated grounding check: every task ID cited must be the task itself or one of the similar cases provided. 0 violations across 100. |

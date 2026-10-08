@@ -52,6 +52,10 @@ Run from the repo root with the venv active (`source .venv/bin/activate`):
 - `pip install -r requirements.txt`: install Python deps
 - `python scripts/generate_data.py`: regenerate `data/` (deterministic, seed 42)
 - `python scripts/validate_patterns.py`: check counts, demo task, noise, and patterns P1–P7; exits 1 on failure
-- Both accept `--data-dir DIR` (and the generator `--seed N`) to test other seeds without touching `data/`. After changing the generator, check a range of seeds, not just 42.
+- `python scripts/backtest.py`: train Oct–Jun / test Jul–Sep; next-stakeholder, ETA, and similar-case metrics → `data/artifacts/backtest.json`
+- `python scripts/build_artifacts.py`: `transitions.json`, `predictions.json` (open tasks), `similar_cases.json` (all tasks) in `data/artifacts/`
+- `python scripts/summarize_tasks.py [--limit N] [--force]`: Haiku summaries for open tasks → `summaries.json`. Calls the Claude API (reads `ANTHROPIC_API_KEY` from env or `.env.local`); cached by input hash, so only changed tasks are re-sent.
+- Pipeline order after changing data or model code: generate → validate → backtest → build_artifacts → summarize_tasks
+- `generate_data.py` and `validate_patterns.py` accept `--data-dir DIR` (and the generator `--seed N`) to test other seeds without touching `data/`. After changing the generator, check a range of seeds, not just 42.
 
-`scripts/relay_data.py` holds shared loading/cleaning (`load`, `clean_handoffs`, `stints`, `routes`, `risk_levels`). Reuse it in later scripts rather than re-implementing.
+`scripts/relay_data.py` holds shared loading/cleaning (`load`, `clean_handoffs`, `stints`, `routes`, `risk_levels`); `scripts/relay_model.py` holds `TransitionModel` (prediction, ETA) and `SimilarityIndex`. Reuse them rather than re-implementing. The TypeScript app reads the precomputed artifacts; it doesn't re-implement the model.

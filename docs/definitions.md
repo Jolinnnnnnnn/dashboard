@@ -39,16 +39,18 @@ Exact meanings of the terms used across the data scripts, the app, and the agent
 |---|---|
 | **Next stakeholder** | The stakeholder a task is handed to after its current stint. |
 | **Transition probability** | Share of closed stints at stakeholder S (for task type T) whose next handoff went to N. Falls back to stakeholder-only when (S, T) has < 5 examples. |
-| **Baseline** | Always predicts the single most common next stakeholder from S, ignoring task type. |
+| **Baseline** | Ranks next stakeholders from S by overall frequency, ignoring task type. For ETA: the median time-to-close from S across all task types. |
 | **Top-k accuracy** | Share of test stints where the actual next stakeholder is among the k most probable predictions. |
 | **Reason text** | Plain-language evidence for a prediction, e.g. "17 of 25 similar cache tasks went to Customer after Network Eng". |
-| **Estimated close** | Today + sum of median hold times along the most probable remaining route. |
+| **Expected path** | Greedy chain of most probable next stakeholders (by task type) from the current one until Closed, skipping immediate loops back. |
+| **Remaining at current** | Median of (hold − elapsed) over past stints at the same (stakeholder, type) that lasted longer than the elapsed time; 0.25 × median if fewer than 3 such stints. |
+| **Estimated close** | Today + remaining at current + median holds of each stakeholder on the expected path. |
 
 ## Similar cases
 
 | Term | Definition |
 |---|---|
 | **Similar case** | A closed task ranked by combined similarity to a given task. |
-| **Similarity score** | 0.7 × TF-IDF cosine similarity on title + description + 0.3 × Jaccard overlap of code modules (module = first path segment of each code area). Weights may be tuned in Phase 3; update here if they change. |
+| **Similarity score** | 0.7 × TF-IDF cosine similarity on title + description + 0.3 × Jaccard overlap of code modules (module = first path segment of each code area). Weights were not tuned on the test set; update here if they change. |
 | **Hit** | A similar case from the same issue family as the query task (used only for evaluation; the app never uses family labels to rank). |
 | **Problem module** | A code module ranked by the number of tasks linked to it. |
